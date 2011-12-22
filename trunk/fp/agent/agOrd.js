@@ -51,6 +51,37 @@ Ext.onReady(function() {
         ]
     });
 	
+ Ext.define('Order', {
+        extend: 'Ext.data.Model',
+		
+        fields: [
+            {name:'org'},
+			{name:'orgcode'},
+            {name:'cname'},
+			{name:'curid'},
+			{name:'address'},
+			{name:'contname'},
+			{name:'contmail'},
+			{name:'contphone'},
+			{name:'orgrems'},
+			{name:'dest'},
+			{name:'destcode'},
+			{name:'dname'},
+			{name:'dadr'},
+            {name:'dcontname'},
+			{name:'dcontmail'},
+			{name:'dcontphone'},
+			{name:'destrems'},
+			{name:'amt'},
+			{name:'paytype'},
+			{name:'type'},
+			{name:'packs'},
+			{name:'wt'},
+			{name:'volwt'},
+			{name:'rordnum'}
+        ]
+		
+    });
 	
 	MyJsonStore = Ext.create('Ext.data.Store', {
        
@@ -74,7 +105,7 @@ Ext.onReady(function() {
                     name: 'ORGCity'
                 },
                 {
-                    name: 'CName'
+                    name: 'CName'//, mapping: 'name > cname'
                 },
                 {
                     name: 'DESTCity'
@@ -99,7 +130,7 @@ Ext.onReady(function() {
 	
 	
 	
-pg = Ext.create('Ext.panel.Panel', {
+var pg = Ext.create('Ext.panel.Panel', {
     renderTo: 'start-ct',//Ext.getBody(),
 
     height: 500,
@@ -112,6 +143,7 @@ pg = Ext.create('Ext.panel.Panel', {
 	items: [
                 {
                     xtype: 'gridpanel',
+					//name:'grid',
                     autoShow: true,
                     height: 500,
                     width: 864,
@@ -203,6 +235,7 @@ pg = Ext.create('Ext.panel.Panel', {
        // pageSize: 10,
         model: 'Post'
     });
+	
 
     var p1/*, p2, p3*/;
 	
@@ -230,18 +263,9 @@ pg = Ext.create('Ext.panel.Panel', {
 		
     };
 
-   /*Ext.createWidget('panel', {
-        renderTo: 'vvod',//Ext.getBody(),
-
-        layout: 'absolute',
-        id: 'demo-ct',
-        border: false,
-
-        layoutConfig: {
-            columns: 1
-        },
-
-        items: [*/
+  
+ 
+ 
         p1 = Ext.create('DemoPanel', {
             id: 'panel1',
 			
@@ -307,6 +331,35 @@ pg = Ext.create('Ext.panel.Panel', {
             queryMode: 'remote',
 			valueField: 'code',
             anchor: '100%'}]*/
+			reader: Ext.create('Ext.data.reader.Json',{
+						model: 'Order',
+						
+			}),
+			
+			listeners: {
+								actioncomplete: function(){
+								var borg = Ext.getCmp('idorg');
+								borg.store.load({
+											params:{
+												query: borg.getValue()
+											}
+										});
+								var Review = Ext.getCmp('orgcode');
+								borg.select(Review.getValue());
+								
+								var bdest = Ext.getCmp('iddest');
+								bdest.store.load({
+											params:{
+												query: bdest.getValue()
+											}
+										});
+								var Rev = Ext.getCmp('destcode');
+								bdest.select(Rev.getValue());
+								
+								}
+							
+							},
+			
 			
 			items: [
                 {
@@ -320,19 +373,33 @@ pg = Ext.create('Ext.panel.Panel', {
                         {
                             xtype: 'combobox',
                             width: 330,
+							id: 'idorg',
                             name: 'org',
                             fieldLabel: 'Город',
                             labelAlign: 'top',
                             displayField: 'fname',
                             store: ds,
                             valueField: 'code',
-							allowBlank:false
+							typeAhead: true,
+							allowBlank:false,
+							triggerAction : 'query',
+							selectOnFocus:true,										
                         },
+						{
+						xtype: 'textfield',
+						id:'orgcode',
+						hidden :true
+						},
+						{
+						xtype: 'textfield',
+						name:'rordnum',
+						hidden :true
+						},
                         {
                             xtype: 'textfield',
                             width: 330,
                             name: 'cname',
-                            fieldLabel: 'Название клиента',
+							fieldLabel: 'Название клиента',
 							maxLength:60,
                             labelAlign: 'top',
 							allowBlank:false
@@ -395,7 +462,8 @@ pg = Ext.create('Ext.panel.Panel', {
                         {
                             xtype: 'combobox',
                             width: 330,
-                            name: 'dest',
+							id:'iddest',
+                            name:'dest',
                             fieldLabel: 'Город',
                             labelAlign: 'top',
                             displayField: 'fname',
@@ -403,6 +471,11 @@ pg = Ext.create('Ext.panel.Panel', {
                             valueField: 'code',
 							allowBlank:false
                         },
+						{
+						xtype: 'textfield',
+						id:'destcode',
+						hidden :true
+						},
                         {
                             xtype: 'textfield',
                             width: 330,
@@ -442,7 +515,7 @@ pg = Ext.create('Ext.panel.Panel', {
                         {
                             xtype: 'textfield',
                             width: 84,
-                            name: 'dcontophone',
+                            name: 'dcontphone',
                             fieldLabel: 'Телефон',
                             labelAlign: 'top',
                             anchor: '100%',
@@ -470,6 +543,27 @@ pg = Ext.create('Ext.panel.Panel', {
                     x: 10,
                     y: 390,
                     items: [
+					{
+                            xtype: 'combobox',
+                            width: 320,
+                            name: 'paytype',
+							displayField: 'Name',
+							valueField: 'lowName',
+							allowBlank:false,
+							forceSelection: true,
+							typeAhead: true,
+                            fieldLabel: 'Вид оплаты',
+							store: Ext.create('Ext.data.Store', {
+                        fields: ['Name', 'lowName'],
+                        data : [
+								{ Name: 'Наличный',    lowName: '0' },
+								{ Name: 'Безналичный', lowName: '1' }
+        
+								]
+                    }),
+                            x: 10,
+                            y: 10
+                        },
                         {
                             xtype: 'numberfield',
                             width: 320,
@@ -500,27 +594,7 @@ pg = Ext.create('Ext.panel.Panel', {
                             x: 10,
                             y: 90
                         },
-                        {
-                            xtype: 'combobox',
-                            width: 320,
-                            name: 'paytype',
-							displayField: 'Name',
-							valueField: 'lowName',
-							allowBlank:false,
-							forceSelection: true,
-							typeAhead: true,
-                            fieldLabel: 'Вид оплаты',
-							store: Ext.create('Ext.data.Store', {
-                        fields: ['Name', 'lowName'],
-                        data : [
-								{ Name: 'Наличный',    lowName: '0' },
-								{ Name: 'Безналичный', lowName: '1' }
-        
-								]
-                    }),
-                            x: 10,
-                            y: 10
-                        }
+                        
                     ]
                 },
                 {
@@ -584,14 +658,50 @@ pg = Ext.create('Ext.panel.Panel', {
         });
 		
 		
-  b = Ext.create('Ext.button.Button', {
+ var b = Ext.create('Ext.button.Button', {
         text: 'Новый заказ',
         renderTo: 'start-ct',
         handler: function() {
-            updateSpot('panel1')
+            
+			//var sm = pg.child('gridpanel').getSelectionModel().getSelection()[0];
 			
+			
+			//Ext.Msg.alert('Плоха все!', sm.get('ROrdNum'));
+			/*p1.getForm().load({
+                    //url: 'test.json'
+					method :'GET',
+					url:'EditAgOrders.php?id='+sm.get('ROrdNum')
+                    //waitMsg: 'Loading...'
+                });*/
+				
+			updateSpot('panel1');
+				
         }
     });
+	
+var buted = Ext.create('Ext.button.Button', {
+        text: 'Редактировать заказ',
+        renderTo: 'start-ct',
+        handler: function() {
+            
+			var sm = pg.child('gridpanel').getSelectionModel();//.getSelection()[0];
+			
+			
+			if (sm.getCount()>0){
+			p1.getForm().load({
+                   	method :'GET',
+					url:'EditAgOrders.php?id='+sm.getSelection()[0].get('ROrdNum')
+					                    //waitMsg: 'Loading...'
+                });
+			updateSpot('panel1');
+				}else{
+					Ext.Msg.alert('Внимание!', 'Выберите заказ для редактирования');
+					}
+				
+			
+				
+        }
+    });	
 	
 	p1.setVisible( false);
 });

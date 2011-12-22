@@ -27,7 +27,7 @@ $query = "exec wwwSaveAgOrders
 @DName='$DName',
 @DAdr='$DAdr',
 @DContName='$DContName',
-@DContPhone='$_POST[dcontophone]',
+@DContPhone='$_POST[dcontphone]',
 @DContMail='$_POST[dcontmail]',
 @DESTRems='$DESTRems',
 @Type=$_POST[type],
@@ -38,7 +38,8 @@ $query = "exec wwwSaveAgOrders
 @CurId=$CurId,
 @PayType=$_POST[paytype],
 @Payr=$ag,
-@UserIn=$UserIn"; 
+@UserIn=$UserIn,
+@RordNum=$_POST[rordnum]"; 
   
 mssql_query($query);
 //echo"1";  
