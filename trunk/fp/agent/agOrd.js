@@ -98,14 +98,17 @@ Ext.onReady(function() {
                 {
                     name: 'ROrdNum'
                 },
+                {
+                    name: 'status'
+                },
 				{
-					name: 'DateIn'//,type: 'date'//, dateFormat: 'n/j h:ia'
+					name: 'DateIn'
 				},
                 {
                     name: 'ORGCity'
                 },
                 {
-                    name: 'CName'//, mapping: 'name > cname'
+                    name: 'CName'
                 },
                 {
                     name: 'DESTCity'
@@ -134,7 +137,7 @@ var pg = Ext.create('Ext.panel.Panel', {
     renderTo: 'start-ct',//Ext.getBody(),
 
     height: 500,
-    width: 864,
+    width: 930,
     layout: {
      //   align: 'stretchmax',
      //   type: 'vbox'
@@ -146,7 +149,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 					//name:'grid',
                     autoShow: true,
                     height: 500,
-                    width: 864,
+                    width: 930,
                     title: 'Список агентских заказов',
                     store: MyJsonStore,
                     //flex: 1,
@@ -161,6 +164,14 @@ var pg = Ext.create('Ext.panel.Panel', {
                             dataIndex: 'ROrdNum',
                             text: '№'
                         },
+                        {
+                            xtype: 'gridcolumn',
+                            width: 50,
+							
+                            dataIndex: 'status',
+                            text: 'Статус'
+                        },
+                        
 						{
 							xtype: 'gridcolumn',
 							
@@ -688,12 +699,18 @@ var buted = Ext.create('Ext.button.Button', {
 			
 			
 			if (sm.getCount()>0){
+			if (sm.getSelection()[0].get('status')=='заявлен'){ 
 			p1.getForm().load({
                    	method :'GET',
 					url:'EditAgOrders.php?id='+sm.getSelection()[0].get('ROrdNum')
 					                    //waitMsg: 'Loading...'
                 });
 			updateSpot('panel1');
+            }else{
+                
+               Ext.Msg.alert('Запрещено!', 'Редактировать можно только заявленные заказы'); 
+            }
+            
 				}else{
 					Ext.Msg.alert('Внимание!', 'Выберите заказ для редактирования');
 					}

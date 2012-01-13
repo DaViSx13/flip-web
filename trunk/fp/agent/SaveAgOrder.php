@@ -13,8 +13,10 @@ $OrgRems=iconv("UTF-8", "windows-1251",$_POST[orgrems]);
 $DContName=iconv("UTF-8", "windows-1251",$_POST[dcontname]);
 $DAdr=iconv("UTF-8", "windows-1251",$_POST[dadr]);
 $DESTRems=iconv("UTF-8", "windows-1251",$_POST[destrems]);
-$UserIn= $_SESSION['xUser'];  
-	
+$UserIn= $_SESSION['xUser'];
+ 
+ 
+
 $query = "exec wwwSaveAgOrders 
 @ORG=$_POST[org], 
 @CName='$CName',
