@@ -15,6 +15,15 @@ $result=mssql_query($query);
 
 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 
+if ($row["dcontmail"]==' ' or $row["dcontmail"]=='')
+{
+$row["dcontmail"]=null;
+}
+if ($row["contmail"]==' ' or $row["contmail"]=='')
+{
+$row["contmail"]=null;
+}
+
 $res_arr[] = array('rordnum'=>$row["rordnum"], 'datein'=>$row["datein"],'orgcode'=>$row["orgcode"],'org'=>iconv("windows-1251", "UTF-8", $row["org"]), 
 'cname'=>iconv("windows-1251", "UTF-8", $row["cname"]), 'dest'=>iconv("windows-1251", "UTF-8", $row["dest"]),'destcode'=>$row["destcode"], 'dname'=>iconv("windows-1251", "UTF-8", $row["dname"]),
  'packs'=>$row["packs"], 'wt'=>$row["wt"], 'volwt'=>$row["volwt"],'curid'=>$row["curid"], 'type'=>$row["type"],'amt'=>$row["amt"],'orgrems'=>iconv("windows-1251", "UTF-8", $row["orgrems"]), 'destrems'=>iconv("windows-1251", "UTF-8", $row["destrems"]),
