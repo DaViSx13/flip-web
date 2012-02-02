@@ -7,6 +7,7 @@ $DName=iconv("UTF-8", "windows-1251",$_POST[dname]);
 $Amt=$_POST[amt] ? $_POST[amt] : 0;
 $CurId=$_POST[curid] ? $_POST[curid] : 0;
 $VolWt=$_POST[volwt] ? $_POST[volwt] : 0;
+$Rordnum=$_POST[rordnum] ? $_POST[rordnum] : 0;
 $Address=iconv("UTF-8", "windows-1251",$_POST[address]);
 $ContName=iconv("UTF-8", "windows-1251",$_POST[contname]);
 $OrgRems=iconv("UTF-8", "windows-1251",$_POST[orgrems]);
@@ -41,7 +42,7 @@ $query = "exec wwwSaveAgOrders
 @PayType=$_POST[paytype],
 @Payr=$ag,
 @UserIn=$UserIn,
-@RordNum=$_POST[rordnum]"; 
+@RordNum=$Rordnum"; 
   
 mssql_query($query);
 //echo"1";  
