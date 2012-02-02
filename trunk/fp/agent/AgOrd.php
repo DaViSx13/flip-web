@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="example.css" />
 	<style type="text/css">
         body {
-            overflow: hidden;
+           /* overflow: hidden;*/
         }
         
         #demo-ct .x-table-layout-cell {
