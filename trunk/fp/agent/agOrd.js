@@ -604,7 +604,7 @@ var pg = Ext.create('Ext.panel.Panel', {
                     }),
                             x: 10,
                             y: 90
-                        },
+                        }
                         
                     ]
                 },
