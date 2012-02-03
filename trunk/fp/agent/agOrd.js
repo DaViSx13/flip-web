@@ -289,13 +289,15 @@ var pg = Ext.create('Ext.panel.Panel', {
 					var form = this.up('form').getForm();
 					
 					if (form.isValid()) { // make sure the form contains valid data before submitting
+					
                     form.submit({
 						url: 'SaveAgOrder.php',
 						submitEmptyText: false,
                         success: function(form, action) {
                            Ext.Msg.alert('Все ок!', action.result.msg);
-						   form.reset();
-						   updateSpot(false);
+						   
+						  form.reset();
+						  updateSpot(false);
 						  MyJsonStore.load();
                         },
                         failure: function(form, action) {
@@ -348,7 +350,11 @@ var pg = Ext.create('Ext.panel.Panel', {
 			}),
 			
 			listeners: {
-								actioncomplete: function(){
+								actioncomplete: function(form, action){
+								if (action.method == 'GET') 
+								{
+								 //Ext.Msg.alert('action', action.method);
+								
 								var borg = Ext.getCmp('idorg');
 								borg.store.load({
 											params:{
@@ -367,6 +373,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 								var Rev = Ext.getCmp('destcode');
 								bdest.select(Rev.getValue());
 								
+								}
 								}
 							
 							},
