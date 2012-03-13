@@ -78,7 +78,10 @@ Ext.onReady(function() {
 			{name:'packs'},
 			{name:'wt'},
 			{name:'volwt'},
-			{name:'rordnum'}
+			{name:'rordnum'},
+            {name:'courdate'},
+            {name:'courtimef'},
+            {name:'courtimet'}
         ]
 		
     });
@@ -124,6 +127,9 @@ Ext.onReady(function() {
                 },
                 {
                     name: 'VolWt'
+                },
+                {
+                    name: 'wb_no'
                 }
             ]
 	   
@@ -137,7 +143,7 @@ var pg = Ext.create('Ext.panel.Panel', {
     renderTo: 'start-ct',//Ext.getBody(),
 
     height: 500,
-    width: 930,
+    width: 1000,
     layout: {
      //   align: 'stretchmax',
      //   type: 'vbox'
@@ -149,7 +155,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 					//name:'grid',
                     autoShow: true,
                     height: 500,
-                    width: 930,
+                    width: 1000,
                     title: 'Список агентских заказов',
                     store: MyJsonStore,
                     //flex: 1,
@@ -228,6 +234,13 @@ var pg = Ext.create('Ext.panel.Panel', {
 							
                             dataIndex: 'VolWt',
                             text: 'Об. вес'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            width: 70,
+							
+                            dataIndex: 'wb_no',
+                            text: '№ накл.'
                         }
                     ]
                 }
@@ -552,76 +565,54 @@ var pg = Ext.create('Ext.panel.Panel', {
                 },
                 {
                     xtype: 'fieldset',
-                    height: 150,
+                    height: 120,
                     width: 360,
                     layout: {
                         type: 'absolute'
                     },
-                    title: 'Стоимость доставки',
+                    title: 'Дата приезда курьера',
                     x: 10,
-                    y: 390,
+                    y: 380,
                     items: [
-					{
-                            xtype: 'combobox',
-                            width: 320,
-                            name: 'paytype',
-							displayField: 'Name',
-							valueField: 'lowName',
-							allowBlank:false,
-							forceSelection: true,
-							typeAhead: true,
-                            fieldLabel: 'Вид оплаты',
-							store: Ext.create('Ext.data.Store', {
-                        fields: ['Name', 'lowName'],
-                        data : [
-								{ Name: 'Наличный',    lowName: '0' },
-								{ Name: 'Безналичный', lowName: '1' }
-        
-								]
-                    }),
-                            x: 10,
-                            y: 10
+					   {
+                             xtype: 'datefield',
+                             name: 'courdate',
+                             fieldLabel: 'Дата',
+                             x: 10,
+                             y: 10,
+                             width: 320,
+                             format: 'd.m.Y',
+                            // altFormats: 'Y m d',
                         },
                         {
-                            xtype: 'numberfield',
+                            xtype: 'timefield',
                             width: 320,
-                            name: 'amt',
-							minValue: 0,
-                            fieldLabel: 'Сумма',
+                            name: 'courtimef',
+							fieldLabel: 'Время с',
+                            format: 'H:i:s',
                             x: 10,
-                            y: 50
+                            y: 40
                         },
                         {
-                            xtype: 'combobox',
+                            xtype: 'timefield',
                             width: 320,
-                            name: 'curid',
-							displayField: 'Name',
-							valueField: 'lowName',
-							forceSelection: true,
-							typeAhead: true,
-                            fieldLabel: 'Валюта',
-							store: Ext.create('Ext.data.Store', {
-                        fields: ['Name', 'lowName'],
-                        data : [
-								{ Name: 'Российские рубли',    lowName: '0' },
-								{ Name: 'Доллары США', lowName: '1' },
-								{ Name: 'Евро', lowName: '2' }
-        
-								]
-                    }),
+                            name: 'courtimet',
+                            fieldLabel: 'Время до',
+                            format: 'H:i:s',
                             x: 10,
-                            y: 90
+                            y: 70
                         }
                         
                     ]
                 },
+                
                 {
                     xtype: 'fieldset',
                     height: 150,
                     width: 360,
                     title: 'Информация о грузе',
                     x: 390,
-                    y: 390,
+                    y: 380,
 					
                     items: [
                         {
@@ -669,6 +660,14 @@ var pg = Ext.create('Ext.panel.Panel', {
                             anchor: '100%'
                         }
                     ]
+                },{
+                            xtype: 'label',
+                            text: '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
+                             x: 10,
+                             y: 500,
+                             width: 360
+                             
+                            //margins: '0 0 0 10'
                 }
             ]
 			

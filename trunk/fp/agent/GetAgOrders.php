@@ -15,7 +15,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 
 $res_arr[] = array('ROrdNum'=>$row["ROrdNum"], 'DateIn'=>$row["DateIn"],'ORGCity'=>iconv("windows-1251", "UTF-8", $row["ORGCity"]), 
 'CName'=>iconv("windows-1251", "UTF-8", $row["CName"]), 'DESTCity'=>iconv("windows-1251", "UTF-8", $row["DESTCity"]), 'DName'=>iconv("windows-1251", "UTF-8", $row["DName"]),
- 'Packs'=>$row["Packs"], 'Wt'=>$row["Wt"], 'VolWt'=>$row["VolWt"], 'status'=>iconv("windows-1251", "UTF-8", $row["status"]) );
+ 'Packs'=>$row["Packs"], 'Wt'=>$row["Wt"], 'VolWt'=>$row["VolWt"], 'status'=>iconv("windows-1251", "UTF-8", $row["status"]),'wb_no'=>$row["Wb_no"] );
 
 
 }
