@@ -363,6 +363,9 @@ var pg = Ext.create('Ext.panel.Panel', {
 			}),
 			
 			listeners: {
+			                    show:function(form, action){
+			                         this.setTitle( 'Новый заказ');
+			                     },
 								actioncomplete: function(form, action){
 								if (action.method == 'GET') 
 								{
@@ -386,6 +389,11 @@ var pg = Ext.create('Ext.panel.Panel', {
 								var Rev = Ext.getCmp('destcode');
 								bdest.select(Rev.getValue());
 								
+                                var ordn=Ext.getCmp('idrordnum');
+                                    
+                                        this.setTitle( 'Заказ № '+ordn.getValue());
+                                    
+                               
 								}
 								}
 							
@@ -424,6 +432,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 						{
 						xtype: 'textfield',
 						name:'rordnum',
+                        id:'idrordnum',
 						hidden :true
 						},
                         {
