@@ -143,7 +143,7 @@ var pg = Ext.create('Ext.panel.Panel', {
     renderTo: 'start-ct',//Ext.getBody(),
 
     height: 500,
-    width: 1000,
+    width: 1002,
     layout: {
      //   align: 'stretchmax',
      //   type: 'vbox'
