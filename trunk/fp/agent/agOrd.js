@@ -598,7 +598,7 @@ var pg = Ext.create('Ext.panel.Panel', {
                             width: 320,
                             name: 'courtimef',
 							fieldLabel: 'Время с',
-                            format: 'H:i:s',
+                            format: 'H:i',
                             x: 10,
                             y: 40
                         },
@@ -607,7 +607,7 @@ var pg = Ext.create('Ext.panel.Panel', {
                             width: 320,
                             name: 'courtimet',
                             fieldLabel: 'Время до',
-                            format: 'H:i:s',
+                            format: 'H:i',
                             x: 10,
                             y: 70
                         }
