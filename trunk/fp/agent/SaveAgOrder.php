@@ -21,6 +21,12 @@ $courtimet=iconv("UTF-8", "windows-1251",$_POST[courtimet]);
 $ContPhone=iconv("UTF-8", "windows-1251",$_POST[contphone]); 
 $DContPhone=iconv("UTF-8", "windows-1251",$_POST[dcontphone]); 
 
+if($courdate){
+    $d = explode('.', $courdate);
+    $courdate = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
+}
+
+
 $query = "exec wwwSaveAgOrders 
 @ORG=$_POST[org], 
 @CName='$CName',
