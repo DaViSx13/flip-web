@@ -86,6 +86,7 @@ function exportXLS(){
                  }
     else if (newAgent) { para += 'newAgent='+newAgent };
    
+   para += '&filter=' + $("input:radio:checked").attr("value");
   //alert("getAgentWbsXLS.php?"+para);
   //$.get("getAgentWbsXLS.php?"+para);
   window.location.href = "getAgentWbsXLS.php?"+para;

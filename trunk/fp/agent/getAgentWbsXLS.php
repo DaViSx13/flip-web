@@ -6,10 +6,11 @@
     require_once 'Spreadsheet/Excel/Writer.php';
 
 
-$ag = $_GET['newAgent'] ? $_GET['newAgent'] : $_SESSION['xAgentID'];  
- 
+$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
+$filter = $_REQUEST['filter'];
+
 //$query = "exec wwwGetAgentWbs @period='20100201', @agentID=54";
-$query = "exec wwwGetAgentWbs @period='$_GET[newPeriod]', @agentID={$ag}";
+$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}";
 $result=mssql_query($query);
 
 // Creating a workbook
@@ -89,11 +90,13 @@ $rowNo++;
 
 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 //пишем данные
-    $startColNo = 0;
-    foreach ($fields as $f => $value) {
-        $worksheet->write($rowNo, $startColNo++, $row[$value], $format_data);
-        };
-    $rowNo++;
+    if($filter == 'all' || $row['dir'] == $filter ){
+        $startColNo = 0;
+        foreach ($fields as $f => $value) {
+            $worksheet->write($rowNo, $startColNo++, $row[$value], $format_data);
+            };
+        $rowNo++;
+    }
 }
 
 //итоги
