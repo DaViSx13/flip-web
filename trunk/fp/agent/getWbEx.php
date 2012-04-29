@@ -2,7 +2,7 @@
 	require_once "secureCheck.php";
     include "dbConnect.php";
 
-$wbno = $_POST['wbno'] ? $_POST['wbno'] : $_GET['wbno'];
+$wbno = $_REQUEST['wbno']; //? $_POST['wbno'] : $_GET['wbno'];
  
 $query = "exec wwwGetWbEx @wbno='{$wbno}'";
 $result=mssql_query($query);

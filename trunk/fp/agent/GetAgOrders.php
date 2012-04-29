@@ -3,10 +3,10 @@
 
     include "dbConnect.php";
 
-$ag = $_GET['newAgent'] ? $_GET['newAgent'] : $_SESSION['xAgentID'];  
+$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
  
 //$query = "exec wwwGetAgOrders @period='20111116', @agentID=54";
-$query = "exec wwwGetAgOrders @period='$_POST[newPeriod]', @agentID={$ag}";
+$query = "exec wwwGetAgOrders @period='$_REQUEST[newPeriod]', @agentID={$ag}";
 //$query = "exec wwwGetAgOrders @period='$_POST[newPeriod]', @agentID={$ag}";
 $result=mssql_query($query);
 
