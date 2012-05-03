@@ -17,9 +17,10 @@ $res_arr[] = array('ROrdNum'=>$row["ROrdNum"], 'DateIn'=>$row["DateIn"],'ORGCity
 'CName'=>iconv("windows-1251", "UTF-8", $row["CName"]), 'DESTCity'=>iconv("windows-1251", "UTF-8", $row["DESTCity"]), 'DName'=>iconv("windows-1251", "UTF-8", $row["DName"]),
  'Packs'=>$row["Packs"], 'Wt'=>$row["Wt"], 'VolWt'=>$row["VolWt"], 'status'=>iconv("windows-1251", "UTF-8", $row["status"]),'wb_no'=>$row["Wb_no"] );
 
-
 }
-
-
+if(sizeof($res_arr)==0){
+echo json_encode(array('success'=>true, 'msg'=>iconv("windows-1251", "UTF-8", "ok")));
+}else{
 echo json_encode($res_arr);
+}
 ?>
