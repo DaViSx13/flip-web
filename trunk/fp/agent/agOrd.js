@@ -595,6 +595,7 @@ var pg = Ext.create('Ext.panel.Panel', {
                              xtype: 'datefield',
                              name: 'courdate',
                              fieldLabel: 'Дата',
+							 startDay:1,
                              x: 10,
                              y: 10,
                              width: 320,
