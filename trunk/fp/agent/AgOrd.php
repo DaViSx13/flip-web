@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="http://web.flippost.com/extjs/resources/css/ext-all.css"/>
     <script type="text/javascript" src="http://web.flippost.com/extjs/ext-all-debug.js"></script>
 	<script type="text/javascript" src="Spotlight.js"></script>
-	<script type="text/javascript" src="../../extjs/locale/ext-lang-ru.js"></script>
+	<!--script type="text/javascript" src="../../extjs/locale/ext-lang-ru.js"></script-->
+	<script type="text/javascript" src="ext-lang-ru.js"></script>
     <script type="text/javascript" src="agOrd.js"></script>
 	<link rel="stylesheet" type="text/css" href="example.css" />
 	<style type="text/css">
