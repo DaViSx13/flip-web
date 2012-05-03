@@ -300,6 +300,12 @@ var pg = Ext.create('Ext.panel.Panel', {
 				handler: function() {
                     
 					var form = this.up('form').getForm();
+					var org = Ext.getCmp('idorg');
+					var dest = Ext.getCmp('iddest');
+					if (org.value == null || dest.value == null){
+					Ext.Msg.alert('Ошибка ввода города!', 'Неверно введен город Отправителя или Получателя! Выберите город из выпадающего списка.');
+					
+					} else {
 					
 					if (form.isValid()) { // make sure the form contains valid data before submitting
 					
@@ -322,7 +328,7 @@ var pg = Ext.create('Ext.panel.Panel', {
                 } else { // display error alert if the data is invalid
                     Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
                 }
-				
+				}
             }
 					
 					//this.up('form').getForm().submit({
