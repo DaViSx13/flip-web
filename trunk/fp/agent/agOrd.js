@@ -599,7 +599,7 @@ var pg = Ext.create('Ext.panel.Panel', {
                              x: 10,
                              y: 10,
                              width: 320,
-                             format: 'd.m.Y',
+                             format: 'd.m.Y'
                             // altFormats: 'Y m d',
                         },
                         {
