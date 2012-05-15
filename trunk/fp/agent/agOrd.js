@@ -429,7 +429,8 @@ var pg = Ext.create('Ext.panel.Panel', {
 							allowBlank:false,
 							triggerAction : 'query',
 							selectOnFocus:true,	
-							hideTrigger:true	
+							hideTrigger:true,
+                            minChars: 2	
                         },
 						{
 						xtype: 'textfield',
@@ -517,7 +518,8 @@ var pg = Ext.create('Ext.panel.Panel', {
                             store: ds2,
                             valueField: 'code',
 							hideTrigger:true,
-							allowBlank:false
+							allowBlank:false,
+                            minChars: 2
                         },
 						{
 						xtype: 'textfield',
