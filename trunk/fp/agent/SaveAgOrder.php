@@ -1,4 +1,5 @@
 <?php
+try {
 include "dbConnect.php";
 require_once "secureCheck.php";
 $CName=iconv("UTF-8", "windows-1251",$_POST[cname]);
@@ -51,16 +52,21 @@ $query = "exec wwwSaveAgOrders
 @CourTimeT='$courtimet',
 @Payr=$ag,
 @UserIn=$UserIn,
-@RordNum=$Rordnum"; 
-  
+@RordNum=$Rordnum";
+ 
+error_reporting(0);  
 mssql_query($query);
+
 //echo"1";  
 if (mssql_get_last_message() == "Operation completed successfully") {
 //echo "2";
 print_r(json_encode(array('success'=>true, 'msg'=>iconv("windows-1251", "UTF-8", "Заказ сохранен"))));			//"{ "success": true, "msg": "User added successfully" }";
 } else {
-     print_r(json_encode(array('success'=>false, 'msg'=>iconv("windows-1251", "UTF-8", "Ашипка!"))));
+     print_r(json_encode(array('success'=>false, 'msg'=> iconv("windows-1251", "UTF-8", "Ошибка БД!"))));
 }   
    //$result= mssql_query($query);
+}catch (Exception $e) {
+    print_r(json_encode(array('success'=>false, 'msg'=>iconv("windows-1251", "UTF-8", "Ошибка Сервера"))));
+    }
 
 ?>
