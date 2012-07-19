@@ -32,7 +32,7 @@ Ext.onReady(function() {
         }*/
     });
 	
-	Ext.define("Post", {
+	Ext.define('Post', {
         extend: 'Ext.data.Model',
         proxy: {
             type: 'ajax',
@@ -270,6 +270,8 @@ var pg = Ext.create('Ext.panel.Panel', {
         if (typeof id == 'string') {
 			pg.setVisible(false);
 			b.setVisible(false);
+			butsee.setVisible(false);
+			buted.setVisible(false);
 		    p1.setVisible(true);
             spot.show(id);
 			
@@ -279,6 +281,8 @@ var pg = Ext.create('Ext.panel.Panel', {
 			p1.setVisible(false);
 			pg.setVisible(true);
 			b.setVisible(true);
+			butsee.setVisible(true);
+			buted.setVisible(true);
        }
 
        // p1.toggle(id == p1.id);
@@ -287,6 +291,26 @@ var pg = Ext.create('Ext.panel.Panel', {
 		
     };
 
+   var EnableDisable = function(DisableOn) {
+       var ButPan = Ext.getCmp('butsave'); 
+		if ( DisableOn == true) {
+		  ButPan.setVisible(false);      
+		  //console.log(ButPan.isVisible()); 
+
+			
+        } else  {
+			
+           ButPan.setVisible(true);
+       }
+
+      		
+    };
+  
+  
+  
+  
+  
+  
   
  
  
@@ -296,16 +320,67 @@ var pg = Ext.create('Ext.panel.Panel', {
 			renderTo: 'start-ct',
             buttons: [{
                 text: 'Сохранить',
-                //disabled: true,
+                id:'butsave',
 				handler: function() {
                     
-					var form = this.up('form').getForm();
+					
 					var org = Ext.getCmp('idorg');
 					var dest = Ext.getCmp('iddest');
-					if (org.value == null || dest.value == null){
-					Ext.Msg.alert('Ошибка ввода города!', 'Неверно введен город Отправителя или Получателя! Выберите город из выпадающего списка.');
+					var form = this.up('form').getForm();
 					
-					} else {
+					//console.log(org.value);	
+					if (org.value == null){
+					
+					//var ModelPost = Ext.ModelManager.getModel('Post');
+					//Ext.Msg.alert(org.getValue()+' '+dest.getValue());
+					var jsonArrayOrg = ds.data.items;
+					//console.log(jsonArrayOrg.length);	
+					if (jsonArrayOrg.length == 0)
+					{
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+					return;
+					};
+					//console.log(org.getValue());
+					
+					for (var i = 0; i < jsonArrayOrg.length; i++) 
+						{
+						if (jsonArrayOrg[i].get('fname')== Ext.util.Format.trim(org.getValue()))
+							{
+					
+							org.setValue(jsonArrayOrg[i].data.code);
+									
+							//console.log(org.getValue()+' - '+org.value);
+							break;
+							};
+										
+						};
+						console.log(org.value);	
+					if (org.value == null)
+						{
+						Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+						return;
+						};
+						
+					};
+					//Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+					//console.log('1');
+					/*
+					if (dest.value == null){
+					var jsonArrayDest = ds2.data.items;
+					for (var i = 0; i < jsonArrayDest.length; i++) {
+					
+					if (jsonArrayDest[i].get('fname')== Ext.util.Format.trim(dest.getValue())){
+					
+					dest.setValue(jsonArrayOrg[i].data.code);
+					
+					};
+					
+					};
+																				
+					};*/
+					//Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+					//console.log('2');
+					
 					
 					if (form.isValid()) { // make sure the form contains valid data before submitting
 					
@@ -328,7 +403,7 @@ var pg = Ext.create('Ext.panel.Panel', {
                 } else { // display error alert if the data is invalid
                     Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
                 }
-				}
+				//}
             }
 					
 					//this.up('form').getForm().submit({
@@ -343,7 +418,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 			handler: function() {
 			this.up('form').getForm().reset();
 			updateSpot(false);
-			MyJsonStore.load();
+			//MyJsonStore.load();
 			}
 			}
 			
@@ -409,6 +484,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 			items: [
                 {
                     xtype: 'fieldset',
+					id:'fs1',
                     height: 380,
                     width: 360,
                     title: 'Отправитель',
@@ -430,7 +506,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 							triggerAction : 'query',
 							selectOnFocus:true,	
 							hideTrigger:true,
-                            minChars: 2	
+							minChars: 2	
                         },
 						{
 						xtype: 'textfield',
@@ -710,11 +786,39 @@ var pg = Ext.create('Ext.panel.Panel', {
 					url:'EditAgOrders.php?id='+sm.get('ROrdNum')
                     //waitMsg: 'Loading...'
                 });*/
-				
+			EnableDisable(false);	
 			updateSpot('panel1');
 				
         }
     });
+	
+
+var butsee = Ext.create('Ext.button.Button', {
+        text: 'Посмотреть заказ',
+        renderTo: 'start-ct',
+        handler: function() {
+		var sm = pg.child('gridpanel').getSelectionModel();//.getSelection()[0];
+			
+			
+			if (sm.getCount()>0){
+			
+			p1.getForm().load({
+                   	method :'GET',
+					url:'EditAgOrders.php?id='+sm.getSelection()[0].get('ROrdNum')
+					                    //waitMsg: 'Loading...'
+                });
+			updateSpot('panel1');
+            EnableDisable(true);
+            
+				}else{
+					Ext.Msg.alert('Внимание!', 'Выберите заказ для редактирования');
+					}
+				
+			
+				
+        }
+    });
+		
 	
 var buted = Ext.create('Ext.button.Button', {
         text: 'Редактировать заказ',
@@ -732,6 +836,7 @@ var buted = Ext.create('Ext.button.Button', {
 					                    //waitMsg: 'Loading...'
                 });
 			updateSpot('panel1');
+			EnableDisable(false);
             }else{
                 
                Ext.Msg.alert('Запрещено!', 'Редактировать можно только заявленные заказы'); 
