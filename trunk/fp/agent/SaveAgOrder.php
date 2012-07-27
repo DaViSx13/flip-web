@@ -4,7 +4,7 @@ include "dbConnect.php";
 require_once "secureCheck.php";
 $CName=iconv("UTF-8", "windows-1251",stripslashes($_POST[cname]));
 $ag=$_SESSION['xAgentID'];
-$DName=iconv("UTF-8", "windows-1251",$_POST[dname]);
+$DName=iconv("UTF-8", "windows-1251",stripslashes($_POST[dname]));
 $Amt=$_POST[amt] ? $_POST[amt] : 0;
 $CurId=$_POST[curid] ? $_POST[curid] : 0;
 $VolWt=$_POST[volwt] ? $_POST[volwt] : 0;
