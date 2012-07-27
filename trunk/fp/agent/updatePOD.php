@@ -3,6 +3,7 @@ include_once 'secureCheck.php';
 include_once 'dbConnect.php';
 //header("Content-type: text/plain; charset=utf-8");
 //setlocale(LC_ALL,'rus','ru', 'RU_ru', 'ru-RU', 'ru_RU.CP1251', 'rus_RUS.CP1251', 'Russian_Russia.1251');
+header("Content-type: text/plain; charset=windows-1251");
 
 $rcpn = iconv("UTF-8", "windows-1251", $_POST['rcpn']);   
 //echo('rcpn=='.$_POST['rcpn'].'=='); 
