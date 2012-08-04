@@ -1,13 +1,13 @@
 Ext.define('FpWeb.view.Viewport', {
     extend: 'Ext.container.Viewport',//'Ext.Window.Window',
-    //closable:false,
+    alias: 'widget.mainviewport',
     layout: 'fit',
     autoScroll:true,
-    //title:'Новый web',
+    title:'Новый web',
    // html:'sfgssgsgsg',
   requires: [
-        'FpWeb.view.loginform.ShowForm',
-        'FpWeb.view.mainform.MainPanel'
+        'FpWeb.view.loginform.ShowForm'//,
+        //'FpWeb.view.mainform.MainPanel'
         ],
         
     initComponent: function() {

@@ -1,7 +1,7 @@
 Ext.define('FpWeb.view.loginform.ShowForm', {
 	extend: 'Ext.panel.Panel',
 	alias: 'widget.showform',
-
+   
     requires: [
         'FpWeb.view.loginform.UserName'
         ,'FpWeb.view.loginform.Pass'

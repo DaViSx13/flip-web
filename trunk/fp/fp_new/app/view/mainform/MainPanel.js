@@ -3,12 +3,17 @@ Ext.define('FpWeb.view.mainform.MainPanel', {
 	alias: 'widget.mainpanel',
     title:'ФлипПостВеб',
     layout: 'fit',
+    autoShow: true,
+    //height: 120,
+    //width: 280,
    	initComponent: function() {
 		Ext.apply(this,  {
 		  
+         
           items:[
           {
             xtype: 'form',
+             
             title: 'Основная'
           }
           ]

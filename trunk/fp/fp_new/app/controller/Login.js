@@ -13,12 +13,14 @@ Ext.define('FpWeb.controller.Login', {
         });
     },
 
-    logonUser: function() {
-        
-        var view = Ext.create('FpWeb.view.mainform.MainPanel').setVisible(true);//Ext.widget('mainpanel');
+    logonUser: function(button,view) {
+     var NewForm = Ext.create('FpWeb.view.mainform.MainPanel');
+     var MyViewport = button.up('viewport');
      
-        view.down('form').show();
-         console.log(view.down('form').title);
+      MyViewport.removeAll(true);
+      MyViewport.add(NewForm);
+    
+        // console.log(test.title);
     },
 });
 
