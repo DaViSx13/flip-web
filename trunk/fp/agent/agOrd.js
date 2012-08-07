@@ -13,7 +13,7 @@ Ext.onReady(function() {
         extend: 'Ext.form.Panel',
 
         title: 'Новый заказ',
-        frame: true,
+        frame: true
         //width: 300,
        // height: 200,
         //html: 'Здесь куча полей',
@@ -38,7 +38,7 @@ Ext.onReady(function() {
             type: 'ajax',
             url : 'getCityList.php',
             reader: {
-                type: 'json',
+                type: 'json'
                 //root: 'topics',
                 //totalProperty: 'totalCount'
             }
@@ -439,7 +439,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 			valueField: 'code',
             anchor: '100%'}]*/
 			reader: Ext.create('Ext.data.reader.Json',{
-						model: 'Order',
+						model: 'Order'
 						
 			}),
 			
