@@ -156,8 +156,9 @@ var pg = Ext.create('Ext.panel.Panel', {
 							padding: 0
 							},
                     layout: {
-                        type: 'hbox'
-						
+                        type: 'hbox',
+						pack: 'center',
+						align: 'middle'
 						
                     },
 				
@@ -326,11 +327,11 @@ var pg = Ext.create('Ext.panel.Panel', {
 			
 			
     ds = Ext.create('Ext.data.Store', {
-       // pageSize: 10,
+       
         model: 'Post'
     });
 	ds2 = Ext.create('Ext.data.Store', {
-       // pageSize: 10,
+       
         model: 'Post'
     });
 	
@@ -477,22 +478,17 @@ var pg = Ext.create('Ext.panel.Panel', {
                 } else { // display error alert if the data is invalid
                     Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
                 }
-				//}
+				
             }
 					
-					//this.up('form').getForm().submit({
-                    
-                    //submitEmptyText: false
-                    //waitMsg: 'Saving Data...'
-					
-                //});
+				
 				
             },{
 			text: 'Отменить',
 			handler: function() {
 			this.up('form').getForm().reset();
 			updateSpot(false);
-			//MyJsonStore.load();
+			
 			}
 			}
 			
@@ -503,15 +499,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 				type: 'absolute'
 					},
 			bodyPadding: 10,
-			/* items: [{
-            xtype: 'combobox',
-            store: ds,
-            displayField: 'fname',
-            typeAhead: false,
-            hideLabel: true,
-            queryMode: 'remote',
-			valueField: 'code',
-            anchor: '100%'}]*/
+			
 			reader: Ext.create('Ext.data.reader.Json',{
 						model: 'Order'
 						
@@ -928,15 +916,6 @@ var buted = Ext.create('Ext.button.Button', {
         }
     });	
 	
-	/*var vMonth = Ext.getCmp('idMonth');
-	var vYear = Ext.getCmp('idYear');
-	//console.log(vMonth.getValue()+vYear.getValue());
-	MyJsonStore.load({
-		params: {
-				newPeriod: vYear.getValue()+vMonth.getValue()
-				},
-		scope: this
-	});*/
-	
+		
 	p1.setVisible( false);
 });
