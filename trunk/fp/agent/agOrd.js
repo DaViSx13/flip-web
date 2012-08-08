@@ -8,28 +8,13 @@ Ext.onReady(function() {
         duration: 300
     });
 
-    //Create a DemoPanel which is the base for each panel in the example
+    //Create a DemoPanel 
     Ext.define('DemoPanel', {
         extend: 'Ext.form.Panel',
 
         title: 'Новый заказ',
         frame: true
-        //width: 300,
-       // height: 200,
-        //html: 'Здесь куча полей',
-       // bodyStyle: 'padding:5px;',
-
-        /**
-         * Custom method which toggles a Ext.Button for the current panel on/off depending on the only argument
-         */
-        /*toggle: function(on) {
-            var btns = this.dockedItems.last(),
-                btn = btns.items.first();
-
-            if (btn) {
-                btn.setDisabled(!on);
-            }
-        }*/
+    
     });
 	
 	Ext.define('Post', {
@@ -39,8 +24,7 @@ Ext.onReady(function() {
             url : 'getCityList.php',
             reader: {
                 type: 'json'
-                //root: 'topics',
-                //totalProperty: 'totalCount'
+                
             }
         },
 
@@ -88,7 +72,7 @@ Ext.onReady(function() {
 	
 	MyJsonStore = Ext.create('Ext.data.Store', {
        
-	   autoLoad: true,
+	   //autoLoad: true,
             storeId: 'MyJsonStore',
             proxy: {
                 type: 'ajax',
@@ -137,28 +121,118 @@ Ext.onReady(function() {
     });
 	
 	
+dsMonth = Ext.create('Ext.data.Store', {
+                        fields: ['Name', 'lowName'],
+                        data : [
+								{ Name: 'Январь',   lowName: '01' },
+								{ Name: 'Февраль', 	lowName: '02' },
+								{ Name: 'Март', 	lowName: '03' },
+								{ Name: 'Апрель',   lowName: '04' },
+								{ Name: 'Май', 		lowName: '05' },
+								{ Name: 'Июнь',    	lowName: '06' },
+								{ Name: 'Июль', 	lowName: '07' },
+								{ Name: 'Август',   lowName: '08' },
+								{ Name: 'Сентябрь', lowName: '09' },
+								{ Name: 'Октябрь', 	lowName: '10' },
+								{ Name: 'Ноябрь',   lowName: '11' },
+								{ Name: 'Декабрь', 	lowName: '12' }
+								]
+                    });
 	
-	
-var pg = Ext.create('Ext.panel.Panel', {
-    renderTo: 'start-ct',//Ext.getBody(),
+var startD = new Date();
+var nMonth = startD.getMonth()+1;	
 
-    height: 500,
+var pg = Ext.create('Ext.panel.Panel', {
+    renderTo: 'start-ct',
+	border: 0,
+    height: 520,
     width: 1002,
-    layout: {
-     //   align: 'stretchmax',
-     //   type: 'vbox'
-    },
-	
+  	
 	items: [
+				{
+				xtype: 'fieldset',
+                    style: {
+							border: 0,
+							padding: 0
+							},
+                    layout: {
+                        type: 'hbox'
+						
+						
+                    },
+				
+				items: [					
+				{
+				xtype: 'numberfield',
+				labelAlign: 'right',
+				name: 'aYear',
+				id:'idYear',
+				fieldLabel: 'Год',
+				value: 2012,
+				minValue: 2011,
+				width: 150,
+				editable: false,
+				labelWidth: 50,
+				maxValue: 2020,
+				listeners: {
+							change: function(el, newValue){ 
+									var vMonth = Ext.getCmp('idMonth');
+										
+							MyJsonStore.load({
+												params: {
+														newPeriod: newValue+vMonth.getValue()
+														},
+												scope: this
+											});
+																																	
+									}
+									
+							}
+				},
+				{
+				xtype: 'combobox',
+				editable: false,
+				width: 200,
+				labelWidth: 50,
+                name: 'aMonth',
+                fieldLabel: 'Месяц',
+                labelAlign: 'right',
+                displayField: 'Name',
+                store: dsMonth,
+                valueField: 'lowName',
+				typeAhead: true,
+				allowBlank:false,
+				id:'idMonth',
+				value: nMonth,
+				selectOnFocus:true,
+				listeners: {
+							change: function(el, newValue){ 
+									//var vMonth = Ext.getCmp('idMonth');
+									var vYear = Ext.getCmp('idYear');
+	
+							MyJsonStore.load({
+												params: {
+														newPeriod: vYear.getValue()+newValue//vMonth.getValue()
+														},
+												scope: this
+											});
+																
+									}
+									
+							}
+				
+				}
+				]
+				},
                 {
                     xtype: 'gridpanel',
-					//name:'grid',
+					
                     autoShow: true,
-                    height: 500,
+                    height: 483,
                     width: 1000,
                     title: 'Список агентских заказов',
                     store: MyJsonStore,
-                    //flex: 1,
+                    
                     viewConfig: {
 
                     },
@@ -802,6 +876,7 @@ var butsee = Ext.create('Ext.button.Button', {
 			
 			if (sm.getCount()>0){
 			
+			if(sm.getSelection()[0].get('ROrdNum')!=''){
 			p1.getForm().load({
                    	method :'GET',
 					url:'EditAgOrders.php?id='+sm.getSelection()[0].get('ROrdNum')
@@ -809,9 +884,11 @@ var butsee = Ext.create('Ext.button.Button', {
                 });
 			updateSpot('panel1');
             EnableDisable(true);
-            
+            }else{
+					Ext.Msg.alert('Внимание!', 'Заказ не выбран');
+					}
 				}else{
-					Ext.Msg.alert('Внимание!', 'Выберите заказ для редактирования');
+					Ext.Msg.alert('Внимание!', 'Выберите заказ для просмотра');
 					}
 				
 			
@@ -850,6 +927,16 @@ var buted = Ext.create('Ext.button.Button', {
 				
         }
     });	
+	
+	/*var vMonth = Ext.getCmp('idMonth');
+	var vYear = Ext.getCmp('idYear');
+	//console.log(vMonth.getValue()+vYear.getValue());
+	MyJsonStore.load({
+		params: {
+				newPeriod: vYear.getValue()+vMonth.getValue()
+				},
+		scope: this
+	});*/
 	
 	p1.setVisible( false);
 });
