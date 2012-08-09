@@ -140,7 +140,19 @@ dsMonth = Ext.create('Ext.data.Store', {
                     });
 	
 var startD = new Date();
-var nMonth = startD.getMonth()+1;	
+var nMonth = startD.getMonth()+1;
+
+var loadOrders = function(m, y)
+{
+if (m == '') {var vMonth = Ext.getCmp('idMonth').getValue();} else {var vMonth = m;}
+if (y== '')  {var vYear = Ext.getCmp('idYear').getValue();} else {var vYear = y;}
+MyJsonStore.load({
+				params: {
+						newPeriod: vYear+vMonth//vYear.getValue()+vMonth.getValue()
+						},
+				scope: this
+				});
+};		
 
 var pg = Ext.create('Ext.panel.Panel', {
     renderTo: 'start-ct',
@@ -177,15 +189,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 				maxValue: 2020,
 				listeners: {
 							change: function(el, newValue){ 
-									var vMonth = Ext.getCmp('idMonth');
-										
-							MyJsonStore.load({
-												params: {
-														newPeriod: newValue+vMonth.getValue()
-														},
-												scope: this
-											});
-																																	
+									loadOrders('', newValue);	
 									}
 									
 							}
@@ -208,16 +212,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 				selectOnFocus:true,
 				listeners: {
 							change: function(el, newValue){ 
-									//var vMonth = Ext.getCmp('idMonth');
-									var vYear = Ext.getCmp('idYear');
-	
-							MyJsonStore.load({
-												params: {
-														newPeriod: vYear.getValue()+newValue//vMonth.getValue()
-														},
-												scope: this
-											});
-																
+									loadOrders(newValue, '');	
 									}
 									
 							}
@@ -336,6 +331,9 @@ var pg = Ext.create('Ext.panel.Panel', {
     });
 	
 
+	
+	
+	
     var p1/*, p2, p3*/;
 	
     /**
@@ -467,7 +465,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 						   
 						  form.reset();
 						  updateSpot(false);
-						  MyJsonStore.load();
+						  loadOrders('', '');
                         },
                         failure: function(form, action) {
                             Ext.Msg.alert('Плоха все!', action.result.msg);
@@ -780,6 +778,7 @@ var pg = Ext.create('Ext.panel.Panel', {
 							valueField: 'lowName',
 							allowBlank:false,
 							forceSelection: true,
+							editable: false,
 							typeAhead: true,
                             fieldLabel: 'Тип груза',
 							store: Ext.create('Ext.data.Store', {
