@@ -16,7 +16,7 @@
         
         {
             region: 'center',
-			xtype: 'mnfgrid',
+			xtype: 'mnfgrid'
 			
         },
 		{

@@ -3,10 +3,10 @@
 });
 Ext.application({
     name: 'FpMnf',
-    appFolder: "app",
-    autoCreateViewport: true,
-    /*controllers: [
-        'Login'
-    ]*/
-  //  launch: function() {         }
+    //appFolder: "app",
+	controllers: ['MnfCont'],
+    autoCreateViewport: true
+	
+  // controllers: ['MnfCont']
+    //launch: function() {  console.log('app');       }
 });

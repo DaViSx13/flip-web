@@ -13,21 +13,26 @@
         items: [
 		  {
 			text: 'Исходящие',
-			//enableToggle: true,
+			
+			enableToggle: true,
 			//toggleHandler: onItemToggle,
-			pressed: true
-			},
-			'-',
-			{
-			text: 'Входящие'
-			//enableToggle: true,
-			//toggleHandler: onItemToggle,
+			action: 'out'
 			//pressed: true
 			},
 			'-',
 			{
-			text: 'Все'
+			text: 'Входящие',
+			action: 'in',
+			enableToggle: true
+			//toggleHandler: onItemToggle,
+			//pressed: true
 			
+			},
+			'-',
+			{
+			text: 'Все',
+			enableToggle: true,
+			action: 'all'
 			},
 			'-',
 			'->',

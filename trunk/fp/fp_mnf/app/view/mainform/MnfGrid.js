@@ -3,52 +3,62 @@
     alias: 'widget.mnfgrid',
 	requires: [
        		'FpMnf.view.mainform.MnfTool'
+			
             ],
  
  initComponent: function() {
         
         Ext.apply(this,  {
-		  
+		  store: 'MnfSt',
           columns: [
 			{
-                text: 'Номер',
-                
+                text: 'Номер 1',
+                dataIndex: 'mnfregno',
                 width: 200
             },
 			{
+                text: 'Номер 2',
+                dataIndex: 'mnfrefno',
+                width: 200
+            },
+			/*{
                 text: 'Перевозчик',
                 
                 flex: 1
-            },
+            },*/
 			{
                 text: 'Отправлено',
-               // dataIndex: 'title',
+                dataIndex: 'shpd',
                 width: 200
                 
             }, {
                 text: 'РДП',
-                //dataIndex: 'author',
-                //hidden: true,
+                dataIndex: 'dtarr',
                 width: 200
             }, {
                 text: 'Доставлено',
-                //dataIndex: 'pubDate',
+                dataIndex: 'darr',
                 
                 width: 200
             },{
                 text: 'ORG',
+				dataIndex: 'orgtrk',
                 width: 50
             },{
                 text: 'DEST',
+				dataIndex: 'desttrk',
                 width: 50
             },{
                 text: 'Мест',
+				dataIndex: 'bpcs',
                 width: 50
             },{
                 text: 'Вес',
+				dataIndex: 'bwt',
                 width: 50
             },{
                 text: 'V вес',
+				dataIndex: 'bvwt',
                 width: 50
             }
 			],

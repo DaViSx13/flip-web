@@ -3,14 +3,14 @@
     alias: 'widget.combomonth',
 	
 	hideLabel: true,
-    //store: store,
-    //displayField: 'state',
+    store: 'aMonths',
+    displayField: 'Name',
     //typeAhead: true,
-    //queryMode: 'local',
-    //triggerAction: 'all',
-    emptyText:'Выберите месяц...',
+	valueField: 'lowName',
+    value: Ext.Date.format(new Date(), 'm'),
     selectOnFocus:true,
-	editable: false,
+    queryMode: 'local',
+    editable: false,
 	allowBlank:false,
     width:135
 

@@ -1,16 +1,17 @@
 ﻿Ext.define('FpMnf.view.mainform.NumYear', {
     extend: 'Ext.form.NumberField',
     alias: 'widget.numyear',
-
-	//labelAlign: 'right',
-	//name: 'aYear',
-	//id:'idYear',
-	//fieldLabel: 'Год',
-	value: 2012,
+	
+	initComponent: function() {
+		Ext.apply(this,  {
+	value: Ext.Date.format(new Date(), 'Y'),
 	minValue: 2011,
 	width: 80,
 	editable: false,
-	//labelWidth: 50,
 	maxValue: 2020
 	
+	});
+
+        this.callParent(arguments);
+    } 
 	});

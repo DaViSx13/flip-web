@@ -8,42 +8,17 @@
             'FpMnf.view.mainform.MainPanel'
         ],
        
-    /*initComponent: function() {
-        this.items = {
-         layout: {
-                 type: 'fit',
-                 align: 'stretch'
-                },
-          border:false,
+    initComponent: function() {
+        var me = this;
+        
+        Ext.apply(me, {
             items: [
                 {
-               
-               
-		        xtype: 'mainpanel',
-                minHeight:800,
-                minWidth:1024,
-                layout: {
-                 type: 'fit',
-                 align: 'stretch'
-                        }
+                    xtype: 'mainpanel'
                 }
-             
-                
-            ]  
-         
-          
-        };
-
-        this.callParent();
-    }*/      
-      
-//layout: 'border',
-
-    items: [{
-		//split: true, 
-        //region: 'center',
-        xtype: 'mainpanel'
-    }]
-	  
+            ]
+        });     
+    me.callParent(arguments);  
+	}
         
   });
