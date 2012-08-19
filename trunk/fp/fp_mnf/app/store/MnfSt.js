@@ -5,7 +5,7 @@
     model: 'FpMnf.model.MnfMod',
 	proxy: {
 		type: 'ajax',
-		url : 'fpwebsrv.php',
+		url : 'srv/fpwebsrv.php',
 		reader: {
 			type: 'json'
             }

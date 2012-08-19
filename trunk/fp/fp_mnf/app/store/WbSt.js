@@ -4,7 +4,7 @@
     model: 'FpMnf.model.WbMod',
 	proxy: {
 		type: 'ajax',
-		url : 'fpwebsrv.php',
+		url : 'srv/fpwebsrv.php',
 		reader: {
 			type: 'json'
             }/*,
