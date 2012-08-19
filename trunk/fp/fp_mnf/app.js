@@ -1,12 +1,12 @@
 ﻿Ext.Loader.setConfig({
- enabled: true   
+    enabled: true
 });
 Ext.application({
     name: 'FpMnf',
     //appFolder: "app",
-	controllers: ['MnfCont'],
+    controllers: ['MnfCont'],
     autoCreateViewport: true
-	
-  // controllers: ['MnfCont']
+
+    // controllers: ['MnfCont']
     //launch: function() {  console.log('app');       }
 });
