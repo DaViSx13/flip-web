@@ -6,9 +6,11 @@
         {name: 'dtd'},
 		{name: 'org'},
         {name: 'dest'},
-		{name: 'shpcs'},
-        {name: 'shwt'},
-		{name: 'shvol_wt'},
-        {name: 'c_adr'}		
+		{name: 'shpcs', type: 'int'},
+        {name: 'shwt', type: 'float'},
+		{name: 'shvol_wt', type: 'float'},
+        {name: 'c_adr'},
+		{name: 's_co'},
+        {name: 'r_co'}
     ]
 });

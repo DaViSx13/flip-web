@@ -11,8 +11,8 @@
 		{name: 'bvwt'},
         {name: 'shpd'},
 		{name: 'dtarr'},
-		{name: 'darr'}//,
-        //{name: 'orgagentid'},
+		{name: 'darr'},
+        {name: 'descr'}
 		//{name: 'destagentid'}
     ]
 });

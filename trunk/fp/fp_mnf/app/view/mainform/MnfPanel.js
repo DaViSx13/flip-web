@@ -8,19 +8,23 @@
             ],
  layout: 'border',
  closable: false,
+
  initComponent: function() {
         
         Ext.apply(this,  {
-		  
+		 
           items: [
         
         {
+			flex: 2,
+			minHeight:250,
             region: 'center',
 			xtype: 'mnfgrid'
 			
         },
 		{
-			height: 300,
+			flex: 1,
+			//maxHeight:300,
 			split: true,
 			region: 'south',
             xtype: 'wbgrid'

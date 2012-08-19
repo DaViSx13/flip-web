@@ -2,6 +2,9 @@
     extend: 'Ext.grid.Panel',
     alias: 'widget.wbgrid',
 	autoScroll: true,
+	requires: [
+       		'FpMnf.view.mainform.TotalWb'
+            ],
  
  initComponent: function() {
         
@@ -24,7 +27,7 @@
                 width: 50
             }, {
                 text: 'Отправитель',
-                
+                dataIndex: 's_co',
                 flex: 1
             }, {
                 text: 'DEST',
@@ -32,7 +35,7 @@
                 width: 50
             }, {
                 text: 'Получатель',
-                
+                dataIndex: 'r_co',
                 flex: 1
             },{
                 text: 'Мест',
@@ -46,6 +49,12 @@
                 text: 'V вес',
 				dataIndex: 'shvol_wt',
                 width: 50
+            }
+			],
+			dockedItems:[
+			{
+                xtype: 'totalwb',
+                dock: 'bottom'
             }
 			]
     

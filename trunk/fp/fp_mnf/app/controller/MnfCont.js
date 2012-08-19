@@ -3,7 +3,10 @@
     views: ['mainform.MnfGrid', 'mainform.MnfPanel','mainform.NumYear', 'mainform.ComboMonth'],
 	models: ['MnfMod', 'WbMod'],
     stores: ['MnfSt', 'aMonths', 'WbSt'],
-
+	refs: [
+        {ref: 'TotalTool', selector: 'totaltool'},
+		{ref: 'TotalWb', selector: 'totalwb'}
+		],
 
     init: function() {
 		this.control({   
@@ -30,11 +33,18 @@
             }
 		});
 		
-		/* this.getMnfStStore().on({
+		 this.getMnfStStore().on({
             scope: this,
-            beforeload : this.loadMnf
-        });*/
+            load : this.loadMnfStore
+        });
+		this.getWbStStore().on({
+            scope: this,
+            load : this.loadWbStore
+        });
     },
+	
+	
+    
 
 	loadMnfAll: function(y, m, tab){
 	
@@ -125,7 +135,38 @@
                 }
             });
 		
+	},
+	loadMnfStore: function(st, rec, suc) {
+	var tt=this.getTotalTool();
+	tt.down('label').setText('Количество манифестов: '+st.getCount());
+	if (rec[0].data['mnfrefno']==''){
+	tt.down('label').setText('Количество манифестов: 0');
+	//console.log(rec[0].data['mnfrefno']);
+	//console.log(st.getCount());
+		}
+	},
+	loadWbStore: function(st, rec, suc) {
+	var tt=this.getTotalWb();
+	var sum_shpcs = 0;
+	var sum_shwt = 0;
+	var sum_shvol_wt = 0;
+	for (var i = 0; i <= rec.length-1; i++) { 
+	
+	sum_shpcs+=rec[i].data['shpcs'];
+	sum_shwt+=rec[i].data['shwt'];
+	sum_shvol_wt+=rec[i].data['shvol_wt'];
 	}
-	 
+    
+	
+	tt.down('label[itemId=lab1]').setText('Количество накладных: '+st.getCount());
+	tt.down('label[itemId=lab2]').setText('Количество мест: '+sum_shpcs);
+	tt.down('label[itemId=lab3]').setText('Общий вес: '+Ext.util.Format.round(sum_shwt,2));
+	tt.down('label[itemId=lab4]').setText('Общий V вес: '+Ext.util.Format.round(sum_shvol_wt,2));
+	
+	
+	if (rec[0].data['wb_no']==''){
+	tt.down('label').setText('');
+		}
+	}
 });
 

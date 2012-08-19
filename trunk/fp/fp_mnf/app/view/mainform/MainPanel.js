@@ -8,6 +8,7 @@
             ],
 	activeItem: 0,
     margins: '5 5 5 5',
+	
    	initComponent: function() {
 		Ext.apply(this,  {
 		  

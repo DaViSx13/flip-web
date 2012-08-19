@@ -2,30 +2,29 @@
     extend: 'Ext.grid.Panel',
     alias: 'widget.mnfgrid',
 	requires: [
-       		'FpMnf.view.mainform.MnfTool'
-			
+       		'FpMnf.view.mainform.MnfTool',
+			'FpMnf.view.mainform.TotalTool'
             ],
  
  initComponent: function() {
         
         Ext.apply(this,  {
 		  store: 'MnfSt',
+		  
           columns: [
+			
 			{
-                text: 'Номер 1',
-                dataIndex: 'mnfregno',
-                width: 200
-            },
-			{
-                text: 'Номер 2',
+                text: 'Манифест',
                 dataIndex: 'mnfrefno',
+				
                 width: 200
             },
-			/*{
+			{
                 text: 'Перевозчик',
-                
+                dataIndex: 'descr',
+				
                 flex: 1
-            },*/
+            },
 			{
                 text: 'Отправлено',
                 dataIndex: 'shpd',
@@ -62,10 +61,16 @@
                 width: 50
             }
 			],
-			dockedItems:[{
+			dockedItems:[
+			{
                 xtype: 'mnftool',
                 dock: 'top'
-            }]
+            },
+			{
+				xtype: 'totaltool',
+                dock: 'bottom'
+			}
+			]
     
     });
 
