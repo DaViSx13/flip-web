@@ -5,11 +5,11 @@
 	initComponent : function () {
 		Ext.apply(this, {
 			items : [{
-					text : 'Исходящие',
+					text : 'Входящие',
 					enableToggle : true,
 					action : 'out'
 				}, '-', {
-					text : 'Входящие',
+					text : 'Исходящие',
 					action : 'in',
 					enableToggle : true
 				}, '-', {
