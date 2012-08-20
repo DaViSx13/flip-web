@@ -10,7 +10,12 @@
 			{
 			ref : 'OrdTool',
 			selector : 'ordtool'
+			},
+			{
+			ref : 'OrdTotal',
+			selector : 'ordtotal'
 			}
+			
 		],
 	init : function () {
 		this.control({
@@ -39,11 +44,11 @@
 		this.getOrderStStore().on({
 			scope : this,
 			load : this.loadOrdStore
-		});/*
-		this.getWbStStore().on({
+		});
+		this.getOrdsStStore().on({
 			scope : this,
-			load : this.loadWbStore
-		});*/
+			load : this.loadOrdersSt
+		});
 	},
 	loadOrds : function (y, m) {
 		
@@ -143,24 +148,17 @@
 		var form_ord = edit.down('ordform');
 		form_ord.loadRecord(rec[0]);
 		console.log(rec[0]);
+		
 		//if (rec[0].data['mnfrefno'] == '') {tt.down('label').setText('Количество манифестов: 0');		}
-	}/*
-	loadWbStore : function (st, rec, suc) {
-		var tt = this.getTotalWb();
-		var sum_shpcs = 0;
-		var sum_shwt = 0;
-		var sum_shvol_wt = 0;
-		for (var i = 0; i <= rec.length - 1; i++) {
-			sum_shpcs += rec[i].data['shpcs'];
-			sum_shwt += rec[i].data['shwt'];
-			sum_shvol_wt += rec[i].data['shvol_wt'];
+	},
+	loadOrdersSt : function (st, rec, suc) {
+		var tt = this.getOrdTotal();
+		
+		
+		tt.down('label').setText('Количество заказов: ' + st.getCount());
+		
+		if (rec[0].data['ROrdNum'] == '') {
+			tt.down('label').setText('Количество заказов: 0');
 		}
-		tt.down('label[itemId=lab1]').setText('Количество накладных: ' + st.getCount());
-		tt.down('label[itemId=lab2]').setText('Количество мест: ' + sum_shpcs);
-		tt.down('label[itemId=lab3]').setText('Общий вес: ' + Ext.util.Format.round(sum_shwt, 2));
-		tt.down('label[itemId=lab4]').setText('Общий V вес: ' + Ext.util.Format.round(sum_shvol_wt, 2));
-		if (rec[0].data['wb_no'] == '') {
-			tt.down('label').setText('');
-		}
-	}*/
+	}
 });
