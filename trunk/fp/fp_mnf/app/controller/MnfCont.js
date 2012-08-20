@@ -126,6 +126,7 @@
 	},
 	loadMnfStore : function (st, rec, suc) {
 		var tt = this.getTotalTool();
+		
 		tt.down('label').setText('Количество манифестов: ' + st.getCount());
 		if (rec[0].data['mnfrefno'] == '') {
 			tt.down('label').setText('Количество манифестов: 0');

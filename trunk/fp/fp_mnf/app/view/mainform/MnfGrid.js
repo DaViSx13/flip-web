@@ -7,24 +7,26 @@
 			store : 'MnfSt',
 			columns : [{
 					text : 'Манифест',
-					dataIndex : 'mnfrefno',
-					width : 200
-				}, {
-					text : 'Перевозчик',
-					dataIndex : 'descr',
-					flex : 1
+					dataIndex : 'mnfrefno'//,
+					//width : 200
 				}, {
 					text : 'Отправлено',
 					dataIndex : 'shpd',
-					width : 200
+					xtype: 'datecolumn',   
+					format:'d-m-Y',
+					width : 180
 				}, {
 					text : 'РДП',
 					dataIndex : 'dtarr',
-					width : 200
+					xtype: 'datecolumn',   
+					format:'d-m-Y H:i:s',
+					width : 180
 				}, {
 					text : 'Доставлено',
 					dataIndex : 'darr',
-					width : 200
+					xtype: 'datecolumn',   
+					format:'d-m-Y H:i:s',
+					width : 180
 				}, {
 					text : 'ORG',
 					dataIndex : 'orgtrk',
@@ -36,15 +38,25 @@
 				}, {
 					text : 'Мест',
 					dataIndex : 'bpcs',
+					xtype: 'numbercolumn', 
+					format:'0',
 					width : 50
 				}, {
 					text : 'Вес',
+					xtype: 'numbercolumn', 
+					format:'0.00',
 					dataIndex : 'bwt',
 					width : 50
 				}, {
 					text : 'V вес',
+					xtype: 'numbercolumn', 
+					format:'0.00',
 					dataIndex : 'bvwt',
 					width : 50
+				},{
+					text : 'Перевозчик',
+					dataIndex : 'descr',
+					flex : 1
 				}
 			],
 			dockedItems : [{

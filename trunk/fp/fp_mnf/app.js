@@ -4,7 +4,7 @@
 Ext.application({
     name: 'FpMnf',
     //appFolder: "app",
-    controllers: ['MnfCont', 'OrdsCont'],
+    controllers: ['MnfCont', 'OrdsCont', 'OrdFormCont'],
     autoCreateViewport: true
 
     // controllers: ['MnfCont']

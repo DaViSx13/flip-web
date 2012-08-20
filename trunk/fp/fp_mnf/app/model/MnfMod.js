@@ -9,17 +9,26 @@
 		}, {
 			name : 'desttrk'
 		}, {
-			name : 'bpcs'
+			name : 'bpcs',
+			type : 'int'
 		}, {
-			name : 'bwt'
+			name : 'bwt',
+			type : 'float'
 		}, {
-			name : 'bvwt'
+			name : 'bvwt',
+			type : 'float'
 		}, {
-			name : 'shpd'
+			name : 'shpd',
+			dateFormat: 'Y-m-d H:i:s',//"2012-07-31 00:00:00"
+			type : 'date'
 		}, {
-			name : 'dtarr'
+			name : 'dtarr',
+			dateFormat: 'Y-m-d H:i:s',
+			type : 'date'
 		}, {
-			name : 'darr'
+			name : 'darr',
+			dateFormat: 'Y-m-d H:i:s',
+			type : 'date'
 		}, {
 			name : 'descr'
 		}

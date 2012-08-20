@@ -3,7 +3,9 @@
 	fields : [{
 			name : 'wb_no'
 		}, {
-			name : 'dtd'
+			name : 'dtd',
+			type : 'date',
+			dateFormat: 'Y-m-d H:i:s'
 		}, {
 			name : 'org'
 		}, {

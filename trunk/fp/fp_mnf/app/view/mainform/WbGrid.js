@@ -13,6 +13,8 @@
 				}, {
 					text : 'РДД',
 					dataIndex : 'dtd',
+					xtype: 'datecolumn',   
+					format:'d-m-Y',
 					width : 200
 				}, {
 					text : 'ORG',
@@ -32,14 +34,20 @@
 					flex : 1
 				}, {
 					text : 'Мест',
+					xtype: 'numbercolumn', 
+					format:'0',
 					dataIndex : 'shpcs',
 					width : 50
 				}, {
 					text : 'Вес',
+					xtype: 'numbercolumn', 
+					format:'0.00',
 					dataIndex : 'shwt',
 					width : 50
 				}, {
 					text : 'V вес',
+					xtype: 'numbercolumn', 
+					format:'0.00',
 					dataIndex : 'shvol_wt',
 					width : 50
 				}

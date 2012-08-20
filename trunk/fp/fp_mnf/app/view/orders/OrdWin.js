@@ -3,45 +3,31 @@
     extend: 'Ext.window.Window',
     alias : 'widget.ordwin',
 
-    requires: ['Ext.form.Panel'],
+    requires: ['FpMnf.view.orders.OrdForm'],
 
-    title : 'Edit User',
+    title : 'Новый заказ',
     layout: 'fit',
     autoShow: true,
-    height: 120,
-    width: 280,
+    height: 620,
+    width: 770,
+	resizable: false,
 	modal: true,
 
     initComponent: function() {
         this.items = [
             {
-                xtype: 'form',
-                padding: '5 5 0 5',
-                border: false,
-                style: 'background-color: #fff;',
-
-                items: [
-                    {
-                        xtype: 'textfield',
-                        name : 'name',
-                        fieldLabel: 'Name'
-                    },
-                    {
-                        xtype: 'textfield',
-                        name : 'email',
-                        fieldLabel: 'Email'
-                    }
-                ]
+                xtype: 'ordform'
+                
             }
         ];
 
         this.buttons = [
             {
-                text: 'Save',
+                text: 'Сохранить',
                 action: 'save'
             },
             {
-                text: 'Cancel',
+                text: 'Отмена',
                 scope: this,
                 handler: this.close
             }
