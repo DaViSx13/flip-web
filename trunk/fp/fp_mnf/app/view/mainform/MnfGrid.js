@@ -13,19 +13,19 @@
 					text : 'Отправлено',
 					dataIndex : 'shpd',
 					xtype: 'datecolumn',   
-					format:'d-m-Y',
+					format:'d.m.Y',
 					width : 180
 				}, {
 					text : 'РДП',
 					dataIndex : 'dtarr',
 					xtype: 'datecolumn',   
-					format:'d-m-Y H:i:s',
+					format:'d.m.Y H:i',
 					width : 180
 				}, {
 					text : 'Доставлено',
 					dataIndex : 'darr',
 					xtype: 'datecolumn',   
-					format:'d-m-Y H:i:s',
+					format:'d.m.Y H:i',
 					width : 180
 				}, {
 					text : 'ORG',

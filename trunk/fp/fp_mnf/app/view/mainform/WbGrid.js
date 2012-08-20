@@ -14,7 +14,7 @@
 					text : 'РДД',
 					dataIndex : 'dtd',
 					xtype: 'datecolumn',   
-					format:'d-m-Y',
+					format:'d.m.Y',
 					width : 200
 				}, {
 					text : 'ORG',
