@@ -7,7 +7,9 @@
                     name: 'status'
                 },
 				{
-					name: 'DateIn'
+					name: 'datein',
+					type : 'date',
+					dateFormat: 'Y-m-d H:i:s'
 				},
                 {
                     name: 'ORGCity'
@@ -22,13 +24,16 @@
                     name: 'DName'
                 },
                 {
-                    name: 'Packs'
+                    name: 'Packs',
+					type : 'int'
                 },
                 {
-                    name: 'Wt'
+                    name: 'Wt',
+					type : 'float'
                 },
                 {
-                    name: 'VolWt'
+                    name: 'VolWt',
+					type : 'float'
                 },
                 {
                     name: 'wb_no'

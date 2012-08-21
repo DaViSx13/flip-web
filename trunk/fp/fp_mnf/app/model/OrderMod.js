@@ -1,6 +1,8 @@
 ﻿Ext.define('FpMnf.model.OrderMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
+			name : 'rordnum'
+		},{
 			name : 'org'
 		}, {
 			name : 'orgcode'

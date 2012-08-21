@@ -21,10 +21,11 @@
                         },
                         
 						{
-							xtype: 'gridcolumn',
+							xtype: 'datecolumn',   
+							format:'d.m.Y',
 							
                             width: 70,
-                            dataIndex: 'DateIn',
+                            dataIndex: 'datein',
 							
                             text: 'Дата'
 						},
@@ -57,21 +58,24 @@
                             text: 'Получатель'
                         },
                         {
-                            xtype: 'gridcolumn',
+                            xtype: 'numbercolumn', 
+							format:'0',
                             width: 41,
 							
                             dataIndex: 'Packs',
                             text: 'Кол.'
                         },
                         {
-                            xtype: 'gridcolumn',
+                            xtype: 'numbercolumn', 
+							format:'0.00',
                             width: 51,
 							
                             dataIndex: 'Wt',
                             text: 'Вес'
                         },
                         {
-                            xtype: 'gridcolumn',
+                            xtype: 'numbercolumn', 
+							format:'0.00',
                             width: 51,
 							
                             dataIndex: 'VolWt',

@@ -26,15 +26,15 @@
                         {
                             xtype: 'combocityorg'                           	
                         },
-						{
+						/*{
 						xtype: 'textfield',
 						id:'orgcode',
 						hidden :true
-						},
+						},*/
 						{
 						xtype: 'textfield',
 						name:'rordnum',
-                        id:'idrordnum',
+                        //id:'idrordnum',
 						hidden :true
 						},
                         {
@@ -104,11 +104,11 @@
                         {
                             xtype: 'combocitydes'
                         },
-						{
+						/*{
 						xtype: 'textfield',
 						id:'destcode',
 						hidden :true
-						},
+						},*/
                         {
                             xtype: 'textfield',
                             width: 337,
@@ -235,17 +235,10 @@
 							editable: false,
 							typeAhead: true,
                             fieldLabel: 'Тип груза',
-							store: Ext.create('Ext.data.Store', {
-                        fields: ['Name', 'lowName'],
-                        data : [
-								{ Name: 'Документ',    lowName: '1' },
-								{ Name: 'Не документ', lowName: '0' },
-								{ Name: 'Опасный груз', lowName: '3' }
-        
-								]
-                    })//,
-                            //labelAlign: 'top'//,
-                            //anchor: '100%'
+							store: 'TypeSt',
+							selectOnFocus : true,
+							queryMode : 'local'
+							
                         },
                         {
                             xtype: 'numberfield',
