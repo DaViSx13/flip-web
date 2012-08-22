@@ -19,15 +19,15 @@
 			type : 'float'
 		}, {
 			name : 'shpd',
-			dateFormat: 'Y-m-d H:i:s',//"2012-07-31 00:00:00"
+			dateFormat : 'Y-m-d H:i:s',
 			type : 'date'
 		}, {
 			name : 'dtarr',
-			dateFormat: 'Y-m-d H:i:s',
+			dateFormat : 'Y-m-d H:i:s',
 			type : 'date'
 		}, {
 			name : 'darr',
-			dateFormat: 'Y-m-d H:i:s',
+			dateFormat : 'Y-m-d H:i:s',
 			type : 'date'
 		}, {
 			name : 'descr'

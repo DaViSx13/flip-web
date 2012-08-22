@@ -5,7 +5,7 @@
 		}, {
 			name : 'dtd',
 			type : 'date',
-			dateFormat: 'Y-m-d H:i:s'
+			dateFormat : 'Y-m-d H:i:s'
 		}, {
 			name : 'org'
 		}, {
