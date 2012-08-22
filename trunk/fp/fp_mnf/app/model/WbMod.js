@@ -1,7 +1,8 @@
 ﻿Ext.define('FpMnf.model.WbMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
-			name : 'wb_no'
+			name : 'wb_no',
+			type:'string'
 		}, {
 			name : 'dtd',
 			type : 'date',

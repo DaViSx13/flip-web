@@ -3,7 +3,8 @@
 	fields : [{
 			name : 'ROrdNum'
 		}, {
-			name : 'status'
+			name : 'status',
+			type:'string'
 		}, {
 			name : 'datein',
 			type : 'date',
@@ -26,7 +27,8 @@
 			name : 'VolWt',
 			type : 'float'
 		}, {
-			name : 'wb_no'
+			name : 'wb_no',
+			type:'string'
 		}
 	]
 });
