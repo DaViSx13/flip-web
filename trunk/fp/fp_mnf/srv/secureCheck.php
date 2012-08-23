@@ -15,5 +15,5 @@ if (!isset($_SESSION['xUser']))
    echo "</pre>";
    echo "<HR>";
    */
-//<a href="../logout.php">Р’С‹С…РѕРґ</a><br/>
+//<a href="../logout.php">Выход</a><br/>
 ?>
