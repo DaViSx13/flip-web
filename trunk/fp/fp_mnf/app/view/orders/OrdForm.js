@@ -181,10 +181,10 @@ Ext.define('FpMnf.view.orders.OrdForm', {
 							allowBlank : false,
 							forceSelection : true,
 							editable : false,
-							typeAhead : true,
+							//typeAhead : true,
 							fieldLabel : 'Тип груза',
 							store : 'TypeSt',
-							selectOnFocus : true,
+							//selectOnFocus : true,
 							queryMode : 'local'
 						}, {
 							xtype : 'numberfield',

@@ -6,7 +6,7 @@ Ext.define('FpMnf.view.mainform.ComboMonth', {
 	displayField : 'Name',
 	valueField : 'lowName',
 	value : Ext.Date.format(new Date(), 'm'),
-	selectOnFocus : true,
+	//selectOnFocus : true,
 	queryMode : 'local',
 	editable : false,
 	allowBlank : false,

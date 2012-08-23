@@ -91,12 +91,13 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
+				var win = Ext.create('FpMnf.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params : {
 							id : sm.getSelection()[0].get('ROrdNum')
 						}
 					});
-				var win = Ext.create('FpMnf.view.orders.OrdWin').show();
+				
 				if (btn.action == 'view') {
 					win.down('button[action=save]').setVisible(false);
 				} else {
@@ -185,10 +186,10 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		}
 	},
 	loadOrdStore : function (st, rec, suc) {
-		var edit = this.getOrdWin();
-		var form_ord = edit.down('ordform');
+		var edi = this.getOrdWin();
+		var form_ord = edi.down('ordform');
 		form_ord.loadRecord(rec[0]);
-		edit.setTitle('Заказ № ' + rec[0].data['rordnum']);
+		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
 		var cb_org = form_ord.down('combocityorg');
 		cb_org.store.load({
 			params : {
