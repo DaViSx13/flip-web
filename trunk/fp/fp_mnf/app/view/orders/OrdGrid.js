@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.orders.OrdGrid', {
+Ext.define('FpMnf.view.orders.OrdGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.ordgrid',
 	requires : ['FpMnf.view.orders.OrdTool', 'FpMnf.view.orders.OrdTotal'],

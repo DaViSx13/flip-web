@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.orders.OrdForm', {
+Ext.define('FpMnf.view.orders.OrdForm', {
 	alias : 'widget.ordform',
 	extend : 'Ext.form.Panel',
 	requires : ['FpMnf.view.orders.ComboCityOrg', 'FpMnf.view.orders.ComboCityDes'],

@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.mainform.NumYear', {
+Ext.define('FpMnf.view.mainform.NumYear', {
 	extend : 'Ext.form.NumberField',
 	alias : 'widget.numyear',
 	initComponent : function () {

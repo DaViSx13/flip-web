@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.store.MnfSt', {
+Ext.define('FpMnf.store.MnfSt', {
     extend: 'Ext.data.Store',
 	requires: ['Ext.data.reader.Json'],
 	//autoLoad: true,

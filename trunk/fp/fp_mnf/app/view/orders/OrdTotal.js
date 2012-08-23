@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.orders.OrdTotal', {
+Ext.define('FpMnf.view.orders.OrdTotal', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.ordtotal',
 	initComponent : function () {

@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.model.WbMod', {
+Ext.define('FpMnf.model.WbMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'wb_no',

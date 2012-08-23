@@ -60,13 +60,13 @@ mssql_query($query);
 //echo"1";  
 if (mssql_get_last_message() == "Operation completed successfully") {
 //echo "2";
-print_r(json_encode(array('success'=>true, 'msg'=>iconv("windows-1251", "UTF-8", "Çàêàç ñîõðàíåí"))));			//"{ "success": true, "msg": "User added successfully" }";
+print_r(json_encode(array('success'=>true, 'msg'=>iconv("windows-1251", "UTF-8", "Ð—Ð°ÐºÐ°Ð· ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½"))));			//"{ "success": true, "msg": "User added successfully" }";
 } else {
-     print_r(json_encode(array('success'=>false, 'msg'=> iconv("windows-1251", "UTF-8", "Îøèáêà ÁÄ!"))));
+     print_r(json_encode(array('success'=>false, 'msg'=> iconv("windows-1251", "UTF-8", "ÐžÑˆÐ¸Ð±ÐºÐ° Ð‘Ð”!"))));
 }   
    //$result= mssql_query($query);
 }catch (Exception $e) {
-    print_r(json_encode(array('success'=>false, 'msg'=>iconv("windows-1251", "UTF-8", "Îøèáêà Ñåðâåðà"))));
+    print_r(json_encode(array('success'=>false, 'msg'=>iconv("windows-1251", "UTF-8", "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¡ÐµÑ€Ð²ÐµÑ€Ð°"))));
     }
 
 ?>

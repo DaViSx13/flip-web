@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.orders.ComboCityDes', {
+Ext.define('FpMnf.view.orders.ComboCityDes', {
 	extend : 'Ext.form.ComboBox',
 	alias : 'widget.combocitydes',
 	width : 337,

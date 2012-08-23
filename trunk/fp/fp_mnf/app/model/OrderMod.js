@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.model.OrderMod', {
+Ext.define('FpMnf.model.OrderMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'rordnum'

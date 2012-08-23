@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.store.OrderSt', {
+Ext.define('FpMnf.store.OrderSt', {
 	extend : 'Ext.data.Store',
 	requires : ['Ext.data.reader.Json'],
 	

@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.store.TypeSt', {
+Ext.define('FpMnf.store.TypeSt', {
 	extend : 'Ext.data.Store',
 	
 	model : 'FpMnf.model.TypeMod',

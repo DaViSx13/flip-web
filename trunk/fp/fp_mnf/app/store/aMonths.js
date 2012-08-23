@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.store.aMonths', {
+Ext.define('FpMnf.store.aMonths', {
     extend: 'Ext.data.Store',
 	//autoLoad: true,
     model: 'FpMnf.model.aMonth',

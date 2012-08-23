@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.mainform.WbGrid', {
+Ext.define('FpMnf.view.mainform.WbGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.wbgrid',
 	autoScroll : true,

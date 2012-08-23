@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.mainform.TotalTool', {
+Ext.define('FpMnf.view.mainform.TotalTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.totaltool',
 	initComponent : function () {

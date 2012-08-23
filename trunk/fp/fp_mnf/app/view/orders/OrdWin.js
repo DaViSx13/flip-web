@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.orders.OrdWin', {
+Ext.define('FpMnf.view.orders.OrdWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.ordwin',

@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.controller.MnfCont', {
+Ext.define('FpMnf.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel'],
 	models : ['MnfMod', 'WbMod'],

@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.mainform.MnfTool', {
+Ext.define('FpMnf.view.mainform.MnfTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.mnftool',
 	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear'],

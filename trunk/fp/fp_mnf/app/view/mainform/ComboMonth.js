@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.mainform.ComboMonth', {
+Ext.define('FpMnf.view.mainform.ComboMonth', {
 	extend : 'Ext.form.ComboBox',
 	alias : 'widget.combomonth',
 	hideLabel : true,

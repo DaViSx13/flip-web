@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.Viewport', {
+Ext.define('FpMnf.view.Viewport', {
 	extend : 'Ext.container.Viewport',
 	layout : 'fit',
 	requires : ['FpMnf.view.mainform.MainPanel'],

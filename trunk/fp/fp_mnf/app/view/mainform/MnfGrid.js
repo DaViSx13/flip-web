@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.mainform.MnfGrid', {
+Ext.define('FpMnf.view.mainform.MnfGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.mnfgrid',
 	requires : ['FpMnf.view.mainform.MnfTool', 'FpMnf.view.mainform.TotalTool'],

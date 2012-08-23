@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.orders.OrdTool', {
+Ext.define('FpMnf.view.orders.OrdTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.ordtool',
 	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear'],

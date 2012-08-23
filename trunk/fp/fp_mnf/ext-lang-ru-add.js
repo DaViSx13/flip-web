@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Russian translation additional
  * By dvs  (utf-8 encoding)
  * 21 August 2012

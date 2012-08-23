@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.controller.OrdsCont', {
+Ext.define('FpMnf.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.OrdGrid', 'mainform.NumYear', 'mainform.ComboMonth', 'orders.OrdWin'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod'],
@@ -51,7 +51,7 @@
 			},
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
-			},
+			}
 		});
 		this.getOrderStStore().on({
 			scope : this,

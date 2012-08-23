@@ -1,4 +1,4 @@
-﻿Ext.define('FpMnf.view.mainform.MainPanel', {
+Ext.define('FpMnf.view.mainform.MainPanel', {
 	extend : 'Ext.tab.Panel',
 	alias : 'widget.mainpanel',
 	requires : ['FpMnf.view.mainform.MnfPanel', 'FpMnf.view.orders.OrdGrid', 'FpMnf.view.orders.OrdWin'],
