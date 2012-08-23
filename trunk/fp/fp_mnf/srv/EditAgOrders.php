@@ -1,5 +1,5 @@
 <?php
-	//require_once "secureCheck.php";
+	require_once "secureCheck.php";
 
     include "dbConnect.php";
 

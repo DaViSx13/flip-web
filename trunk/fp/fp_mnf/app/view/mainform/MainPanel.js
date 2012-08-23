@@ -12,6 +12,7 @@
 				}, {
 				
 					title : 'Накладные'
+					
 				}, {
 					xtype : 'ordgrid',
 					title : 'Заказы'

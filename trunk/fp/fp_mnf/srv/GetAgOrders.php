@@ -1,9 +1,9 @@
 <?php
-	//require_once "secureCheck.php";
+	require_once "secureCheck.php";
 
     include "dbConnect.php";
 
-$ag = 55;//$_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
+$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
  
 //$query = "exec wwwGetAgOrders @period='20111116', @agentID=54";
 $query = "exec wwwGetAgOrders @period='$_REQUEST[newPeriod]', @agentID={$ag}";

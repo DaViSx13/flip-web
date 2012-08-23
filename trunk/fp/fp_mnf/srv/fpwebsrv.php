@@ -1,5 +1,5 @@
 <?php
-	//require_once "secureCheck.php";
+	require_once "secureCheck.php";
 
     include "dbConnect.php";
 
@@ -9,11 +9,11 @@ $proc =  $_REQUEST['proc'];
 //$query = "exec wwwGetMnf @period='201207', @agentID=55, @is_Ready=2";
 if ($proc=='GetMnf'){
 	$is_Ready = $_REQUEST['is_Ready'];
-	$query = "exec www{$proc} @period='$_REQUEST[period]', @agentID=55, @is_Ready={$is_Ready}";
+	$query = "exec www{$proc} @period='$_REQUEST[period]', @agentID={$ag}, @is_Ready={$is_Ready}";
 }
 if ($proc=='GetWbMnf'){
 	$mnfRefNo = $_REQUEST['mnfRefNo'];
-	$query = "exec www{$proc} @agentID=55, @mnfRefNo='{$mnfRefNo}'";
+	$query = "exec www{$proc} @agentID={$ag}, @mnfRefNo='{$mnfRefNo}'";
 }
 $result=mssql_query($query);
 

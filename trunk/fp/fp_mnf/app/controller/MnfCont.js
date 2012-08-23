@@ -1,6 +1,6 @@
 ﻿Ext.define('FpMnf.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth'],
+	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel'],
 	models : ['MnfMod', 'WbMod'],
 	stores : ['MnfSt', 'aMonths', 'WbSt'],
 	refs : [{
@@ -15,6 +15,9 @@
 		this.control({
 			'mnfpanel' : {
 				activate : this.loadMnf
+			},
+			'mainpanel' : {
+				tabchange : this.gotoWb
 			},
 			'mnfgrid button[action=out]' : {
 				click : this.openOutmnf
@@ -73,6 +76,13 @@
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadMnfAll(ye, mo, 2);
+	},
+	gotoWb: function (pan, ntab) {
+	if (ntab.title=='Накладные'){
+	console.log(ntab.title);
+	document.location.href = "../agent/work.php";
+	}
+		
 	},
 	openAllmnf : function (btn) {
 		btn.toggle(true);

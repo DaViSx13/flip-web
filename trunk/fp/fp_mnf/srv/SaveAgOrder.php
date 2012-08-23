@@ -1,9 +1,9 @@
 <?php
 try {
 include "dbConnect.php";
-//require_once "secureCheck.php";
+require_once "secureCheck.php";
 $CName=iconv("UTF-8", "windows-1251",stripslashes($_POST[cname]));
-$ag=55;//$_SESSION['xAgentID'];
+$ag=$_SESSION['xAgentID'];
 $DName=iconv("UTF-8", "windows-1251",stripslashes($_POST[dname]));
 $Amt=$_POST[amt] ? $_POST[amt] : 0;
 $CurId=$_POST[curid] ? $_POST[curid] : 0;
