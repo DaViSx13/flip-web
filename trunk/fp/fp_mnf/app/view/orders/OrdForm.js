@@ -1,7 +1,7 @@
 Ext.define('FpMnf.view.orders.OrdForm', {
 	alias : 'widget.ordform',
 	extend : 'Ext.form.Panel',
-	requires : ['FpMnf.view.orders.ComboCityOrg', 'FpMnf.view.orders.ComboCityDes'],
+	requires : ['FpMnf.view.orders.ComboCity'],
 	initComponent : function () {
 		Ext.apply(this, {
 			height : 610,
@@ -19,7 +19,9 @@ Ext.define('FpMnf.view.orders.OrdForm', {
 					x : 10,
 					y : 0,
 					items : [{
-							xtype : 'combocityorg'
+							xtype : 'combocity',
+                            name : 'org',
+                            store : 'CityStOrg'
 						}, {
 							xtype : 'textfield',
 							name : 'rordnum',
@@ -82,7 +84,9 @@ Ext.define('FpMnf.view.orders.OrdForm', {
 					x : 390,
 					y : 0,
 					items : [{
-							xtype : 'combocitydes'
+							xtype : 'combocity',
+                            name : 'dest',
+                            store : 'CityStDes'
 						}, {
 							xtype : 'textfield',
 							width : 337,

@@ -14,10 +14,10 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			selector : 'ordtotal'
 		}, {
 			ref : 'ComboCityOrg',
-			selector : 'combocityorg'
+			selector : 'combocity[name=org]'
 		}, {
 			ref : 'ComboCityDes',
-			selector : 'combocitydes'
+			selector : 'combocity[name=dest]'
 		}, {
 			ref : 'OrdWin',
 			selector : 'ordwin'
@@ -76,7 +76,8 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		this.loadOrds(ye, mo);
 	},
 	openOrdWin : function (btn) {
-		var edit = Ext.create('FpMnf.view.orders.OrdWin').show();
+		//var edit = Ext.create('FpMnf.view.orders.OrdWin').show();
+        var edit = Ext.widget('ordwin').show();
 	},
 	dblclickOrdGr : function (gr, rec) {
 		var tt = this.getOrdTool();
@@ -117,8 +118,8 @@ Ext.define('FpMnf.controller.OrdsCont', {
 	saveOrder : function (btn) {
 		var win = btn.up('ordwin');
 		var form_ord = win.down('ordform');
-		var org = form_ord.down('combocityorg');
-		var dest = form_ord.down('combocitydes');
+		var org = form_ord.down('combocity[name=org]');
+		var dest = form_ord.down('combocity[name=dest]');
 		if (org.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
@@ -190,14 +191,14 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		var form_ord = edi.down('ordform');
 		form_ord.loadRecord(rec[0]);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
-		var cb_org = form_ord.down('combocityorg');
+		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
 			params : {
 				query : cb_org.getValue()
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
-		var cb_des = form_ord.down('combocitydes');
+		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params : {
 				query : cb_des.getValue()
