@@ -1,1 +1,1 @@
-sencha create jsb -a http://localhost/fp_mnf/app.html -p app.jsb3 -v
+sencha create jsb -a http://test2.dvs/fp/fp_mnf/app.html -p app.jsb3 -v

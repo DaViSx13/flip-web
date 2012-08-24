@@ -1,7 +1,7 @@
 Ext.define('FpMnf.view.mainform.MnfPanel', {
 	extend : 'Ext.panel.Panel',
 	alias : 'widget.mnfpanel',
-	requires : ['FpMnf.view.mainform.MnfGrid', 'FpMnf.view.mainform.WbGrid'],
+	requires : ['FpMnf.view.mainform.MnfGrid', 'FpMnf.view.mainform.WbGrid', 'Ext.resizer.*'],
 	layout : 'border',
 	closable : false,
 	initComponent : function () {
