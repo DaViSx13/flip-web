@@ -1,6 +1,6 @@
 Ext.define('FpMnf.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'mainform.NumYear', 'mainform.ComboMonth', 'orders.OrdWin'],
+	views : ['orders.OrdGrid', /*'mainform.NumYear', 'mainform.ComboMonth', */'orders.OrdWin'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt'],
 	refs : [{
@@ -13,10 +13,10 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			ref : 'OrdTotal',
 			selector : 'ordtotal'
 		}, {
-			ref : 'ComboCityOrg',
+			ref : 'ComboCity',
 			selector : 'combocity[name=org]'
 		}, {
-			ref : 'ComboCityDes',
+			ref : 'ComboCity',
 			selector : 'combocity[name=dest]'
 		}, {
 			ref : 'OrdWin',
