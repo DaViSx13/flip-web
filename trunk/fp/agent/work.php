@@ -426,10 +426,10 @@ for ($i = 0; $i <= 5; $i++) {
 </td>
 
 <td>
-<a href="../fp_mnf/app.php">Агентские заказы и Манифесты</a><!--aan Меню типа -->
+<a href="../fp_mnf/app.php">Заказы и Манифесты</a><!--aan Меню типа -->
 </td>
 
-<td align="right"><img src=" http://www.flippost.com/images/logo.gif"/></td>
+<td align="right"><img src="http://flippost.com/assets/templates/fl/images/logo.gif"/></td>
 </tr>
 </table>
 
