@@ -48,7 +48,7 @@ $form = <<<FORM
 <div align="center">
 <form method="post" action="login.php">
 <table>
-<tr><td colspan="2" align="center"><img src=" http://www.flippost.com/images/logo.gif"/></td></tr>
+<tr><td colspan="2" align="center"><img src="http://flippost.com/assets/templates/fl/images/logo.gif"/></td></tr>
 <tr><td colspan="2" align="center">ООО Флиппост. Агентский вход</td></tr>
 <tr><td>Имя</td><td><input type="text" name="xUser" id="xUser" onkeyup="onOff()" onblur="onOff()" onchange="onOff()" value="{$_POST['xUser']}" /></td></tr>
 <tr><td>Пароль</td><td><input type="password" name="xPassword" id="xPassword" onkeyup="onOff()" onblur="onOff()" onchange="onOff()"/></td></tr>
