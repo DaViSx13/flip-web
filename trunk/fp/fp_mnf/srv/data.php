@@ -28,10 +28,10 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getCourOrders':
             $query = "exec wwwCourGetOrders @courId='$_SESSION[courId]'";
             break;
-		case 'getAgOrders'	:
-			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
-			$query = "exec wwwGetAgOrders @period='$_REQUEST[newPeriod]', @agentID={$ag}";
-			break;
+        case 'getAgOrders':
+            $ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+            $query = "exec wwwGetAgOrders @period='$_REQUEST[newPeriod]', @agentID={$ag}";
+            break;
     }
 
     if (!isset($query)) {
@@ -77,5 +77,9 @@ function my_json_encode($arr)
 
 }
 
-echo my_json_encode($response);
+if (extension_loaded('mbstring')) {
+    echo my_json_encode($response);
+} else {
+    echo json_encode($response);
+}
 ?>
