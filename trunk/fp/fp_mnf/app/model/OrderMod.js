@@ -5,7 +5,8 @@ Ext.define('FpMnf.model.OrderMod', {
 		}, {
 			name : 'org'
 		}, {
-			name : 'orgcode'
+			name : 'orgcode',
+			type: 'int'
 		}, {
 			name : 'cname'
 		}, {
@@ -23,7 +24,8 @@ Ext.define('FpMnf.model.OrderMod', {
 		}, {
 			name : 'dest'
 		}, {
-			name : 'destcode'
+			name : 'destcode',
+			type: 'int'
 		}, {
 			name : 'dname'
 		}, {

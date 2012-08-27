@@ -50,7 +50,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({
 			params : {
-				proc : 'GetMnf',
+				//proc : 'GetMnf',
 				period : y + m,
 				is_Ready : tab
 			}
@@ -79,7 +79,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 	},
 	gotoWb: function (pan, ntab) {
 	if (ntab.title=='Накладные'){
-	console.log(ntab.title);
+	//console.log(ntab.title);
 	document.location.href = "../agent/work.php";
 	}
 		
@@ -129,7 +129,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 		}
 		this.getWbStStore().load({
 			params : {
-				proc : 'GetWbMnf',
+				//proc : 'GetWbMnf',
 				mnfRefNo : No
 			}
 		});
@@ -156,8 +156,8 @@ Ext.define('FpMnf.controller.MnfCont', {
 		tt.down('label[itemId=lab2]').setText('Количество мест: ' + sum_shpcs);
 		tt.down('label[itemId=lab3]').setText('Общий вес: ' + Ext.util.Format.round(sum_shwt, 2));
 		tt.down('label[itemId=lab4]').setText('Общий V вес: ' + Ext.util.Format.round(sum_shvol_wt, 2));
-		if (rec[0].data['wb_no'] == '') {
+		/*if (rec[0].data['wb_no'] == '') {
 			tt.down('label').setText('');
-		}
+		}*/
 	}
 });

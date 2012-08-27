@@ -5,8 +5,6 @@
 $pName = $_GET['query'] ? $_GET['query'] : '';  
 $pName = iconv("UTF-8", "windows-1251",$pName);   
 
-//print($pName);
-
 $query = "exec wwwGetCity @pName = '{$pName}'";
 
 //print($query);

@@ -5,14 +5,15 @@ Ext.define('FpMnf.store.MnfSt', {
     model: 'FpMnf.model.MnfMod',
 	proxy: {
 		type: 'ajax',
-		url : 'srv/fpwebsrv.php',
+		url : 'srv/data.php',
 		reader: {
-			type: 'json'
-            }
-	},
-	params:{
-			proc: 'GetMnf'
-			}
+			type: 'json',
+			root: 'data'
+            },
+		extraParams: {
+			dbAct: 'GetMnf'
+		}
+	} 
 
     
     

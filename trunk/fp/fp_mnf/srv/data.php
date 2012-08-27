@@ -32,6 +32,21 @@ if (!isset($_REQUEST['dbAct'])) {
             $ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
             $query = "exec wwwGetAgOrders @period='$_REQUEST[newPeriod]', @agentID={$ag}";
             break;
+		case 'GetMnf':
+			$is_Ready = $_REQUEST['is_Ready'];
+			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			$query = "exec wwwGetMnf @period='$_REQUEST[period]', @agentID={$ag}, @is_Ready={$is_Ready}";
+			break;
+		case 'GetWbMnf':
+			$mnfRefNo = $_REQUEST['mnfRefNo'];
+			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			$query = "exec wwwGetWbMnf @agentID={$ag}, @mnfRefNo='{$mnfRefNo}'";
+			break;
+		case 'GetCity':
+			$pName = $_REQUEST['query'] ? $_REQUEST['query'] : '';  
+			//$pName = iconv("UTF-8", "windows-1251",$pName);   
+			$query = "exec wwwGetCity @pName = '{$pName}'";
+			break;
     }
 
     if (!isset($query)) {

@@ -1,9 +1,11 @@
 Ext.define('FpMnf.model.CityMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
-			name : 'code'
+			name : 'code',
+			type: 'int'
 		}, {
-			name : 'fname'
+			name : 'fname',
+			type: 'string'
 		}
 	]
 });

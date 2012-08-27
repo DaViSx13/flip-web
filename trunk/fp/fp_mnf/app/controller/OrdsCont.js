@@ -198,6 +198,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
+		//console.log(rec[0].data['orgcode']);
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params : {
@@ -205,6 +206,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			}
 		});
 		cb_des.select(rec[0].data['destcode']);
+		//cb_des.setValue(rec[0].data['destcode']);
 	},
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
