@@ -7,7 +7,7 @@ class Response
 {
     public $success = false;
     public $msg = 'defaultResponse';
-    public $data = array();
+    //public $data = array();
 }
 $response = new Response();
 
@@ -40,11 +40,17 @@ if (!isset($_REQUEST['dbAct'])) {
             include "dbConnect.php";
             $result = mssql_query($query);
             if ($result) {
+				for($i = 0; $i < mssql_num_fields($result); $i++){
+					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
+				}
+			
                 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
-                    foreach ($row as &$value) {
-                        $value = iconv("windows-1251", "UTF-8", $value);
+                    foreach ($row as $f => &$value) {
+						if($response->fields[$f] == 'char'){
+							$value = iconv("windows-1251", "UTF-8", $value);
+						}
                     }
-                    $response->data[] = $row;
+                    $response->data[] = array_change_key_case($row);
                 }
                 mssql_free_result($result);
                 $response->success = true;
@@ -73,5 +79,9 @@ function my_json_encode($arr)
 
 }
 
-echo my_json_encode($response);
+if (extension_loaded('mbstring')) {
+    echo my_json_encode($response);
+} else {
+    echo json_encode($response);
+}
 ?>
