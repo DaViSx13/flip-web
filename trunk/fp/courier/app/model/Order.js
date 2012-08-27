@@ -1,19 +1,19 @@
 ﻿Ext.define('Courier.model.Order', {
 	extend: 'Ext.data.Model',
 	fields: [{
-		name: 'aNo',
+		name: 'ano',
 		type: 'string'
 	},
 	{
-		name: 'displayNo',
+		name: 'displayno',
 		type: 'string'
 	},
 	{
-		name: 'aCash',
+		name: 'acash',
 		type: 'float'
 	},
 	{
-		name: 'aAddress',
+		name: 'aaddress',
 		type: 'string'
 	},
 	{
@@ -21,11 +21,11 @@
 		type: 'string'
 	},
 	{
-		name: 'timeB',
+		name: 'timeb',
 		type: 'string'
 	},
 	{
-		name: 'timeE',
+		name: 'timee',
 		type: 'string'
 	}],
 	proxy: {
