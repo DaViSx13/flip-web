@@ -63,7 +63,7 @@ if (!isset($_REQUEST['dbAct'])) {
                     foreach ($row as &$value) {
                         $value = iconv("windows-1251", "UTF-8", $value);
                     }
-                    $response->data[] = $row;
+                    $response->data[] = array_change_key_case($row);
                 }
                 mssql_free_result($result);
                 $response->success = true;

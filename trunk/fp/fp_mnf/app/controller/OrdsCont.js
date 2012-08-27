@@ -95,7 +95,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 				var win = Ext.create('FpMnf.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params : {
-							id : sm.getSelection()[0].get('ROrdNum')
+							id : sm.getSelection()[0].get('rordnum')
 						}
 					});
 				

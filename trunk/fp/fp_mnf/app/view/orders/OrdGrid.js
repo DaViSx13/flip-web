@@ -6,7 +6,7 @@ Ext.define('FpMnf.view.orders.OrdGrid', {
 	columns : [{
 			xtype : 'gridcolumn',
 			width : 47,
-			dataIndex : 'ROrdNum',
+			dataIndex : 'rordnum',
 			text : '№'
 		}, {
 			xtype : 'gridcolumn',
@@ -22,40 +22,40 @@ Ext.define('FpMnf.view.orders.OrdGrid', {
 		}, {
 			xtype : 'gridcolumn',
 			width : 114,
-			dataIndex : 'ORGCity',
+			dataIndex : 'orgcity',
 			text : 'Город'
 		}, {
 			xtype : 'gridcolumn',
 			flex : 1,
-			dataIndex : 'CName',
+			dataIndex : 'cname',
 			text : 'Отправитель'
 		}, {
 			xtype : 'gridcolumn',
 			width : 114,
-			dataIndex : 'DESTCity',
+			dataIndex : 'destcity',
 			text : 'Город'
 		}, {
 			xtype : 'gridcolumn',
 			flex : 1,
-			dataIndex : 'DName',
+			dataIndex : 'dname',
 			text : 'Получатель'
 		}, {
 			xtype : 'numbercolumn',
 			format : '0',
 			width : 41,
-			dataIndex : 'Packs',
+			dataIndex : 'packs',
 			text : 'Кол.'
 		}, {
 			xtype : 'numbercolumn',
 			format : '0.00',
 			width : 51,
-			dataIndex : 'Wt',
+			dataIndex : 'wt',
 			text : 'Вес'
 		}, {
 			xtype : 'numbercolumn',
 			format : '0.00',
 			width : 51,
-			dataIndex : 'VolWt',
+			dataIndex : 'volwt',
 			text : 'Об. вес'
 		}, {
 			xtype : 'gridcolumn',

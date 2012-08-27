@@ -1,7 +1,7 @@
 Ext.define('FpMnf.model.OrdsMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
-			name : 'ROrdNum'
+			name : 'rordnum'
 		}, {
 			name : 'status',
 			type:'string'
@@ -10,21 +10,21 @@ Ext.define('FpMnf.model.OrdsMod', {
 			type : 'date',
 			dateFormat : 'Y-m-d H:i:s'
 		}, {
-			name : 'ORGCity'
+			name : 'orgcity'
 		}, {
-			name : 'CName'
+			name : 'cname'
 		}, {
-			name : 'DESTCity'
+			name : 'destcity'
 		}, {
-			name : 'DName'
+			name : 'dname'
 		}, {
-			name : 'Packs',
+			name : 'packs',
 			type : 'int'
 		}, {
-			name : 'Wt',
+			name : 'wt',
 			type : 'float'
 		}, {
-			name : 'VolWt',
+			name : 'volwt',
 			type : 'float'
 		}, {
 			name : 'wb_no',
