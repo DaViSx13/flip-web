@@ -156,7 +156,10 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		}
 		if (form_ord.getForm().isValid()) {
 			form_ord.submit({
-				url : 'srv/SaveAgOrder.php',
+				url : 'srv/data.php',
+				params: {
+					dbAct: 'saveagorder'
+				},
 				submitEmptyText : false,
 				success : function (form, action) {
 					Ext.Msg.alert('Заказ сохранен!', action.result.msg);

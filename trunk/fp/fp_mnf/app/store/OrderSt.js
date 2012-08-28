@@ -5,9 +5,13 @@ Ext.define('FpMnf.store.OrderSt', {
 	model : 'FpMnf.model.OrderMod',
 	proxy : {
 		type : 'ajax',
-		url : 'srv/EditAgOrders.php',
-		reader : {
-			type : 'json'
+		url : 'srv/data.php',
+		reader: {
+			type: 'json',
+			root: 'data'
+            },
+		extraParams: {
+			dbAct: 'editagorder'
 		}
 	}
 	

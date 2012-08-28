@@ -7,7 +7,7 @@ class Response
 {
     public $success = false;
     public $msg = 'defaultResponse';
-    public $data = array();
+    //public $data = array();
 }
 $response = new Response();
 
@@ -21,12 +21,6 @@ if (!isset($_REQUEST['dbAct'])) {
     switch ($dbAct) {
         case 'dbTest':
             $query = "select '$_REQUEST[test]' as test";
-            break;
-        case 'getCourWbs':
-            $query = "exec wwwCourGetWbs @courId=$_SESSION[courId]";
-            break;
-        case 'getCourOrders':
-            $query = "exec wwwCourGetOrders @courId='$_SESSION[courId]'";
             break;
         case 'getAgOrders':
             $ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
@@ -45,6 +39,66 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetCity':
 			$pName = $_REQUEST['query'] ? $_REQUEST['query'] : '';  
 			$query = "exec wwwGetCity @pName = '{$pName}'";
+			break;
+		case 'GetAgentWbs':
+			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
+			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}";
+			break;
+		case 'editagorder':
+			$id =  $_REQUEST[id];
+			$query = "exec wwwEditAgOrders @id={$id}";
+			break;
+		case 'saveagorder':
+			$CName=$_POST[cname];
+			$ag=$_SESSION['xAgentID'];
+			$DName=$_POST[dname];
+			$Amt=$_POST[amt] ? $_POST[amt] : 0;
+			$CurId=$_POST[curid] ? $_POST[curid] : 0;
+			$VolWt=$_POST[volwt] ? $_POST[volwt] : 0;
+			$Rordnum=$_POST[rordnum] ? $_POST[rordnum] : 0;
+			$Address=$_POST[address];
+			$ContName=$_POST[contname];
+			$OrgRems=$_POST[orgrems];
+			$DContName=$_POST[dcontname];
+			$DAdr=$_POST[dadr];
+			$DESTRems=$_POST[destrems];
+			$UserIn= $_SESSION['xUser'];
+			$courdate=$_POST[courdate];
+			$courtimef=$_POST[courtimef];
+			$courtimet=$_POST[courtimet];
+			$ContPhone=$_POST[contphone];
+			$DContPhone=$_POST[dcontphone];
+
+			if($courdate){
+				$d = explode('.', $courdate);
+				$courdate = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) );
+			}
+
+			$query = "exec wwwSaveAgOrders
+			@ORG=$_POST[org],
+			@CName='$CName',
+			@Address='$Address',
+			@ContName='$ContName',
+			@ContPhone='$ContPhone',
+			@ContMail='$_POST[contmail]',
+			@OrgRems='$OrgRems',
+			@DEST=$_POST[dest],
+			@DName='$DName',
+			@DAdr='$DAdr',
+			@DContName='$DContName',
+			@DContPhone='$DContPhone',
+			@DContMail='$_POST[dcontmail]',
+			@DESTRems='$DESTRems',
+			@Type=$_POST[type],
+			@Packs=$_POST[packs],
+			@Wt=$_POST[wt],
+			@VolWt=$VolWt,
+			@CourDate='$courdate',
+			@CourTimeF='$courtimef',
+			@CourTimeT='$courtimet',
+			@Payr=$ag,
+			@UserIn=$UserIn,
+			@RordNum=$Rordnum";			
 			break;
 		case 'GetAgentWbs':
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
@@ -72,7 +126,7 @@ if (!isset($_REQUEST['dbAct'])) {
                 $response->success = true;
                 $response->msg = 'ok';
             } else {
-                $response->msg = 'sql error: ' . mssql_get_last_message();
+                $response->msg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
             }
         }
         catch (exception $e) {

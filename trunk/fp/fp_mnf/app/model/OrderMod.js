@@ -1,7 +1,8 @@
 Ext.define('FpMnf.model.OrderMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
-			name : 'rordnum'
+			name : 'rordnum',
+			type: 'int'
 		}, {
 			name : 'org'
 		}, {
@@ -43,13 +44,17 @@ Ext.define('FpMnf.model.OrderMod', {
 		}, {
 			name : 'paytype'
 		}, {
-			name : 'type'
+			name : 'type',
+			type : 'int'
 		}, {
-			name : 'packs'
+			name : 'packs',
+			type : 'int'
 		}, {
-			name : 'wt'
+			name : 'wt',
+			type : 'float'
 		}, {
-			name : 'volwt'
+			name : 'volwt',
+			type : 'float'
 		}, {
 			name : 'rordnum'
 		}, {
