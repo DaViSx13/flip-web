@@ -44,8 +44,11 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'GetCity':
 			$pName = $_REQUEST['query'] ? $_REQUEST['query'] : '';  
-			//$pName = iconv("UTF-8", "windows-1251",$pName);   
 			$query = "exec wwwGetCity @pName = '{$pName}'";
+			break;
+		case 'GetAgentWbs':
+			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
+			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}";
 			break;
     }
 

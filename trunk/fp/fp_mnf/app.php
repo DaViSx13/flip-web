@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="ext-lang-ru-add.js"></script>
 	<script type="text/javascript" src="app.js"></script-->
 
-    <!-- prod mode -->
+    <!-- prod mode-->
 	<script type="text/javascript" src="/extjs-4.1.1/ext-all.js"></script>
 	<script type="text/javascript" src="/extjs-4.1.1/locale/ext-lang-ru.js"></script>
 	<script type="text/javascript" src="ext-lang-ru-add.js"></script>

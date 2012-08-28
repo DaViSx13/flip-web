@@ -1,7 +1,7 @@
-Ext.define('FpMnf.store.MnfSt', {
+Ext.define('FpMnf.store.WbsStore', {
 	extend : 'Ext.data.Store',
 	requires : ['Ext.data.reader.Json'],
-	model : 'FpMnf.model.MnfMod',
+	model : 'FpMnf.model.WbsMod',
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',
@@ -10,7 +10,7 @@ Ext.define('FpMnf.store.MnfSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetMnf'
+			dbAct : 'GetAgentWbs'
 		}
 	}
 });
