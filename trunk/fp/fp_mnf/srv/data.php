@@ -21,6 +21,7 @@ if (!isset($_REQUEST['dbAct'])) {
     switch ($dbAct) {
         case 'dbTest':
             $query = "select '$_REQUEST[test]' as test";
+			//$query = "select cast(null as varchar(10)) as test";
             break;
         case 'getAgOrders':
             $ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
@@ -116,9 +117,15 @@ if (!isset($_REQUEST['dbAct'])) {
             include "dbConnect.php";
             $result = mssql_query($query);
             if ($result) {
+				for($i = 0; $i < mssql_num_fields($result); $i++){
+					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
+				}
+			
                 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
-                    foreach ($row as &$value) {
-                        $value = iconv("windows-1251", "UTF-8", $value);
+                    foreach ($row as $f => &$value) {
+						if(($response->fields[$f] == 'char')&&($value)){
+							$value = iconv("windows-1251", "UTF-8", $value);
+						}
                     }
                     $response->data[] = array_change_key_case($row);
                 }
