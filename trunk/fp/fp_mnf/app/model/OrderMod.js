@@ -17,7 +17,8 @@ Ext.define('FpMnf.model.OrderMod', {
 		}, {
 			name : 'contname'
 		}, {
-			name : 'contmail'
+			name : 'contmail',
+			type: 'string'
 		}, {
 			name : 'contphone'
 		}, {

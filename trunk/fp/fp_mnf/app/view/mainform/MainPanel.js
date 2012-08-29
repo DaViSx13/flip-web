@@ -4,6 +4,7 @@ Ext.define('FpMnf.view.mainform.MainPanel', {
 	activeTab : 1,
 	margins : '5 5 5 5',
 	items : [{
+			xtype : 'wbsgrid',
 			title : 'Накладные'
 		}, {
 			xtype : 'ordgrid',

@@ -4,8 +4,35 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 	requires : ['FpMnf.view.wbs.WbsTool'/*, 'FpMnf.view.mainform.TotalTool'*/],
 	store : 'WbsStore',
 	columns : [{
+			xtype: 'actioncolumn',
 			text : 'ИС',
-			dataIndex : 'is_ex' 
+			//dataIndex : 'is_ex',
+			width: 50,
+            items: [
+			{
+			icon: 'resources/images/new.gif',
+			tooltip: 'Новое ИС',
+			handler: function(grid, rowIndex, colIndex) {
+                        
+                        Ext.Msg.alert('ИС', 'Новая ИС');
+                    }
+			},
+			{
+			getClass: function(v, meta, rec) {          // Or return a class from a function
+                        if (rec.get('is_ex') > 0) {
+                         //console.log(rec.get('is_ex'));  
+						   this.items[1].tooltip = 'Посмотреть ИС';
+                            return 'ex-col';
+                        }
+			
+			},
+			handler: function(grid, rowIndex, colIndex) {
+                        
+                        Ext.Msg.alert('ИС', 'Посмотреть ИС');
+                    }
+			
+			}
+			]			
 		},{
 			text : 'Накладная',
 			dataIndex : 'wb_no'
@@ -43,6 +70,8 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 			text : 'Об.вес',
 			dataIndex : 'vol_wt'
 		},{
+		text:'Тариф Флип',
+		columns : [{
 			text : 'баз.',
 			dataIndex : 'tar_flip_b'
 		},{
@@ -54,7 +83,10 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 		},{
 			text : 'прим.',
 			dataIndex : 'rem_flip'
+		}]
 		},{
+		text:'Тариф Аг',
+		columns : [{
 			text : 'баз.',
 			dataIndex : 'tar_ag_b'
 		},{
@@ -66,10 +98,11 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 		},{
 			text : 'прим.',
 			dataIndex : 'rem_ag'
+		}]
 		}
 	],
 	dockedItems : [{
-			xtype : 'mnftool',
+			xtype : 'wbstool',
 			dock : 'top'
 		}/*, {
 			xtype : 'totaltool',

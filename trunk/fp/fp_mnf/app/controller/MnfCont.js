@@ -80,7 +80,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 	gotoWb: function (pan, ntab) {
 	if (ntab.title=='Накладные'){
 	//console.log(ntab.title);
-	document.location.href = "../agent/work.php";
+	//document.location.href = "../agent/work.php";
 	}
 		
 	},
