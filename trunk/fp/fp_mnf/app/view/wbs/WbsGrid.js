@@ -2,7 +2,14 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.wbsgrid',
 	requires : ['FpMnf.view.wbs.WbsTool'/*, 'FpMnf.view.mainform.TotalTool'*/],
-	store : 'WbsStore',
+	store : 'WbsBufStore',
+	loadMask: true,
+    selModel: {
+            pruneRemoved: false
+        },
+    viewConfig: {
+            trackOver: false
+        },
 	columns : [{
 			xtype: 'actioncolumn',
 			text : 'ИС',
@@ -65,20 +72,30 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 			dataIndex : 'r_co'
 		},{
 			text : 'Вес',
-			dataIndex : 'wt'
+			dataIndex : 'wt',
+			xtype : 'numbercolumn',
+			format : '0.00'
 		},{
 			text : 'Об.вес',
+			xtype : 'numbercolumn',
+			format : '0.00',
 			dataIndex : 'vol_wt'
 		},{
 		text:'Тариф Флип',
 		columns : [{
 			text : 'баз.',
+			xtype : 'numbercolumn',
+			format : '0.00',
 			dataIndex : 'tar_flip_b'
 		},{
 			text : 'доп.',
+			xtype : 'numbercolumn',
+			format : '0.00',
 			dataIndex : 'tar_flip_a'
 		},{
 			text : 'Всего',
+			xtype : 'numbercolumn',
+			format : '0.00',
 			dataIndex : 'tar_flip_t'
 		},{
 			text : 'прим.',
@@ -88,12 +105,18 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 		text:'Тариф Аг',
 		columns : [{
 			text : 'баз.',
+			xtype : 'numbercolumn',
+			format : '0.00',
 			dataIndex : 'tar_ag_b'
 		},{
 			text : 'доп.',
+			xtype : 'numbercolumn',
+			format : '0.00',
 			dataIndex : 'tar_ag_a'
 		},{
 			text : 'Всего',
+			xtype : 'numbercolumn',
+			format : '0.00',
 			dataIndex : 'tar_ag_t'
 		},{
 			text : 'прим.',

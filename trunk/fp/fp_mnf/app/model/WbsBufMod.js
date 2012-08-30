@@ -1,4 +1,4 @@
-Ext.define('FpMnf.model.WbsMod', {
+Ext.define('FpMnf.model.WbsBufMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'wb_no',

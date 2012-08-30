@@ -214,8 +214,6 @@ Ext.define('FpMnf.controller.OrdsCont', {
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText('Количество заказов: ' + st.getCount());
-		if (rec[0].data['ROrdNum'] == '') {
-			tt.down('label').setText('Количество заказов: 0');
-		}
+		
 	}
 });

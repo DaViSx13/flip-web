@@ -138,9 +138,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 		var tt = this.getTotalTool();
 		
 		tt.down('label').setText('Количество манифестов: ' + st.getCount());
-		if (rec[0].data['mnfrefno'] == '') {
-			tt.down('label').setText('Количество манифестов: 0');
-		}
+		
 	},
 	loadWbStore : function (st, rec, suc) {
 		var tt = this.getTotalWb();
