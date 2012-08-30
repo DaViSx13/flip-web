@@ -12,16 +12,16 @@ Ext.define('FpMnf.controller.WbsCont', {
 		this.control({
 			'wbsgrid' : {
 				activate : this.loadWbsGrid
+			},
+			'wbsgrid button[action=all]' : {
+				click : this.allWbs
+			},
+			'wbsgrid button[action=out]' : {
+				click : this.outWbs
+			},
+			'wbsgrid button[action=in]' : {
+				click : this.inWbs
 			}/*,
-			'ordgrid button[action=new]' : {
-				click : this.openOrdWin
-			},
-			'ordgrid button[action=edit]' : {
-				click : this.editOrdWin
-			},
-			'ordgrid button[action=view]' : {
-				click : this.editOrdWin
-			},
 			'ordwin button[action=save]' : {
 				click : this.saveOrder
 			},
@@ -59,47 +59,34 @@ Ext.define('FpMnf.controller.WbsCont', {
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadWbs(ye, mo);
+		this.allWbs(aTol.down('button[action=all]'));
+	},
+	allWbs : function (btn) {
+		btn.toggle(true);
+		var aTol = btn.up('wbstool');
+		aTol.down('button[action=out]').toggle(false);
+		aTol.down('button[action=in]').toggle(false);
+		this.getWbsStoreStore().clearFilter(false);
+		//console.log('all');
+	},
+	outWbs : function (btn) {
+		btn.toggle(true);
+		var aTol = btn.up('wbstool');
+		aTol.down('button[action=all]').toggle(false);
+		aTol.down('button[action=in]').toggle(false);
+		this.getWbsStoreStore().clearFilter(true);
+		this.getWbsStoreStore().filter('dir', 'out');
+		//console.log('out');
+	},
+	inWbs : function (btn) {
+		btn.toggle(true);
+		var aTol = btn.up('wbstool');
+		aTol.down('button[action=all]').toggle(false);
+		aTol.down('button[action=out]').toggle(false);
+		this.getWbsStoreStore().clearFilter(true);
+		this.getWbsStoreStore().filter('dir', 'in');
+		//console.log('in');
 	}/*,
-	openOrdWin : function (btn) {
-		//var edit = Ext.create('FpMnf.view.orders.OrdWin').show();
-        var edit = Ext.widget('ordwin').show();
-	},
-	dblclickOrdGr : function (gr, rec) {
-		var tt = this.getOrdTool();
-		if (rec.data['status'] == 'заявлен') {
-			var vbut = tt.down('button[action=edit]');
-		} else {
-			var vbut = tt.down('button[action=view]');
-		}
-		this.editOrdWin(vbut);
-	},
-	editOrdWin : function (btn) {
-		var sm = btn.up('ordgrid').getSelectionModel();
-		if (sm.getCount() > 0) {
-			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
-				var win = Ext.create('FpMnf.view.orders.OrdWin').show();
-				var store_ord = this.getOrderStStore().load({
-						params : {
-							id : sm.getSelection()[0].get('rordnum')
-						}
-					});
-				
-				if (btn.action == 'view') {
-					win.down('button[action=save]').setVisible(false);
-				} else {
-					win.down('button[action=save]').setVisible(true);
-				}
-			} else {
-				Ext.Msg.alert('Запрещено!', 'Редактировать можно только заявленные заказы');
-			}
-		} else {
-			if (btn.action == 'edit') {
-				Ext.Msg.alert('Внимание!', 'Выберите заказ для редактирования');
-			} else {
-				Ext.Msg.alert('Внимание!', 'Выберите заказ для просмотра');
-			}
-		}
-	},
 	saveOrder : function (btn) {
 		var win = btn.up('ordwin');
 		var form_ord = win.down('ordform');

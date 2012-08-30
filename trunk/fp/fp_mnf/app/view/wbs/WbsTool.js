@@ -3,11 +3,11 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
 	alias : 'widget.wbstool',
 	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear'],
 	items : [{
-			text : 'Входящие',
+			text : 'Исходящие',
 			enableToggle : true,
 			action : 'out'
 		}, '-', {
-			text : 'Исходящие',
+			text : 'Входящие',
 			action : 'in',
 			enableToggle : true
 		}, '-', {
