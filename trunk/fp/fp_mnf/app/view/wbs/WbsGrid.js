@@ -2,7 +2,7 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.wbsgrid',
 	requires : ['FpMnf.view.wbs.WbsTool'/*, 'FpMnf.view.mainform.TotalTool'*/],
-	store : 'WbsBufStore',
+	store : 'WbsStore',
 	loadMask: true,
     selModel: {
             pruneRemoved: false

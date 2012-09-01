@@ -41,19 +41,48 @@ Ext.define('FpMnf.controller.WbsCont', {
 		this.getWbsStoreStore().on({
 			scope : this,
 			load : this.loadWbsStore
+		});
+		this.getWbsStoreStore().on({
+			scope : this,
+			beforeprefetch : this.beforeprefetchWbsStore
+		});
+		this.getWbsStoreStore().on({
+			scope : this,
+			beforeload : this.beforeloadWbsStore
 		});/*
 		this.getOrdsStStore().on({
 			scope : this,
 			load : this.loadOrdersSt
 		});*/
 	},
-	
+    getPeriod: function(){
+      //console.log(this.getWbsTool().down('combomonth').value);
+      //console.log(this.getWbsTool().down('numyear').value);
+      var m = this.getWbsTool().down('combomonth').value;
+      var y = this.getWbsTool().down('numyear').value;
+      //console.log(y + m + '01');
+      return y + m + '01';
+    },
+    beforeprefetchWbsStore: function(store, operation){
+        //console.log('beforeprefetchWbsStore');
+        store.getProxy().setExtraParam('newPeriod', this.getPeriod());
+        //console.log(operation.params);
+        //console.log(this.getPeriod());
+    },
+    beforeloadWbsStore: function(store, operation){
+        //console.log('beforeloadWbsStore');
+        store.getProxy().setExtraParam('newPeriod', this.getPeriod());
+        //console.log(operation);
+    },
+	loadWbsStore : function (st, rec, suc) {
+        //console.log('loadWbsStore');
+	},
 	loadWbs : function (y, m) {
-		this.getWbsStoreStore().load({
+		this.getWbsStoreStore().load(/*{
 			params : {
 				newPeriod : y + m +'01'
 			}
-		});
+		}*/);
 	},
 	loadWbsGrid : function () {
 		var aTol = this.getWbsTool();
@@ -105,10 +134,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 			this.loadOrdGr();
 		}
 	},*/
-	loadWbsStore : function (st, rec, suc) {
-		
-		
-	}/*,
+/*,
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText('Количество заказов: ' + st.getCount());
