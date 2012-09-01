@@ -6,11 +6,9 @@ error_reporting(0);
 class Response
 {
     public $success = false;
-    public $msg = 'defaultResponse';
-    //public $data = array();
+    public $msg = '';
 }
 $response = new Response();
-
 
 //кульминация
 
@@ -18,6 +16,11 @@ if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'совсем не правильный запрос';
 } else {
     $dbAct = $_REQUEST['dbAct'];
+    //в case нужно сформировать строку sql запроса $query
+    //если нужен paging установить $paging = true
+    //можно задать сообщение, которое вернуть при успехе $response->msg = 'успех'
+
+    $response->msg = 'ok';
     switch ($dbAct) {
         case 'dbTest':
             $query = "select '$_REQUEST[test]' as test";
@@ -40,10 +43,6 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetCity':
 			$pName = $_REQUEST['query'] ? $_REQUEST['query'] : '';  
 			$query = "exec wwwGetCity @pName = '{$pName}'";
-			break;
-		case 'GetAgentWbs':
-			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
-			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}";
 			break;
 		case 'editagorder':
 			$id =  $_REQUEST[id];
@@ -104,6 +103,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetAgentWbs':
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
 			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}";
+            $paging = true;
 			break;
     }
 
@@ -117,6 +117,7 @@ if (!isset($_REQUEST['dbAct'])) {
             include "dbConnect.php";
             $result = mssql_query($query);
             if ($result) {
+
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
 				}
@@ -127,11 +128,41 @@ if (!isset($_REQUEST['dbAct'])) {
 							$value = iconv("windows-1251", "UTF-8", $value);
 						}
                     }
+
                     $response->data[] = array_change_key_case($row);
                 }
+
+                //$response->dvs = 'превед';
+                unset($response->fields);
+
+				//paging
+				if($paging){
+				    //$response->paging = 'paging';
+		  			$page = $_REQUEST['page'];
+        			$start = $_REQUEST['start'];
+        			$limit = $_REQUEST['limit'];
+
+                    //setlocale(LC_ALL, "ru_RU.UTF-8", "Russian_Russia.65001");
+                    //$response->zzz = strnatcasecmp('ВЫСОЦКАЯ', 'Васильева');
+                    //$response->xxx = setlocale(LC_ALL, '0');
+
+                    $sortParams = json_decode(stripslashes($_REQUEST['sort']), true);
+                    $sortKey = strtolower($sortParams[0]['property']);
+                    $sortDir = strtolower($sortParams[0]['direction']);
+
+                    include 'multiSort.php';
+                    $multisort = new multisort();
+                    $response->data = $multisort->run($response->data, $sortKey, $sortDir);
+                    //uasort($response->data, build_sorter('rcpn'), 'desc');
+
+
+					$response->total = count($response->data);
+					$response->data = array_slice($response->data, $start, $limit);
+				}
+				
                 mssql_free_result($result);
                 $response->success = true;
-                $response->msg = 'ok';
+                
             } else {
                 $response->msg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
             }
