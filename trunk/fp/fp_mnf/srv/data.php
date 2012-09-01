@@ -102,8 +102,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'GetAgentWbs':
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
-			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}";
+			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}, @dir='$_REQUEST[dir]'";
             $paging = true;
+			break;
+		case 'GetExCodes':
+			  
+			$query = "exec wwwGetExCodes";
 			break;
     }
 

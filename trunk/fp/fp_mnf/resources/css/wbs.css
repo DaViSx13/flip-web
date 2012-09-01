@@ -1,12 +1,15 @@
-/* styles for the ActionColumn icons */
+/* styles for the ActionColumn icons 
 .x-action-col-cell img {
             height: 16px;
             width: 16px;
             cursor: pointer;
-        }
+        }*/
 /* custom icon for the "ex" ActionColumn icon */
 .x-action-col-cell img.ex-col {
             background-image: url(/fp_mnf/resources/images/ex.gif);
+			height: 16px;
+            width: 16px;
+            cursor: pointer;
         }
 /* custom icon for the "pod" ActionColumn icon 
         .x-action-col-cell img.pod-col {

@@ -2,8 +2,8 @@ Ext.define('FpMnf.view.orders.OrdForm', {
 	alias : 'widget.ordform',
 	extend : 'Ext.form.Panel',
 	requires : ['FpMnf.view.orders.ComboCity'],
-	height : 610,
-	width : 763,
+	//height : 610,
+	//width : 763,
 	layout : {
 		type : 'absolute'
 	},
