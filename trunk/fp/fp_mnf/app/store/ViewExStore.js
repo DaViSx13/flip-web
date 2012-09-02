@@ -1,12 +1,7 @@
-Ext.define('FpMnf.store.WbsStore', {
+Ext.define('FpMnf.store.ViewExStore', {
 	extend : 'Ext.data.Store',
 	requires : ['Ext.data.reader.Json'],
-	model : 'FpMnf.model.WbsMod',
-	buffered: true,
-	pageSize: 40,
-	leadingBufferZone: 40,
-//	trailingBufferZone: 100,
-    remoteSort: true,
+	model : 'FpMnf.model.ViewExMod',
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',
@@ -15,7 +10,7 @@ Ext.define('FpMnf.store.WbsStore', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetAgentWbs'
+			dbAct : 'GetWbEx'
 		}
 	}
 });

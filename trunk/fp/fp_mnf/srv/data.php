@@ -109,6 +109,10 @@ if (!isset($_REQUEST['dbAct'])) {
 			  
 			$query = "exec wwwGetExCodes";
 			break;
+		case 'GetWbEx':
+			  
+			$query = "exec wwwGetWbEx @wbno='$_REQUEST[wb_no]'";
+			break;	
     }
 
     if (!isset($query)) {

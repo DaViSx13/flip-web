@@ -12,7 +12,7 @@ Ext.define('FpMnf.view.wbs.NewPodForm', {
 			xtype : 'textfield',
 			name : 'wb_no',
 			fieldLabel : 'Накладная',
-			readOnly : true,
+			readOnly : true
 			//allowBlank : false
 		}, {
 			xtype : 'datefield',

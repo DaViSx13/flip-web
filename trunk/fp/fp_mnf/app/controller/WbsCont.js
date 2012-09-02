@@ -1,8 +1,8 @@
 Ext.define('FpMnf.controller.WbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin'],
-	models : ['WbsMod', 'ExCodeMod'],
-	stores : ['WbsStore', 'aMonths', 'ExCodeStore'],
+	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin'],
+	models : ['WbsMod', 'ExCodeMod', 'ViewExMod'],
+	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore'],
 	refs : [{
 			ref : 'WbsTool',
 			selector : 'wbstool'
@@ -39,8 +39,8 @@ Ext.define('FpMnf.controller.WbsCont', {
 			}
 		});
 		/*this.getWbsStoreStore().on({
-			scope : this,
-			load : this.loadWbsStore
+		scope : this,
+		load : this.loadWbsStore
 		});*/
 		this.getWbsStoreStore().on({
 			scope : this,
@@ -52,18 +52,29 @@ Ext.define('FpMnf.controller.WbsCont', {
 		});
 		
 	},
-	viewEx : function () {
+	
+	viewExGrid : function (ex_wb_no) {
+		if (ex_wb_no) {
+			var viewex = Ext.widget('viewexwin').show();
+			this.getViewExStoreStore().load({
+				params : {
+					wb_no : ex_wb_no
+				}
+				
+			});
+		} else {
+			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
+		}
 		
-		console.log('viewEx');
+	},
+	
+	viewEx : function (column, action, grid, rowIndex, colIndex, record, node) {
+		
+		this.viewExGrid(record.data['wb_no']);
 		
 	},
 	loadWbs : function (w_dir) {
-		this.getWbsStoreStore().load({
-		params : {
-				dir : w_dir
-			}
-		
-		});
+		this.getWbsStoreStore().load();
 	},
 	insertNewPod : function (p_wb_no, p_dtd_txt, p_dir, p_d_in_txt) {
 		if (p_wb_no && p_dtd_txt && p_dir == 'out' && !p_d_in_txt) {
@@ -85,39 +96,39 @@ Ext.define('FpMnf.controller.WbsCont', {
 		}
 		
 	},
-	 getPeriod: function(){
-      //console.log(this.getWbsTool().down('combomonth').value);
-      //console.log(this.getWbsTool().down('numyear').value);
-      var m = this.getWbsTool().down('combomonth').value;
-      var y = this.getWbsTool().down('numyear').value;
-      //console.log(y + m + '01');
-      return y + m + '01';
-    },
-    beforeprefetchWbsStore: function(store, operation){
-        //console.log('beforeprefetchWbsStore');
-        store.getProxy().setExtraParam('newPeriod', this.getPeriod());
+	getPeriod : function () {
+		//console.log(this.getWbsTool().down('combomonth').value);
+		//console.log(this.getWbsTool().down('numyear').value);
+		var m = this.getWbsTool().down('combomonth').value;
+		var y = this.getWbsTool().down('numyear').value;
+		//console.log(y + m + '01');
+		return y + m + '01';
+	},
+	beforeprefetchWbsStore : function (store, operation) {
+		//console.log('beforeprefetchWbsStore');
+		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
 		switch (true) {
 		case this.getWbsTool().down('button[action=all]').pressed:
-            store.getProxy().setExtraParam('dir', 'all');
+			store.getProxy().setExtraParam('dir', 'all');
 			//console.log('set all');
-            break;
+			break;
 		case this.getWbsTool().down('button[action=in]').pressed:
-            store.getProxy().setExtraParam('dir', 'in');
+			store.getProxy().setExtraParam('dir', 'in');
 			//console.log('set in');
-            break;
+			break;
 		case this.getWbsTool().down('button[action=out]').pressed:
-            store.getProxy().setExtraParam('dir', 'out');
+			store.getProxy().setExtraParam('dir', 'out');
 			//console.log('set out');
-            break;
+			break;
 		}
-        //console.log(operation.params);
-        //console.log(this.getPeriod());
-    },
-    beforeloadWbsStore: function(store, operation){
-        //console.log('beforeloadWbsStore');
-        store.getProxy().setExtraParam('newPeriod', this.getPeriod());
-        //console.log(operation);
-    },
+		//console.log(operation.params);
+		//console.log(this.getPeriod());
+	},
+	beforeloadWbsStore : function (store, operation) {
+		//console.log('beforeloadWbsStore');
+		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
+		//console.log(operation);
+	},
 	loadWbsGrid : function () {
 		var aTol = this.getWbsTool();
 		//var mo = aTol.down('combomonth').value;
@@ -166,13 +177,16 @@ Ext.define('FpMnf.controller.WbsCont', {
 	monthChange : function (comp, newz, oldz) {
 		//var aTol = comp.up('wbstool');
 		//var ye = aTol.down('numyear').value;
-		this.loadWbs(/*ye, newz*/);
+		this.loadWbs(/*ye, newz*/
+		);
 	},
 	yearChange : function (comp, newz, oldz) {
 		//var aTol = comp.up('wbstool');
 		//var mo = aTol.down('combomonth').value;
-		this.loadWbs(/*newz, mo*/);
-	}/*,
+		this.loadWbs(/*newz, mo*/
+		);
+	}
+	/*,
 	loadWbsStore : function (st, rec, suc) {}*/
 	
 	/*,

@@ -24,7 +24,8 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 				
 				Ext.Msg.alert('ИС', 'Новая ИС');
 				}
-				},*/{
+				},*/
+				{
 					getClass : function (v, meta, rec) { // Or return a class from a function
 						if (rec.get('is_ex') > 0) {
 							//console.log(rec.get('is_ex'));
@@ -54,7 +55,7 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 			dataIndex : 'rcpn'
 		}, {
 			text : 'Подтв.',
-			dataIndex : 'p_d_in_txt',
+			dataIndex : 'p_d_in_txt'
 		}, {
 			text : 'ORG',
 			dataIndex : 'org'
