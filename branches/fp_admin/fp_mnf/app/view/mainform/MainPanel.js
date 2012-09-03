@@ -12,6 +12,9 @@ Ext.define('FpMnf.view.mainform.MainPanel', {
 		}, {
 			xtype : 'mnfpanel',
 			title : 'Манифесты'
+		}, {
+			xtype : 'usersgrid',
+			title : 'Пользователи'
 		}
 	]
 });
