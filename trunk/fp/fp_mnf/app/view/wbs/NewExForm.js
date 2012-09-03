@@ -1,9 +1,6 @@
 Ext.define('FpMnf.view.wbs.NewExForm', {
 	alias : 'widget.newexform',
 	extend : 'Ext.form.Panel',
-	
-	//height : 330,
-	//width : 280,
 	layout : {
 		type : 'vbox'
 	},
@@ -13,29 +10,27 @@ Ext.define('FpMnf.view.wbs.NewExForm', {
 			name : 'wb_no',
 			fieldLabel : 'Накладная',
 			readOnly : true
-			//allowBlank : false
 		}, {
 			xtype : 'textfield',
 			name : 'exLoc',
 			fieldLabel : 'Код места происшествия',
-			//labelAlign : 'top',
 			allowBlank : false
 		}, {
 			xtype : 'datefield',
-			name : 'wexRaised',
+			name : 'exRaised',
 			fieldLabel : 'Дата события',
 			startDay : 1,
 			format : 'd.m.Y',
 			allowBlank : false
 		}, {
 			xtype : 'timefield',
-			name : 'wexRaisedTime',
+			name : 'exRaisedTime',
 			fieldLabel : 'Время события',
 			format : 'H:i',
 			allowBlank : false
 		}, {
 			xtype : 'datefield',
-			name : 'wexRptd',
+			name : 'exRptd',
 			fieldLabel : 'Дата отчета о событии',
 			startDay : 1,
 			format : 'd.m.Y',
@@ -51,15 +46,11 @@ Ext.define('FpMnf.view.wbs.NewExForm', {
 			editable : false,
 			fieldLabel : 'Код ИС',
 			store : 'ExCodeStore'
-			
 		}, {
 			xtype : 'textareafield',
 			width : 340,
-			name : 'wexContent',
-			fieldLabel : 'Содержание происшествия',
-			//labelAlign : 'top',
-			allowBlank : false
+			name : 'exContent',
+			fieldLabel : 'Содержание происшествия'
 		}
-		
 	]
 });

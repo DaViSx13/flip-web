@@ -112,6 +112,26 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWbEx':
 			  
 			$query = "exec wwwGetWbEx @wbno='$_REQUEST[wb_no]'";
+			break;
+		case 'SetTar_a_ag':
+			$rem_ag = $_POST['rem_ag'];   
+			$rem_ag = stripslashes($rem_ag);
+			$tar_a_ag = strtr($_POST['tar_a_ag'], ',', '.');  
+			$query = "exec wwwSetTar_a_ag @wb_no='{$_POST[wb_no]}', @interid={$_POST['interid']}, @tar_a_ag={$tar_a_ag}, @rem='{$rem_ag}', @user='{$_SESSION[xUser]}' ";
+			break;
+		case 'NewEx':
+			$exContent = $_POST['exContent'];   
+			$d = explode('.', $_POST['exRaised']);
+			$exRaised = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ) . ' ' . $_POST['exRaisedTime'];
+			$d = explode('.', $_POST['exRptd']);
+			$exRptd = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
+			$query = "exec wwwNewEx @wb_no='{$_POST[wb_no]}', @raised='{$exRaised}', @rptd='{$exRptd}', @loc='{$_POST[exLoc]}', @exCode = '{$_POST[exCode]}', @Content = '$exContent' , @user='{$_SESSION[xUser]}' ";
+			break;	
+		case 'SetPOD':
+			$rcpn = $_POST['rcpn'];
+			$d = explode('.', $_POST['p_d_in']);
+			$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
+			$query = "exec wwwSetPOD @wb_no='{$_POST[wb_no]}', @p_d_in='{$p_d_in}', @tdd='{$_POST[tdd]}', @rcpn='{$rcpn}', @user='{$_SESSION[xUser]}' ";
 			break;	
     }
 

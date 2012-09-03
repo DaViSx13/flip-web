@@ -1,5 +1,5 @@
-Ext.define('FpMnf.view.wbs.NewPodForm', {
-	alias : 'widget.newpodform',
+Ext.define('FpMnf.view.wbs.NewDopForm', {
+	alias : 'widget.newdopform',
 	extend : 'Ext.form.Panel',
 	layout : {
 		type : 'vbox'
@@ -18,23 +18,19 @@ Ext.define('FpMnf.view.wbs.NewPodForm', {
 			readOnly : true,
 			format : 'd.m.Y'
 		}, {
-			xtype : 'datefield',
-			name : 'p_d_in',
-			fieldLabel : 'Дата',
-			format : 'd.m.Y',
-			startDay : 1,
+			xtype : 'textfield',
+			name : 'tar_a_ag',
+			fieldLabel : 'Доп. тариф',
 			allowBlank : false
 		}, {
-			xtype : 'timefield',
-			name : 'tdd',
-			fieldLabel : 'Время',
-			format : 'H:i',
-			allowBlank : false
+			xtype : 'textareafield',
+			width : 310,
+			name : 'rem_ag',
+			fieldLabel : 'Примечание'
 		}, {
 			xtype : 'textfield',
-			name : 'rcpn',
-			fieldLabel : 'Получатель',
-			allowBlank : false
+			name : 'interid',
+			hidden : true
 		}
 	]
 });

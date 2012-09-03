@@ -1,11 +1,23 @@
 Ext.define('FpMnf.controller.WbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin'],
+	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin'],
 	models : ['WbsMod', 'ExCodeMod', 'ViewExMod'],
 	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore'],
 	refs : [{
 			ref : 'WbsTool',
 			selector : 'wbstool'
+		},
+		{
+			ref : 'NewDopWin',
+			selector : 'newdopwin'
+		},
+		{
+			ref : 'NewExWin',
+			selector : 'newexwin'
+		},
+		{
+			ref : 'NewPodWin',
+			selector : 'newpodwin'
 		}
 	],
 	init : function () {
@@ -27,6 +39,18 @@ Ext.define('FpMnf.controller.WbsCont', {
 			},
 			'wbsgrid button[action=ex]' : {
 				click : this.newEx
+			},
+			'wbsgrid button[action=dop]' : {
+				click : this.newDop
+			},
+			'newdopwin button[action=save]' : {
+				click : this.saveDop
+			},
+			'newexwin button[action=save]' : {
+				click : this.saveEx
+			},
+			'newpodwin button[action=save]' : {
+				click : this.savePod
 			},
 			'wbstool combomonth' : {
 				change : this.monthChange
@@ -52,6 +76,105 @@ Ext.define('FpMnf.controller.WbsCont', {
 		});
 		
 	},
+	savePod : function (btn) {
+		var me = this;
+		var win = btn.up('newpodwin');
+		var form_pod = win.down('newpodform');
+		if (form_pod.getForm().isValid()) {
+			form_pod.submit({
+				url : 'srv/data.php',
+				params: {
+					dbAct: 'SetPOD'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					me.loadWbs();
+					Ext.Msg.alert('ПОД сохранено!', action.result.msg);
+					form.reset();
+					me.getNewPodWin().close();
+					
+					
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('ПОД не сохранено!', action.result.msg);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+		}
+	},
+	saveEx : function (btn) {
+		var me = this;
+		var win = btn.up('newexwin');
+		var form_ex = win.down('newexform');
+		if (form_ex.getForm().isValid()) {
+			form_ex.submit({
+				url : 'srv/data.php',
+				params: {
+					dbAct: 'NewEx'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					me.loadWbs();
+					Ext.Msg.alert('Происшествие сохранено!', action.result.msg);
+					form.reset();
+					me.getNewExWin().close();
+					
+					
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Происшествие не сохранено!', action.result.msg);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+		}
+	},
+	saveDop : function (btn) {
+		var me = this;
+		var win = btn.up('newdopwin');
+		var form_dop = win.down('newdopform');
+		if (form_dop.getForm().isValid()) {
+			form_dop.submit({
+				url : 'srv/data.php',
+				params: {
+					dbAct: 'SetTar_a_ag'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					me.loadWbs();
+					Ext.Msg.alert('Доп. тариф сохранен!', action.result.msg);
+					form.reset();
+					me.getNewDopWin().close();
+					
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Доп. тариф не сохранен!', action.result.msg);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+		}
+	},	
+	insertNewDop : function (d_wb_no, d_dtd_txt, d_tar_ag_id, d_req_tar_a) {
+		if (d_wb_no && d_dtd_txt && d_tar_ag_id && !d_req_tar_a) {
+			var newdop = Ext.widget('newdopwin').show();
+			var formdop = newdop.down('newdopform');
+			formdop.down('textfield[name=wb_no]').setValue(d_wb_no);
+			formdop.down('textfield[name=dtd_txt]').setValue(d_dtd_txt);
+			formdop.down('textfield[name=interid]').setValue(d_tar_ag_id);
+		} else {
+			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя внести Доп. тариф');
+		}
+	},
+	newDop : function (btn) {
+		var sm = btn.up('wbsgrid').getSelectionModel();
+		if (sm.getCount() > 0) {
+			
+			this.insertNewDop(sm.getSelection()[0].get('wb_no'), sm.getSelection()[0].get('dtd_txt'), sm.getSelection()[0].get('tar_ag_id'), sm.getSelection()[0].get('req_tar_a'));
+		}
+		
+	},
 	
 	viewExGrid : function (ex_wb_no) {
 		if (ex_wb_no) {
@@ -73,7 +196,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		this.viewExGrid(record.data['wb_no']);
 		
 	},
-	loadWbs : function (w_dir) {
+	loadWbs : function () {
 		this.getWbsStoreStore().load();
 	},
 	insertNewPod : function (p_wb_no, p_dtd_txt, p_dir, p_d_in_txt) {
@@ -141,7 +264,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
-		this.loadWbs('all');
+		this.loadWbs();
 		//console.log('all');
 	},
 	outWbs : function (btn) {
@@ -149,7 +272,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
-		this.loadWbs('out');
+		this.loadWbs();
 		//console.log('out');
 	},
 	inWbs : function (btn) {
@@ -157,7 +280,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=out]').toggle(false);
-		this.loadWbs('in');
+		this.loadWbs();
 		//console.log('in');
 	},
 	newPod : function (btn) {

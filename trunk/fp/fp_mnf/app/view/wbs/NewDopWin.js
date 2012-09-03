@@ -1,18 +1,18 @@
-Ext.define('FpMnf.view.wbs.NewPodWin', {
+Ext.define('FpMnf.view.wbs.NewDopWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
-	alias : 'widget.newpodwin',
-	requires : ['FpMnf.view.wbs.NewPodForm'],
-	title : 'Подтверждение о доставке накладной',
+	alias : 'widget.newdopwin',
+	requires : ['FpMnf.view.wbs.NewDopForm'],
+	title : 'Заявка на доп. тариф',
 	layout : 'fit',
 	autoShow : true,
-	height : 220,
-	width : 285,
+	height : 250,
+	width : 340,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
 		this.items = [{
-				xtype : 'newpodform'
+				xtype : 'newdopform'
 			}
 		];
 		this.buttons = [{
