@@ -3,7 +3,8 @@ Ext.define('FpMnf.view.Viewport', {
 	layout : 'fit',
 	requires : ['Ext.resizer.*', 'Ext.grid.column.*', 'Ext.form.*', 'Ext.layout.container.*'], //for build
 	items : [{
-			xtype : 'mainpanel'
+			//xtype : 'mainpanel'
+			xtype : 'loginformcontainer'
 		}
 	]
 });
