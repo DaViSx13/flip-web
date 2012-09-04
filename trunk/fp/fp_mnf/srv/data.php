@@ -152,7 +152,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			
                 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
                     foreach ($row as $f => &$value) {
-						if(($response->fields[$f] == 'char')&&($value)){
+						if((($response->fields[$f] == 'char')||($response->fields[$f] == 'text'))&&($value)){
 							$value = iconv("windows-1251", "UTF-8", $value);
 						}
                     }
