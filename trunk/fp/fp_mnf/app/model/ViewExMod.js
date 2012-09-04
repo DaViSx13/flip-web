@@ -13,6 +13,8 @@ Ext.define('FpMnf.model.ViewExMod', {
 			name : 'loc'
 		}, {
 			name : 'exdesc'
+		}, {
+			name : 'ofvers'
 		}
 	]
 });

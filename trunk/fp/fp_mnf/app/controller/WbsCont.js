@@ -99,7 +99,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
-				console.log(text.data[0].s_wb);
+				//console.log(text.data[0].s_wb);
 				twt.down('label[itemId=lab1]').setText('Всего: ' + text.data[0].s_wb);
 				twt.down('label[itemId=lab2]').setText('Вес: ' + text.data[0].s_wt);
 				twt.down('label[itemId=lab3]').setText('V вес: ' + text.data[0].s_vol_wt);
