@@ -4,6 +4,7 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 	requires : ['FpMnf.view.wbs.WbsTool' /*, 'FpMnf.view.mainform.TotalTool'*/
 	],
 	store : 'WbsStore',
+	autoScroll : true,
 	loadMask : true,
 	selModel : {
 		pruneRemoved : false

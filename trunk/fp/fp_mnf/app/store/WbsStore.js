@@ -3,8 +3,8 @@ Ext.define('FpMnf.store.WbsStore', {
 	requires : ['Ext.data.reader.Json'],
 	model : 'FpMnf.model.WbsMod',
 	buffered: true,
-	pageSize: 40,
-	leadingBufferZone: 40,
+	pageSize: 100,
+	leadingBufferZone: 300,
 //	trailingBufferZone: 100,
     remoteSort: true,
 	proxy : {
