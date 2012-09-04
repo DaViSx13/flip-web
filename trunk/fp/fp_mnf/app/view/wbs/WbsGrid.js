@@ -1,7 +1,7 @@
 Ext.define('FpMnf.view.wbs.WbsGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.wbsgrid',
-	requires : ['FpMnf.view.wbs.WbsTool' /*, 'FpMnf.view.mainform.TotalTool'*/
+	requires : ['FpMnf.view.wbs.WbsTool' , 'FpMnf.view.wbs.WbsTotal'
 	],
 	store : 'WbsStore',
 	autoScroll : true,
@@ -132,9 +132,9 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 			xtype : 'wbstool',
 			dock : 'top'
 		}
-		/*, {
-		xtype : 'totaltool',
+		, {
+		xtype : 'wbstotal',
 		dock : 'bottom'
-		}*/
+		}
 	]
 });

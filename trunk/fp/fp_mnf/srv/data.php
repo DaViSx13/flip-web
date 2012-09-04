@@ -132,7 +132,11 @@ if (!isset($_REQUEST['dbAct'])) {
 			$d = explode('.', $_POST['p_d_in']);
 			$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
 			$query = "exec wwwSetPOD @wb_no='{$_POST[wb_no]}', @p_d_in='{$p_d_in}', @tdd='{$_POST[tdd]}', @rcpn='{$rcpn}', @user='{$_SESSION[xUser]}' ";
-			break;	
+			break;
+		case 'GetWbsTotal':
+			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			$query = "exec wwwGetWbsTotal @dir='{$_POST[dir]}', @period='{$_POST[period]}',  @agentID={$ag} ";
+			break;
     }
 
     if (!isset($query)) {
