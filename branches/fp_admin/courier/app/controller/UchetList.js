@@ -24,7 +24,7 @@
 		if (success) {
 			this.getUchetsStore().add(records);
 			/*store.each(function () {
-				console.log(this.get('client'))
+				console.log(this.getData())
 			})*/
 		}
 	}

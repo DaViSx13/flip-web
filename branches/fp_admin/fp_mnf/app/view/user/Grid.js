@@ -3,15 +3,21 @@ Ext.define('FpMnf.view.user.Grid', {
 	alias : 'widget.usersgrid',
 	store : 'Users',
 	columns : [{
+			text : 'Код города',
+			dataIndex : 'partloc',
+            menuDisabled: true
+		},{
 			text : 'Login',
 			dataIndex : 'login',
             menuDisabled: true
 		}, {
 			text : 'Агент',
-			dataIndex : 'agentname',
+			dataIndex : 'partname',
+            width: 200,
             menuDisabled: true
 		}, {
-			text : 'Активен',
+			xtype: 'booleancolumn',
+            text : 'Активен',
 			dataIndex : 'active',
             menuDisabled: true
 		}

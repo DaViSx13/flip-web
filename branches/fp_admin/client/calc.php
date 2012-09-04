@@ -107,8 +107,8 @@ function fCalc(){
             	</div>
             </span>
             <script type="text/javascript">
-        	//var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname', {minCharsType: 2, loadFromServer: true, urlParam: "pName"});
-        	var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname');
+        	var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname', {minCharsType: 2, loadFromServer: true, urlParam: "pName"});
+        	//var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname');
             </script>
        
         </td>
