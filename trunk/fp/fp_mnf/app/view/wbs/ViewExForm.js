@@ -7,9 +7,7 @@ Ext.define('FpMnf.view.wbs.ViewExForm', {
 	bodyPadding : 0,
 	items : [{
 			xtype : 'textareafield',
-			//width : 340,
-			name : 'ofvers'//,
-			//fieldLabel : 'Содержание происшествия'
+			name : 'ofvers'
 		}
 	]
 });

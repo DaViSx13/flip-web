@@ -4,7 +4,7 @@ Ext.define('FpMnf.view.wbs.ViewExWin', {
 	alias : 'widget.viewexwin',
 	requires : ['FpMnf.view.wbs.ViewExGrid', 'FpMnf.view.wbs.ViewExForm'],
 	title : 'Просмотр исключений',
-	layout: 'border',
+	layout : 'border',
 	autoShow : true,
 	height : 300,
 	width : 550,
@@ -14,13 +14,13 @@ Ext.define('FpMnf.view.wbs.ViewExWin', {
 		this.items = [{
 				xtype : 'viewexgrid',
 				region : 'center',
-				flex:2
-			},{
-			xtype : 'viewexform',
-			split : true,
-			region : 'south',
-			flex : 1
-		}
+				flex : 2
+			}, {
+				xtype : 'viewexform',
+				split : true,
+				region : 'south',
+				flex : 1
+			}
 		]
 		this.callParent(arguments);
 	}

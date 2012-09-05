@@ -28,10 +28,10 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
 			},{
 			text : 'Новая ИС',
 			action : 'ex'
-			},{
+			}/*,{
 			text : 'Доп. Тариф',
 			action : 'dop'
-			}
+			}*/
 			
 			]
 			

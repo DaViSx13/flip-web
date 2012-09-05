@@ -40,9 +40,9 @@ Ext.define('FpMnf.controller.WbsCont', {
 			'wbsgrid button[action=ex]' : {
 				click : this.newEx
 			},
-			'wbsgrid button[action=dop]' : {
+			/*'wbsgrid button[action=dop]' : {
 				click : this.newDop
-			},
+			},*/
 			'newdopwin button[action=save]' : {
 				click : this.saveDop
 			},
@@ -60,6 +60,9 @@ Ext.define('FpMnf.controller.WbsCont', {
 			},
 			'wbsgrid actioncolumn' : {
 				itemclick : this.viewEx
+			},
+			'wbsgrid numbercolumn[itemId=dop]' : {
+				click : this.showDop
 			}
 		});
 		this.getWbsStoreStore().on({
@@ -70,6 +73,26 @@ Ext.define('FpMnf.controller.WbsCont', {
 			scope : this,
 			beforeload : this.beforeloadWbsStore
 		});
+	},
+	editDop : function (d_wb_no, d_dtd_txt, d_tar_ag_id, d_req_tar_a, d_req_rem) {
+		if (d_wb_no && d_dtd_txt && d_tar_ag_id && d_req_tar_a) {
+			var newdop = Ext.widget('newdopwin').show();
+			var formdop = newdop.down('newdopform');
+			formdop.down('textfield[name=wb_no]').setValue(d_wb_no);
+			formdop.down('textfield[name=dtd_txt]').setValue(d_dtd_txt);
+			formdop.down('textfield[name=interid]').setValue(d_tar_ag_id);
+			formdop.down('textfield[name=tar_a_ag]').setValue(d_req_tar_a);
+			formdop.down('textfield[name=rem_ag]').setValue(d_req_rem);
+		} else {
+			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя редактировать Доп. тариф');
+		}
+	},
+	showDop : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
+	if (!rec.data['req_tar_a']) {
+	this.insertNewDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a']);
+	} else {
+	this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
+	}
 	},
 	getPeriod : function () {
 		var m = this.getWbsTool().down('combomonth').value;
@@ -198,12 +221,12 @@ Ext.define('FpMnf.controller.WbsCont', {
 			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя внести Доп. тариф');
 		}
 	},
-	newDop : function (btn) {
+	/*newDop : function (btn) {
 		var sm = btn.up('wbsgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			this.insertNewDop(sm.getSelection()[0].get('wb_no'), sm.getSelection()[0].get('dtd_txt'), sm.getSelection()[0].get('tar_ag_id'), sm.getSelection()[0].get('req_tar_a'));
 		}
-	},
+	},*/
 	viewExGrid : function (ex_wb_no) {
 		if (ex_wb_no) {
 			var viewex = Ext.widget('viewexwin').show();

@@ -4,9 +4,9 @@ Ext.define('FpMnf.controller.ViewExCont', {
 	refs : [{
 			ref : 'ViewExForm',
 			selector : 'viewexform'
-		}],
+		}
+	],
 	init : function () {
-		
 		this.control({
 			'viewexgrid' : {
 				selectionchange : this.viewRem
@@ -14,10 +14,8 @@ Ext.define('FpMnf.controller.ViewExCont', {
 		});
 	},
 	viewRem : function (mod, rec) {
-	//console.log(rec[0]);	
 		if (rec[0]) {
-                        this.getViewExForm().getForm().loadRecord(rec[0]);
-						
-                    }
+			this.getViewExForm().getForm().loadRecord(rec[0]);
+		}
 	}
 });

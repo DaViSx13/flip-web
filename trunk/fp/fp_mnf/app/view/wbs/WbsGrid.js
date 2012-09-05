@@ -4,6 +4,14 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 	requires : ['FpMnf.view.wbs.WbsTool' , 'FpMnf.view.wbs.WbsTotal'
 	],
 	store : 'WbsStore',
+	change: function(val) {
+        if (val > 0) {
+            return '<span style="color:green; cursor: pointer;">' + val + '</span>';
+        } else if (val == 0) {
+            return '<img src="/fp_mnf/resources/images/dop.gif" style="cursor: pointer;" alt="dop" />';
+        }
+        return val;
+    },
 	autoScroll : true,
 	loadMask : true,
 	selModel : {
@@ -12,7 +20,8 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 	viewConfig : {
 		trackOver : false
 	},
-	columns : [{
+	initComponent: function() {
+	this.columns = [{
 			xtype : 'actioncolumn',
 			text : 'ИС',
 			name : 'exaction',
@@ -88,16 +97,19 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 					text : 'баз.',
 					xtype : 'numbercolumn',
 					format : '0.00',
+					
 					dataIndex : 'tar_flip_b'
 				}, {
 					text : 'доп.',
 					xtype : 'numbercolumn',
 					format : '0.00',
+					
 					dataIndex : 'tar_flip_a'
 				}, {
 					text : 'Всего',
 					xtype : 'numbercolumn',
 					format : '0.00',
+					
 					dataIndex : 'tar_flip_t'
 				}, {
 					text : 'прим.',
@@ -126,9 +138,17 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 					dataIndex : 'rem_ag'
 				}
 			]
+		},
+		{
+			xtype : 'numbercolumn',
+			text : 'Заявка',
+			itemId: 'dop',
+			dataIndex : 'req_tar_a',
+			width : 50,
+			renderer : this.change
 		}
-	],
-	dockedItems : [{
+	];
+	this.dockedItems = [{
 			xtype : 'wbstool',
 			dock : 'top'
 		}
@@ -136,5 +156,7 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 		xtype : 'wbstotal',
 		dock : 'bottom'
 		}
-	]
+	];
+	this.callParent(arguments);
+}
 });
