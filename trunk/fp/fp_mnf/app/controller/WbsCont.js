@@ -70,6 +70,9 @@ Ext.define('FpMnf.controller.WbsCont', {
 			},
 			'wbstool button[action=filter]' : {
 				click : this.filterGrid
+			},
+			'wbstool comboagent' : {
+				change : this.changeAgent
 			}
 		});
 		this.getWbsStoreStore().on({
@@ -80,6 +83,23 @@ Ext.define('FpMnf.controller.WbsCont', {
 			scope : this,
 			beforeload : this.beforeloadWbsStore
 		});
+	},
+	changeAgent : function (Field, newValue) {
+		Ext.Ajax.request({
+			url : 'srv/change.php',
+			params : {
+				agent : newValue
+			},
+			success : function (response) {
+				var text = Ext.decode(response.responseText);
+			},
+			failure : function (response) {
+				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+			}
+		});
+		this.loadWbs();
+		this.viewTotal();
+		
 	},
     filterGrid: function(){
       //console.log('filtering');

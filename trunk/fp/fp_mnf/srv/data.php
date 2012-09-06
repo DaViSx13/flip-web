@@ -28,16 +28,19 @@ if (!isset($_REQUEST['dbAct'])) {
             break;
         case 'getAgOrders':
             $ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
             $query = "exec wwwGetAgOrders @period='$_REQUEST[newPeriod]', @agentID={$ag}";
             break;
 		case 'GetMnf':
 			$is_Ready = $_REQUEST['is_Ready'];
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetMnf @period='$_REQUEST[period]', @agentID={$ag}, @is_Ready={$is_Ready}";
 			break;
 		case 'GetWbMnf':
 			$mnfRefNo = $_REQUEST['mnfRefNo'];
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetWbMnf @agentID={$ag}, @mnfRefNo='{$mnfRefNo}'";
 			break;
 		case 'GetCity':
@@ -101,7 +104,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			@RordNum=$Rordnum";			
 			break;
 		case 'GetAgentWbs':
-			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
+			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}, @dir='$_REQUEST[dir]'";
             $paging = true;
 			break;
@@ -135,8 +139,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'GetWbsTotal':
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetWbsTotal @dir='{$_POST[dir]}', @period='{$_POST[period]}',  @agentID={$ag} ";
 			break;
+		case 'GetAgents':
+			$query = "exec wwwGetAgents";
+			break;	
     }
 
     if (!isset($query)) {

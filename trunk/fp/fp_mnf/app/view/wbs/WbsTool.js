@@ -1,7 +1,7 @@
 Ext.define('FpMnf.view.wbs.WbsTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.wbstool',
-	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear', 'Ext.ButtonGroup'],
+	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear',  'Ext.ButtonGroup', 'FpMnf.view.mainform.ComboAgent'],
 	
 	items : [
 			{
@@ -39,12 +39,24 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
             '-',
             {
               xtype: 'textfield',
+			  emptyText: '№ накладной',
               name: 'filteredit'
             },
             {
 			text : 'Фильтр',
 			action : 'filter'
-			},
+			}, {
+			xtype : 'buttongroup',
+			itemId : 'admgroup',
+			items : [
+			{xtype : 'comboagent'}
+			],
+			hidden : true,
+			style : {
+				marginLeft : '20px',
+				marginRight : '20px'
+			}
+		},
 				
 		
 		

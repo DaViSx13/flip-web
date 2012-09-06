@@ -1,6 +1,17 @@
 Ext.define('FpMnf.controller.Loginform', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.Loginform', 'mainform.MainPanel', 'mainform.Loginformcontainer', 'Viewport'],
+	refs : [{
+			ref : 'OrdTool',
+			selector : 'ordtool'
+		}, {
+			ref : 'MnfTool',
+			selector : 'mnftool'
+		}, {
+			ref : 'WbsTool',
+			selector : 'wbstool'
+		}
+	],
 	init : function () {
 		this.control({
 			'loginform button[action=login]' : {
@@ -10,7 +21,7 @@ Ext.define('FpMnf.controller.Loginform', {
 		
 	},
 	onLaunch : function () {
-		
+		var me = this;
 		Ext.Ajax.request({
 			url : 'srv/launch.php',
 			success : function (response) {
@@ -20,6 +31,13 @@ Ext.define('FpMnf.controller.Loginform', {
 					var aviewport = Ext.widget('fpmnfviewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('mainpanel'));
+					if (text.msg == '-1') {
+						
+						me.getOrdTool().down('comboagent').up('buttongroup').setVisible(true);
+						me.getMnfTool().down('comboagent').up('buttongroup').setVisible(true);
+						me.getWbsTool().down('comboagent').up('buttongroup').setVisible(true);
+					}
+				
 					
 				} else {
 					var aviewport = Ext.widget('fpmnfviewport');
@@ -44,6 +62,12 @@ Ext.define('FpMnf.controller.Loginform', {
 					var aviewport = button.up('viewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('mainpanel'));
+					if (action.result.msg == '-1') {
+						
+						me.getOrdTool().down('comboagent').up('buttongroup').setVisible(true);
+						me.getMnfTool().down('comboagent').up('buttongroup').setVisible(true);
+						me.getWbsTool().down('comboagent').up('buttongroup').setVisible(true);
+					}
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Ошибка', action.result.msg);

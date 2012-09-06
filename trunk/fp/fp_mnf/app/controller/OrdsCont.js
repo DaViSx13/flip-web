@@ -1,8 +1,8 @@
 Ext.define('FpMnf.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.OrdGrid', 'orders.OrdWin'],
-	models : ['OrdsMod', 'OrderMod', 'CityMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt'],
+	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
+	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt'],
 	refs : [{
 			ref : 'OrdForm',
 			selector : 'ordform'
@@ -51,6 +51,9 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			},
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
+			},
+			'ordtool comboagent' : {
+				change : this.changeAgent
 			}
 		});
 		this.getOrderStStore().on({
@@ -61,6 +64,25 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+	},
+	changeAgent : function (comp, newValue) {
+		Ext.Ajax.request({
+			url : 'srv/change.php',
+			params : {
+				agent : newValue
+			},
+			success : function (response) {
+				var text = Ext.decode(response.responseText);
+			},
+			failure : function (response) {
+				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+			}
+		});
+		var aTol = comp.up('ordtool');
+		var ye = aTol.down('numyear').value;
+		var mo = aTol.down('combomonth').value;
+		this.loadOrds(ye, mo);
+		
 	},
 	loadOrds : function (y, m) {
 		this.getOrdsStStore().load({

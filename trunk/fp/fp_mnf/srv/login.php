@@ -26,15 +26,13 @@ if ( !empty( $_POST['user'] )) {
 		   
 		   }
                 else {
-				   $response->success = true;
-				   $response->msg = 'Превед';
+				   
                    session_start();
 				   $_SESSION['xUser'] = $_POST['user'];
                    $_SESSION['xAgentID'] = $row['agentid'];
                    $_SESSION['xAgentName'] = $row['partname'];
-                   //header("Location: agent/work.php");
-				   
-                  // exit;  
+                   $response->success = true;
+				   $response->msg = $_SESSION['xAgentID'];  
                 }; 
         }; 
     

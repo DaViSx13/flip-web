@@ -7,18 +7,17 @@ class Response
 }
 $response = new Response();
 session_start();
-if ( !empty( $_SESSION['xUser'] ) && !empty( $_SESSION['xAgentID'] )) {
+if ( !empty( $_POST['agent'] )) {
+	
+	$_SESSION['AdmAgentID'] = $_POST['agent'];
     
-	$_SESSION['AdmAgentID']=null;
 	$response->success = true;
-	$response->msg = $_SESSION['xAgentID'];
+	$response->msg = $_SESSION['AdmAgentID'];
                    
     
     } else {
-	$_SESSION['AdmAgentID']=null;
 	$response->success = false;
 	$response->msg='Доступ блокирован...';
-	
 	
 	}
 echo json_encode($response);

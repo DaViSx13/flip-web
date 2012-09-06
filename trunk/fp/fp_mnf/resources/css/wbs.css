@@ -1,12 +1,12 @@
 .x-action-col-cell img.dop-col {
-			background-image: url(/fp_mnf/resources/images/dop.gif);
+			background-image: url(resources/images/dop.gif);
             height: 16px;
             width: 16px;
             cursor: pointer;
         }
 /* custom icon for the "ex" ActionColumn icon */
 .x-action-col-cell img.ex-col {
-            background-image: url(/fp_mnf/resources/images/ex.gif);
+            background-image: url(resources/images/ex.gif);
 			height: 16px;
             width: 16px;
             cursor: pointer;
