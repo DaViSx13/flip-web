@@ -1,5 +1,5 @@
 <?php
-/************************************
+/*****************ы*******************
 *    Allows sorting multi-dimensional
 *    arrays by a specific key and in
 *    asc or desc order
