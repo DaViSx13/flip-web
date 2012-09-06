@@ -1,7 +1,7 @@
 Ext.define('FpMnf.view.mainform.MnfTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.mnftool',
-	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear', 'FpMnf.view.mainform.ComboAgent'],
+	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear'],
 	items : [{
 			text : 'Входящие',
 			enableToggle : true,
@@ -14,18 +14,7 @@ Ext.define('FpMnf.view.mainform.MnfTool', {
 			text : 'Все',
 			enableToggle : true,
 			action : 'all'
-		}, '-', {
-			xtype : 'buttongroup',
-			itemId : 'admgroup',
-			items : [
-			{xtype : 'comboagent'}
-			],
-			hidden : true,
-			style : {
-				marginLeft : '20px',
-				marginRight : '20px'
-			}
-		}, '->', '-', {
+		}, '-', '->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'

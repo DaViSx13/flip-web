@@ -1,8 +1,8 @@
 Ext.define('FpMnf.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.OrdGrid', 'orders.OrdWin'],
-	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt'],
+	models : ['OrdsMod', 'OrderMod', 'CityMod'],
+	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt'],
 	refs : [{
 			ref : 'OrdForm',
 			selector : 'ordform'
@@ -51,9 +51,6 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			},
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
-			},
-			'ordtool comboagent' : {
-				change : this.changeAgent
 			}
 		});
 		this.getOrderStStore().on({
@@ -64,25 +61,6 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
-	},
-	changeAgent : function (comp, newValue) {
-		Ext.Ajax.request({
-			url : 'srv/change.php',
-			params : {
-				agent : newValue
-			},
-			success : function (response) {
-				var text = Ext.decode(response.responseText);
-			},
-			failure : function (response) {
-				Ext.Msg.alert('Сервер недоступен!', response.statusText);
-			}
-		});
-		var aTol = comp.up('ordtool');
-		var ye = aTol.down('numyear').value;
-		var mo = aTol.down('combomonth').value;
-		this.loadOrds(ye, mo);
-		
 	},
 	loadOrds : function (y, m) {
 		this.getOrdsStStore().load({
@@ -98,7 +76,8 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		this.loadOrds(ye, mo);
 	},
 	openOrdWin : function (btn) {
-		var edit = Ext.widget('ordwin').show();
+		//var edit = Ext.create('FpMnf.view.orders.OrdWin').show();
+        var edit = Ext.widget('ordwin').show();
 	},
 	dblclickOrdGr : function (gr, rec) {
 		var tt = this.getOrdTool();
@@ -119,6 +98,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 							id : sm.getSelection()[0].get('rordnum')
 						}
 					});
+				
 				if (btn.action == 'view') {
 					win.down('button[action=save]').setVisible(false);
 				} else {
@@ -177,8 +157,8 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		if (form_ord.getForm().isValid()) {
 			form_ord.submit({
 				url : 'srv/data.php',
-				params : {
-					dbAct : 'saveagorder'
+				params: {
+					dbAct: 'saveagorder'
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
@@ -221,6 +201,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
+		//console.log(rec[0].data['orgcode']);
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params : {
@@ -228,9 +209,11 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			}
 		});
 		cb_des.select(rec[0].data['destcode']);
+		//cb_des.setValue(rec[0].data['destcode']);
 	},
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText('Количество заказов: ' + st.getCount());
+		
 	}
 });

@@ -1,5 +1,5 @@
 <?php
-/************************************
+/*****************ы*******************
 *    Allows sorting multi-dimensional
 *    arrays by a specific key and in
 *    asc or desc order
@@ -7,7 +7,7 @@
 
 class multiSort
 {
-    var $key;    //key in your array
+    private $key;    //key in your array
 
     //runs the sort, and returns sorted array
     function run ($myarray, $key_to_sort, $type_of_sort = '')
@@ -23,8 +23,8 @@ class multiSort
     }
 
     //for ascending order
-    function mycompare($x, $y)
-    {
+    private function mycompare($x, $y)
+    {    //echo 'sort';
        return strnatcasecmp(iconv("UTF-8", "windows-1251", ($x[$this->key])), iconv("UTF-8", "windows-1251", ($y[$this->key])));
        /*
         if ( $x[$this->key] == $y[$this->key] )
@@ -37,7 +37,7 @@ class multiSort
     }
 
     //for descending order
-    function myreverse_compare($x, $y)
+    private function myreverse_compare($x, $y)
     {
       return -1 * strnatcasecmp(iconv("UTF-8", "windows-1251", ($x[$this->key])), iconv("UTF-8", "windows-1251", ($y[$this->key])));
       /*  if ( $x[$this->key] == $y[$this->key] )

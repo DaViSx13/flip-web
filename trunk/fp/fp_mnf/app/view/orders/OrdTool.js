@@ -1,7 +1,7 @@
 Ext.define('FpMnf.view.orders.OrdTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.ordtool',
-	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear', 'FpMnf.view.mainform.ComboAgent'],
+	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear'],
 	items : [{
 			text : 'Новый',
 			action : 'new'
@@ -11,18 +11,8 @@ Ext.define('FpMnf.view.orders.OrdTool', {
 		}, '-', {
 			text : 'Редактировать',
 			action : 'edit'
-		}, '-', {
-			xtype : 'buttongroup',
-			itemId : 'admgroup',
-			items : [
-			{xtype : 'comboagent'}
-			],
-			hidden : true,
-			style : {
-				marginLeft : '20px',
-				marginRight : '20px'
-			}
-		}, '->', '-', {
+		},
+		'->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'

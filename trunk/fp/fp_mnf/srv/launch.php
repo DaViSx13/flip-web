@@ -10,7 +10,7 @@ session_start();
 if ( !empty( $_SESSION['xUser'] ) && !empty( $_SESSION['xAgentID'] )) {
     
 	$response->success = true;
-	$response->msg = $_SESSION['xAgentID'];
+	$response->msg = 'Превед';
                    
     
     } else {

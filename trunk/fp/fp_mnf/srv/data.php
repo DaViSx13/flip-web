@@ -28,13 +28,11 @@ if (!isset($_REQUEST['dbAct'])) {
             break;
         case 'getAgOrders':
             $ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
-			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
             $query = "exec wwwGetAgOrders @period='$_REQUEST[newPeriod]', @agentID={$ag}";
             break;
 		case 'GetMnf':
 			$is_Ready = $_REQUEST['is_Ready'];
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
-			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetMnf @period='$_REQUEST[period]', @agentID={$ag}, @is_Ready={$is_Ready}";
 			break;
 		case 'GetWbMnf':
@@ -103,9 +101,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@RordNum=$Rordnum";			
 			break;
 		case 'GetAgentWbs':
-			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID']; 
-			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			
+			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];  
 			$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}, @dir='$_REQUEST[dir]'";
             $paging = true;
 			break;
@@ -141,9 +137,6 @@ if (!isset($_REQUEST['dbAct'])) {
 			$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID'];
 			$query = "exec wwwGetWbsTotal @dir='{$_POST[dir]}', @period='{$_POST[period]}',  @agentID={$ag} ";
 			break;
-		case 'GetAgents':
-			$query = "exec wwwGetAgents";
-			break;	
     }
 
     if (!isset($query)) {
@@ -176,25 +169,37 @@ if (!isset($_REQUEST['dbAct'])) {
 
 				//paging
 				if($paging){
-				    //$response->paging = 'paging';
+
+                    //filtering
+                    if(isset($_REQUEST['filter'])){
+                      $filterParams = json_decode(stripslashes($_REQUEST['filter']), true);
+                      $filterKey = strtolower($filterParams[0]['property']);
+                      $filterValue = strtolower($filterParams[0]['value']);
+
+                      $response->filterKey = $filterKey;
+                      $response->filterValue = $filterValue;
+
+                      include 'filterer.php';
+                      $filterer = new Filterer();
+                      $response->data = $filterer->filter($response->data, $filterKey, $filterValue);
+
+                    }
+
+                    //sorting
+                    if(isset($_REQUEST['sort'])){
+                      $sortParams = json_decode(stripslashes($_REQUEST['sort']), true);
+                      $sortKey = strtolower($sortParams[0]['property']);
+                      $sortDir = strtolower($sortParams[0]['direction']);
+
+                      include 'multiSort.php';
+                      $multisort = new multisort();
+                      $response->data = $multisort->run($response->data, $sortKey, $sortDir);
+                    }
+
+                    //paging
 		  			$page = $_REQUEST['page'];
         			$start = $_REQUEST['start'];
         			$limit = $_REQUEST['limit'];
-
-                    //setlocale(LC_ALL, "ru_RU.UTF-8", "Russian_Russia.65001");
-                    //$response->zzz = strnatcasecmp('ВЫСОЦКАЯ', 'Васильева');
-                    //$response->xxx = setlocale(LC_ALL, '0');
-
-                    $sortParams = json_decode(stripslashes($_REQUEST['sort']), true);
-                    $sortKey = strtolower($sortParams[0]['property']);
-                    $sortDir = strtolower($sortParams[0]['direction']);
-
-                    include 'multiSort.php';
-                    $multisort = new multisort();
-                    $response->data = $multisort->run($response->data, $sortKey, $sortDir);
-                    //uasort($response->data, build_sorter('rcpn'), 'desc');
-
-
 					$response->total = count($response->data);
 					$response->data = array_slice($response->data, $start, $limit);
 				}
