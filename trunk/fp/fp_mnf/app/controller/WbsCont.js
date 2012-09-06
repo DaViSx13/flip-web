@@ -18,7 +18,11 @@ Ext.define('FpMnf.controller.WbsCont', {
 		}, {
 			ref : 'WbsTotal',
 			selector : 'wbstotal'
-		}
+		},
+        {
+          ref: 'WbFilter',
+          selector: 'wbstool > textfield[name=filteredit]'
+        }
 	],
 	init : function () {
 		this.control({
@@ -63,6 +67,9 @@ Ext.define('FpMnf.controller.WbsCont', {
 			},
 			'wbsgrid numbercolumn[itemId=dop]' : {
 				click : this.showDop
+			},
+			'wbstool button[action=filter]' : {
+				click : this.filterGrid
 			}
 		});
 		this.getWbsStoreStore().on({
@@ -74,6 +81,25 @@ Ext.define('FpMnf.controller.WbsCont', {
 			beforeload : this.beforeloadWbsStore
 		});
 	},
+    filterGrid: function(){
+      //console.log('filtering');
+      //console.log(this.getWbsTool().down('textfield[name=filteredit]'));
+      //console.log(this.getWbFilter().getValue());
+
+      if(this.getWbFilter().getValue()){
+        this.getWbsStoreStore().clearFilter(true);
+        this.getWbsStoreStore().filter('wb_no', this.getWbFilter().getValue());
+      }
+      else {this.getWbsStoreStore().clearFilter();
+      }
+/*      var wbFilter = new Ext.util.Filter({
+             property: 'wb_no',
+             value   : '00'
+             //,anyMatch: true
+            });
+      //console.log
+      this.getWbsStoreStore().filter(wbFilter);
+  */  },
 	editDop : function (d_wb_no, d_dtd_txt, d_tar_ag_id, d_req_tar_a, d_req_rem) {
 		if (d_wb_no && d_dtd_txt && d_tar_ag_id && d_req_tar_a) {
 			var newdop = Ext.widget('newdopwin').show();

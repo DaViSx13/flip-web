@@ -32,9 +32,18 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
 			text : 'Доп. Тариф',
 			action : 'dop'
 			}*/
-			
+
 			]
-			
+
+			},
+            '-',
+            {
+              xtype: 'textfield',
+              name: 'filteredit'
+            },
+            {
+			text : 'Фильтр',
+			action : 'filter'
 			},
 				
 		
