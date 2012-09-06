@@ -10,6 +10,7 @@ Ext.define('FpMnf.view.mainform.Loginform', {
 	width : 260,
 	items: [{
 		xtype: 'textfield',
+		width : 230,
 		name: 'user',
 		fieldLabel: 'Имя',
 		allowBlank: false
@@ -17,6 +18,7 @@ Ext.define('FpMnf.view.mainform.Loginform', {
 	{
 		xtype: 'textfield',
 		name: 'password',
+		width : 230,
 		fieldLabel: 'Пароль',
 		inputType: 'password',
 		allowBlank: false
