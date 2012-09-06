@@ -7,7 +7,6 @@ Ext.define('FpMnf.store.WbsStore', {
 	leadingBufferZone: 300,
 //	trailingBufferZone: 100,
     remoteSort: true,
-    remoteFilter: true,
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',

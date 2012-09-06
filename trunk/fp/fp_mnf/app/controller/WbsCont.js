@@ -18,11 +18,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		}, {
 			ref : 'WbsTotal',
 			selector : 'wbstotal'
-		},
-        {
-          ref: 'WbFilter',
-          selector: 'wbstool > textfield[name=filteredit]'
-        }
+		}
 	],
 	init : function () {
 		this.control({
@@ -44,9 +40,6 @@ Ext.define('FpMnf.controller.WbsCont', {
 			'wbsgrid button[action=ex]' : {
 				click : this.newEx
 			},
-			/*'wbsgrid button[action=dop]' : {
-				click : this.newDop
-			},*/
 			'newdopwin button[action=save]' : {
 				click : this.saveDop
 			},
@@ -68,8 +61,8 @@ Ext.define('FpMnf.controller.WbsCont', {
 			'wbsgrid numbercolumn[itemId=dop]' : {
 				click : this.showDop
 			},
-			'wbstool button[action=filter]' : {
-				click : this.filterGrid
+			'wbstool comboagent' : {
+				change : this.changeAgent
 			}
 		});
 		this.getWbsStoreStore().on({
@@ -81,25 +74,23 @@ Ext.define('FpMnf.controller.WbsCont', {
 			beforeload : this.beforeloadWbsStore
 		});
 	},
-    filterGrid: function(){
-      //console.log('filtering');
-      //console.log(this.getWbsTool().down('textfield[name=filteredit]'));
-      //console.log(this.getWbFilter().getValue());
-
-      if(this.getWbFilter().getValue()){
-        this.getWbsStoreStore().clearFilter(true);
-        this.getWbsStoreStore().filter('wb_no', this.getWbFilter().getValue());
-      }
-      else {this.getWbsStoreStore().clearFilter();
-      }
-/*      var wbFilter = new Ext.util.Filter({
-             property: 'wb_no',
-             value   : '00'
-             //,anyMatch: true
-            });
-      //console.log
-      this.getWbsStoreStore().filter(wbFilter);
-  */  },
+	changeAgent : function (Field, newValue) {
+		Ext.Ajax.request({
+			url : 'srv/change.php',
+			params : {
+				agent : newValue
+			},
+			success : function (response) {
+				var text = Ext.decode(response.responseText);
+			},
+			failure : function (response) {
+				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+			}
+		});
+		this.loadWbs();
+		this.viewTotal();
+		
+	},
 	editDop : function (d_wb_no, d_dtd_txt, d_tar_ag_id, d_req_tar_a, d_req_rem) {
 		if (d_wb_no && d_dtd_txt && d_tar_ag_id && d_req_tar_a) {
 			var newdop = Ext.widget('newdopwin').show();
@@ -114,11 +105,11 @@ Ext.define('FpMnf.controller.WbsCont', {
 		}
 	},
 	showDop : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
-	if (!rec.data['req_tar_a']) {
-	this.insertNewDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a']);
-	} else {
-	this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
-	}
+		if (!rec.data['req_tar_a']) {
+			this.insertNewDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a']);
+		} else {
+			this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
+		}
 	},
 	getPeriod : function () {
 		var m = this.getWbsTool().down('combomonth').value;
@@ -130,13 +121,13 @@ Ext.define('FpMnf.controller.WbsCont', {
 		var twt = tc.getWbsTotal();
 		switch (true) {
 		case this.getWbsTool().down('button[action=all]').pressed:
-			var t_dir ='all';
+			var t_dir = 'all';
 			break;
 		case this.getWbsTool().down('button[action=in]').pressed:
-			var t_dir ='in';
+			var t_dir = 'in';
 			break;
 		case this.getWbsTool().down('button[action=out]').pressed:
-			var t_dir ='out';
+			var t_dir = 'out';
 			break;
 		}
 		Ext.Ajax.request({
@@ -148,7 +139,6 @@ Ext.define('FpMnf.controller.WbsCont', {
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
-				//console.log(text.data[0].s_wb);
 				twt.down('label[itemId=lab1]').setText('Всего: ' + text.data[0].s_wb);
 				twt.down('label[itemId=lab2]').setText('Вес: ' + text.data[0].s_wt);
 				twt.down('label[itemId=lab3]').setText('V вес: ' + text.data[0].s_vol_wt);
@@ -247,12 +237,6 @@ Ext.define('FpMnf.controller.WbsCont', {
 			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя внести Доп. тариф');
 		}
 	},
-	/*newDop : function (btn) {
-		var sm = btn.up('wbsgrid').getSelectionModel();
-		if (sm.getCount() > 0) {
-			this.insertNewDop(sm.getSelection()[0].get('wb_no'), sm.getSelection()[0].get('dtd_txt'), sm.getSelection()[0].get('tar_ag_id'), sm.getSelection()[0].get('req_tar_a'));
-		}
-	},*/
 	viewExGrid : function (ex_wb_no) {
 		if (ex_wb_no) {
 			var viewex = Ext.widget('viewexwin').show();

@@ -36,6 +36,9 @@ Ext.define('FpMnf.controller.MnfCont', {
 			},
 			'mnfgrid' : {
 				selectionchange : this.previewWb
+			},
+			'mnfgrid comboagent' : {
+				change : this.changeAgent
 			}
 		});
 		this.getMnfStStore().on({
@@ -47,10 +50,37 @@ Ext.define('FpMnf.controller.MnfCont', {
 			load : this.loadWbStore
 		});
 	},
+	changeAgent : function (comp, newValue) {
+		Ext.Ajax.request({
+			url : 'srv/change.php',
+			params : {
+				agent : newValue
+			},
+			success : function (response) {
+				var text = Ext.decode(response.responseText);
+			},
+			failure : function (response) {
+				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+			}
+		});
+		var aTol = comp.up('mnftool');
+		if (aTol.down('button[action=out]').pressed == true) {
+			var tab = -1
+		};
+		if (aTol.down('button[action=in]').pressed == true) {
+			var tab = 2
+		};
+		if (aTol.down('button[action=all]').pressed == true) {
+			var tab = 3
+		};
+		var mo = aTol.down('combomonth').value;
+		var ye = aTol.down('numyear').value;
+		this.loadMnfAll(ye, mo, tab);
+		
+	},
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({
 			params : {
-				//proc : 'GetMnf',
 				period : y + m,
 				is_Ready : tab
 			}
@@ -77,11 +107,8 @@ Ext.define('FpMnf.controller.MnfCont', {
 		var ye = aTol.down('numyear').value;
 		this.loadMnfAll(ye, mo, 2);
 	},
-	gotoWb: function (pan, ntab) {
-	if (ntab.title=='Накладные'){
-	//console.log(ntab.title);
-	//document.location.href = "../agent/work.php";
-	}
+	gotoWb : function (pan, ntab) {
+		if (ntab.title == 'Накладные') {}
 		
 	},
 	openAllmnf : function (btn) {
@@ -129,16 +156,13 @@ Ext.define('FpMnf.controller.MnfCont', {
 		}
 		this.getWbStStore().load({
 			params : {
-				//proc : 'GetWbMnf',
 				mnfRefNo : No
 			}
 		});
 	},
 	loadMnfStore : function (st, rec, suc) {
 		var tt = this.getTotalTool();
-		
 		tt.down('label').setText('Количество манифестов: ' + st.getCount());
-		
 	},
 	loadWbStore : function (st, rec, suc) {
 		var tt = this.getTotalWb();
@@ -154,8 +178,5 @@ Ext.define('FpMnf.controller.MnfCont', {
 		tt.down('label[itemId=lab2]').setText('Количество мест: ' + sum_shpcs);
 		tt.down('label[itemId=lab3]').setText('Общий вес: ' + Ext.util.Format.round(sum_shwt, 2));
 		tt.down('label[itemId=lab4]').setText('Общий V вес: ' + Ext.util.Format.round(sum_shvol_wt, 2));
-		/*if (rec[0].data['wb_no'] == '') {
-			tt.down('label').setText('');
-		}*/
 	}
 });
