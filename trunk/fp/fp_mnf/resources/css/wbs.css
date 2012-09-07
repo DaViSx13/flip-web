@@ -1,9 +1,6 @@
-/*.x-action-col-cell img.dop-col {
-			background-image: url(resources/images/dop.gif);
-            height: 16px;
-            width: 16px;
-            cursor: pointer;
-        }
+.exit-user {
+			background-image: url(../../resources/images/exit.gif);
+             }
 /* custom icon for the "ex" ActionColumn icon */
 .x-action-col-cell img.ex-col {
             background-image: url(../../resources/images/ex.gif);

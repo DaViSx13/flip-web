@@ -21,6 +21,9 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		}, {
 			ref : 'OrdWin',
 			selector : 'ordwin'
+		},{
+			ref : 'AdmTool',
+			selector : 'admtool'
 		}
 	],
 	init : function () {
@@ -52,7 +55,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
 			},
-			'ordtool comboagent' : {
+			'admtool comboagent' : {
 				select : this.changeAgent
 			}
 		});
@@ -66,6 +69,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		});
 	},
 	changeAgent : function (comp, newValue) {
+	if	(comp.up('mainpanel').activeTab.title == 'Заказы'){	
 		Ext.Ajax.request({
 			url : 'srv/change.php',
 			params : {
@@ -78,11 +82,11 @@ Ext.define('FpMnf.controller.OrdsCont', {
 				Ext.Msg.alert('Сервер недоступен!', response.statusText);
 			}
 		});
-		var aTol = comp.up('ordtool');
+		var aTol = this.getOrdTool();
 		var ye = aTol.down('numyear').value;
 		var mo = aTol.down('combomonth').value;
 		this.loadOrds(ye, mo);
-		
+	}	
 	},
 	loadOrds : function (y, m) {
 		this.getOrdsStStore().load({

@@ -45,7 +45,7 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
             {
 			text : 'Фильтр',
 			action : 'filter'
-			}, {
+			}, /*{
 			xtype : 'buttongroup',
 			itemId : 'admgroup',
 			items : [
@@ -56,7 +56,7 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
 				marginLeft : '20px',
 				marginRight : '20px'
 			}
-		},
+		},*/
 				
 		
 		

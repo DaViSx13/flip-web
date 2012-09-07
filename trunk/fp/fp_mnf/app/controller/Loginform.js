@@ -2,50 +2,48 @@ Ext.define('FpMnf.controller.Loginform', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.Loginform', 'mainform.MainPanel', 'mainform.Loginformcontainer', 'Viewport'],
 	refs : [{
-			ref : 'OrdTool',
-			selector : 'ordtool'
-		}, {
+			ref : 'AdmTool',
+			selector : 'admtool'
+		}/*, {
 			ref : 'MnfTool',
 			selector : 'mnftool'
 		}, {
 			ref : 'WbsTool',
 			selector : 'wbstool'
-		}
+		}*/
 	],
 	init : function () {
 		this.control({
 			'loginform button[action=login]' : {
 				click : this.doLogin
+			},
+			'mainpanel button[action=logout]' : {
+				click : this.doLogout
 			}
 		});
-		
 	},
 	loadAdmPan : function () {
-	var me = this;
-	Ext.Ajax.request({
+		var me = this;
+		Ext.Ajax.request({
 			url : 'srv/data.php',
 			params : {
-				dbAct: 'GetAgents'
+				dbAct : 'GetAgents'
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
 				if (text.success == true) {
-				me.getOrdTool().down('comboagent').store.add(text.data);
-				me.getOrdTool().down('comboagent').up('buttongroup').setVisible(true);
-				me.getMnfTool().down('comboagent').up('buttongroup').setVisible(true);
-				me.getWbsTool().down('comboagent').up('buttongroup').setVisible(true);
-					
+					me.getAdmTool().down('comboagent').store.add(text.data);
+					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
+					//me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
+					//me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
 				} else {
-				
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
 			},
 			failure : function (response) {
-				
 				Ext.Msg.alert('Сервер недоступен!', response.statusText);
 			}
 		});
-	
 	},
 	onLaunch : function () {
 		var me = this;
@@ -54,25 +52,20 @@ Ext.define('FpMnf.controller.Loginform', {
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
 				if (text.success == true) {
-					
 					var aviewport = Ext.widget('fpmnfviewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('mainpanel'));
 					if (text.msg == '-1') {
 						me.loadAdmPan();
-											
+						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
+					} else {
+						aviewport.down('mainpanel').down('label').setText(text.username);
 					}
-				
-					
 				} else {
 					var aviewport = Ext.widget('fpmnfviewport');
-					//aviewport.removeAll(true);
-					//aviewport.add(Ext.widget('loginformcontainer'));
-					
 				}
 			},
 			failure : function (response) {
-				
 				Ext.Msg.alert('Сервер недоступен!', response.statusText);
 			}
 		});
@@ -89,8 +82,10 @@ Ext.define('FpMnf.controller.Loginform', {
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('mainpanel'));
 					if (action.result.msg == '-1') {
-						
 						me.loadAdmPan();
+						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
+					} else {
+						aviewport.down('mainpanel').down('label').setText(action.result.username);
 					}
 				},
 				failure : function (form, action) {
@@ -98,5 +93,26 @@ Ext.define('FpMnf.controller.Loginform', {
 				}
 			});
 		}
+	},
+	doLogout : function (button) {
+		var me = this;
+		Ext.Ajax.request({
+			url : 'srv/logout.php',
+			success : function (response) {
+				var text = Ext.decode(response.responseText);
+				if (text.success == true) {
+					var aviewport = button.up('viewport');
+					aviewport.removeAll(true);
+					aviewport.add(Ext.widget('loginformcontainer'));
+					
+				} else {
+					Ext.Msg.alert('Ошибка!', 'Обновите страницу');
+				}
+			},
+			failure : function (response) {
+				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+			}
+		});
+		
 	}
 });

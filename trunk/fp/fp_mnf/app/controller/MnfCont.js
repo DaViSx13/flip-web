@@ -9,6 +9,12 @@ Ext.define('FpMnf.controller.MnfCont', {
 		}, {
 			ref : 'TotalWb',
 			selector : 'totalwb'
+		},{
+			ref : 'AdmTool',
+			selector : 'admtool'
+		},{
+			ref : 'MnfTool',
+			selector : 'mnftool'
 		}
 	],
 	init : function () {
@@ -37,7 +43,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 			'mnfgrid' : {
 				selectionchange : this.previewWb
 			},
-			'mnfgrid comboagent' : {
+			'admtool comboagent' : {
 				select : this.changeAgent
 			}
 		});
@@ -51,6 +57,8 @@ Ext.define('FpMnf.controller.MnfCont', {
 		});
 	},
 	changeAgent : function (comp, newValue) {
+		
+	if	(comp.up('mainpanel').activeTab.title == 'Манифесты'){
 		Ext.Ajax.request({
 			url : 'srv/change.php',
 			params : {
@@ -63,7 +71,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 				Ext.Msg.alert('Сервер недоступен!', response.statusText);
 			}
 		});
-		var aTol = comp.up('mnftool');
+		var aTol = this.getMnfTool();
 		if (aTol.down('button[action=out]').pressed == true) {
 			var tab = -1
 		};
@@ -76,7 +84,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadMnfAll(ye, mo, tab);
-		
+	}	
 	},
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({

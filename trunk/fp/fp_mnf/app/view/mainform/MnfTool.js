@@ -14,18 +14,19 @@ Ext.define('FpMnf.view.mainform.MnfTool', {
 			text : 'Все',
 			enableToggle : true,
 			action : 'all'
-		}, '-', {
+		}, '-', /*{
 			xtype : 'buttongroup',
 			itemId : 'admgroup',
-			items : [
-			{xtype : 'comboagent'}
+			items : [{
+					xtype : 'comboagent'
+				}
 			],
 			hidden : true,
 			style : {
 				marginLeft : '20px',
 				marginRight : '20px'
 			}
-		}, '->', '-', {
+		},*/ '->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'

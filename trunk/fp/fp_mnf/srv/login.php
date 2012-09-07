@@ -4,6 +4,7 @@ class Response
 {
     public $success = false;
     public $msg = '';
+	public $username = '';
 }
 $response = new Response();
 //echo '1';
@@ -32,7 +33,8 @@ if ( !empty( $_POST['user'] )) {
                    $_SESSION['xAgentID'] = $row['agentid'];
                    $_SESSION['xAgentName'] = $row['partname'];
                    $response->success = true;
-				   $response->msg = $_SESSION['xAgentID'];  
+				   $response->msg = $_SESSION['xAgentID']; 
+				   $response->username =$_SESSION['xAgentName'];				   
                 }; 
         }; 
     

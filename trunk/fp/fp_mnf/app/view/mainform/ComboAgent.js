@@ -4,14 +4,14 @@ Ext.define('FpMnf.view.mainform.ComboAgent', {
 	name : 'agents',
 	displayField : 'partname',
 	valueField : 'partcode',
-	//allowBlank : false,
-	width : 250,
+	fieldLabel : 'Выберите Агента',
+	width : 350,
 	forceSelection : true,
 	queryMode : 'local',
 	style : {
 		marginBottom : '2px',
 		marginTop : '2px',
-		marginLeft : '2px',
+		marginLeft : '6px',
 		marginRight : '2px'
 	},
 	store : 'AgentsSt'

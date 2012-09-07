@@ -22,7 +22,10 @@ Ext.define('FpMnf.controller.WbsCont', {
         {
           ref: 'WbFilter',
           selector: 'wbstool > textfield[name=filteredit]'
-        }
+        },{
+			ref : 'AdmTool',
+			selector : 'admtool'
+		}
 	],
 	init : function () {
 		this.control({
@@ -71,7 +74,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 			'wbstool button[action=filter]' : {
 				click : this.filterGrid
 			},
-			'wbstool comboagent' : {
+			'admtool comboagent' : {
 				select : this.changeAgent
 			}
 		});
@@ -84,8 +87,8 @@ Ext.define('FpMnf.controller.WbsCont', {
 			beforeload : this.beforeloadWbsStore
 		});
 	},
-	changeAgent : function (Field, newValue) {
-		
+	changeAgent : function (comp, newValue) {
+	if	(comp.up('mainpanel').activeTab.title == 'Накладные'){	
 		Ext.Ajax.request({
 			url : 'srv/change.php',
 			params : {
@@ -100,7 +103,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		});
 		this.loadWbs();
 		this.viewTotal();
-		
+	}	
 	},
     filterGrid: function(){
       //console.log('filtering');
@@ -265,7 +268,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 			formdop.down('textfield[name=dtd_txt]').setValue(d_dtd_txt);
 			formdop.down('textfield[name=interid]').setValue(d_tar_ag_id);
 		} else {
-			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя внести Доп. тариф');
+			//Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя внести Доп. тариф');
 		}
 	},
 	/*newDop : function (btn) {

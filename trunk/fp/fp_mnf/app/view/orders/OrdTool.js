@@ -11,7 +11,7 @@ Ext.define('FpMnf.view.orders.OrdTool', {
 		}, '-', {
 			text : 'Редактировать',
 			action : 'edit'
-		}, '-', {
+		}, '-',/* {
 			xtype : 'buttongroup',
 			itemId : 'admgroup',
 			items : [
@@ -22,7 +22,7 @@ Ext.define('FpMnf.view.orders.OrdTool', {
 				marginLeft : '20px',
 				marginRight : '20px'
 			}
-		}, '->', '-', {
+		}, */'->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'
