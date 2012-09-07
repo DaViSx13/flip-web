@@ -53,7 +53,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 				itemdblclick : this.dblclickOrdGr
 			},
 			'ordtool comboagent' : {
-				change : this.changeAgent
+				select : this.changeAgent
 			}
 		});
 		this.getOrderStStore().on({
@@ -69,7 +69,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		Ext.Ajax.request({
 			url : 'srv/change.php',
 			params : {
-				agent : newValue
+				agent : newValue[0].data['partcode']
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);

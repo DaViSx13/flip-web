@@ -20,6 +20,33 @@ Ext.define('FpMnf.controller.Loginform', {
 		});
 		
 	},
+	loadAdmPan : function () {
+	var me = this;
+	Ext.Ajax.request({
+			url : 'srv/data.php',
+			params : {
+				dbAct: 'GetAgents'
+			},
+			success : function (response) {
+				var text = Ext.decode(response.responseText);
+				if (text.success == true) {
+				me.getOrdTool().down('comboagent').store.add(text.data);
+				me.getOrdTool().down('comboagent').up('buttongroup').setVisible(true);
+				me.getMnfTool().down('comboagent').up('buttongroup').setVisible(true);
+				me.getWbsTool().down('comboagent').up('buttongroup').setVisible(true);
+					
+				} else {
+				
+					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+				}
+			},
+			failure : function (response) {
+				
+				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+			}
+		});
+	
+	},
 	onLaunch : function () {
 		var me = this;
 		Ext.Ajax.request({
@@ -32,10 +59,8 @@ Ext.define('FpMnf.controller.Loginform', {
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('mainpanel'));
 					if (text.msg == '-1') {
-						
-						me.getOrdTool().down('comboagent').up('buttongroup').setVisible(true);
-						me.getMnfTool().down('comboagent').up('buttongroup').setVisible(true);
-						me.getWbsTool().down('comboagent').up('buttongroup').setVisible(true);
+						me.loadAdmPan();
+											
 					}
 				
 					
@@ -53,6 +78,7 @@ Ext.define('FpMnf.controller.Loginform', {
 		});
 	},
 	doLogin : function (button) {
+		var me = this;
 		var form = button.up('form').form;
 		if (form.isValid()) {
 			form.submit({
@@ -64,9 +90,7 @@ Ext.define('FpMnf.controller.Loginform', {
 					aviewport.add(Ext.widget('mainpanel'));
 					if (action.result.msg == '-1') {
 						
-						me.getOrdTool().down('comboagent').up('buttongroup').setVisible(true);
-						me.getMnfTool().down('comboagent').up('buttongroup').setVisible(true);
-						me.getWbsTool().down('comboagent').up('buttongroup').setVisible(true);
+						me.loadAdmPan();
 					}
 				},
 				failure : function (form, action) {

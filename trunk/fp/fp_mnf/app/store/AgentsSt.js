@@ -1,9 +1,9 @@
 Ext.define('FpMnf.store.AgentsSt', {
 	extend : 'Ext.data.Store',
 	requires : ['Ext.data.reader.Json'],
-	model : 'FpMnf.model.AgentsMod',
+	model : 'FpMnf.model.AgentsMod'//,
 	//autoLoad : true,
-	proxy: {
+	/*proxy: {
 		type: 'ajax',
 		url : 'srv/data.php',
 		reader: {
@@ -13,5 +13,5 @@ Ext.define('FpMnf.store.AgentsSt', {
 		extraParams: {
 			dbAct: 'GetAgents'
 		}
-	}
+	}*/
 });

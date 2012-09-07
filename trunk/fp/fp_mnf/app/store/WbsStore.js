@@ -5,7 +5,7 @@ Ext.define('FpMnf.store.WbsStore', {
 	buffered: true,
 	pageSize: 100,
 	leadingBufferZone: 300,
-//	trailingBufferZone: 100,
+//	trailingBufferZone: 300,
     remoteSort: true,
     remoteFilter: true,
 	proxy : {

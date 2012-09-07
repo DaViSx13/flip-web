@@ -72,7 +72,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 				click : this.filterGrid
 			},
 			'wbstool comboagent' : {
-				change : this.changeAgent
+				select : this.changeAgent
 			}
 		});
 		this.getWbsStoreStore().on({
@@ -85,10 +85,11 @@ Ext.define('FpMnf.controller.WbsCont', {
 		});
 	},
 	changeAgent : function (Field, newValue) {
+		
 		Ext.Ajax.request({
 			url : 'srv/change.php',
 			params : {
-				agent : newValue
+				agent : newValue[0].data['partcode']
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
