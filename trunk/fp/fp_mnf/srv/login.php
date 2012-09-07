@@ -31,13 +31,15 @@ if ( !empty( $_POST['user'] )) {
                    session_start();
 				   $_SESSION['xUser'] = $_POST['user'];
                    $_SESSION['xAgentID'] = $row['agentid'];
-                   $_SESSION['xAgentName'] = $row['partname'];
+                   $_SESSION['xAgentName'] = iconv("windows-1251", "UTF-8", $row['partname']);
                    $response->success = true;
 				   $response->msg = $_SESSION['xAgentID']; 
-				   $response->username =$_SESSION['xAgentName'];				   
+				   $response->username =$_SESSION['xAgentName'];
+				   
                 }; 
         }; 
     
     }
+	
 echo json_encode($response);
 ?>
