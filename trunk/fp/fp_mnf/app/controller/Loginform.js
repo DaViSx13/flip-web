@@ -4,13 +4,7 @@ Ext.define('FpMnf.controller.Loginform', {
 	refs : [{
 			ref : 'AdmTool',
 			selector : 'admtool'
-		}/*, {
-			ref : 'MnfTool',
-			selector : 'mnftool'
-		}, {
-			ref : 'WbsTool',
-			selector : 'wbstool'
-		}*/
+		}
 	],
 	init : function () {
 		this.control({
@@ -19,8 +13,18 @@ Ext.define('FpMnf.controller.Loginform', {
 			},
 			'mainpanel button[action=logout]' : {
 				click : this.doLogout
+			},
+			'loginform textfield' : {
+				keypress : this.pressEnter
 			}
 		});
+	},
+	pressEnter : function (fild, e) {
+		var keyCode = e.getKey();
+		if (keyCode == 13) {
+		
+			this.doLogin(fild.up('loginform').down('button[action=login]'));
+		}
 	},
 	loadAdmPan : function () {
 		var me = this;
@@ -34,8 +38,6 @@ Ext.define('FpMnf.controller.Loginform', {
 				if (text.success == true) {
 					me.getAdmTool().down('comboagent').store.add(text.data);
 					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
-					//me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
-					//me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
 				} else {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
@@ -104,7 +106,6 @@ Ext.define('FpMnf.controller.Loginform', {
 					var aviewport = button.up('viewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('loginformcontainer'));
-					
 				} else {
 					Ext.Msg.alert('Ошибка!', 'Обновите страницу');
 				}
@@ -113,6 +114,5 @@ Ext.define('FpMnf.controller.Loginform', {
 				Ext.Msg.alert('Сервер недоступен!', response.statusText);
 			}
 		});
-		
 	}
 });

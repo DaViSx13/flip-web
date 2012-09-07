@@ -13,11 +13,13 @@ Ext.define('FpMnf.view.mainform.Loginform', {
 		width : 230,
 		name: 'user',
 		fieldLabel: 'Имя',
+		enableKeyEvents : true,
 		allowBlank: false
 	},
 	{
 		xtype: 'textfield',
 		name: 'password',
+		enableKeyEvents : true,
 		width : 230,
 		fieldLabel: 'Пароль',
 		inputType: 'password',

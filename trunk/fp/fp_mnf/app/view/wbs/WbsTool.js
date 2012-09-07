@@ -7,11 +7,11 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
 			{
             xtype:'buttongroup',
             items: [{
-				text : 'Исходящие',
+				text : 'Входящие',
 				enableToggle : true,
 				action : 'out'
 				}, {
-				text : 'Входящие',
+				text : 'Исходящие',
 				action : 'in',
 				enableToggle : true
 				}, {

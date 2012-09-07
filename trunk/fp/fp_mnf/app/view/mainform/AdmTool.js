@@ -1,7 +1,7 @@
 Ext.define('FpMnf.view.mainform.AdmTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.admtool',
-	requires : ['Ext.ButtonGroup', 'FpMnf.view.mainform.ComboAgent'],
+	requires : ['Ext.ButtonGroup', 'FpMnf.view.mainform.ComboAgent', 'Ext.Toolbar.Spacer'],
 	
 	items : [
 		{
