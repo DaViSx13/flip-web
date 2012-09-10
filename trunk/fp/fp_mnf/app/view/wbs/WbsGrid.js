@@ -24,7 +24,7 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 				xtype : 'actioncolumn',
 				text : 'ИС',
 				name : 'exaction',
-				width : 50,
+				width : 40,
 				items : [{
 						getClass : function (v, meta, rec) {
 							if (rec.get('is_ex') > 0) {
@@ -55,26 +55,33 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 				dataIndex : 'p_d_in_txt'
 			}, {
 				text : 'ORG',
+				width : 50,
 				dataIndex : 'org'
 			}, {
 				text : 'DEST',
+				width : 50,
 				dataIndex : 'dest'
 			}, {
 				text : 'Услуга',
+				width : 45,
 				dataIndex : 't_srv'
 			}, {
 				text : 'Отправитель',
+				flex : 1,
 				dataIndex : 's_co'
 			}, {
 				text : 'Получатель',
+				flex : 1,
 				dataIndex : 'r_co'
 			}, {
 				text : 'Вес',
+				width : 45,
 				dataIndex : 'wt',
 				xtype : 'numbercolumn',
 				format : '0.00'
 			}, {
 				text : 'Об.вес',
+				width : 45,
 				xtype : 'numbercolumn',
 				format : '0.00',
 				dataIndex : 'vol_wt'
@@ -82,16 +89,19 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 				text : 'Тариф Флип',
 				columns : [{
 						text : 'баз.',
+						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_b'
 					}, {
 						text : 'доп.',
+						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_a'
 					}, {
 						text : 'Всего',
+						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_t'
@@ -104,16 +114,19 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 				text : 'Тариф Аг',
 				columns : [{
 						text : 'баз.',
+						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_b'
 					}, {
 						text : 'доп.',
+						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_a'
 					}, {
 						text : 'Всего',
+						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_t'
@@ -127,7 +140,7 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 				text : 'Заявка',
 				itemId : 'dop',
 				dataIndex : 'req_tar_a',
-				width : 50,
+				width : 45,
 				renderer : this.change
 			}
 		];
