@@ -216,10 +216,13 @@ Ext.define('FpMnf.controller.WbsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					me.loadWbs();
-					Ext.Msg.alert('Происшествие сохранено!', action.result.msg);
-					form.reset();
-					me.getNewExWin().close();
+					if (action.result.success == true) {
+						Ext.Msg.alert('Происшествие сохранено!', action.result.msg);
+						var rec_ex = me.getWbsStoreStore().findRecord('wb_no', form_ex.getValues()['wb_no']);
+						rec_ex.set('is_ex', 1);
+						form.reset();
+						me.getNewExWin().close();
+					}
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Происшествие не сохранено!', action.result.msg);
@@ -241,10 +244,14 @@ Ext.define('FpMnf.controller.WbsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					me.loadWbs();
-					Ext.Msg.alert('Доп. тариф сохранен!', action.result.msg);
-					form.reset();
-					me.getNewDopWin().close();
+					if (action.result.success == true) {
+						Ext.Msg.alert('Доп. тариф сохранен!', action.result.msg);
+						var rec_dop = me.getWbsStoreStore().findRecord('wb_no', form_dop.getValues()['wb_no']);
+						rec_dop.set('req_tar_a', form_dop.getValues()['tar_a_ag']);
+						rec_dop.set('req_rem', form_dop.getValues()['rem_ag']);
+						form.reset();
+						me.getNewDopWin().close();
+					}
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Доп. тариф не сохранен!', action.result.msg);
