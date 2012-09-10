@@ -2,7 +2,7 @@ Ext.define('FpMnf.model.WbsMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'wb_no',
-			type:'string'
+			type : 'string'
 		}, {
 			name : 'd_acc_txt'
 		}, {
@@ -12,59 +12,61 @@ Ext.define('FpMnf.model.WbsMod', {
 		}, {
 			name : 'rcpn'
 		}, {
-			name : 'p_d_in_txt'
+			name : 'p_d_in_txt',
+			dateFormat : 'Y-m-d H:i:s',
+			type : 'date'
 		}, {
 			name : 'dtd_txt'
 		}, {
 			name : 'org',
-			type:'string'
+			type : 'string'
 		}, {
 			name : 'dest',
-			type:'string'
+			type : 'string'
 		}, {
 			name : 's_co',
-			type:'string'
+			type : 'string'
 		}, {
 			name : 'r_co',
-			type:'string'
+			type : 'string'
 		}, {
 			name : 'wt',
-			type: 'float'
+			type : 'float'
 		}, {
 			name : 'vol_wt',
-			type: 'float'
+			type : 'float'
 		}, {
 			name : 't_srv'
 		}, {
 			name : 'dir'
 		}, {
 			name : 'tar_flip_b',
-			type: 'float'
+			type : 'float'
 		}, {
 			name : 'tar_flip_a',
-			type: 'float'
+			type : 'float'
 		}, {
 			name : 'tar_flip_t',
-			type: 'float'
+			type : 'float'
 		}, {
 			name : 'tar_flip_id'
 		}, {
 			name : 'tar_ag_b',
-			type: 'float'
+			type : 'float'
 		}, {
 			name : 'tar_ag_t',
-			type: 'float'
+			type : 'float'
 		}, {
 			name : 'tar_ag_id'
 		}, {
 			name : 'rem_flip',
-			type:'string'
+			type : 'string'
 		}, {
 			name : 'rem_ag',
-			type:'string'
+			type : 'string'
 		}, {
 			name : 'is_ex',
-			type: 'int'
+			type : 'int'
 		}, {
 			name : 'req_tar_a'
 		}, {

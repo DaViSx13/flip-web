@@ -103,7 +103,6 @@ Ext.define('FpMnf.controller.WbsCont', {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
 			});
-			
 		}
 	},
 	filterGrid : function () {
@@ -186,10 +185,16 @@ Ext.define('FpMnf.controller.WbsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					me.loadWbs();
-					Ext.Msg.alert('ПОД сохранено!', action.result.msg);
-					form.reset();
-					me.getNewPodWin().close();
+					if (action.result.success == true) {
+						Ext.Msg.alert('ПОД сохранено!', action.result.msg);
+						var rec_pod = me.getWbsStoreStore().findRecord('wb_no', form_pod.getValues()['wb_no']);
+						rec_pod.set('dod_txt', form_pod.getValues()['p_d_in'] + ' ' + form_pod.getValues()['tdd']);
+						rec_pod.set('rcpn', form_pod.getValues()['rcpn']);
+						var dtd = new Date();
+						rec_pod.set('p_d_in_txt', dtd);
+						form.reset();
+						me.getNewPodWin().close();
+					}
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('ПОД не сохранено!', action.result.msg);

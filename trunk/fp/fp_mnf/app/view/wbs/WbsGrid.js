@@ -52,7 +52,9 @@ Ext.define('FpMnf.view.wbs.WbsGrid', {
 				dataIndex : 'rcpn'
 			}, {
 				text : 'Подтв.',
-				dataIndex : 'p_d_in_txt'
+				dataIndex : 'p_d_in_txt',
+				xtype : 'datecolumn',
+				format : 'd.m.Y'
 			}, {
 				text : 'ORG',
 				width : 50,
