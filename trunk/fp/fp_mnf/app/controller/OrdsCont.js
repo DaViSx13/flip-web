@@ -21,7 +21,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		}, {
 			ref : 'OrdWin',
 			selector : 'ordwin'
-		},{
+		}, {
 			ref : 'AdmTool',
 			selector : 'admtool'
 		}
@@ -69,24 +69,26 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		});
 	},
 	changeAgent : function (comp, newValue) {
-	if	(comp.up('mainpanel').activeTab.title == 'Заказы'){	
-		Ext.Ajax.request({
-			url : 'srv/change.php',
-			params : {
-				agent : newValue[0].data['partcode']
-			},
-			success : function (response) {
-				var text = Ext.decode(response.responseText);
-			},
-			failure : function (response) {
-				Ext.Msg.alert('Сервер недоступен!', response.statusText);
-			}
-		});
-		var aTol = this.getOrdTool();
-		var ye = aTol.down('numyear').value;
-		var mo = aTol.down('combomonth').value;
-		this.loadOrds(ye, mo);
-	}	
+		var me = this;
+		if (comp.up('mainpanel').activeTab.title == 'Заказы') {
+			Ext.Ajax.request({
+				url : 'srv/change.php',
+				params : {
+					agent : newValue[0].data['partcode']
+				},
+				success : function (response) {
+					var text = Ext.decode(response.responseText);
+					var aTol = me.getOrdTool();
+					var ye = aTol.down('numyear').value;
+					var mo = aTol.down('combomonth').value;
+					me.loadOrds(ye, mo);
+				},
+				failure : function (response) {
+					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+				}
+			});
+			
+		}
 	},
 	loadOrds : function (y, m) {
 		this.getOrdsStStore().load({
@@ -103,7 +105,7 @@ Ext.define('FpMnf.controller.OrdsCont', {
 	},
 	openOrdWin : function (btn) {
 		//var edit = Ext.create('FpMnf.view.orders.OrdWin').show();
-        var edit = Ext.widget('ordwin').show();
+		var edit = Ext.widget('ordwin').show();
 	},
 	dblclickOrdGr : function (gr, rec) {
 		var tt = this.getOrdTool();
@@ -183,8 +185,8 @@ Ext.define('FpMnf.controller.OrdsCont', {
 		if (form_ord.getForm().isValid()) {
 			form_ord.submit({
 				url : 'srv/data.php',
-				params: {
-					dbAct: 'saveagorder'
+				params : {
+					dbAct : 'saveagorder'
 				},
 				submitEmptyText : false,
 				success : function (form, action) {

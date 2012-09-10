@@ -87,6 +87,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		});
 	},
 	changeAgent : function (comp, newValue) {
+		var me = this;
 		if (comp.up('mainpanel').activeTab.title == 'Накладные') {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
@@ -95,13 +96,14 @@ Ext.define('FpMnf.controller.WbsCont', {
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
+					me.loadWbs();
+					me.viewTotal();
 				},
 				failure : function (response) {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
 			});
-			this.loadWbs();
-			this.viewTotal();
+			
 		}
 	},
 	filterGrid : function () {

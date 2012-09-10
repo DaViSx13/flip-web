@@ -9,10 +9,10 @@ Ext.define('FpMnf.controller.MnfCont', {
 		}, {
 			ref : 'TotalWb',
 			selector : 'totalwb'
-		},{
+		}, {
 			ref : 'AdmTool',
 			selector : 'admtool'
-		},{
+		}, {
 			ref : 'MnfTool',
 			selector : 'mnftool'
 		}
@@ -57,34 +57,35 @@ Ext.define('FpMnf.controller.MnfCont', {
 		});
 	},
 	changeAgent : function (comp, newValue) {
-		
-	if	(comp.up('mainpanel').activeTab.title == 'Манифесты'){
-		Ext.Ajax.request({
-			url : 'srv/change.php',
-			params : {
-				agent : newValue[0].data['partcode']
-			},
-			success : function (response) {
-				var text = Ext.decode(response.responseText);
-			},
-			failure : function (response) {
-				Ext.Msg.alert('Сервер недоступен!', response.statusText);
-			}
-		});
-		var aTol = this.getMnfTool();
-		if (aTol.down('button[action=out]').pressed == true) {
-			var tab = -1
-		};
-		if (aTol.down('button[action=in]').pressed == true) {
-			var tab = 2
-		};
-		if (aTol.down('button[action=all]').pressed == true) {
-			var tab = 3
-		};
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadMnfAll(ye, mo, tab);
-	}	
+		var me = this;
+		if (comp.up('mainpanel').activeTab.title == 'Манифесты') {
+			Ext.Ajax.request({
+				url : 'srv/change.php',
+				params : {
+					agent : newValue[0].data['partcode']
+				},
+				success : function (response) {
+					var text = Ext.decode(response.responseText);
+					var aTol = me.getMnfTool();
+					if (aTol.down('button[action=out]').pressed == true) {
+						var tab = -1
+					};
+					if (aTol.down('button[action=in]').pressed == true) {
+						var tab = 2
+					};
+					if (aTol.down('button[action=all]').pressed == true) {
+						var tab = 3
+					};
+					var mo = aTol.down('combomonth').value;
+					var ye = aTol.down('numyear').value;
+					me.loadMnfAll(ye, mo, tab);
+				},
+				failure : function (response) {
+					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+				}
+			});
+			
+		}
 	},
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({
@@ -116,11 +117,11 @@ Ext.define('FpMnf.controller.MnfCont', {
 		var ye = aTol.down('numyear').value;
 		this.loadMnfAll(ye, mo, 2);
 	},
-	gotoWb: function (pan, ntab) {
-	if (ntab.title=='Накладные'){
-	//console.log(ntab.title);
-	//document.location.href = "../agent/work.php";
-	}
+	gotoWb : function (pan, ntab) {
+		if (ntab.title == 'Накладные') {
+			//console.log(ntab.title);
+			//document.location.href = "../agent/work.php";
+		}
 		
 	},
 	openAllmnf : function (btn) {
@@ -194,7 +195,7 @@ Ext.define('FpMnf.controller.MnfCont', {
 		tt.down('label[itemId=lab3]').setText('Общий вес: ' + Ext.util.Format.round(sum_shwt, 2));
 		tt.down('label[itemId=lab4]').setText('Общий V вес: ' + Ext.util.Format.round(sum_shvol_wt, 2));
 		/*if (rec[0].data['wb_no'] == '') {
-			tt.down('label').setText('');
+		tt.down('label').setText('');
 		}*/
 	}
 });
