@@ -109,8 +109,20 @@ Ext.define('FpMnf.controller.WbsCont', {
 		if (this.getWbFilter().getValue()) {
 			this.getWbsStoreStore().clearFilter(true);
 			this.getWbsStoreStore().filter('wb_no', this.getWbFilter().getValue());
+			var twt = this.getWbsTotal();
+			twt.down('label[itemId=lab1]').setText('');
+			twt.down('label[itemId=lab2]').setText('');
+			twt.down('label[itemId=lab3]').setText('');
+			twt.down('label[itemId=lab4]').setText('');
+			twt.down('label[itemId=lab5]').setText('');
+			twt.down('label[itemId=lab6]').setText('');
+			twt.down('label[itemId=lab7]').setText('');
+			twt.down('label[itemId=lab8]').setText('');
+			twt.down('label[itemId=lab9]').setText('');			
+			
 		} else {
 			this.getWbsStoreStore().clearFilter();
+			this.viewTotal();
 		}
 	},
 	editDop : function (d_wb_no, d_dtd_txt, d_tar_ag_id, d_req_tar_a, d_req_rem) {

@@ -7,7 +7,7 @@ Ext.define('FpMnf.view.wbs.NewPodWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 220,
-	width : 285,
+	width : 290,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
