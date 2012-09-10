@@ -1,67 +1,51 @@
 Ext.define('FpMnf.view.wbs.WbsTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.wbstool',
-	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear',  'Ext.ButtonGroup', 'FpMnf.view.mainform.ComboAgent'],
-	
-	items : [
-			{
-            xtype:'buttongroup',
-            items: [{
-				text : 'Входящие',
-				enableToggle : true,
-				action : 'out'
-				}, {
-				text : 'Исходящие',
-				action : 'in',
-				enableToggle : true
-				}, {
-				text : 'Все',
-				enableToggle : true,
-				action : 'all'
-				}]
-			},{
-			xtype:'buttongroup',
-            items: [
-			{
-			text : 'Внести ПОД',
-			action : 'pod'
-			},{
-			text : 'Новая ИС',
-			action : 'ex'
-			}/*,{
-			text : 'Доп. Тариф',
-			action : 'dop'
-			}*/
-
-			]
-
-			},
-            '-',
-            {
-              xtype: 'textfield',
-			  emptyText: '№ накладной',
-              name: 'filteredit'
-            },
-            {
-			text : 'Фильтр',
-			action : 'filter'
-			}, /*{
+	requires : ['FpMnf.view.mainform.ComboMonth', 'FpMnf.view.mainform.NumYear', 'Ext.ButtonGroup', 'FpMnf.view.mainform.ComboAgent'],
+	items : [{
 			xtype : 'buttongroup',
-			itemId : 'admgroup',
-			items : [
-			{xtype : 'comboagent'}
-			],
-			hidden : true,
-			style : {
-				marginLeft : '20px',
-				marginRight : '20px'
-			}
-		},*/
-				
-		
-		
-		'->',
-		'-', {
+			items : [{
+					text : 'Входящие',
+					enableToggle : true,
+					iconCls : 'outbox',
+					action : 'out'
+				}, {
+					text : 'Исходящие',
+					action : 'in',
+					iconCls : 'inbox',
+					enableToggle : true
+				}, {
+					text : 'Все',
+					iconCls : 'allbox',
+					enableToggle : true,
+					action : 'all'
+				}
+			]
+		}, {
+			xtype : 'buttongroup',
+			items : [{
+					text : 'Внести ПОД',
+					iconCls : 'newpod',
+					action : 'pod'
+				}, {
+					text : 'Новая ИС',
+					iconCls : 'newex',
+					action : 'ex'
+				}, {
+					text : 'Экспорт в Excel',
+					iconCls : 'excel',
+					action : 'excel'
+				}
+			]
+		}, '-', {
+			xtype : 'textfield',
+			emptyText : '№ накладной',
+			name : 'filteredit'
+		}, {
+			text : 'Фильтр',
+			iconCls : 'filter',
+			action : 'filter'
+		}, '->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'

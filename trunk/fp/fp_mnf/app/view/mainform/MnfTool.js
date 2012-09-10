@@ -5,28 +5,19 @@ Ext.define('FpMnf.view.mainform.MnfTool', {
 	items : [{
 			text : 'Входящие',
 			enableToggle : true,
+			iconCls : 'outbox',
 			action : 'out'
 		}, '-', {
 			text : 'Исходящие',
+			iconCls : 'inbox',
 			action : 'in',
 			enableToggle : true
 		}, '-', {
 			text : 'Все',
 			enableToggle : true,
+			iconCls : 'allbox',
 			action : 'all'
-		}, '-', /*{
-			xtype : 'buttongroup',
-			itemId : 'admgroup',
-			items : [{
-					xtype : 'comboagent'
-				}
-			],
-			hidden : true,
-			style : {
-				marginLeft : '20px',
-				marginRight : '20px'
-			}
-		},*/ '->', '-', {
+		}, '-', '->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'
