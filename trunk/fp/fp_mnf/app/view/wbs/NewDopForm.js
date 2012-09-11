@@ -20,6 +20,7 @@ Ext.define('FpMnf.view.wbs.NewDopForm', {
 		}, {
 			xtype : 'textfield',
 			name : 'tar_a_ag',
+			width : 233,
 			fieldLabel : 'Доп. тариф',
 			allowBlank : false
 		}, {

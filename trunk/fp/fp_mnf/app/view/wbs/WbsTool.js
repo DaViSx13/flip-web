@@ -39,9 +39,10 @@ Ext.define('FpMnf.view.wbs.WbsTool', {
 			]
 		}, '-', {
 			xtype : 'textfield',
+			width : 120,
 			emptyText : '№ накладной',
 			name : 'filteredit'
-		}, {
+		},' ', {
 			text : 'Фильтр',
 			iconCls : 'filter',
 			action : 'filter'

@@ -13,6 +13,7 @@ Ext.define('FpMnf.view.wbs.NewExForm', {
 		}, {
 			xtype : 'textfield',
 			name : 'exLoc',
+			width : 233,
 			fieldLabel : 'Код места происшествия',
 			allowBlank : false
 		}, {

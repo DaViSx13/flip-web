@@ -33,6 +33,7 @@ Ext.define('FpMnf.view.wbs.NewPodForm', {
 		}, {
 			xtype : 'textfield',
 			name : 'rcpn',
+			width : 233,
 			fieldLabel : 'Получатель',
 			allowBlank : false
 		}

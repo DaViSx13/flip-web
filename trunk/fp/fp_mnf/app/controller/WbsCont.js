@@ -118,8 +118,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 			twt.down('label[itemId=lab6]').setText('');
 			twt.down('label[itemId=lab7]').setText('');
 			twt.down('label[itemId=lab8]').setText('');
-			twt.down('label[itemId=lab9]').setText('');			
-			
+			twt.down('label[itemId=lab9]').setText('');
 		} else {
 			this.getWbsStoreStore().clearFilter();
 			this.viewTotal();
