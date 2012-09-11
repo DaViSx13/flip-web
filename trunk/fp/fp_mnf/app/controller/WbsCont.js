@@ -109,16 +109,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 		if (this.getWbFilter().getValue()) {
 			this.getWbsStoreStore().clearFilter(true);
 			this.getWbsStoreStore().filter('wb_no', this.getWbFilter().getValue());
-			var twt = this.getWbsTotal();
-			twt.down('label[itemId=lab1]').setText('');
-			twt.down('label[itemId=lab2]').setText('');
-			twt.down('label[itemId=lab3]').setText('');
-			twt.down('label[itemId=lab4]').setText('');
-			twt.down('label[itemId=lab5]').setText('');
-			twt.down('label[itemId=lab6]').setText('');
-			twt.down('label[itemId=lab7]').setText('');
-			twt.down('label[itemId=lab8]').setText('');
-			twt.down('label[itemId=lab9]').setText('');
+			this.viewTotal();
 		} else {
 			this.getWbsStoreStore().clearFilter();
 			this.viewTotal();
@@ -152,37 +143,49 @@ Ext.define('FpMnf.controller.WbsCont', {
 	viewTotal : function () {
 		var tc = this;
 		var twt = tc.getWbsTotal();
-		switch (true) {
-		case this.getWbsTool().down('button[action=all]').pressed:
-			var t_dir = 'all';
-			break;
-		case this.getWbsTool().down('button[action=in]').pressed:
-			var t_dir = 'in';
-			break;
-		case this.getWbsTool().down('button[action=out]').pressed:
-			var t_dir = 'out';
-			break;
-		}
-		Ext.Ajax.request({
-			url : 'srv/data.php',
-			params : {
-				dbAct : 'GetWbsTotal',
-				dir : t_dir,
-				period : tc.getPeriod()
-			},
-			success : function (response) {
-				var text = Ext.decode(response.responseText);
-				twt.down('label[itemId=lab1]').setText('Всего: ' + text.data[0].s_wb);
-				twt.down('label[itemId=lab2]').setText('Вес: ' + text.data[0].s_wt);
-				twt.down('label[itemId=lab3]').setText('V вес: ' + text.data[0].s_vol_wt);
-				twt.down('label[itemId=lab4]').setText('тар флип баз: ' + text.data[0].s_flip_b);
-				twt.down('label[itemId=lab5]').setText('тар флип доп: ' + text.data[0].s_flip_a);
-				twt.down('label[itemId=lab6]').setText('тар флип всего: ' + text.data[0].s_flip_t);
-				twt.down('label[itemId=lab7]').setText('тар аг баз: ' + text.data[0].s_ag_b);
-				twt.down('label[itemId=lab8]').setText('тар аг доп: ' + text.data[0].s_ag_a);
-				twt.down('label[itemId=lab9]').setText('тар аг всего: ' + text.data[0].s_ag_t);
+		if (this.getWbsStoreStore().filters.length == 0) {
+			switch (true) {
+			case this.getWbsTool().down('button[action=all]').pressed:
+				var t_dir = 'all';
+				break;
+			case this.getWbsTool().down('button[action=in]').pressed:
+				var t_dir = 'in';
+				break;
+			case this.getWbsTool().down('button[action=out]').pressed:
+				var t_dir = 'out';
+				break;
 			}
-		});
+			Ext.Ajax.request({
+				url : 'srv/data.php',
+				params : {
+					dbAct : 'GetWbsTotal',
+					dir : t_dir,
+					period : tc.getPeriod()
+				},
+				success : function (response) {
+					var text = Ext.decode(response.responseText);
+					twt.down('label[itemId=lab1]').setText('Всего: ' + text.data[0].s_wb);
+					twt.down('label[itemId=lab2]').setText('Вес: ' + text.data[0].s_wt);
+					twt.down('label[itemId=lab3]').setText('V вес: ' + text.data[0].s_vol_wt);
+					twt.down('label[itemId=lab4]').setText('тар флип баз: ' + text.data[0].s_flip_b);
+					twt.down('label[itemId=lab5]').setText('тар флип доп: ' + text.data[0].s_flip_a);
+					twt.down('label[itemId=lab6]').setText('тар флип всего: ' + text.data[0].s_flip_t);
+					twt.down('label[itemId=lab7]').setText('тар аг баз: ' + text.data[0].s_ag_b);
+					twt.down('label[itemId=lab8]').setText('тар аг доп: ' + text.data[0].s_ag_a);
+					twt.down('label[itemId=lab9]').setText('тар аг всего: ' + text.data[0].s_ag_t);
+				}
+			});
+		} else {
+			twt.down('label[itemId=lab1]').setText('');
+			twt.down('label[itemId=lab2]').setText('');
+			twt.down('label[itemId=lab3]').setText('');
+			twt.down('label[itemId=lab4]').setText('');
+			twt.down('label[itemId=lab5]').setText('');
+			twt.down('label[itemId=lab6]').setText('');
+			twt.down('label[itemId=lab7]').setText('');
+			twt.down('label[itemId=lab8]').setText('');
+			twt.down('label[itemId=lab9]').setText('');
+		}
 	},
 	savePod : function (btn) {
 		var me = this;
