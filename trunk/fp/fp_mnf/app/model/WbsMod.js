@@ -12,7 +12,7 @@ Ext.define('FpMnf.model.WbsMod', {
 		}, {
 			name : 'rcpn'
 		}, {
-			name : 'p_d_in_txt',
+			name : 'p_d_in',
 			dateFormat : 'Y-m-d H:i:s',
 			type : 'date'
 		}, {

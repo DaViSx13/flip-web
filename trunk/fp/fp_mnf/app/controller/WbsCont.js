@@ -215,7 +215,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 						rec_pod.set('dod_txt', form_pod.getValues()['p_d_in'] + ' ' + form_pod.getValues()['tdd']);
 						rec_pod.set('rcpn', form_pod.getValues()['rcpn']);
 						var dtd = new Date();
-						rec_pod.set('p_d_in_txt', dtd);
+						rec_pod.set('p_d_in', dtd);
 						form.reset();
 						me.getNewPodWin().close();
 					}
@@ -394,7 +394,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 	newPod : function (btn) {
 		var sm = btn.up('wbsgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
-			this.insertNewPod(sm.getSelection()[0].get('wb_no'), sm.getSelection()[0].get('dtd_txt'), sm.getSelection()[0].get('dir'), sm.getSelection()[0].get('p_d_in_txt'));
+			this.insertNewPod(sm.getSelection()[0].get('wb_no'), sm.getSelection()[0].get('dtd_txt'), sm.getSelection()[0].get('dir'), sm.getSelection()[0].get('p_d_in'));
 		}
 	},
 	newEx : function (btn) {
