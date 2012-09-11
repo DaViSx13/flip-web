@@ -24,6 +24,9 @@ Ext.define('FpMnf.controller.WbsCont', {
 		}, {
 			ref : 'AdmTool',
 			selector : 'admtool'
+		}, {
+			ref : 'ViewExGrid',
+			selector : 'viewexgrid'
 		}
 	],
 	init : function () {
@@ -85,6 +88,13 @@ Ext.define('FpMnf.controller.WbsCont', {
 			scope : this,
 			beforeload : this.beforeloadWbsStore
 		});
+		this.getViewExStoreStore().on({
+			scope : this,
+			load : this.loadViewExStore
+		});
+	},
+	loadViewExStore : function () {
+		this.getViewExGrid().getSelectionModel().select(0);
 	},
 	changeAgent : function (comp, newValue) {
 		var me = this;
@@ -353,7 +363,7 @@ Ext.define('FpMnf.controller.WbsCont', {
 	beforeloadWbsStore : function (store, operation) {
 		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
 	},
-	loadWbsGrid : function () {
+	loadWbsGrid : function (comp) {
 		var aTol = this.getWbsTool();
 		this.allWbs(aTol.down('button[action=all]'));
 	},
