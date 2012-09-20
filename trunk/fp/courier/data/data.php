@@ -6,11 +6,9 @@ error_reporting(0);
 class Response
 {
     public $success = false;
-    public $msg = 'defaultResponse';
-    //public $data = array();
+    public $msg = '';
 }
 $response = new Response();
-
 
 //кульминация
 
@@ -18,15 +16,18 @@ if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'совсем не правильный запрос';
 } else {
     $dbAct = $_REQUEST['dbAct'];
+    //в case нужно сформировать строку sql запроса $query
+    //если нужен paging установить $paging = true
+    //можно задать сообщение, которое вернуть при успехе $response->msg = 'успех'
+
+    $response->msg = 'ok';
     switch ($dbAct) {
         case 'dbTest':
             $query = "select '$_REQUEST[test]' as test";
+			//$query = "select cast(null as varchar(10)) as test";
             break;
         case 'getCourWbs':
-            $query = "exec wwwCourGetWbs @courId=$_SESSION[courId]";
-            break;
-        case 'getCourOrders':
-            $query = "exec wwwCourGetOrders @courId='$_SESSION[courId]'";
+            $query = "exec wwwCourGetAll @courId=$_SESSION[courId]";
             break;
     }
 
@@ -40,23 +41,66 @@ if (!isset($_REQUEST['dbAct'])) {
             include "dbConnect.php";
             $result = mssql_query($query);
             if ($result) {
+
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
 				}
 			
                 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
                     foreach ($row as $f => &$value) {
-						if($response->fields[$f] == 'char'){
+						if((($response->fields[$f] == 'char')||($response->fields[$f] == 'text'))&&($value)){
 							$value = iconv("windows-1251", "UTF-8", $value);
 						}
                     }
+
                     $response->data[] = array_change_key_case($row);
                 }
+
+                //$response->dvs = 'превед';
+                unset($response->fields);
+
+				//paging
+				if($paging){
+
+                    //filtering
+                    if(isset($_REQUEST['filter'])){
+                      $filterParams = json_decode(stripslashes($_REQUEST['filter']), true);
+                      $filterKey = strtolower($filterParams[0]['property']);
+                      $filterValue = strtolower($filterParams[0]['value']);
+
+                      $response->filterKey = $filterKey;
+                      $response->filterValue = $filterValue;
+
+                      include 'filterer.php';
+                      $filterer = new Filterer();
+                      $response->data = $filterer->filter($response->data, $filterKey, $filterValue);
+
+                    }
+
+                    //sorting
+                    if(isset($_REQUEST['sort'])){
+                      $sortParams = json_decode(stripslashes($_REQUEST['sort']), true);
+                      $sortKey = strtolower($sortParams[0]['property']);
+                      $sortDir = strtolower($sortParams[0]['direction']);
+
+                      include 'multiSort.php';
+                      $multisort = new multisort();
+                      $response->data = $multisort->run($response->data, $sortKey, $sortDir);
+                    }
+
+                    //paging
+		  			$page = $_REQUEST['page'];
+        			$start = $_REQUEST['start'];
+        			$limit = $_REQUEST['limit'];
+					$response->total = count($response->data);
+					$response->data = array_slice($response->data, $start, $limit);
+				}
+				
                 mssql_free_result($result);
                 $response->success = true;
-                $response->msg = 'ok';
+                
             } else {
-                $response->msg = 'sql error: ' . mssql_get_last_message();
+                $response->msg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
             }
         }
         catch (exception $e) {

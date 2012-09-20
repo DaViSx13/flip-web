@@ -45,8 +45,9 @@
 		this.refreshTask = Ext.TaskManager.start({
 			run: function() {
 				this.getInfoPanel().down('button').setText(Ext.Date.format(new Date(), 'H:i:s'));
+				console.log('time set');
 			},
-			interval: 1000,
+			interval: 10000,
 			// 10 Seconds
 			scope: this
 		});

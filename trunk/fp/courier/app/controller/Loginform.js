@@ -7,7 +7,7 @@
 		selector: 'info'
 	}],
 	init: function() {
-		console.log('Initialized LoginForm');
+		//console.log('Initialized LoginForm');
 		this.control({
 			'loginform button[action=login]': {
 				click: this.doLogin
@@ -21,9 +21,13 @@
 				url: 'data/login.php',
 				scope: this,
 				success: function(form, action) {
+					console.log('test');
 					var aviewport = button.up('viewport');
+					console.log('test1');
 					aviewport.removeAll(true);
-					aviewport.add(Ext.widget('mainview'));
+					console.log('test2');
+					aviewport.add(Ext.widget('main'));
+					console.log('test3');
 					Courier.model.Courier.load(0, {
 						scope: this,
 						success: function(cour) {
