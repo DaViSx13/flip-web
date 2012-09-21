@@ -3,7 +3,7 @@
 	//requires: ['Ext.Date'],
 	views: ['Main', 'Info'],
 	models: ['Courier'],
-    stores: ['OrderAndWb'],
+    stores: ['OrderAndWb', 'Uchets'],
 	refs: [{
 		ref: 'infoPanel',
 		selector: 'info'
@@ -45,7 +45,7 @@
 		this.refreshTask = Ext.TaskManager.start({
 			run: function() {
 				this.getInfoPanel().down('button').setText(Ext.Date.format(new Date(), 'H:i:s'));
-				console.log('time set');
+				//console.log('time set');
 			},
 			interval: 10000,
 			// 10 Seconds

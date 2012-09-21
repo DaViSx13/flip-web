@@ -21,11 +21,34 @@
 	},
 	makeUchetList : function (store, records, success) {
 		console.log('wbs store loaded');
+		var me = this;
 		if (success) {
-			this.getUchetsStore().add(records);
-			/*store.each(function () {
-				console.log(this.get('client'))
-			})*/
+			//this.getUchetsStore().add(records);
+			var jsonArray = me.getUchetsStore().data.items;
+			var resArray = new Array();
+
+			for (var i = 0; i < jsonArray.length; i++) {
+				store.each(function () {
+				
+					if (jsonArray[i].get('displayno')==this.get('displayno')){
+						//console.log(jsonArray[i].get('displayno') + ' ' + this.get('displayno'));
+						
+					Ext.Array.include( resArray, this ); //insert into new array
+					Ext.Array.remove( records, this );// delete from OrderAndWbStore
+					}
+				
+				
+				
+				}) 
+				
+			
+			}
+			//console.log(jsonArray);
+			console.log(resArray);
+			console.log(records);
+			Ext.Array.push( resArray, records );//add other records in new array
+			this.getUchetsStore().loadData(resArray);//remove UchetsStore data
+			//add data in UchetsStore from new array
 		}
 	}
 });

@@ -1,16 +1,16 @@
 Ext.define('Courier.view.UchetList', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.uchetlist',
-	//store : 'Uchets',
+	store : 'Uchets',
 	columns : [{
-			text : '№'//,
-			//dataIndex : 'displayno'
+			text : '№',
+			dataIndex : 'displayno'
 		}, {
-			text : 'Адрес'//,
-			//dataIndex : 'aaddress'
+			text : 'Адрес',
+			dataIndex : 'aaddress'
 		}, {
-			text : 'Клиент'//,
-			//dataIndex : 'client'
+			text : 'Клиент',
+			dataIndex : 'client'
 		}
 	]
 });

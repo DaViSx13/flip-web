@@ -41,6 +41,7 @@ if (!isset($_REQUEST['dbAct'])) {
             include "dbConnect.php";
             $result = mssql_query($query);
             
+			
 			if ($result) {
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
