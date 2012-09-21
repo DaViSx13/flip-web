@@ -19,7 +19,7 @@ if (!empty($_POST['user'])) {
         $response->msg = 'Превед';
 
         session_start();
-        $_SESSION['courId'] = 10231;
+        $_SESSION['courId'] = 10294;//10231;
     }
     ;
 

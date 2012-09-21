@@ -23,10 +23,10 @@ if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'ok';
     switch ($dbAct) {
         case 'dbTest':
-            $query = "select '$_REQUEST[test]' as test";
+            $query = "exec wwwGetExCodes";
 			//$query = "select cast(null as varchar(10)) as test";
             break;
-        case 'getCourWbs':
+        case 'getCourAll':
             $query = "exec wwwCourGetAll @courId=$_SESSION[courId]";
             break;
     }
@@ -40,7 +40,8 @@ if (!isset($_REQUEST['dbAct'])) {
         try {
             include "dbConnect.php";
             $result = mssql_query($query);
-            if ($result) {
+            
+			if ($result) {
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);

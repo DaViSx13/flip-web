@@ -1,4 +1,4 @@
-﻿Ext.define('Courier.model.Order', {
+﻿Ext.define('Courier.model.OrderAndWb', {
 	extend: 'Ext.data.Model',
 	fields: [{
 		name: 'ano',
@@ -42,7 +42,7 @@
 			root: 'data'
 		},
 		extraParams: {
-			dbAct: 'getCourOrders'
+			dbAct: 'getCourAll'
 		}
 	}
 });

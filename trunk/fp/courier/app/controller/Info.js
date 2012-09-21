@@ -3,7 +3,7 @@
 	//requires: ['Ext.Date'],
 	views: ['Main', 'Info'],
 	models: ['Courier'],
-    stores: ['Orders', 'Wbs'],
+    stores: ['OrderAndWb'],
 	refs: [{
 		ref: 'infoPanel',
 		selector: 'info'
@@ -33,8 +33,8 @@
 		//this.getInfoPanel().down('button').setText(Ext.Date.format(new Date(), 'H:i'));
 		//console.log(this.refreshTask);
         //Ext.TaskManager.stop(this.refreshTask);
-        this.getOrdersStore().load();
-        this.getWbsStore().load();
+        this.getOrderAndWbStore().load();
+        //this.getWbsStore().load();
 		console.log('END test function');
 	},
 	test1: function() {
