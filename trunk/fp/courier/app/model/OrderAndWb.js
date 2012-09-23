@@ -31,8 +31,43 @@
 	{
 		name: 'tdd',
 		type: 'string'
+	},
+	{
+		name: 'cont',
+		type: 'string'
+	},
+	{
+		name: 'contphone',
+		type: 'string'
+	},
+	{
+		name: 'packs',
+		type: 'int'
+	},
+	{
+		name: 'wt',
+		type: 'float'
+	},
+	{
+		name: 'volwt',
+		type: 'float'
+	},
+	{
+		name: 'rems',
+		type: 'string'
+	},
+	{
+		name: 'ordstatus',
+		type: 'int'
+	},
+	{
+		name: 'ordtype',
+		type: 'int'
+	},
+	{
+		name: 'rectype',
+		type: 'int'
 	}
-	
 	],
 	proxy: {
 		type: 'ajax',
