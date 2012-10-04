@@ -2,7 +2,14 @@ Ext.define('Courier.view.UchetList', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.uchetlist',
 	store : 'Uchets',
-	requires : ['Courier.view.NewPodWin'],
+	requires : ['Courier.view.NewPodWin', 'Courier.view.Info'],
+	viewConfig: {
+            plugins: {
+                ptype: 'gridviewdragdrop',
+                dragGroup: 'UchetListDDGroup',
+                dropGroup: 'UchetListDDGroup'
+            }
+			},
 	columns : [{
 			itemId : '0',
 			text : 'Статус'
@@ -14,6 +21,7 @@ Ext.define('Courier.view.UchetList', {
 		}, {
 			text : 'Адрес',
 			itemId : '2',
+			flex : 1,
 			dataIndex : 'aaddress'
 		}, {
 			text : 'Клиент',
@@ -40,6 +48,11 @@ Ext.define('Courier.view.UchetList', {
 		}, {
 			dataIndex : 'rectype',
 			text : 'Тип'
+		}
+	],
+	dockedItems : [{
+			xtype : 'info',
+			dock : 'top'
 		}
 	]
 });

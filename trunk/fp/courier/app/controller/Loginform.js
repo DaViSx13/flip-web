@@ -3,7 +3,7 @@
 	views: ['Loginform', 'Main', 'Loginformcontainer'],
 	models: ['Courier'],
 	refs: [{
-		ref: 'infoPanel',
+		ref: 'Info',
 		selector: 'info'
 	}],
 	init: function() {
@@ -31,7 +31,7 @@
 					Courier.model.Courier.load(0, {
 						scope: this,
 						success: function(cour) {
-							this.getInfoPanel().setTitle("Курьер : " + cour.get('name'));
+							this.getInfo().down('label').setText("Курьер : " + cour.get('name'));
 						}
 					})
 				},

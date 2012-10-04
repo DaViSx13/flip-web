@@ -5,15 +5,15 @@
 	models: ['Courier'],
     stores: ['OrderAndWb', 'Uchets'],
 	refs: [{
-		ref: 'infoPanel',
+		ref: 'Info',
 		selector: 'info'
 	}],
 	init: function() {
-		console.log('Initialized info controller');
+		//console.log('Initialized info controller');
 		this.control({
-			'info button[action=test]': {
+			/*'info button[action=test]': {
 				click: this.test
-			},
+			},*/
 			'info': {
 				render: this.test1
 			}
@@ -26,7 +26,7 @@
 		});*/
 	},
 	test: function(button) {
-		console.log('BEGIN test function');
+		//console.log('BEGIN test function');
 		//Ext.getStore('Courier').load();
 		//console.log(this.getInfoView());
 		//console.log(button);
@@ -35,7 +35,7 @@
         //Ext.TaskManager.stop(this.refreshTask);
         this.getOrderAndWbStore().load();
         //this.getWbsStore().load();
-		console.log('END test function');
+		//console.log('END test function');
 	},
 	test1: function() {
 		console.log('BEGIN test1 function');
@@ -44,8 +44,9 @@
 		//console.log(this.refreshTask)
 		this.refreshTask = Ext.TaskManager.start({
 			run: function() {
-				this.getInfoPanel().down('button').setText(Ext.Date.format(new Date(), 'H:i:s'));
-				//console.log('time set');
+				//this.getInfoPanel().down('button').setText(Ext.Date.format(new Date(), 'H:i:s'));
+				this.getOrderAndWbStore().load();
+				console.log('load');
 			},
 			interval: 10000,
 			// 10 Seconds

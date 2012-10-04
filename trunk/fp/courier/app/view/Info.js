@@ -1,13 +1,9 @@
 Ext.define('Courier.view.Info', {
-	extend: 'Ext.panel.Panel',
+	extend : 'Ext.toolbar.Toolbar',
 	alias: 'widget.info',
-	title: 'infopanel',
+	//title: 'infopanel',
 	items: [{
-		html: 'разное инфо123123'
-	},
-	{
-		xtype: 'button',
-		text: 'бутон',
-		action: 'test'
+		xtype: 'label',
+		text:''
 	}]
 });

@@ -1,18 +1,18 @@
-Ext.define('Courier.view.WbWin', {
+Ext.define('Courier.view.OrderWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
-	alias : 'widget.wbwin',
-	requires : ['Courier.view.WbForm'],
-	title : 'Накладная',
+	alias : 'widget.orderwin',
+	requires : ['Courier.view.OrderForm'],
+	title : 'Заказ',
 	layout : 'fit',
 	autoShow : true,
-	height : 360,
+	height : 450,
 	width : 280,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
 		this.items = [{
-				xtype : 'wbform'
+				xtype : 'orderform'
 			}
 		];
 		this.buttons = [{

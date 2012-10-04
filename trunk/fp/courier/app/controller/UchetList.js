@@ -1,6 +1,6 @@
 ﻿Ext.define('Courier.controller.UchetList', {
 	extend : 'Ext.app.Controller',
-	views : ['UchetList', 'Info', 'NewPodWin', 'NewPodForm', 'WbWin'],
+	views : ['UchetList', 'Info', 'NewPodWin', 'NewPodForm', 'WbWin', 'OrderWin', 'OrderForm'],
 	models : ['Courier'],
 	stores : ['OrderAndWb', 'Uchets'],
 	refs : [{
@@ -42,7 +42,7 @@
 		});*/
 	},
 	makeUchetList : function (store, records, success) {
-		console.log('wbs store loaded');
+		//console.log('wbs store loaded');
 		var me = this;
 		if (success) {
 			//this.getUchetsStore().add(records);
@@ -66,8 +66,8 @@
 			
 			}
 			//console.log(jsonArray);
-			console.log(resArray);
-			console.log(records);
+			//console.log(resArray);
+			//console.log(records);
 			Ext.Array.push( resArray, records );//add other records in new array
 			this.getUchetsStore().loadData(resArray);//remove UchetsStore data
 			//add data in UchetsStore from new array
@@ -93,6 +93,9 @@
 	
 	var wb = Ext.widget('wbwin').show();
 	}
+	if (rec.data['rectype']==0){
 	
+	var ord = Ext.widget('orderwin').show();
+	}
 	}
 });

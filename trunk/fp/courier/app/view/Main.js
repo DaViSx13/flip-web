@@ -6,9 +6,9 @@
 		type : 'vbox',
 		align : 'stretch'
 	},
-	items : [{
+	items : [/*{
 			xtype : 'info'
-		}, {
+		}, */{
 			/*title : 'grid',*/
 			//html : 'основа',
 			xtype : 'uchetlist',
