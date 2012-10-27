@@ -15,11 +15,11 @@ Ext.define('Courier.view.WbWin', {
 				xtype : 'wbform'
 			}
 		];
-		this.buttons = [{
+		this.buttons = [/*{
 				text : 'Сохранить',
 				action : 'save'
-			}, {
-				text : 'Отмена',
+			}, */{
+				text : 'Закрыть',
 				scope : this,
 				handler : this.close
 			}

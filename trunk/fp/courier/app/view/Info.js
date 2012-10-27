@@ -5,5 +5,16 @@ Ext.define('Courier.view.Info', {
 	items: [{
 		xtype: 'label',
 		text:''
-	}]
+	},'-',
+	{
+	text:'test',
+	action: 'test'
+	},'->',
+	{
+		xtype: 'label',
+		itemId: 'count',
+		text:''
+	}
+	
+	]
 });

@@ -1,0 +1,38 @@
+.x-action-col-cell img.ex-ch {
+	background-image : url(../../resources/images/checked.gif);
+	
+	height : 16px;
+	width : 16px;
+	cursor : pointer;
+}
+.x-action-col-cell img.ex-unch {
+	background-image : url(../../resources/images/unchecked.gif);
+	
+	height : 16px;
+	width : 16px;
+	cursor : pointer;
+}
+.rec-gray {
+	color: #808080;
+}
+.rec-green {
+	color: #177245;
+}
+.rec-red {
+	color: #ff7f50;
+}
+.x-grid-row.rec-notview-gray .x-grid-cell
+{
+	color: #808080;
+	background-color: #abcdef;
+}
+.x-grid-row.rec-notview-green .x-grid-cell
+{
+	color: #177245;
+	background-color: #abcdef;
+}
+.x-grid-row.rec-notview-red .x-grid-cell
+{
+	color: #ff7f50;
+	background-color: #abcdef;
+}

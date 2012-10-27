@@ -38,7 +38,7 @@
 		//console.log('END test function');
 	},
 	test1: function() {
-		console.log('BEGIN test1 function');
+		//console.log('BEGIN test1 function');
 		//console.log(this.refreshTask)
 		//Ext.TaskManager.start(this.refreshTask);
 		//console.log(this.refreshTask)
@@ -52,7 +52,7 @@
 			// 10 Seconds
 			scope: this
 		});
-		console.log('END test1 function');
+		//console.log('END test1 function');
 	}/*,
 	refreshTask: {
 		//scope: this,

@@ -21,13 +21,13 @@
 				url: 'data/login.php',
 				scope: this,
 				success: function(form, action) {
-					console.log('test');
+					//console.log('test');
 					var aviewport = button.up('viewport');
-					console.log('test1');
+					//console.log('test1');
 					aviewport.removeAll(true);
-					console.log('test2');
+					//console.log('test2');
 					aviewport.add(Ext.widget('main'));
-					console.log('test3');
+					//console.log('test3');
 					Courier.model.Courier.load(0, {
 						scope: this,
 						success: function(cour) {

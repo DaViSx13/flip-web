@@ -1,4 +1,4 @@
-﻿Ext.define('Courier.model.OrderAndWb', {
+Ext.define('Courier.model.LocModel', {
 	extend: 'Ext.data.Model',
 	fields: [{
 		name: 'ano',
@@ -84,17 +84,5 @@
 		name: 'rcpn',
 		type: 'string'
 	}
-	
-	],
-	proxy: {
-		type: 'ajax',
-		url: 'data/data.php',
-		reader: {
-			type: 'json',
-			root: 'data'
-		},
-		extraParams: {
-			dbAct: 'getCourAll'
-		}
-	}
+	]
 });
