@@ -1,15 +1,15 @@
 .x-action-col-cell img.ex-ch {
-	background-image : url(../../resources/images/checked.gif);
+	background-image : url(../../resources/images/checkbox_checked.png);
 	
-	height : 16px;
-	width : 16px;
+	height : 32px;
+	width : 32px;
 	cursor : pointer;
 }
 .x-action-col-cell img.ex-unch {
-	background-image : url(../../resources/images/unchecked.gif);
+	background-image : url(../../resources/images/checkbox_unchecked.png);
 	
-	height : 16px;
-	width : 16px;
+	height : 32px;
+	width : 32px;
 	cursor : pointer;
 }
 .rec-gray {
@@ -35,4 +35,18 @@
 {
 	color: #ff7f50;
 	background-color: #abcdef;
+}
+.up {
+    background-image: url( ../../resources/images/up_arrow.png ) !important;
+}
+.down {
+    background-image: url( ../../resources/images/down_arrow.png ) !important;
+}
+.view {
+    background-image: url( ../../resources/images/notebook.png ) !important;
+}
+.x-grid-row
+{
+	height : 45px;
+	
 }

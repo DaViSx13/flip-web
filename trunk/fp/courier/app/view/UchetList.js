@@ -2,15 +2,13 @@ Ext.define('Courier.view.UchetList', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.uchetlist',
 	store : 'Uchets',
-	requires : ['Courier.view.NewPodWin', 'Courier.view.Info'],
+	requires : ['Courier.view.NewPodWin', 'Courier.view.Info', 'Courier.view.Actions'],
 	viewConfig: {
-            plugins: {
+           /* plugins: {
                 ptype: 'gridviewdragdrop',
 				dragText: 'Перетащите для сортировки',
-				/*
-                dragGroup: 'UchetListDDGroup',
-                dropGroup: 'UchetListDDGroup'*/
-            },
+				
+            },*/
 			getRowClass: function(record, index) {
 							if (record.get('isview') == 1){
 							var ret ='rec-';
@@ -34,31 +32,41 @@ Ext.define('Courier.view.UchetList', {
 	columns : [{
 			itemId : '0',
 			text : 'Статус',
+			menuDisabled : true,
 			dataIndex : 'ordstatus'
 		}, {
 			text : '№',
+			menuDisabled : true,
 			itemId : '1',
 			dataIndex : 'displayno'
 		}, {
 			text : 'Адрес',
+			menuDisabled : true,
 			itemId : '2',
 			flex : 1,
 			dataIndex : 'aaddress'
 		}, {
 			text : 'Клиент',
+			menuDisabled : true,
 			itemId : '3',
 			dataIndex : 'client'
 		}, {
 			text : 'С',
 			itemId : '4',
+			width : 60,
+			menuDisabled : true,
 			dataIndex : 'timeb'
 		}, {
 			text : 'До',
 			itemId : '5',
+			width : 60,
+			menuDisabled : true,
 			dataIndex : 'timee'
 		}, {
 			xtype: 'actioncolumn',
-			text : 'В пути',
+			width : 33,
+			menuDisabled : true,
+			text : 'Еду',
 			itemId: 'inway',
 			items : [{
 						
@@ -67,7 +75,7 @@ Ext.define('Courier.view.UchetList', {
 							if (rec.get('inway') > 0 && !rec.get('tdd') && rec.get('isredy')==0) {
 								this.items[0].tooltip = 'Едем сюда';
 								return 'ex-ch';
-							} else {
+							} else if (rec.get('inway') <1 && !rec.get('tdd') && rec.get('isredy')==0) {
 							this.items[0].tooltip = 'Не определено';
 							return 'ex-unch';
 							}
@@ -81,7 +89,9 @@ Ext.define('Courier.view.UchetList', {
 			
 		}, {
 			xtype: 'actioncolumn',
-			text: 'Выполнено',
+			width : 33,
+			menuDisabled : true,
+			text: 'Ок',
 			itemId: 'isredy',
 			items : [{
 						
@@ -105,21 +115,30 @@ Ext.define('Courier.view.UchetList', {
 		}, {
 			text : 'ПОД',
 			dataIndex : 'tdd',
+			width : 60,
+			menuDisabled : true,
 			itemId : 'pod'
 		}, {
-			text : 'Количество',
+			text : 'Кол.',
+			width : 35,
+			menuDisabled : true,
 			dataIndex : 'packs'
-		}, {
+		}/*, {
 			dataIndex : 'rectype',
 			text : 'Тип',
 			xtype : 'numbercolumn',
 			format : '0'
-		}
+		}*/
 	],
 	
-	dockedItems : [{
+	dockedItems : [
+		{
+			xtype : 'actions',
+			dock : 'left'
+		},{
 			xtype : 'info',
 			dock : 'top'
 		}
+		
 	]
 });

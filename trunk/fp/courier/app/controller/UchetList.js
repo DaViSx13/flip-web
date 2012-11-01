@@ -6,6 +6,9 @@
 	refs : [{
 			ref : 'Info',
 			selector : 'info'
+		},{
+			ref : 'Actions',
+			selector : 'actions'
 		}		
 	],
 	init : function () {
@@ -13,7 +16,7 @@
 			'uchetlist gridcolumn[itemId=pod]' : {
 				click : this.insertPod
 			},
-			'uchetlist gridcolumn[itemId=0]' : {
+			/*'uchetlist gridcolumn[itemId=0]' : {
 				dblclick : this.showDetails
 			},
 			'uchetlist gridcolumn[itemId=1]' : {
@@ -30,7 +33,7 @@
 			},
 			'uchetlist gridcolumn[itemId=5]' : {
 				dblclick : this.showDetails
-			},
+			},*/
 			'uchetlist info button[action=test]' : {
 				click : this.test
 			},
@@ -42,6 +45,15 @@
 			},
 			'newpodwin button[action=save]' : {
 				click : this.savePod
+			},
+			'uchetlist actions button[action=up]' : {
+				click : this.up
+			},
+			'uchetlist actions button[action=down]' : {
+				click : this.down
+			},
+			'uchetlist actions button[action=view]' : {
+				click : this.showDetails
 			}
 		});
 		this.getOrderAndWbStore().on({
@@ -117,9 +129,10 @@
 				store.each(function () {
 						
 					if (jsonArray[i].get('ano')==this.get('ano')){//Нужно: Сравниваем OrderAndWbStore с LocalStore
-						//console.log(records);
+						
 						
 					Ext.Array.include( resArray, this/*.getData()*/ ); //insert into new array
+					//console.log(resArray[i]);
 					resArray[i].data['isredy'] = jsonArray[i].get('isredy');
 					resArray[i].data['inway'] = jsonArray[i].get('inway');
 					resArray[i].data['isview'] = jsonArray[i].get('isview');
@@ -197,16 +210,28 @@
 			//this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
 		}
 	},
-	showDetails : function ( gridview, el, rowIndex, colIndex, e, rec, rowEl ) {
-	//console.log(rec);
-	rec.set('isview', 1);
-	if (rec.data['rectype']==1){
+	showDetails : function ( btn ) {
 	
-	var wb = Ext.widget('wbwin').show();
-	}
-	if (rec.data['rectype']==0){
+	var sm = btn.up('uchetlist').getSelectionModel();
+		if (sm.getCount() > 0) {
+			
+			sm.getSelection()[0].set('isview', 1);	
+			if (sm.getSelection()[0].get('rectype')==1){
 	
-	var ord = Ext.widget('orderwin').show();
-	}
+					var wb = Ext.widget('wbwin').show();
+			}
+			if (sm.getSelection()[0].get('rectype')==0){
+	
+					var ord = Ext.widget('orderwin').show();
+			}
+		}
+	},
+	up : function ( btn ) {
+	var sm = btn.up('uchetlist').getSelectionModel();
+	//var rec = this.getUchetsStore().store.getAt(0));
+	var sr = sm.getSelection();
+	//sm.setPosition( 1, 2, true ); 
+	sr.setPosition( 3, 5, true );
+	//console.log(sr.getId());
 	}
 });
