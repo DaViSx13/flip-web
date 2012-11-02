@@ -1,1 +1,1 @@
-sencha create jsb -a index.html -p app.jsb3
+sencha create jsb -a http://localhost/courier/index.html -p app.jsb3

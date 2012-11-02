@@ -48,7 +48,7 @@
 				this.getOrderAndWbStore().load();
 				console.log('load');
 			},
-			interval: 10000,
+			interval: 30000,
 			// 10 Seconds
 			scope: this
 		});
