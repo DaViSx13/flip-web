@@ -2,12 +2,7 @@
 	extend: 'Ext.form.Panel',
 	alias: 'widget.loginform',
 	title: 'Здрасте',
-	//url: 'data/login.php',
-/*
-    config: {
-        url: 'login.php'
-        },
-  */
+	bodyPadding : 10,
 	items: [{
 		xtype: 'textfield',
 		name: 'user',

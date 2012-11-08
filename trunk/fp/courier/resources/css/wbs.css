@@ -3,14 +3,14 @@
 	
 	height : 32px;
 	width : 32px;
-	cursor : pointer;
+	/*cursor : pointer;*/
 }
 .x-action-col-cell img.ex-unch {
 	background-image : url(../../resources/images/checkbox_unchecked.png);
 	
 	height : 32px;
 	width : 32px;
-	cursor : pointer;
+	/*cursor : pointer;*/
 }
 .rec-gray {
 	color: #808080;

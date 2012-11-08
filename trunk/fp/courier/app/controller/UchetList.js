@@ -1,6 +1,6 @@
 ﻿Ext.define('Courier.controller.UchetList', {
 	extend : 'Ext.app.Controller',
-	views : ['UchetList', 'Info', 'NewPodWin', 'NewPodForm', 'WbWin', 'OrderWin', 'OrderForm'],
+	views : ['UchetList', 'Info', 'NewPodWin', 'NewPodForm', 'WbWin', 'OrderWin', 'OrderForm', 'NewCountWin', 'NewCountForm'],
 	models : ['Courier', 'LocModel', 'LocModFlag', 'OrderAndWb'],
 	stores : ['OrderAndWb', 'Uchets', 'LocStore', 'LocStoFlag'],
 	refs : [{
@@ -9,6 +9,9 @@
 		},{
 			ref : 'Actions',
 			selector : 'actions'
+		},{
+			ref : 'UchetList',
+			selector : 'uchetlist'
 		}		
 	],
 	init : function () {
@@ -16,10 +19,10 @@
 			'uchetlist gridcolumn[itemId=pod]' : {
 				click : this.insertPod
 			},
-			/*'uchetlist gridcolumn[itemId=0]' : {
-				dblclick : this.showDetails
+			'uchetlist gridcolumn[itemId=packs]' : {
+				click : this.insertCount
 			},
-			'uchetlist gridcolumn[itemId=1]' : {
+			/*'uchetlist gridcolumn[itemId=1]' : {
 				dblclick : this.showDetails
 			},
 			'uchetlist gridcolumn[itemId=2]' : {
@@ -45,6 +48,9 @@
 			},
 			'newpodwin button[action=save]' : {
 				click : this.savePod
+			},
+			'newcountwin button[action=save]' : {
+				click : this.saveCount
 			},
 			'uchetlist actions button[action=up]' : {
 				click : this.up
@@ -83,7 +89,13 @@
 						win.close();
 						console.log(this.getLocStoFlagStore());
 	},
-	
+	saveCount : function (btn) {
+						var win = btn.up('newcountwin');
+						var form = win.down('newcountform');
+						var rec = this.getUchetsStore().findRecord('ano', form.getValues()['wb_no']);						
+						rec.set('packs', form.getValues()['packs']);
+						win.close();						
+	},
 	setWay : function (column, action, grid, rowIndex, colIndex, record, node) {
 	
 	if (record.get('inway')==0 && !record.get('tdd') && record.get('isredy')==0) {
@@ -107,6 +119,29 @@
 	}
 	},
 	
+	syncOnServer : function () {
+	Ext.Ajax.request({
+				url : 'data/data.php',
+				params : {
+					dbAct : 'SetPOD',
+					rcpn : '',
+					tdd : '',
+					p_d_in : ''
+				},
+				success : function (response) {
+					var text = Ext.decode(response.responseText);
+					var aTol = me.getOrdTool();
+					var ye = aTol.down('numyear').value;
+					var mo = aTol.down('combomonth').value;
+					me.loadOrds(ye, mo);
+				},
+				failure : function (response) {
+					console.log('Сервер недоступен! ' + response.statusText);
+				}
+			});
+	
+	},
+	
 	makeUchetList : function (store, records, success) {
 		//console.log('wbs store loaded');
 		var me = this;
@@ -123,7 +158,7 @@
 			}
 			var resArray = new Array();
 			var countNew = 0;
-			
+			var sel = me.getUchetList().getSelectionModel().getCurrentPosition();
 			
 			for (var i = 0; i < jsonArray.length; i++) {
 				store.each(function () {
@@ -136,6 +171,7 @@
 					resArray[i].data['isredy'] = jsonArray[i].get('isredy');
 					resArray[i].data['inway'] = jsonArray[i].get('inway');
 					resArray[i].data['isview'] = jsonArray[i].get('isview');
+					resArray[i].data['packs'] = jsonArray[i].get('packs');
 					if(me.getLocStoFlagStore().getCount() > 0)
 					if(me.getLocStoFlagStore().findRecord('ano', jsonArray[i].get('ano'))){
 					resArray[i].data['tdd'] = jsonArray[i].get('tdd');
@@ -184,6 +220,9 @@
 					}
 			}
 		}
+		if (sel){
+			me.getUchetList().getSelectionModel().select(sel.row);
+		}
 	},
 	test : function (but) {
 	
@@ -210,6 +249,20 @@
 			//this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
 		}
 	},
+	insertCount : function ( gridview, el, rowIndex, colIndex, e, rec, rowEl ) {
+	
+		if (rec.data['rectype']==1 || rec.data['rectype']==0) {
+			
+			var newcount = Ext.widget('newcountwin').show();
+			var formcount = newcount.down('newcountform');
+			formcount.down('textfield[name=wb_no]').setValue(rec.data['displayno']);
+			formcount.down('textfield[name=packs]').setValue(rec.data['packs']);
+			
+		} else {
+			
+		}
+	},
+	
 	showDetails : function ( btn ) {
 	
 	var sm = btn.up('uchetlist').getSelectionModel();
@@ -218,11 +271,17 @@
 			sm.getSelection()[0].set('isview', 1);	
 			if (sm.getSelection()[0].get('rectype')==1){
 	
-					var wb = Ext.widget('wbwin').show();
+					var wb = Ext.widget('wbwin');
+					wb.show();
+					var wbf = wb.down('wbform');
+					wbf.loadRecord(sm.getLastSelected());
 			}
 			if (sm.getSelection()[0].get('rectype')==0){
 	
-					var ord = Ext.widget('orderwin').show();
+					var ord = Ext.widget('orderwin');
+					ord.show();
+					var ordf = ord.down('orderform');
+					ordf.loadRecord(sm.getLastSelected());
 			}
 		}
 	},

@@ -73,10 +73,10 @@ Ext.define('Courier.view.UchetList', {
 						getClass : function (v, meta, rec) {
 						
 							if (rec.get('inway') > 0 && !rec.get('tdd') && rec.get('isredy')==0) {
-								this.items[0].tooltip = 'Едем сюда';
+								//this.items[0].tooltip = 'Едем сюда';
 								return 'ex-ch';
 							} else if (rec.get('inway') <1 && !rec.get('tdd') && rec.get('isredy')==0) {
-							this.items[0].tooltip = 'Не определено';
+							//this.items[0].tooltip = 'Не определено';
 							return 'ex-unch';
 							}
 						},
@@ -98,10 +98,10 @@ Ext.define('Courier.view.UchetList', {
 						getClass : function (v, meta, rec) {
 						
 							if (rec.get('isredy') > 0 && (rec.get('rectype') == 0 || rec.get('rectype') == 2)) {
-								this.items[0].tooltip = 'Выполнено';
+								//this.items[0].tooltip = 'Выполнено';
 								return 'ex-ch';
 							} else if (rec.get('isredy') < 1 && (rec.get('rectype') == 0 || rec.get('rectype') == 2)) {
-							this.items[0].tooltip = 'Не выполнено';
+							//this.items[0].tooltip = 'Не выполнено';
 							return 'ex-unch';
 							}
 						},
@@ -122,7 +122,8 @@ Ext.define('Courier.view.UchetList', {
 			text : 'Кол.',
 			width : 35,
 			menuDisabled : true,
-			dataIndex : 'packs'
+			dataIndex : 'packs',
+			itemId: 'packs'
 		}/*, {
 			dataIndex : 'rectype',
 			text : 'Тип',
