@@ -4,19 +4,19 @@ Ext.define('Courier.view.Actions', {
 	
 	items: [
 	{
-	tooltip :'Строку вверх',
+	//tooltip :'Строку вверх',
 	scale: 'large',
 	iconCls: 'up',
 	action: 'up'
 	},
 	{
-	tooltip :'Строку вниз',
+	//tooltip :'Строку вниз',
 	iconCls:'down',
 	scale: 'large',
 	action: 'down'
 	},
 	{
-	tooltip :'Просмотр',
+	//tooltip :'Просмотр',
 	iconCls:'view',
 	scale: 'large',
 	action: 'view'

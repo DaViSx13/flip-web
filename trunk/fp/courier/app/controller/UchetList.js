@@ -53,10 +53,10 @@
 				click : this.saveCount
 			},
 			'uchetlist actions button[action=up]' : {
-				click : this.up
+				click : this.upRow
 			},
 			'uchetlist actions button[action=down]' : {
-				click : this.down
+				click : this.downRow
 			},
 			'uchetlist actions button[action=view]' : {
 				click : this.showDetails
@@ -120,25 +120,49 @@
 	},
 	
 	syncOnServer : function () {
-	Ext.Ajax.request({
+	var me = this;
+	me.getLocStoFlagStore().load();
+	var flag_count = me.getLocStoFlagStore().getCount();
+	var dtd = new Date();
+	dtd=dtd.getFullYear()+'.'+dtd.getMonth()+'.'+dtd.getDay(dtd);
+	
+	if (flag_count > 0) {
+	 
+	 //console.log(me.getLocStoreStore().findRecord('ano', me.getLocStoFlagStore().getRange(0, 0)[0].get('ano')).get('tdd'));
+	 var flag_rec = me.getLocStoFlagStore().getRange(0, 0);
+	 
+		Ext.Ajax.request({
 				url : 'data/data.php',
 				params : {
 					dbAct : 'SetPOD',
-					rcpn : '',
-					tdd : '',
-					p_d_in : ''
+					wb_no : me.getLocStoFlagStore().getRange(0, 0)[0].get('ano'),
+					rcpn : me.getLocStoreStore().findRecord('ano', me.getLocStoFlagStore().getRange(0, 0)[0].get('ano')).get('rcpn'),
+					tdd : me.getLocStoreStore().findRecord('ano', me.getLocStoFlagStore().getRange(0, 0)[0].get('ano')).get('tdd'),
+					p_d_in : dtd
 				},
 				success : function (response) {
-					var text = Ext.decode(response.responseText);
-					var aTol = me.getOrdTool();
-					var ye = aTol.down('numyear').value;
-					var mo = aTol.down('combomonth').value;
-					me.loadOrds(ye, mo);
+				
+				var text = Ext.decode(response.responseText);
+				
+				console.log(text);
+					if (text.success == true) {
+						console.log('1 '+text.msg);
+						me.getLocStoFlagStore().remove(flag_rec);
+						me.getLocStoFlagStore().sync();
+						
+					} else {
+						console.log('2 '+text.msg);
+					}
 				},
 				failure : function (response) {
-					console.log('Сервер недоступен! ' + response.statusText);
+						console.log('Сервер недоступен! ' + response.statusText);
+					
 				}
 			});
+	
+	
+	}
+	
 	
 	},
 	
@@ -223,18 +247,17 @@
 		if (sel){
 			me.getUchetList().getSelectionModel().select(sel.row);
 		}
+		this.syncOnServer();
 	},
 	test : function (but) {
+	this.syncOnServer();
 	
-	this.getLocStoFlagStore().load();
+	/*this.getLocStoFlagStore().load();
 	console.log(this.getLocStoFlagStore().getCount());
 	this.getLocStoFlagStore().remove(this.getLocStoFlagStore().getRange());
 	this.getLocStoFlagStore().sync();
-	console.log(this.getLocStoFlagStore().getCount());
-	//this.getLocStoreStore().remove(this.getLocStoreStore().getRange());
-	//this.getLocStoreStore().sync();
-	//this.getLocStoreStore().load();
-	//console.log(this.getLocStoreStore());
+	console.log(this.getLocStoFlagStore().getCount());*/
+	
 	},
 	insertPod : function ( gridview, el, rowIndex, colIndex, e, rec, rowEl ) {
 	//console.log();
@@ -285,12 +308,28 @@
 			}
 		}
 	},
-	up : function ( btn ) {
+	upRow : function ( btn ) {
 	var sm = btn.up('uchetlist').getSelectionModel();
 	//var rec = this.getUchetsStore().store.getAt(0));
 	var sr = sm.getSelection();
-	//sm.setPosition( 1, 2, true ); 
-	sr.setPosition( 3, 5, true );
-	//console.log(sr.getId());
+	//var rec=this.getUchetsStore().getRange(0,0);
+	
+	var row_index = this.getUchetsStore().indexOf(sr[0]);
+	
+	if (row_index > 0){
+		this.getUchetsStore().remove(sr);
+		this.getUchetsStore().insert((row_index-1),sr);
+		sm.select(sr);
+		}
+	},
+	downRow : function ( btn ) {
+		var sm = btn.up('uchetlist').getSelectionModel();
+		var sr = sm.getSelection();
+		var row_index = this.getUchetsStore().indexOf(sr[0]);
+		if (row_index < this.getUchetsStore().getCount()){
+			this.getUchetsStore().remove(sr);
+			this.getUchetsStore().insert((row_index+1),sr);
+			sm.select(sr);
+		}
 	}
 });
