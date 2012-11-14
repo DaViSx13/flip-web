@@ -22,7 +22,7 @@ Ext.define('FpMnf.controller.Loginform', {
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
 		if (keyCode == 13) {
-		
+			
 			this.doLogin(fild.up('loginform').down('button[action=login]'));
 		}
 	},
@@ -88,13 +88,36 @@ Ext.define('FpMnf.controller.Loginform', {
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
 						aviewport.down('mainpanel').down('label').setText(action.result.username);
-					}
+					};
+					
+					//checkSession
+					Ext.TaskManager.start({
+						run : function () {
+							Ext.Ajax.request({
+								url : 'srv/launch.php',
+								success : function (response) {
+									console.log('checkSession')
+									var text = Ext.decode(response.responseText);
+									if (text.success == false) {
+										Ext.getDoc().dom.location.reload()
+									}
+								},
+								failure : function (response) {
+									console.log('checkSession - Сервер недоступен!: ' + response.statusText);
+								}
+							});
+						},
+						interval : 33 * 60 * 1000,
+						scope : this
+					});
+					
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Ошибка', action.result.msg);
 				}
 			});
-		}
+		};
+		
 	},
 	doLogout : function (button) {
 		var me = this;
