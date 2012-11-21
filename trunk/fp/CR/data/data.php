@@ -27,13 +27,13 @@ if (!isset($_REQUEST['dbAct'])) {
 			//$query = "select cast(null as varchar(10)) as test";
             break;
         case 'getCourAll':
-            $query = "exec wwwCourGetAll @courId=$_SESSION[courId]";
+            $query = "exec wwwCourGetAll @courId=$_SESSION[CourID]";
             break;
 		case 'SetPOD':
 			$rcpn = $_POST['rcpn'];
 			$d = explode('.', $_POST['p_d_in']);
 			$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
-			$query = "exec wwwSetPOD @wb_no='{$_POST[wb_no]}', @p_d_in='{$p_d_in}', @tdd='{$_POST[tdd]}', @rcpn='{$rcpn}', @user='{$_SESSION[xUser]}' ";
+			$query = "exec wwwSetPOD @wb_no='{$_POST[wb_no]}', @p_d_in='{$p_d_in}', @tdd='{$_POST[tdd]}', @rcpn='{$rcpn}', @user='{$_SESSION[CourLogin]}' ";
 			break;
     }
 

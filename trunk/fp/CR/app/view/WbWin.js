@@ -6,8 +6,8 @@ Ext.define('Courier.view.WbWin', {
 	title : 'Накладная',
 	layout : 'fit',
 	autoShow : true,
-	height : 360,
-	width : 280,
+	height : 500,
+	width : 600,
 	resizable : false,
 	modal : true,
 	initComponent : function () {

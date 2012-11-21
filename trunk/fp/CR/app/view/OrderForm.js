@@ -6,76 +6,76 @@ Ext.define('Courier.view.OrderForm', {
 	},
 	bodyPadding : 10,
 	items : [{
-			xtype : 'textfield',
-			name : 'displayno',
+			xtype : 'label',
+			itemId : 'displayno'/*,
 			fieldLabel : 'Заказ',
-			readOnly : true
+			readOnly : true*/
 		}, {
-			xtype : 'textfield',
-			name : 'aaddress',
-			fieldLabel : 'Адрес',
-			readOnly : true
+			xtype : 'label',
+			itemId : 'aaddress',
+			width : 570
 		}, {
-			xtype : 'textfield',
-			name : 'client',
-			fieldLabel : 'Клиент'
+			xtype : 'label',
+			itemId : 'client'/*,
+			fieldLabel : 'Клиент'*/
 		}, {
-			xtype : 'textfield',
-			name : 'cont',
-			fieldLabel : 'Контакт'
+			xtype : 'label',
+			itemId : 'cont'/*,
+			fieldLabel : 'Контакт'*/
 		}, {
-			xtype : 'textfield',
-			name : 'contphone',
-			fieldLabel : 'Телефон'
+			xtype : 'label',
+			itemId : 'contphone'/*,
+			fieldLabel : 'Телефон'*/
 		}, {
-			xtype : 'textfield',
-			name : 'rems',
-			fieldLabel : 'Коментарий'
+			xtype : 'label',
+			itemId : 'rems',
+			width : 570
 		}, {
-			xtype : 'textfield',
-			name : 'packs',
-			fieldLabel : 'Мест'
+			xtype : 'label',
+			itemId : 'packs'/*,
+			fieldLabel : 'Мест'*/
 		}, {
-			xtype : 'textfield',
-			name : 'wt',
-			fieldLabel : 'Вес'
+			xtype : 'label',
+			itemId : 'wt'/*,
+			fieldLabel : 'Вес'*/
 		}, {
-			xtype : 'textfield',
-			name : 'volwt',
-			fieldLabel : 'Об. вес'
+			xtype : 'label',
+			itemId : 'volwt'/*,
+			fieldLabel : 'Об. вес'*/
 		}, {
-			xtype : 'textfield',
-			name : 'acash',
-			fieldLabel : 'Сумма'
+			xtype : 'label',
+			itemId : 'acash'/*,
+			fieldLabel : 'Сумма'*/
 		}, {
-			xtype : 'textfield',
-			name : 'ordstatus',
-			fieldLabel : 'Статус'
+			xtype : 'label',
+			itemId : 'ordstatus'/*,
+			fieldLabel : 'Статус'*/
 		}, {
-			xtype : 'textfield',
-			name : 'ordtype',
-			fieldLabel : 'Вид'
+			xtype : 'label',
+			itemId : 'ordtype'/*,
+			fieldLabel : 'Вид'*/
 		}, {
 			xtype : 'fieldset',
 			layout : 'hbox',
 			border : 0,
 			
 			items : [{
-					xtype : 'textfield',
-					name : 'timeb',
+					xtype : 'label',
+					itemId : 'timeb'/*,
 					width : 80,
 					labelPad : 2,
 					labelWidth : 20,
 					margin : '0 10 0 0',
-					fieldLabel : 'C'
+					fieldLabel : 'C'*/
 				}, {
-					xtype : 'textfield',
+					xtype : 'label',
+					itemId : 'timee'/*,
 					width : 80,
 					labelPad : 2,
 					labelWidth : 20,
 					margin : '0 0 0 10',
-					name : 'timee',
-					fieldLabel : 'До'
+					,
+					fieldLabel : 'До'*/
 				}
 			]
 		}

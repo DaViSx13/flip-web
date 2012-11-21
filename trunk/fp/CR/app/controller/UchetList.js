@@ -14,6 +14,7 @@
 			selector : 'uchetlist'
 		}
 	],
+	countNew : 0,
 	init : function () {
 		this.control({
 			'uchetlist gridcolumn[itemId=pod]' : {
@@ -37,9 +38,9 @@
 			'uchetlist gridcolumn[itemId=5]' : {
 			dblclick : this.showDetails
 			},*/
-			'uchetlist info button[action=test]' : {
-				click : this.test
-			},
+			/*'uchetlist info button[action=test]' : {
+				click : this.Exit
+			},*/
 			'uchetlist actioncolumn[itemId=isredy]' : {
 				item_redy_click : this.setRedy
 			},
@@ -70,6 +71,7 @@
 		scope : this,
 		load : this.makeUchetList
 		});*/
+		
 	},
 	
 	savePod : function (btn) {
@@ -94,6 +96,7 @@
 	saveCount : function (btn) {
 		var win = btn.up('newcountwin');
 		var form = win.down('newcountform');
+		//console.log(form.down('label[itemId=wb_no]').text);
 		var rec = this.getUchetsStore().findRecord('ano', form.getValues()['wb_no']);
 		rec.set('packs', form.getValues()['packs']);
 		win.close();
@@ -177,72 +180,99 @@
 			me.getLocStoreStore().load();
 			me.getLocStoFlagStore().load();
 			//console.log(me.getUchetsStore().getCount());
-			//console.log(me.getLocStoreStore());
+			//console.log(me.getLocStoreStore().getRange());
 			if (me.getUchetsStore().getCount() > 0) {
 				var jsonArray = me.getUchetsStore().getRange(); //me.getLocStoreStore().getRange();
 				
-			} else {
-				var jsonArray = me.getLocStoreStore().getRange();
-			}
-			var resArray = new Array();
-			var countNew = 0;
-			var sel = me.getUchetList().getSelectionModel().getCurrentPosition();
 			
-			for (var i = 0; i < jsonArray.length; i++) {
-				store.each(function () {
+			
+				var resArray = new Array();
+				var LocStoreFlagCount = me.getLocStoFlagStore().getCount();
+				var Flag_Store = me.getLocStoFlagStore();
+				var IsDelet =1;
+				var sel = me.getUchetList().getSelectionModel().getCurrentPosition();
+			 //console.log('before for');
+				for (var i = 0; i < jsonArray.length; i++) {
+					store.each(function () {
 					
-					if (jsonArray[i].get('ano') == this.get('ano')) { //Нужно: Сравниваем OrderAndWbStore с LocalStore
+						if (jsonArray[i].get('ano') == this.get('ano')) { //Нужно: Сравниваем OrderAndWbStore с LocalStore
 						
 						
-						Ext.Array.include(resArray, this /*.getData()*/
-						); //insert into new array
-						//console.log(resArray[i]);
-						resArray[i].data['isredy'] = jsonArray[i].get('isredy');
+						//Ext.Array.include(resArray, this); //insert into new array
+						//console.log(this.data.ano);
+						/*resArray[i].data['isredy'] = jsonArray[i].get('isredy');
 						resArray[i].data['inway'] = jsonArray[i].get('inway');
 						resArray[i].data['isview'] = jsonArray[i].get('isview');
-						resArray[i].data['packs'] = jsonArray[i].get('packs');
-						if (me.getLocStoFlagStore().getCount() > 0)
-							if (me.getLocStoFlagStore().findRecord('ano', jsonArray[i].get('ano'))) {
+						resArray[i].data['packs'] = jsonArray[i].get('packs');*/
+						
+						/*if (LocStoreFlagCount > 0)
+							if (Flag_Store.findRecord('ano', jsonArray[i].get('ano'))) {
 								resArray[i].data['tdd'] = jsonArray[i].get('tdd');
 								resArray[i].data['rcpn'] = jsonArray[i].get('rcpn');
-							}
+							}*/
 						
 						//me.getLocStoreStore().sync();
-						
+						IsDelet =0;
 						Ext.Array.remove(records, this); // delete from OrderAndWbStore
 						//Нужно: Присваиваем нужные поля из LocalStore
 					}
 					
 				})
+				//console.log(this);
+				if (IsDelet==1) {
+				me.getUchetsStore().removeAt(i);
+				console.log('remove');
+				} else {
+				IsDelet = 1;
+				}
 				
 			}
 			
-			//console.log(jsonArray[0]);
+			//console.log('after for');
 			//console.log(resArray);
 			//console.log(records);
 			//console.log(store.getRange());
-			Ext.Array.push(resArray, records); //add other records in new array
-			me.getUchetsStore().loadRawData(resArray); //remove UchetsStore data
-			//add data in UchetsStore from new array
+			if (records.length > 0) {
+			this.countNew = this.countNew + records.length;
+			}
+			//Ext.Array.push(resArray, records); //add other records in new array
 			
+			me.getUchetsStore().loadRawData(records, true); //remove UchetsStore data
+			//add data in UchetsStore from new array
 			
 			//this.getLocStoreStore().removeAt(0, this.getLocStoreStore().getCount());
 			
+			
 			me.getLocStoreStore().remove(me.getLocStoreStore().getRange());
 			me.getLocStoreStore().sync();
-			
-			if (resArray.length > 0) {
-				
-				for (var i = 0; i < resArray.length; i++) {
-					countNew = countNew + resArray[i].get('isview');
-					me.getLocStoreStore().add(resArray[i].data);
+			for (var i = 0; i < me.getUchetsStore().getCount(); i++) {
+					me.getLocStoreStore().add(me.getUchetsStore().getRange(i,i)[0].data);
 					me.getLocStoreStore().sync();
 				}
-				countNew = resArray.length - countNew
-					if (countNew > 0) {
-						me.getInfo().down('label[itemId=count]').setText("Количество новых заказов : " + countNew);
-					}
+			
+				
+			} else {
+				/*for (var i = 0; i < me.getLocStoreStore().getCount(); i++) {
+				this.countNew = this.countNew + me.getLocStoreStore().getRange(i,i)[0].get('isview');
+				}
+				this.countNew = me.getLocStoreStore().getCount() - this.countNew;*/
+				console.log(me.getLocStoreStore().getCount());
+				if (me.getLocStoreStore().getCount() > 0){
+				console.log('loc');
+				this.countNew = me.getLocStoreStore().getCount();
+				me.getUchetsStore().loadRawData(me.getLocStoreStore().getRange());
+				} else {
+				console.log('ser');
+				me.getUchetsStore().loadRawData(records);
+				this.countNew = records.length;
+				}
+				//var jsonArray = me.getLocStoreStore().getRange();
 			}
+			
+					if (this.countNew > 0) {
+						me.getInfo().down('label[itemId=count]').setText("Количество новых заказов : " + this.countNew);
+					}
+			
 		}
 		if (sel) {
 			me.getUchetList().getSelectionModel().select(sel.row);
@@ -261,16 +291,12 @@
 		txt.setValue(logStr + '\n' + txt.getValue());
 		
 	},
-	test : function (but) {
+	/*Exit : function (but) {
 		this.syncOnServer();
 		
-		/*this.getLocStoFlagStore().load();
-		console.log(this.getLocStoFlagStore().getCount());
-		this.getLocStoFlagStore().remove(this.getLocStoFlagStore().getRange());
-		this.getLocStoFlagStore().sync();
-		console.log(this.getLocStoFlagStore().getCount());*/
 		
-	},
+		
+	},*/
 	insertPod : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
 		//console.log();
 		if ((!rec.data['tdd']) && (rec.data['rectype'] == 1)) {
@@ -278,8 +304,8 @@
 			//console.log('win');
 			var newdop = Ext.widget('newpodwin').show();
 			var formdop = newdop.down('newpodform');
-			formdop.down('textfield[name=wb_no]').setValue(rec.data['displayno']);
-			
+			formdop.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.displayno+'</font>', false);
+			formdop.down('textfield[name=wb_no]').setValue(rec.data.displayno);
 		} else {
 			//this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
 		}
@@ -290,7 +316,8 @@
 			
 			var newcount = Ext.widget('newcountwin').show();
 			var formcount = newcount.down('newcountform');
-			formcount.down('textfield[name=wb_no]').setValue(rec.data['displayno']);
+			formcount.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.displayno+'</font>', false);
+			formcount.down('textfield[name=wb_no]').setValue(rec.data.displayno);
 			formcount.down('textfield[name=packs]').setValue(rec.data['packs']);
 			
 		} else {}
@@ -300,21 +327,49 @@
 		
 		var sm = btn.up('uchetlist').getSelectionModel();
 		if (sm.getCount() > 0) {
-			
+			if (sm.getSelection()[0].get('isview') == 0) {
 			sm.getSelection()[0].set('isview', 1);
+			this.countNew = this.countNew - 1;
+			this.getInfo().down('label[itemId=count]').setText("Количество новых заказов : " + this.countNew);
+			}
 			if (sm.getSelection()[0].get('rectype') == 1) {
 				
 				var wb = Ext.widget('wbwin');
 				wb.show();
 				var wbf = wb.down('wbform');
-				wbf.loadRecord(sm.getLastSelected());
+				//wbf.loadRecord(sm.getLastSelected());
+				//console.log(sm.getLastSelected().data.ano);
+				wbf.down('label[itemId=displayno]').setText('<font size="5">Накладная:   ' + sm.getLastSelected().data.displayno+'</font>', false);
+				wbf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + sm.getLastSelected().data.aaddress+'</font>', false);
+				wbf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + sm.getLastSelected().data.client+'</font>', false);
+				wbf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + sm.getLastSelected().data.cont+'</font>', false);
+				wbf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + sm.getLastSelected().data.contphone+'</font>', false);
+				wbf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + sm.getLastSelected().data.rems+'</font>', false);
+				wbf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + sm.getLastSelected().data.packs+'</font>', false);
+				wbf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + sm.getLastSelected().data.wt+'</font>', false);
+				wbf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + sm.getLastSelected().data.volwt+'</font>', false);
+				wbf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + sm.getLastSelected().data.acash+'</font>', false);
 			}
 			if (sm.getSelection()[0].get('rectype') == 0) {
 				
 				var ord = Ext.widget('orderwin');
 				ord.show();
 				var ordf = ord.down('orderform');
-				ordf.loadRecord(sm.getLastSelected());
+				//ordf.loadRecord(sm.getLastSelected());
+				ordf.down('label[itemId=displayno]').setText('<font size="5">Заказ:   ' + sm.getLastSelected().data.displayno+'</font>', false);
+				ordf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + sm.getLastSelected().data.aaddress+'</font>', false);
+				ordf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + sm.getLastSelected().data.client+'</font>', false);
+				ordf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + sm.getLastSelected().data.cont+'</font>', false);
+				ordf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + sm.getLastSelected().data.contphone+'</font>', false);
+				ordf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + sm.getLastSelected().data.rems+'</font>', false);
+				ordf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + sm.getLastSelected().data.packs+'</font>', false);
+				ordf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + sm.getLastSelected().data.wt+'</font>', false);
+				ordf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + sm.getLastSelected().data.volwt+'</font>', false);
+				ordf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + sm.getLastSelected().data.acash+'</font>', false);
+				ordf.down('label[itemId=ordstatus]').setText('<font size="5">Статус:   ' + sm.getLastSelected().data.ordstatus+'</font>', false);
+				ordf.down('label[itemId=ordtype]').setText('<font size="5">Вид:   ' + sm.getLastSelected().data.ordtype+'</font>', false);
+				ordf.down('label[itemId=timeb]').setText('<font size="5">C:   ' + sm.getLastSelected().data.timeb+'</font>', false);
+				ordf.down('label[itemId=timee]').setText('<font size="5">До:   ' + sm.getLastSelected().data.timee+'</font>', false);
 			}
 		}
 	},

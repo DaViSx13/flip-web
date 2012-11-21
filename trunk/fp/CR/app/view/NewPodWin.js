@@ -6,8 +6,8 @@ Ext.define('Courier.view.NewPodWin', {
 	title : 'Подтверждение о доставке накладной',
 	layout : 'fit',
 	autoShow : true,
-	height : 170,
-	width : 290,
+	height : 240,
+	width : 350,
 	resizable : false,
 	modal : true,
 	initComponent : function () {

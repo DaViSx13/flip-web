@@ -6,18 +6,19 @@ Ext.define('Courier.view.NewPodForm', {
 	},
 	bodyPadding : 10,
 	items : [{
+			xtype : 'label',
+			itemId : 'wb_no'/*,
+			fieldLabel : 'Накладная',
+			readOnly : true*/
+		}, {
 			xtype : 'textfield',
 			name : 'wb_no',
-			fieldLabel : 'Накладная',
-			readOnly : true
+			hidden : true
+			//format : 'd.m.Y',
+			//fieldLabel : 'РДД',
+			//readOnly : true,
+			//format : 'd.m.Y'
 		}/*, {
-			xtype : 'datefield',
-			name : 'dtd_txt',
-			format : 'd.m.Y',
-			fieldLabel : 'РДД',
-			readOnly : true,
-			format : 'd.m.Y'
-		}, {
 			xtype : 'datefield',
 			name : 'p_d_in',
 			fieldLabel : 'Дата',
@@ -29,6 +30,7 @@ Ext.define('Courier.view.NewPodForm', {
 			name : 'tdd',
 			fieldLabel : 'Время',
 			format : 'H:i',
+			hideTrigger : true,
 			allowBlank : false
 		}, {
 			xtype : 'textfield',

@@ -6,8 +6,8 @@ Ext.define('Courier.view.Info', {
 			xtype : 'label',
 			text : ''
 		}, '-', {
-			text : 'test',
-			action : 'test'
+			text : 'Выход',
+			action : 'logout'
 		}, {
 			xtype : 'textareafield',
 			grow : true,

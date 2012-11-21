@@ -6,8 +6,8 @@ Ext.define('Courier.view.OrderWin', {
 	title : 'Заказ',
 	layout : 'fit',
 	autoShow : true,
-	height : 450,
-	width : 280,
+	height : 600,
+	width : 600,
 	resizable : false,
 	modal : true,
 	initComponent : function () {

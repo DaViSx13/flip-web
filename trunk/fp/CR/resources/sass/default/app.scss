@@ -74,10 +74,13 @@ $font-family: tahoma,arial,verdana,sans-serif;
 $grid-row-cell-line-height: $grid-row-cell-font-size + 4;
 //$grid-row-cell-font-weight: bold;
 $grid-row-cell-font: bold #{$grid-row-cell-font-size}/#{$grid-row-cell-line-height} $font-family;
-//$form-field-height: 44px;
-//$form-field-font-size: 16px;
-//$form-label-font-weight: bold;
-//$form-label-font-size: 16px;
+$form-field-height: 33px;
+$font-size: 16px;
+$form-label-font-size: 16px;
+$form-label-font-weight: bold;
+$form-label-font-size: 16px;
+//$form-trigger-width: 27px !default;
+//$form-trigger-icon-background-position: 7px 6px !default;
 //
 $button-default-base-color: #f8f8f8;
 $button-default-base-color-over: #f3f3f3;

@@ -1,61 +1,59 @@
 Ext.define('Courier.view.WbForm', {
-	alias : 'widget.wbform',
 	extend : 'Ext.form.Panel',
+	alias : 'widget.wbform',
 	layout : {
 		type : 'vbox'
 	},
 	bodyPadding : 10,
 	items : [{
-			xtype : 'textfield',
-			name : 'displayno',
-			fieldLabel : 'Накладная',
-			readOnly : true
+			xtype : 'label',
+			itemId : 'displayno'//,
+			//fieldLabel : 'Накладная',
+			//readOnly : true
 		}, {
-			xtype : 'textfield',
-			name : 'aaddress',
-			fieldLabel : 'Адрес',
-			readOnly : true
+			xtype : 'label',
+			itemId : 'aaddress',
+			width : 570
 			
 		}, {
-			xtype : 'textfield',
-			name : 'client',
-			fieldLabel : 'Клиент'
+			xtype : 'label',
+			itemId : 'client'/*,
+			fieldLabel : 'Клиент'*/
 			
 		}, {
-			xtype : 'textfield',
-			name : 'cont',
-			fieldLabel : 'Контакт'
+			xtype : 'label',
+			itemId : 'cont'/*,
+			fieldLabel : 'Контакт'*/
 			
 		}, {
-			xtype : 'textfield',
-			name : 'contphone',
-			fieldLabel : 'Телефон'
+			xtype : 'label',
+			itemId : 'contphone'/*,
+			fieldLabel : 'Телефон'*/
 			
 		}, {
-			xtype : 'textfield',
-			name : 'rems',
-			//width : 233,
-			fieldLabel : 'Коментарий'
+			xtype : 'label',
+			itemId : 'rems',
+			width : 570
+						
+		}, {
+			xtype : 'label',
+			itemId : 'packs'/*,
+			fieldLabel : 'Мест'*/
 			
 		}, {
-			xtype : 'textfield',
-			name : 'packs',
-			fieldLabel : 'Мест'
+			xtype : 'label',
+			itemId : 'wt'/*,
+			fieldLabel : 'Вес'*/
 			
 		}, {
-			xtype : 'textfield',
-			name : 'wt',
-			fieldLabel : 'Вес'
+			xtype : 'label',
+			itemId : 'volwt'/*,
+			fieldLabel : 'Об. вес'*/
 			
 		}, {
-			xtype : 'textfield',
-			name : 'volwt',
-			fieldLabel : 'Об. вес'
-			
-		}, {
-			xtype : 'textfield',
-			name : 'acash',
-			fieldLabel : 'Сумма'
+			xtype : 'label',
+			itemId : 'acash'/*,
+			fieldLabel : 'Сумма'*/
 			
 		}
 	]
