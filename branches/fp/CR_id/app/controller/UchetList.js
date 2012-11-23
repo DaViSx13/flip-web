@@ -17,6 +17,11 @@
 			selector : 'newpodwin',
 			xtype: 'newpodwin',
 			autoCreate : true
+		}, {
+			ref : 'countWin',
+			selector : 'newcountwin',
+			xtype: 'newcountwin',
+			autoCreate : true
 		}
 	],
 	countNew : 0,
@@ -340,14 +345,14 @@
 	},
 	insertCount : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
 		
-		if (rec.data['rectype'] == 1 || rec.data['rectype'] == 0) {
+		if (/*rec.data['rectype'] == 1 || */rec.data['rectype'] == 0) {
 			
-			var newcount = Ext.widget('newcountwin').show();
+			var newcount = this.getCountWin(); //Ext.widget('newcountwin').show();
 			var formcount = newcount.down('newcountform');
 			formcount.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.displayno + '</font>', false);
 			formcount.down('textfield[name=wb_no]').setValue(rec.data.displayno);
 			formcount.down('textfield[name=packs]').setValue(rec.data['packs']);
-			
+			newcount.show();
 		} else {}
 	},
 	

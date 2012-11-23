@@ -1,5 +1,5 @@
 Ext.define('Courier.view.NewCountWin', {
-	extend : 'Ext.Window',
+//	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.newcountwin',
 	requires : ['Courier.view.NewCountForm'],
@@ -10,6 +10,7 @@ Ext.define('Courier.view.NewCountWin', {
 	width : 290,
 	resizable : false,
 	modal : true,
+	closeAction: 'hide',
 	initComponent : function () {
 		this.items = [{
 				xtype : 'newcountform'
