@@ -12,6 +12,11 @@
 		}, {
 			ref : 'UchetList',
 			selector : 'uchetlist'
+		}, {
+			ref : 'podWin',
+			selector : 'newpodwin',
+			xtype: 'newpodwin',
+			autoCreate : true
 		}
 	],
 	countNew : 0,
@@ -317,14 +322,18 @@
 	
 	},*/
 	insertPod : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
-		//console.log();
+		//console.log(this.getPodWin());
+//		if(this.getPodWin()){Ext.widget('newpodwin')};
+		//console.log(this.getPodWin());
 		if ((!rec.data['tdd']) && (rec.data['rectype'] == 1)) {
 			//this.insertNewDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a']);
-			//console.log('win');
-			var newdop = Ext.widget('newpodwin').show();
+			var newdop = this.getPodWin();//Ext.widget('newpodwin').show();
+			//console.log(Ext.widget('newpodwin'));
+			//console.log(newdop);
 			var formdop = newdop.down('newpodform');
 			formdop.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.displayno + '</font>', false);
 			formdop.down('textfield[name=wb_no]').setValue(rec.data.displayno);
+			newdop.show();
 		} else {
 			//this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
 		}

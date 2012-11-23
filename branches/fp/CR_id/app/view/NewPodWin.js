@@ -1,5 +1,5 @@
 Ext.define('Courier.view.NewPodWin', {
-	extend : 'Ext.Window',
+	//extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.newpodwin',
 	requires : ['Courier.view.NewPodForm'],
@@ -10,6 +10,7 @@ Ext.define('Courier.view.NewPodWin', {
 	width : 350,
 	resizable : false,
 	modal : true,
+	closeAction: 'hide',
 	initComponent : function () {
 		this.items = [{
 				xtype : 'newpodform'
