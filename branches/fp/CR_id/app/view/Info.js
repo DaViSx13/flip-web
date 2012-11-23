@@ -17,7 +17,7 @@ Ext.define('Courier.view.Info', {
 			//anchor : '100%'
 			flex : 1
 		},
-		'->', {
+		{
 			xtype : 'label',
 			itemId : 'count',
 			text : ''

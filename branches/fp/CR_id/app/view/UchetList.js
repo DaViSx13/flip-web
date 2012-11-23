@@ -1,7 +1,7 @@
 Ext.define('Courier.view.UchetList', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.uchetlist',
-	store : 'Uchets',
+	store : 'LocStore',//'Uchets',
 	requires : ['Courier.view.NewPodWin', 'Courier.view.Info', 'Courier.view.Actions'],
 	viewConfig : {
 		/* plugins: {

@@ -17,6 +17,10 @@ Ext.define('Courier.view.Actions', {
 			iconCls : 'view',
 			scale : 'large',
 			action : 'view'
+		}, {
+			xtype : 'button',
+			text : 'clearLS',
+			action : 'clearLS'
 		}
 		
 	]

@@ -1,5 +1,6 @@
 ﻿Ext.define('Courier.model.OrderAndWb', {
 	extend : 'Ext.data.Model',
+	idProperty: 'ano',
 	fields : [{
 			name : 'ano',
 			type : 'string'
@@ -51,7 +52,7 @@
 		}, {
 			name : 'rectype',
 			type : 'int'
-		}, {
+		}/*, {
 			name : 'isredy',
 			type : 'int'
 		}, {
@@ -64,7 +65,7 @@
 			name : 'rcpn',
 			type : 'string'
 		}
-		
+		*/
 	],
 	proxy : {
 		type : 'ajax',

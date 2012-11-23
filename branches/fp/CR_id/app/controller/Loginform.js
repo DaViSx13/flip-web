@@ -15,7 +15,7 @@
 			},
 			'main button[action=logout]' : {
 				click : this.doLogout
-			},
+			}
 		});
 	},
 	doLogin : function (button) {
