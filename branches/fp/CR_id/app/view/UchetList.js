@@ -15,16 +15,19 @@ Ext.define('Courier.view.UchetList', {
 			} else {
 				var ret = 'rec-notview-';
 			}
+			
 			if (record.get('isredy') == 1 || record.get('tdd')) {
 				ret = ret + 'gray';
-				return ret;
+//				return ret;
 			} else if ((!record.get('tdd') && record.get('rectype') == 1) || record.get('ordstatus') == 'Готов' || record.get('rectype') == 2) {
 				ret = ret + 'green';
-				return ret;
+//				return ret;
 			} else if (record.get('ordstatus') == 'Не готов') {
 				ret = ret + 'red';
-				return ret;
+//				return ret;
 			}
+
+			return ret;
 		}
 		
 	},

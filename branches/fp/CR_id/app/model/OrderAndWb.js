@@ -31,10 +31,10 @@
 		}, {
 			name : 'contphone',
 			type : 'string'
-		}, {
+		}/*, {
 			name : 'packs',
 			type : 'int'
-		}, {
+		}*/, {
 			name : 'wt',
 			type : 'float'
 		}, {

@@ -15,12 +15,12 @@
 		}, {
 			ref : 'podWin',
 			selector : 'newpodwin',
-			xtype: 'newpodwin',
+			xtype : 'newpodwin',
 			autoCreate : true
 		}, {
 			ref : 'countWin',
 			selector : 'newcountwin',
-			xtype: 'newcountwin',
+			xtype : 'newcountwin',
 			autoCreate : true
 		}
 	],
@@ -74,6 +74,9 @@
 			},
 			'uchetlist actions button[action=clearLS]' : {
 				click : this.clearLS
+			},
+			'uchetlist actions button[action=test]' : {
+				click : this.test
 			}
 		});
 		this.getOrderAndWbStore().on({
@@ -90,7 +93,7 @@
 	savePod : function (btn) {
 		var win = btn.up('newpodwin');
 		var form_pod = win.down('newpodform');
-		var rec_pod = this.getUchetsStore().findRecord('ano', form_pod.getValues()['wb_no']);
+		var rec_pod = this.getLocStoreStore().findRecord('ano', form_pod.getValues()['wb_no']);
 		rec_pod.set('tdd', form_pod.getValues()['tdd']);
 		rec_pod.set('rcpn', form_pod.getValues()['rcpn']);
 		
@@ -110,8 +113,9 @@
 		var win = btn.up('newcountwin');
 		var form = win.down('newcountform');
 		//console.log(form.down('label[itemId=wb_no]').text);
-		var rec = this.getUchetsStore().findRecord('ano', form.getValues()['wb_no']);
+		var rec = this.getLocStoreStore().findRecord('ano', form.getValues()['wb_no']);
 		rec.set('packs', form.getValues()['packs']);
+		this.getLocStoreStore().sync();
 		win.close();
 	},
 	setWay : function (column, action, grid, rowIndex, colIndex, record, node) {
@@ -218,6 +222,7 @@
 					viewstore.add(newRec);
 				};
 			};
+			
 			//если нужно удаляем
 			recordsToRemove = new Array();
 			for (i = 0; i < viewstore.getCount(); i++) {
@@ -230,8 +235,12 @@
 			if (recordsToRemove.length > 0) {
 				viewstore.remove(recordsToRemove)
 			};
+			
 			//синхро
 			viewstore.sync();
+			
+			this.setCount();
+			
 			Ext.resumeLayouts(true);
 		};
 		
@@ -328,16 +337,16 @@
 	},*/
 	insertPod : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
 		//console.log(this.getPodWin());
-//		if(this.getPodWin()){Ext.widget('newpodwin')};
+		//		if(this.getPodWin()){Ext.widget('newpodwin')};
 		//console.log(this.getPodWin());
 		if ((!rec.data['tdd']) && (rec.data['rectype'] == 1)) {
 			//this.insertNewDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a']);
-			var newdop = this.getPodWin();//Ext.widget('newpodwin').show();
+			var newdop = this.getPodWin(); //Ext.widget('newpodwin').show();
 			//console.log(Ext.widget('newpodwin'));
 			//console.log(newdop);
 			var formdop = newdop.down('newpodform');
-			formdop.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.displayno + '</font>', false);
-			formdop.down('textfield[name=wb_no]').setValue(rec.data.displayno);
+			formdop.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.ano + '</font>', false);
+			formdop.down('textfield[name=wb_no]').setValue(rec.data.ano);
 			newdop.show();
 		} else {
 			//this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
@@ -345,65 +354,73 @@
 	},
 	insertCount : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
 		
-		if (/*rec.data['rectype'] == 1 || */rec.data['rectype'] == 0) {
+		if (/*rec.data['rectype'] == 1 || */
+			rec.data['rectype'] == 0) {
 			
 			var newcount = this.getCountWin(); //Ext.widget('newcountwin').show();
 			var formcount = newcount.down('newcountform');
-			formcount.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.displayno + '</font>', false);
-			formcount.down('textfield[name=wb_no]').setValue(rec.data.displayno);
+			formcount.down('label[itemId=wb_no]').setText('<font size="5">Заказ:   ' + rec.data.displayno + '</font>', false);
+			formcount.down('textfield[name=wb_no]').setValue(rec.data.ano);
 			formcount.down('textfield[name=packs]').setValue(rec.data['packs']);
 			newcount.show();
 		} else {}
 	},
 	
 	showDetails : function (btn) {
-		
 		var sm = btn.up('uchetlist').getSelectionModel();
 		if (sm.getCount() > 0) {
-			if (sm.getSelection()[0].get('isview') == 0) {
-				sm.getSelection()[0].set('isview', 1);
-				this.countNew = this.countNew - 1;
+			var record = sm.getSelection()[0];
+			var store = this.getLocStoreStore();
+			if (record.get('isview') == 0) {
+				record.set('isview', 1);
+				store.sync();
+				this.setCount();
+				/*this.countNew = this.countNew - 1;
 				this.getInfo().down('label[itemId=count]').setText("Количество новых заказов : " + this.countNew);
+				 */
 			}
-			if (sm.getSelection()[0].get('rectype') == 1) {
+			
+			Ext.suspendLayouts();
+			if (record.get('rectype') == 1) {
 				
 				var wb = Ext.widget('wbwin');
-				wb.show();
 				var wbf = wb.down('wbform');
-				//wbf.loadRecord(sm.getLastSelected());
-				//console.log(sm.getLastSelected().data.ano);
-				wbf.down('label[itemId=displayno]').setText('<font size="5">Накладная:   ' + sm.getLastSelected().data.displayno + '</font>', false);
-				wbf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + sm.getLastSelected().data.aaddress + '</font>', false);
-				wbf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + sm.getLastSelected().data.client + '</font>', false);
-				wbf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + sm.getLastSelected().data.cont + '</font>', false);
-				wbf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + sm.getLastSelected().data.contphone + '</font>', false);
-				wbf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + sm.getLastSelected().data.rems + '</font>', false);
-				wbf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + sm.getLastSelected().data.packs + '</font>', false);
-				wbf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + sm.getLastSelected().data.wt + '</font>', false);
-				wbf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + sm.getLastSelected().data.volwt + '</font>', false);
-				wbf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + sm.getLastSelected().data.acash + '</font>', false);
+				//wbf.loadRecord(record);
+				//console.log(record.data.ano);
+				wbf.down('label[itemId=displayno]').setText('<font size="5">Накладная:   ' + record.data.displayno + '</font>', false);
+				wbf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + record.data.aaddress + '</font>', false);
+				wbf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + record.data.client + '</font>', false);
+				wbf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + record.data.cont + '</font>', false);
+				wbf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + record.data.contphone + '</font>', false);
+				wbf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + record.data.rems + '</font>', false);
+				wbf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + record.data.packs + '</font>', false);
+				wbf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + record.data.wt + '</font>', false);
+				wbf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + record.data.volwt + '</font>', false);
+				wbf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + record.data.acash + '</font>', false);
+				wb.show();
 			}
-			if (sm.getSelection()[0].get('rectype') == 0) {
+			if (record.get('rectype') == 0) {
 				
 				var ord = Ext.widget('orderwin');
-				ord.show();
 				var ordf = ord.down('orderform');
-				//ordf.loadRecord(sm.getLastSelected());
-				ordf.down('label[itemId=displayno]').setText('<font size="5">Заказ:   ' + sm.getLastSelected().data.displayno + '</font>', false);
-				ordf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + sm.getLastSelected().data.aaddress + '</font>', false);
-				ordf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + sm.getLastSelected().data.client + '</font>', false);
-				ordf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + sm.getLastSelected().data.cont + '</font>', false);
-				ordf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + sm.getLastSelected().data.contphone + '</font>', false);
-				ordf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + sm.getLastSelected().data.rems + '</font>', false);
-				ordf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + sm.getLastSelected().data.packs + '</font>', false);
-				ordf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + sm.getLastSelected().data.wt + '</font>', false);
-				ordf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + sm.getLastSelected().data.volwt + '</font>', false);
-				ordf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + sm.getLastSelected().data.acash + '</font>', false);
-				ordf.down('label[itemId=ordstatus]').setText('<font size="5">Статус:   ' + sm.getLastSelected().data.ordstatus + '</font>', false);
-				ordf.down('label[itemId=ordtype]').setText('<font size="5">Вид:   ' + sm.getLastSelected().data.ordtype + '</font>', false);
-				ordf.down('label[itemId=timeb]').setText('<font size="5">C:   ' + sm.getLastSelected().data.timeb + '</font>', false);
-				ordf.down('label[itemId=timee]').setText('<font size="5">До:   ' + sm.getLastSelected().data.timee + '</font>', false);
+				//ordf.loadRecord(record);
+				ordf.down('label[itemId=displayno]').setText('<font size="5">Заказ:   ' + record.data.displayno + '</font>', false);
+				ordf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + record.data.aaddress + '</font>', false);
+				ordf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + record.data.client + '</font>', false);
+				ordf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + record.data.cont + '</font>', false);
+				ordf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + record.data.contphone + '</font>', false);
+				ordf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + record.data.rems + '</font>', false);
+				ordf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + record.data.packs + '</font>', false);
+				ordf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + record.data.wt + '</font>', false);
+				ordf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + record.data.volwt + '</font>', false);
+				ordf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + record.data.acash + '</font>', false);
+				ordf.down('label[itemId=ordstatus]').setText('<font size="5">Статус:   ' + record.data.ordstatus + '</font>', false);
+				ordf.down('label[itemId=ordtype]').setText('<font size="5">Вид:   ' + record.data.ordtype + '</font>', false);
+				ordf.down('label[itemId=timeb]').setText('<font size="5">C:   ' + record.data.timeb + '</font>', false);
+				ordf.down('label[itemId=timee]').setText('<font size="5">До:   ' + record.data.timee + '</font>', false);
+				ord.show();
 			}
+			Ext.resumeLayouts(true);
 		}
 	},
 	upRow : function (btn) {
@@ -459,6 +476,21 @@
 		var ls = this.getLocStoreStore();
 		ls.remove(ls.getRange());
 		ls.sync();
+		this.setCount();
 		Ext.resumeLayouts(true);
+	},
+	setCount : function (addNew) {
+		if(!addNew) return;
+		
+		var lbl = this.getInfo().down('label[itemId=count]');
+		var st = this.getLocStoreStore();
+		var total = st.getCount();
+		var countNew = total - st.sum('isview');
+		
+		lbl.setText(Ext.String.format('Новых/Всего: {0}/{1}', countNew, total));
+	},
+	test : function () {
+		console.log('testAction');
+		this.setCount(true);
 	}
 });

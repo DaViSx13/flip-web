@@ -31,7 +31,8 @@ Ext.define('Courier.view.NewPodForm', {
 			fieldLabel : 'Время',
 			format : 'H:i',
 			hideTrigger : true,
-			allowBlank : false
+			allowBlank : false,
+			editable: false
 		}, {
 			xtype : 'textfield',
 			name : 'rcpn',
