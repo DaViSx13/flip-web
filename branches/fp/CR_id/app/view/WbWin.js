@@ -7,7 +7,7 @@ Ext.define('Courier.view.WbWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 500,
-	width : 600,
+	width : 700,
 	resizable : false,
 	modal : true,
 	initComponent : function () {

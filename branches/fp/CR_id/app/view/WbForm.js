@@ -6,55 +6,58 @@ Ext.define('Courier.view.WbForm', {
 	},
 	bodyPadding : 10,
 	items : [{
-			xtype : 'label',
-			itemId : 'displayno'//,
-			//fieldLabel : 'Накладная',
+			xtype : 'displayfield',
+			name : 'ano',
+			fieldLabel : 'Накладная'
 			//readOnly : true
 		}, {
-			xtype : 'label',
-			itemId : 'aaddress',
-			width : 570
+			xtype : 'displayfield',
+			name : 'aaddress',
+			fieldLabel : 'Адрес'
+			//width : 570
 			
 		}, {
-			xtype : 'label',
-			itemId : 'client'/*,
-			fieldLabel : 'Клиент'*/
+			xtype : 'displayfield',
+			name : 'client',
+			fieldLabel : 'Клиент'
 			
 		}, {
-			xtype : 'label',
-			itemId : 'cont'/*,
-			fieldLabel : 'Контакт'*/
+			xtype : 'displayfield',
+			name : 'cont',
+			fieldLabel : 'Контакт'
 			
 		}, {
-			xtype : 'label',
-			itemId : 'contphone'/*,
-			fieldLabel : 'Телефон'*/
+			xtype : 'displayfield',
+			name : 'contphone',
+			fieldLabel : 'Телефон'
+			
+		}/*, {
+			xtype : 'displayfield',
+			name : 'packs',
+			fieldLabel : 'Мест'
+			
+		}*/, {
+			xtype : 'displayfield',
+			name : 'wt',
+			fieldLabel : 'Вес'
 			
 		}, {
-			xtype : 'label',
-			itemId : 'rems',
-			width : 570
+			xtype : 'displayfield',
+			name : 'volwt',
+			fieldLabel : 'Об. вес'
+			
+		}, {
+			xtype : 'displayfield',
+			name : 'acash',
+			fieldLabel : 'Сумма'
+			
+		}, {
+			xtype : 'displayfield',
+			name : 'rems',
+			width : 570,
+			labelWidth: 110,
+			fieldLabel : 'Примечание'
 						
-		}, {
-			xtype : 'label',
-			itemId : 'packs'/*,
-			fieldLabel : 'Мест'*/
-			
-		}, {
-			xtype : 'label',
-			itemId : 'wt'/*,
-			fieldLabel : 'Вес'*/
-			
-		}, {
-			xtype : 'label',
-			itemId : 'volwt'/*,
-			fieldLabel : 'Об. вес'*/
-			
-		}, {
-			xtype : 'label',
-			itemId : 'acash'/*,
-			fieldLabel : 'Сумма'*/
-			
 		}
 	]
 });

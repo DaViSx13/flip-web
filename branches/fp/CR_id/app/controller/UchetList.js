@@ -387,6 +387,7 @@
 				var wbf = wb.down('wbform');
 				//wbf.loadRecord(record);
 				//console.log(record.data.ano);
+				/*
 				wbf.down('label[itemId=displayno]').setText('<font size="5">Накладная:   ' + record.data.displayno + '</font>', false);
 				wbf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + record.data.aaddress + '</font>', false);
 				wbf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + record.data.client + '</font>', false);
@@ -397,6 +398,8 @@
 				wbf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + record.data.wt + '</font>', false);
 				wbf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + record.data.volwt + '</font>', false);
 				wbf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + record.data.acash + '</font>', false);
+				*/
+				wbf.loadRecord(record);
 				wb.show();
 			}
 			if (record.get('rectype') == 0) {
@@ -404,6 +407,7 @@
 				var ord = Ext.widget('orderwin');
 				var ordf = ord.down('orderform');
 				//ordf.loadRecord(record);
+				/*
 				ordf.down('label[itemId=displayno]').setText('<font size="5">Заказ:   ' + record.data.displayno + '</font>', false);
 				ordf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + record.data.aaddress + '</font>', false);
 				ordf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + record.data.client + '</font>', false);
@@ -418,6 +422,8 @@
 				ordf.down('label[itemId=ordtype]').setText('<font size="5">Вид:   ' + record.data.ordtype + '</font>', false);
 				ordf.down('label[itemId=timeb]').setText('<font size="5">C:   ' + record.data.timeb + '</font>', false);
 				ordf.down('label[itemId=timee]').setText('<font size="5">До:   ' + record.data.timee + '</font>', false);
+				*/
+				ordf.loadRecord(record);
 				ord.show();
 			}
 			Ext.resumeLayouts(true);
@@ -492,5 +498,7 @@
 	test : function () {
 		console.log('testAction');
 		this.setCount(true);
+		//this.getActions().down('[action=test]').setText('Hell ou');
+		
 	}
 });
