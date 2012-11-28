@@ -53,6 +53,7 @@
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
 				if (text.success == true) {
+					Ext.TaskManager.stopAll();
 					var aviewport = button.up('viewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('loginformcontainer'));
