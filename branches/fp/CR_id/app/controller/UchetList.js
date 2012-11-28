@@ -35,6 +35,7 @@
 		}
 	],
 	countNew : 0,
+	countTotal : 0,
 	init : function () {
 		this.control({
 			'uchetlist gridcolumn[itemId=pod]' : {
@@ -501,15 +502,18 @@
 		Ext.resumeLayouts(true);
 	},
 	setCount : function (addNew) {
-		if (!addNew)
-			return;
+		//if (!addNew)			return;
 		
 		var lbl = this.getInfo().down('label[itemId=count]');
 		var st = this.getLocStoreStore();
 		var total = st.getCount();
 		var countNew = total - st.sum('isview');
 		
-		lbl.setText(Ext.String.format('Новых/Всего: {0}/{1}', countNew, total));
+		if (total != this.countTotal || countNew != this.countNew) {
+			lbl.setText(Ext.String.format('Новых/Всего: {0}/{1}', countNew, total));
+			this.countTotal = total;
+			this.countNew = countNew;
+		}
 	},
 	test : function () {
 		console.log('testAction');
@@ -521,18 +525,18 @@
 			height : 200,
 			width : 400,
 			layout : 'fit',
-			items : { 
-				html: 'Hello'
+			items : {
+				html : 'Hello'
 			}
 		}).show();
 		
 	},
-	testbtn: function(){
+	testbtn : function () {
 		var u = this.getUchetList();
 		if (u.isHidden()) {
-		u.show()
+			u.show()
 		} else {
-		u.hide()
+			u.hide()
 		};
 	}
 });
