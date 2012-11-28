@@ -1,6 +1,6 @@
 ﻿Ext.define('Courier.controller.Loginform', {
 	extend : 'Ext.app.Controller',
-	views : ['Loginform', 'UchetList', 'Loginformcontainer'],
+	views : ['Loginform', 'UchetList', 'Loginformcontainer', 'Info'],
 	models : ['Courier'],
 	refs : [{
 			ref : 'Info',
@@ -13,7 +13,7 @@
 			'loginform button[action=login]' : {
 				click : this.doLogin
 			},
-			'uchetlist button[action=logout]' : {
+			'info button[action=logout]' : {
 				click : this.doLogout
 			}
 		});
@@ -28,7 +28,7 @@
 					if (action.result.success == true) {
 						var aviewport = button.up('viewport');
 						aviewport.removeAll(true);
-						aviewport.add(Ext.widget('uchetlist'));
+						aviewport.add(Ext.widget('main'));
 						this.getInfo().down('label').setText("Курьер : " + action.result.username);
 						/*Courier.model.Courier.load(0, {
 						scope : this,

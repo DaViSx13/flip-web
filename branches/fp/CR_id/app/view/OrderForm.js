@@ -1,9 +1,7 @@
 Ext.define('Courier.view.OrderForm', {
 	alias : 'widget.orderform',
 	extend : 'Ext.form.Panel',
-	layout : {
-		type : 'vbox'
-	},
+	layout : 'form',
 	bodyPadding : 10,
 	items : [{
 			xtype : 'displayfield',
@@ -34,43 +32,32 @@ Ext.define('Courier.view.OrderForm', {
 			xtype : 'fieldset',
 			layout : 'hbox',
 			border : 0,
-			padding: 0,
+			padding : 0,
 			defaults : {
 				margin : '0 50 0 0'
 			},
 			items : [{
 					xtype : 'displayfield',
 					name : 'packs',
-					fieldLabel : 'Мест'
-					,labelWidth : 50
+					fieldLabel : 'Мест',
+					labelWidth : 50
 				}, {
 					xtype : 'displayfield',
 					name : 'wt',
-					fieldLabel : 'Вес'
-					,labelWidth : 40
+					fieldLabel : 'Вес',
+					labelWidth : 40
 				}, {
 					xtype : 'displayfield',
 					name : 'volwt',
-					fieldLabel : 'Об. вес'
-					,labelWidth : 70
+					fieldLabel : 'Об. вес',
+					labelWidth : 70
 				}
 			]
-		}
-		/*, {
-		xtype : 'displayfield',
-		name : 'ordstatus',
-		fieldLabel : 'Статус'
-		}*/
-		/*, {
-		xtype : 'displayfield',
-		name : 'ordtype',
-		fieldLabel : 'Вид'
-		}*/
-	, {
+		}, {
 			xtype : 'fieldset',
 			layout : 'hbox',
 			border : 0,
-			padding: 0,
+			padding : 0,
 			items : [{
 					xtype : 'displayfield',
 					name : 'timeb',
@@ -93,7 +80,7 @@ Ext.define('Courier.view.OrderForm', {
 			xtype : 'displayfield',
 			name : 'rems',
 			fieldLabel : 'Примечание',
-			labelAlign : 'top',
+			//labelAlign : 'top',
 			width : 570
 		}
 	]

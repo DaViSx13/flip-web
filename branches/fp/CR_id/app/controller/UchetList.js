@@ -22,6 +22,16 @@
 			selector : 'newcountwin',
 			xtype : 'newcountwin',
 			autoCreate : true
+		}, {
+			ref : 'wbWin',
+			selector : 'wbwin',
+			xtype : 'wbwin',
+			autoCreate : true
+		}, {
+			ref : 'ordWin',
+			selector : 'orderwin',
+			xtype : 'orderwin',
+			autoCreate : true
 		}
 	],
 	countNew : 0,
@@ -77,6 +87,9 @@
 			},
 			'uchetlist actions button[action=test]' : {
 				click : this.test
+			},
+			'info button[action=testbtn]' : {
+				click : this.testbtn
 			}
 		});
 		this.getOrderAndWbStore().on({
@@ -382,9 +395,12 @@
 			
 			Ext.suspendLayouts();
 			if (record.get('rectype') == 1) {
-				
-				var wb = Ext.widget('wbwin');
+				var wb = this.getWbWin();
 				var wbf = wb.down('wbform');
+				wbf.loadRecord(record);
+				wb.show();
+				
+				//var wb = Ext.widget('wbwin');
 				//wbf.loadRecord(record);
 				//console.log(record.data.ano);
 				/*
@@ -398,14 +414,15 @@
 				wbf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + record.data.wt + '</font>', false);
 				wbf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + record.data.volwt + '</font>', false);
 				wbf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + record.data.acash + '</font>', false);
-				*/
-				wbf.loadRecord(record);
-				wb.show();
+				 */
 			}
 			if (record.get('rectype') == 0) {
-				
-				var ord = Ext.widget('orderwin');
+				var ord = this.getOrdWin();
 				var ordf = ord.down('orderform');
+				ordf.loadRecord(record);
+				ord.show();
+				
+				//var ord = Ext.widget('orderwin');
 				//ordf.loadRecord(record);
 				/*
 				ordf.down('label[itemId=displayno]').setText('<font size="5">Заказ:   ' + record.data.displayno + '</font>', false);
@@ -422,9 +439,7 @@
 				ordf.down('label[itemId=ordtype]').setText('<font size="5">Вид:   ' + record.data.ordtype + '</font>', false);
 				ordf.down('label[itemId=timeb]').setText('<font size="5">C:   ' + record.data.timeb + '</font>', false);
 				ordf.down('label[itemId=timee]').setText('<font size="5">До:   ' + record.data.timee + '</font>', false);
-				*/
-				ordf.loadRecord(record);
-				ord.show();
+				 */
 			}
 			Ext.resumeLayouts(true);
 		}
@@ -486,7 +501,8 @@
 		Ext.resumeLayouts(true);
 	},
 	setCount : function (addNew) {
-		if(!addNew) return;
+		if (!addNew)
+			return;
 		
 		var lbl = this.getInfo().down('label[itemId=count]');
 		var st = this.getLocStoreStore();
@@ -497,8 +513,26 @@
 	},
 	test : function () {
 		console.log('testAction');
-		this.setCount(true);
+		//this.setCount(true);
 		//this.getActions().down('[action=test]').setText('Hell ou');
 		
+		Ext.create('Ext.window.Window', {
+			title : 'Hello',
+			height : 200,
+			width : 400,
+			layout : 'fit',
+			items : { 
+				html: 'Hello'
+			}
+		}).show();
+		
+	},
+	testbtn: function(){
+		var u = this.getUchetList();
+		if (u.isHidden()) {
+		u.show()
+		} else {
+		u.hide()
+		};
 	}
 });

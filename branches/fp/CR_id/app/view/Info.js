@@ -13,6 +13,10 @@ Ext.define('Courier.view.Info', {
 		, {
 			text : 'Выход',
 			action : 'logout'
+		}, '-'
+		, {
+			text : 'testBtn',
+			action : 'testbtn'
 		}
 		, '->'
 		,

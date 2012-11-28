@@ -1,5 +1,5 @@
 Ext.define('Courier.view.OrderWin', {
-	extend : 'Ext.Window',
+	//	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.orderwin',
 	requires : ['Courier.view.OrderForm'],
@@ -10,6 +10,7 @@ Ext.define('Courier.view.OrderWin', {
 	width : 700,
 	resizable : false,
 	modal : true,
+	closeAction : 'hide',
 	initComponent : function () {
 		this.items = [{
 				xtype : 'orderform'
@@ -18,8 +19,7 @@ Ext.define('Courier.view.OrderWin', {
 		this.buttons = [/*{
 			text : 'Сохранить',
 			action : 'save'
-			}, */
-			{
+			}, */{
 				text : 'Закрыть',
 				scope : this,
 				handler : this.close

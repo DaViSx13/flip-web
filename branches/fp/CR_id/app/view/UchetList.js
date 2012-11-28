@@ -138,10 +138,11 @@ Ext.define('Courier.view.UchetList', {
 	dockedItems : [{
 			xtype : 'actions',
 			dock : 'left'
-		}, {
+		}
+		/*, {
 			xtype : 'info',
 			dock : 'top'
-		}
+		}*/
 		
 	]
 });
