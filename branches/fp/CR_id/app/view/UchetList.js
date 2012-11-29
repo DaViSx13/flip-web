@@ -19,7 +19,7 @@ Ext.define('Courier.view.UchetList', {
 			if (record.get('isredy') == 1 || record.get('tdd')) {
 				ret = ret + 'gray';
 //				return ret;
-			} else if ((!record.get('tdd') && record.get('rectype') == 1) || record.get('ordstatus') == 'Готов' || record.get('rectype') == 2) {
+			} else if ((!record.get('tdd') && record.get('rectype') == 1) || record.get('ordstatus') != 'Не готов' || record.get('rectype') == 2) {
 				ret = ret + 'green';
 //				return ret;
 			} else if (record.get('ordstatus') == 'Не готов') {
