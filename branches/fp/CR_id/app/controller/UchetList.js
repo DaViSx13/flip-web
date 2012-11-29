@@ -158,50 +158,54 @@
 	},
 	
 	syncOnServer : function () {
-		var me = this;
-		me.getLocStoFlagStore().load();
-		var flag_count = me.getLocStoFlagStore().getCount();
-		var dtd = new Date();
-		dtd = dtd.getFullYear() + '.' + dtd.getMonth() + '.' + dtd.getDay(dtd);
+		console.log('syncOnServer - start');
+		var localstore = this.getLocStoreStore();
+		var flagstore = this.getLocStoFlagStore();
+		flagstore.load();
+		var data = flagstore.getRange();
+		var flag_count = flagstore.getCount();
+		var dtd = Ext.Date.format(new Date(), 'Ymd');
 		
-		if (flag_count > 0) {
-			
-			//console.log(me.getLocStoreStore().findRecord('ano', me.getLocStoFlagStore().getRange(0, 0)[0].get('ano')).get('tdd'));
-			var flag_rec = me.getLocStoFlagStore().getRange(0, 0);
-			
-			Ext.Ajax.request({
-				url : 'data/data.php',
-				params : {
-					dbAct : 'SetPOD',
-					wb_no : me.getLocStoFlagStore().getRange(0, 0)[0].get('ano'),
-					rcpn : me.getLocStoreStore().findRecord('ano', me.getLocStoFlagStore().getRange(0, 0)[0].get('ano')).get('rcpn'),
-					tdd : me.getLocStoreStore().findRecord('ano', me.getLocStoFlagStore().getRange(0, 0)[0].get('ano')).get('tdd'),
-					p_d_in : dtd
-				},
-				success : function (response) {
-					
-					var text = Ext.decode(response.responseText);
-					
-					console.log(text);
-					if (text.success == true) {
-						console.log('1 ' + text.msg);
-						me.getLocStoFlagStore().remove(flag_rec);
-						me.getLocStoFlagStore().sync();
-						
-					} else {
-						console.log('2 ' + text.msg);
+		console.log(flag_count);
+		for (i = 0; i < flag_count; i++) {
+			var flag_rec = data[i];
+			var datarec = localstore.getById(flag_rec.get('ano'));
+			if (datarec) {
+				Ext.Ajax.request({
+					scope : this,
+					url : 'data/data.php',
+					params : {
+						dbAct : 'SetPOD',
+						wb_no : datarec.get('ano'),
+						rcpn : datarec.get('rcpn'),
+						tdd : datarec.get('tdd'),
+						p_d_in : dtd
+					},
+					success : function (response, options) {
+						var text = Ext.decode(response.responseText);
+						console.log(text);
+						if (text.success == true) {
+							console.log('syncOnServer - success: ' + text.msg);
+							var ano = options.params.wb_no;
+							var fs = this.getLocStoFlagStore();
+							fs.remove(fs.findRecord('ano', ano));
+							fs.sync();
+						} else {
+							console.log('syncOnServer - failed: ' + text.msg);
+						}
+					},
+					failure : function (response) {
+						console.log('syncOnServer - Сервер недоступен! ' + response.statusText);
 					}
-				},
-				failure : function (response) {
-					console.log('Сервер недоступен! ' + response.statusText);
-					
-				}
-			});
+				});
+			};
 			
-		}
-		
+		};
+		console.log('syncOnServer - stop');
 	},
+	
 	logLastTime : null,
+	
 	log : function (str) {
 		if (this.logLastTime == null) {
 			this.logLastTime = Ext.Date.now()
@@ -214,6 +218,7 @@
 		txt.setValue(logStr + '\n' + txt.getValue());
 		this.logLastTime = Ext.Date.now();
 	},
+	
 	makeUchetList1 : function (store, records, success) {
 		//this.log('start');
 		//return;
@@ -222,12 +227,15 @@
 		if (success) {
 			Ext.suspendLayouts();
 			var viewstore = this.getLocStoreStore();
+			var flagstore = this.getLocStoFlagStore();
 			//рассматриваем новые данные
 			for (i = 0; i < records.length; i++) {
 				var id = records[i].getId();
 				if (rec = viewstore.getById(id)) { //если уже есть то обновляем
 					//console.log('found ' + id);
-					rec.set(records[i].getData());
+					if (!flagstore.findRecord('ano', id)) { //если нет не сохраненных данных(пока так)
+						rec.set(records[i].getData());
+					}
 				} else { //если нет то добавляем
 					//console.log('not found ' + id);
 					var newRec = Ext.create('Courier.model.LocModel');
@@ -258,8 +266,10 @@
 			Ext.resumeLayouts(true);
 		};
 		
+		this.syncOnServer();
 		//this.log('end');
 	},
+	
 	makeUchetList : function (store, records, success) {
 		return;
 		var sTime,
@@ -389,9 +399,6 @@
 				record.set('isview', 1);
 				store.sync();
 				this.setCount();
-				/*this.countNew = this.countNew - 1;
-				this.getInfo().down('label[itemId=count]').setText("Количество новых заказов : " + this.countNew);
-				 */
 			}
 			
 			Ext.suspendLayouts();
@@ -400,47 +407,12 @@
 				var wbf = wb.down('wbform');
 				wbf.loadRecord(record);
 				wb.show();
-				
-				//var wb = Ext.widget('wbwin');
-				//wbf.loadRecord(record);
-				//console.log(record.data.ano);
-				/*
-				wbf.down('label[itemId=displayno]').setText('<font size="5">Накладная:   ' + record.data.displayno + '</font>', false);
-				wbf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + record.data.aaddress + '</font>', false);
-				wbf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + record.data.client + '</font>', false);
-				wbf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + record.data.cont + '</font>', false);
-				wbf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + record.data.contphone + '</font>', false);
-				wbf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + record.data.rems + '</font>', false);
-				wbf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + record.data.packs + '</font>', false);
-				wbf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + record.data.wt + '</font>', false);
-				wbf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + record.data.volwt + '</font>', false);
-				wbf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + record.data.acash + '</font>', false);
-				 */
 			}
 			if (record.get('rectype') == 0) {
 				var ord = this.getOrdWin();
 				var ordf = ord.down('orderform');
 				ordf.loadRecord(record);
 				ord.show();
-				
-				//var ord = Ext.widget('orderwin');
-				//ordf.loadRecord(record);
-				/*
-				ordf.down('label[itemId=displayno]').setText('<font size="5">Заказ:   ' + record.data.displayno + '</font>', false);
-				ordf.down('label[itemId=aaddress]').setText('<font size="5">Адрес:   ' + record.data.aaddress + '</font>', false);
-				ordf.down('label[itemId=client]').setText('<font size="5">Клиент:   ' + record.data.client + '</font>', false);
-				ordf.down('label[itemId=cont]').setText('<font size="5">Контакт:   ' + record.data.cont + '</font>', false);
-				ordf.down('label[itemId=contphone]').setText('<font size="5">Телефон:   ' + record.data.contphone + '</font>', false);
-				ordf.down('label[itemId=rems]').setText('<font size="5">Коментарий:   ' + record.data.rems + '</font>', false);
-				ordf.down('label[itemId=packs]').setText('<font size="5">Мест:   ' + record.data.packs + '</font>', false);
-				ordf.down('label[itemId=wt]').setText('<font size="5">Вес:   ' + record.data.wt + '</font>', false);
-				ordf.down('label[itemId=volwt]').setText('<font size="5">Об. вес:   ' + record.data.volwt + '</font>', false);
-				ordf.down('label[itemId=acash]').setText('<font size="5">Сумма:   ' + record.data.acash + '</font>', false);
-				ordf.down('label[itemId=ordstatus]').setText('<font size="5">Статус:   ' + record.data.ordstatus + '</font>', false);
-				ordf.down('label[itemId=ordtype]').setText('<font size="5">Вид:   ' + record.data.ordtype + '</font>', false);
-				ordf.down('label[itemId=timeb]').setText('<font size="5">C:   ' + record.data.timeb + '</font>', false);
-				ordf.down('label[itemId=timee]').setText('<font size="5">До:   ' + record.data.timee + '</font>', false);
-				 */
 			}
 			Ext.resumeLayouts(true);
 		}
@@ -495,10 +467,16 @@
 	},
 	clearLS : function () {
 		Ext.suspendLayouts();
+		
 		var ls = this.getLocStoreStore();
 		ls.remove(ls.getRange());
 		ls.sync();
 		this.setCount();
+		
+		var ls = this.getLocStoFlagStore();
+		ls.remove(ls.getRange());
+		ls.sync();
+		
 		Ext.resumeLayouts(true);
 	},
 	setCount : function (addNew) {
@@ -532,11 +510,15 @@
 		
 	},
 	testbtn : function () {
+		this.syncOnServer();
+		/*
 		var u = this.getUchetList();
 		if (u.isHidden()) {
-			u.show()
+		u.show()
 		} else {
-			u.hide()
+		u.hide()
 		};
+		 */
 	}
+	
 });
