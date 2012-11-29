@@ -36,6 +36,7 @@
 	],
 	countNew : 0,
 	countTotal : 0,
+	
 	init : function () {
 		this.control({
 			'uchetlist gridcolumn[itemId=pod]' : {
@@ -44,24 +45,6 @@
 			'uchetlist gridcolumn[itemId=packs]' : {
 				click : this.insertCount
 			},
-			/*'uchetlist gridcolumn[itemId=1]' : {
-			dblclick : this.showDetails
-			},
-			'uchetlist gridcolumn[itemId=2]' : {
-			dblclick : this.showDetails
-			},
-			'uchetlist gridcolumn[itemId=3]' : {
-			dblclick : this.showDetails
-			},
-			'uchetlist gridcolumn[itemId=4]' : {
-			dblclick : this.showDetails
-			},
-			'uchetlist gridcolumn[itemId=5]' : {
-			dblclick : this.showDetails
-			},*/
-			/*'uchetlist info button[action=test]' : {
-			click : this.Exit
-			},*/
 			'uchetlist actioncolumn[itemId=isredy]' : {
 				item_redy_click : this.setReady
 			},
@@ -91,17 +74,22 @@
 			},
 			'info button[action=testbtn]' : {
 				click : this.testbtn
+			},
+			'uchetlist' : {
+				added : function () {
+					if (localStorage.getItem('courClearStorage')) {
+						this.clearLS();
+						localStorage.removeItem('courClearStorage')
+					};
+				}
 			}
 		});
+		
 		this.getOrderAndWbStore().on({
 			scope : this,
 			load : this.makeUchetList1
 		});
-		/*this.getOrdersStore().on({
-		scope : this,
-		load : this.makeUchetList
-		});*/
-		
+
 	},
 	
 	savePod : function (btn) {

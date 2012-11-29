@@ -30,10 +30,21 @@
 						aviewport.removeAll(true);
 						aviewport.add(Ext.widget('main'));
 						this.getInfo().down('label').setText("Курьер : " + action.result.username);
+						
+						var courId = action.result.msg;
+						var courDate = Ext.Date.format(new Date(), 'Ymd');
+						var storedId = localStorage.getItem('courId');
+						var storedDate = localStorage.getItem('courDate');
+						if (courId != storedId || courDate != storedDate) {
+							localStorage.setItem('courId', courId);
+							localStorage.setItem('courDate', courDate);
+							localStorage.setItem('courClearStorage', true);
+						}
+						
 						/*Courier.model.Courier.load(0, {
 						scope : this,
 						success : function (cour) {
-							this.getInfo().down('label').setText("Курьер : " + cour.get('name'));
+						this.getInfo().down('label').setText("Курьер : " + cour.get('name'));
 						}
 						})*/
 					} else {
