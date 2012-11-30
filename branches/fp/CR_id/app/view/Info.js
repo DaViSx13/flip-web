@@ -22,9 +22,15 @@ Ext.define('Courier.view.Info', {
 		,
 		{
 			xtype : 'label',
+			itemId : 'refresh',
+			text : 'Обновлено: '
+			,width: '150px'
+		},
+		{
+			xtype : 'label',
 			itemId : 'count',
 			text : 'Новых/Всего: '
-			,width: '200px'
+			,width: '150px'
 		}
 		
 	]

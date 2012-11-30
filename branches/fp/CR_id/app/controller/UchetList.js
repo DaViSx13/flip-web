@@ -99,7 +99,13 @@
 		
 	},
 	
-	controlActions : function (rowmodel , record, index) {
+	setRefreshed : function () {
+		var lbl = this.getInfo().down('label[itemId=refresh]');
+		var time = Ext.Date.format(new Date(), 'H:i');
+		lbl.setText('Обновлено: ' + time);
+	},
+	
+	controlActions : function (rowmodel, record, index) {
 		//console.log(selmodel);
 		//console.log(arguments);
 		//console.log(rowmodel);
@@ -279,7 +285,7 @@
 			
 			Ext.resumeLayouts(true);
 		};
-		
+		this.setRefreshed(success);
 		this.syncOnServer();
 		//this.log('end');
 	},
@@ -496,12 +502,12 @@
 	setCount : function (addNew) {
 		//if (!addNew)			return;
 		
-		var lbl = this.getInfo().down('label[itemId=count]');
 		var st = this.getLocStoreStore();
 		var total = st.getCount();
 		var countNew = total - st.sum('isview');
 		
 		if (total != this.countTotal || countNew != this.countNew) {
+			var lbl = this.getInfo().down('label[itemId=count]');
 			lbl.setText(Ext.String.format('Новых/Всего: {0}/{1}', countNew, total));
 			this.countTotal = total;
 			this.countNew = countNew;
@@ -520,6 +526,20 @@
 	
 	test : function () {
 		console.log('testAction');
+		
+		var lbl = this.getInfo().down('label[itemId=refresh]');
+		Ext.create('Ext.fx.Anim', {
+			target : lbl,
+			duration : 1000,
+			/*from : {
+				color : 'green'
+			},*/
+			to : {
+				//color : 'white'
+				width: 300
+			}
+		});
+		
 		//this.setCount(true);
 		//this.getActions().down('[action=test]').setText('Hell ou');
 		
@@ -534,13 +554,13 @@
 		}
 		}).show();
 		 */
-		
+		/*
 		var sm = this.getUchetList().getSelectionModel();
 		var sr = sm.getSelection()[0];
 		var adr = sr.get('aaddress');
 		adr = '?text=Москва ' + adr
-			window.open('http://maps.yandex.ru/' + adr);
-		
+		window.open('http://maps.yandex.ru/' + adr);
+		 */
 	},
 	testbtn : function () {
 		this.syncOnServer();
