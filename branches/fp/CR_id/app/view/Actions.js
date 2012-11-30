@@ -6,11 +6,13 @@ Ext.define('Courier.view.Actions', {
 			scale : 'large',
 			iconCls : 'up',
 			action : 'up'
+			, disabled: true
 		}, {
 			//tooltip :'Строку вниз',
 			iconCls : 'down',
 			scale : 'large',
 			action : 'down'
+			, disabled: true
 		}, {
 			//tooltip :'Просмотр',
 			iconCls : 'view',

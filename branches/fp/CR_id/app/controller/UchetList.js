@@ -85,7 +85,10 @@
 						this.clearLS();
 						localStorage.removeItem('courClearStorage')
 					};
-				}
+				},
+				select : this.controlActions
+				//selectionchange : this.controlActions
+				//selectionchange: function(){console.log('uchetlist on selectionchange')}
 			}
 		});
 		
@@ -96,6 +99,19 @@
 		
 	},
 	
+	controlActions : function (rowmodel , record, index) {
+		//console.log(selmodel);
+		//console.log(arguments);
+		//console.log(rowmodel);
+		//console.log(record);
+		console.log(index);
+		console.log(record.store.count());
+		
+		var actions = this.getActions();
+		actions.down('[action=up]').setDisabled(index == 0);
+		actions.down('[action=down]').setDisabled(index == record.store.count() - 1);
+		
+	},
 	savePod : function (btn) {
 		var win = btn.up('newpodwin');
 		var form_pod = win.down('newpodform');
