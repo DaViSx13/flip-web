@@ -90,7 +90,7 @@
 			scope : this,
 			load : this.makeUchetList1
 		});
-
+		
 	},
 	
 	savePod : function (btn) {
@@ -217,6 +217,9 @@
 			Ext.suspendLayouts();
 			var viewstore = this.getLocStoreStore();
 			var flagstore = this.getLocStoFlagStore();
+			
+			var sel = this.getUchetList().getSelectionModel().getCurrentPosition();
+			
 			//рассматриваем новые данные
 			for (i = 0; i < records.length; i++) {
 				var id = records[i].getId();
@@ -251,6 +254,9 @@
 			viewstore.sync();
 			
 			this.setCount();
+			if (sel) {
+				this.getUchetList().getSelectionModel().select(sel.row);
+			}
 			
 			Ext.resumeLayouts(true);
 		};
