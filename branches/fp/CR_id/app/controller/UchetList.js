@@ -77,6 +77,7 @@
 			},
 			'uchetlist' : {
 				added : function () {
+					this.countNew = 0;
 					if (localStorage.getItem('courClearStorage')) {
 						this.clearLS();
 						localStorage.removeItem('courClearStorage')
