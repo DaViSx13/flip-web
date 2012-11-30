@@ -72,6 +72,9 @@
 			'uchetlist actions button[action=test]' : {
 				click : this.test
 			},
+			'uchetlist actions button[action=yamap]' : {
+				click : this.gotomap
+			},
 			'info button[action=testbtn]' : {
 				click : this.testbtn
 			},
@@ -488,20 +491,39 @@
 			this.countNew = countNew;
 		}
 	},
+	
+	gotomap : function () {
+		var sm = this.getUchetList().getSelectionModel();
+		var sr = sm.getSelection()[0];
+		var adr = sr.get('aaddress');
+		if (adr) {
+			adr = '?text=Москва ' + adr
+				window.open('http://maps.yandex.ru/' + adr);
+		}
+	},
+	
 	test : function () {
 		console.log('testAction');
 		//this.setCount(true);
 		//this.getActions().down('[action=test]').setText('Hell ou');
 		
+		/*
 		Ext.create('Ext.window.Window', {
-			title : 'Hello',
-			height : 200,
-			width : 400,
-			layout : 'fit',
-			items : {
-				html : 'Hello'
-			}
+		title : 'Hello',
+		height : 200,
+		width : 400,
+		layout : 'fit',
+		items : {
+		html : 'Hello'
+		}
 		}).show();
+		 */
+		
+		var sm = this.getUchetList().getSelectionModel();
+		var sr = sm.getSelection()[0];
+		var adr = sr.get('aaddress');
+		adr = '?text=Москва ' + adr
+			window.open('http://maps.yandex.ru/' + adr);
 		
 	},
 	testbtn : function () {

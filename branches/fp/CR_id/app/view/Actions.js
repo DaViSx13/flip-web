@@ -1,7 +1,6 @@
 Ext.define('Courier.view.Actions', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.actions',
-	
 	items : [{
 			//tooltip :'Строку вверх',
 			scale : 'large',
@@ -17,6 +16,12 @@ Ext.define('Courier.view.Actions', {
 			iconCls : 'view',
 			scale : 'large',
 			action : 'view'
+		}, {
+			//tooltip :'Просмотр',
+			//iconCls : 'view',
+			text: 'ЯК',
+			scale : 'large',
+			action : 'yamap'
 		},
 		'->', {
 			xtype : 'button',
