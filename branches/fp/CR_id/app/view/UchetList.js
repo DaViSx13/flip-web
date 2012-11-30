@@ -61,11 +61,13 @@ Ext.define('Courier.view.UchetList', {
 			itemId : '2',
 			flex : 1,
 			dataIndex : 'aaddress'
+			, tdCls: 'wrap'
 		}, {
 			text : 'Клиент',
 			menuDisabled : true,
 			itemId : '3',
 			dataIndex : 'client'
+			, tdCls: 'wrap'
 		}, {
 			text : 'С',
 			itemId : '4',

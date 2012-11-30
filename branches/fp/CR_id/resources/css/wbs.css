@@ -57,3 +57,7 @@
 	height : 45px;
 	
 }
+.wrap .x-grid-cell-inner
+{
+	white-space : normal;
+}
