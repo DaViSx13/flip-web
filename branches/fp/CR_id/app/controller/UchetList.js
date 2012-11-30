@@ -146,7 +146,7 @@
 	},
 	
 	syncOnServer : function () {
-		console.log('syncOnServer - start');
+		//console.log('syncOnServer - start');
 		var localstore = this.getLocStoreStore();
 		var flagstore = this.getLocStoFlagStore();
 		flagstore.load();
@@ -154,7 +154,7 @@
 		var flag_count = flagstore.getCount();
 		var dtd = Ext.Date.format(new Date(), 'Ymd');
 		
-		console.log(flag_count);
+		//console.log(flag_count);
 		for (i = 0; i < flag_count; i++) {
 			var flag_rec = data[i];
 			var datarec = localstore.getById(flag_rec.get('ano'));
@@ -189,7 +189,7 @@
 			};
 			
 		};
-		console.log('syncOnServer - stop');
+		//console.log('syncOnServer - stop');
 	},
 	
 	logLastTime : null,
