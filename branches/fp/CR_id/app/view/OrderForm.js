@@ -80,6 +80,7 @@ Ext.define('Courier.view.OrderForm', {
 			xtype : 'displayfield',
 			name : 'rems',
 			fieldLabel : 'Примечание',
+			labelWidth: 110,
 			//labelAlign : 'top',
 			width : 570
 		}
