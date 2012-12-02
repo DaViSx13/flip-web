@@ -1,83 +1,88 @@
 Ext.define('Courier.view.OrderForm', {
 	alias : 'widget.orderform',
 	extend : 'Ext.form.Panel',
-	layout : {
-		type : 'vbox'
-	},
+	layout : 'form',
 	bodyPadding : 10,
 	items : [{
-			xtype : 'label',
-			itemId : 'displayno'/*,
-			fieldLabel : 'Заказ',
-			readOnly : true*/
+			xtype : 'displayfield',
+			name : 'ano',
+			fieldLabel : 'Заказ'
 		}, {
-			xtype : 'label',
-			itemId : 'aaddress',
-			width : 570
+			xtype : 'displayfield',
+			name : 'aaddress',
+			fieldLabel : 'Адрес'
+			//,width : 570
 		}, {
-			xtype : 'label',
-			itemId : 'client'/*,
-			fieldLabel : 'Клиент'*/
+			xtype : 'displayfield',
+			name : 'client',
+			fieldLabel : 'Клиент'
 		}, {
-			xtype : 'label',
-			itemId : 'cont'/*,
-			fieldLabel : 'Контакт'*/
+			xtype : 'displayfield',
+			name : 'cont',
+			fieldLabel : 'Контакт'
 		}, {
-			xtype : 'label',
-			itemId : 'contphone'/*,
-			fieldLabel : 'Телефон'*/
+			xtype : 'displayfield',
+			name : 'contphone',
+			fieldLabel : 'Телефон'
 		}, {
-			xtype : 'label',
-			itemId : 'rems',
-			width : 570
-		}, {
-			xtype : 'label',
-			itemId : 'packs'/*,
-			fieldLabel : 'Мест'*/
-		}, {
-			xtype : 'label',
-			itemId : 'wt'/*,
-			fieldLabel : 'Вес'*/
-		}, {
-			xtype : 'label',
-			itemId : 'volwt'/*,
-			fieldLabel : 'Об. вес'*/
-		}, {
-			xtype : 'label',
-			itemId : 'acash'/*,
-			fieldLabel : 'Сумма'*/
-		}, {
-			xtype : 'label',
-			itemId : 'ordstatus'/*,
-			fieldLabel : 'Статус'*/
-		}, {
-			xtype : 'label',
-			itemId : 'ordtype'/*,
-			fieldLabel : 'Вид'*/
+			xtype : 'displayfield',
+			name : 'acash',
+			fieldLabel : 'Сумма'
 		}, {
 			xtype : 'fieldset',
 			layout : 'hbox',
 			border : 0,
-			
+			padding : 0,
+			defaults : {
+				margin : '0 50 0 0'
+			},
 			items : [{
-					xtype : 'label',
-					itemId : 'timeb'/*,
+					xtype : 'displayfield',
+					name : 'packs',
+					fieldLabel : 'Мест',
+					labelWidth : 50
+				}, {
+					xtype : 'displayfield',
+					name : 'wt',
+					fieldLabel : 'Вес',
+					labelWidth : 40
+				}, {
+					xtype : 'displayfield',
+					name : 'volwt',
+					fieldLabel : 'Об. вес',
+					labelWidth : 70
+				}
+			]
+		}, {
+			xtype : 'fieldset',
+			layout : 'hbox',
+			border : 0,
+			padding : 0,
+			items : [{
+					xtype : 'displayfield',
+					name : 'timeb',
 					width : 80,
 					labelPad : 2,
 					labelWidth : 20,
 					margin : '0 10 0 0',
-					fieldLabel : 'C'*/
+					fieldLabel : 'C'
 				}, {
-					xtype : 'label',
-					itemId : 'timee'/*,
+					xtype : 'displayfield',
+					name : 'timee',
 					width : 80,
 					labelPad : 2,
-					labelWidth : 20,
+					labelWidth : 30,
 					margin : '0 0 0 10',
-					,
-					fieldLabel : 'До'*/
+					fieldLabel : 'До'
 				}
 			]
+		}, {
+			xtype : 'displayfield',
+			name : 'rems',
+			fieldLabel : 'Примечание',
+			labelWidth: 110,
+			//labelAlign : 'top',
+			width : 570
 		}
 	]
 });

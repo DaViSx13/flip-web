@@ -1,15 +1,17 @@
 Ext.define('Courier.view.NewPodWin', {
-	extend : 'Ext.Window',
+	//extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.newpodwin',
 	requires : ['Courier.view.NewPodForm'],
 	title : 'Подтверждение о доставке накладной',
 	layout : 'fit',
-	autoShow : true,
+	//autoShow : true,
 	height : 240,
 	width : 350,
+	y: 50,
 	resizable : false,
 	modal : true,
+	closeAction: 'hide',
 	initComponent : function () {
 		this.items = [{
 				xtype : 'newpodform'

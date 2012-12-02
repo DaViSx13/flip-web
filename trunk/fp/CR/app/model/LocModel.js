@@ -1,5 +1,6 @@
 Ext.define('Courier.model.LocModel', {
 	extend : 'Ext.data.Model',
+	idProperty: 'ano',
 	fields : [{
 			name : 'ano',
 			type : 'string'

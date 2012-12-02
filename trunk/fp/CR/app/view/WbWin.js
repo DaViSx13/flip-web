@@ -1,5 +1,5 @@
 Ext.define('Courier.view.WbWin', {
-	extend : 'Ext.Window',
+//	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.wbwin',
 	requires : ['Courier.view.WbForm'],
@@ -7,9 +7,10 @@ Ext.define('Courier.view.WbWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 500,
-	width : 600,
+	width : 700,
 	resizable : false,
 	modal : true,
+	closeAction: 'hide',
 	initComponent : function () {
 		this.items = [{
 				xtype : 'wbform'

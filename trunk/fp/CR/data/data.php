@@ -31,8 +31,9 @@ if (!isset($_REQUEST['dbAct'])) {
             break;
 		case 'SetPOD':
 			$rcpn = $_POST['rcpn'];
-			$d = explode('.', $_POST['p_d_in']);
-			$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
+			//$d = explode('.', $_POST['p_d_in']);
+			//$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
+			$p_d_in = $_POST['p_d_in'];
 			$query = "exec wwwSetPOD @wb_no='{$_POST[wb_no]}', @p_d_in='{$p_d_in}', @tdd='{$_POST[tdd]}', @rcpn='{$rcpn}', @user='{$_SESSION[CourLogin]}' ";
 			break;
     }

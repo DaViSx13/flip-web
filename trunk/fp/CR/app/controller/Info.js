@@ -47,7 +47,7 @@
 				run : function () {
 					//this.getInfoPanel().down('button').setText(Ext.Date.format(new Date(), 'H:i:s'));
 					this.getOrderAndWbStore().load();
-					console.log('load');
+					//console.log('load');
 				},
 				interval : 30000,
 				// 10 Seconds

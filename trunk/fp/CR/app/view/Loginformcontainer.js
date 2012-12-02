@@ -3,8 +3,9 @@
 	alias : 'widget.loginformcontainer',
 	layout : {
 		type : 'vbox',
-		align : 'center',
-		pack : 'center'
+		align : 'center'
+		,padding: 20
+		//,pack : 'center'
 	},
 	items : [{
 			xtype : 'loginform'

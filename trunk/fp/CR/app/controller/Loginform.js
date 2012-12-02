@@ -1,6 +1,6 @@
 ﻿Ext.define('Courier.controller.Loginform', {
 	extend : 'Ext.app.Controller',
-	views : ['Loginform', 'Main', 'Loginformcontainer'],
+	views : ['Loginform', 'UchetList', 'Loginformcontainer', 'Info'],
 	models : ['Courier'],
 	refs : [{
 			ref : 'Info',
@@ -13,9 +13,9 @@
 			'loginform button[action=login]' : {
 				click : this.doLogin
 			},
-			'main button[action=logout]' : {
+			'info button[action=logout]' : {
 				click : this.doLogout
-			},
+			}
 		});
 	},
 	doLogin : function (button) {
@@ -30,10 +30,21 @@
 						aviewport.removeAll(true);
 						aviewport.add(Ext.widget('main'));
 						this.getInfo().down('label').setText("Курьер : " + action.result.username);
+						
+						var courId = action.result.msg;
+						var courDate = Ext.Date.format(new Date(), 'Ymd');
+						var storedId = localStorage.getItem('courId');
+						var storedDate = localStorage.getItem('courDate');
+						if (courId != storedId || courDate != storedDate) {
+							localStorage.setItem('courId', courId);
+							localStorage.setItem('courDate', courDate);
+							localStorage.setItem('courClearStorage', true);
+						}
+						
 						/*Courier.model.Courier.load(0, {
 						scope : this,
 						success : function (cour) {
-							this.getInfo().down('label').setText("Курьер : " + cour.get('name'));
+						this.getInfo().down('label').setText("Курьер : " + cour.get('name'));
 						}
 						})*/
 					} else {
@@ -53,6 +64,7 @@
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
 				if (text.success == true) {
+					Ext.TaskManager.stopAll();
 					var aviewport = button.up('viewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('loginformcontainer'));

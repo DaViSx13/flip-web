@@ -1,3 +1,10 @@
+.x-action-col-cell img.ex-baks {
+	background-image : url(../../resources/images/baks.png);
+	
+	height : 30px;
+	width : 30px;
+	/*cursor : pointer;*/
+}
 .x-action-col-cell img.ex-ch {
 	background-image : url(../../resources/images/checkbox_checked.png);
 	
@@ -49,4 +56,8 @@
 {
 	height : 45px;
 	
+}
+.wrap .x-grid-cell-inner
+{
+	white-space : normal;
 }
