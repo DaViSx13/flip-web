@@ -1,5 +1,11 @@
 USE [ALERT_F]
 GO
+
+ALTER TABLE dbo.CouriersTemp ADD
+	MobileLogin varchar(20) NULL,
+	MobilePassword varchar(10) NULL
+go
+	
 /****** Object:  Trigger [dbo].[trInsCouriersTempLog]    Script Date: 11/21/2012 09:56:29 ******/
 SET ANSI_NULLS ON
 GO
@@ -46,9 +52,3 @@ END
 ----------------------------
 go
 
-
-
-
-ALTER TABLE dbo.CouriersTemp ADD
-	MobileLogin varchar(20) NULL,
-	MobilePassword varchar(10) NULL
