@@ -1,16 +1,16 @@
 // Your custom code goes here...
 //$theme-name: 'gray';
-$base-color: #ccc;
+$base-color: #c8c8c8;
 
 //panel
-$panel-header-background-gradient: color-stops(#F0F0F0, #D7D7D7);
-$panel-border-color: #D0D0D0;
+$panel-header-background-gradient: color-stops(#E0E0E0, #C7C7C7);//(#F0F0F0, #D7D7D7);
+$panel-border-color: #C0C0C0;//#D0D0D0;
 $panel-header-color: #333;
 
-$panel-frame-background-color: #f1f1f1;
+$panel-frame-background-color: #E1E1E1;//#f1f1f1;
 
 //window
-$window-background-color: #e8e8e8;
+$window-background-color: #D8D8D8;//#e8e8e8;
 $window-header-color: #333;
 
 //menu
@@ -36,14 +36,14 @@ $tip-base-color: $base-color;
 $grid-header-over-border-color: darken($base-color, 3);
 
 //toolbar
-$toolbar-background-gradient: color-stops(#e6e6e6, #efefef);
+$toolbar-background-gradient: color-stops(#D6D6D6, #DFDFDF);//(#e6e6e6, #efefef);
 $toolbar-separator-color: #aca899;
 $toolbar-text-color: #000;
 
 //btn group
 $btn-group-background-color: #f0f0f0;
 $btn-group-header-background-color: #dfdfdf;
-$btn-group-border-color: #d0d0d0;
+$btn-group-border-color: #c0c0c0;//#d0d0d0;
 $btn-group-header-color: #666;
 $btn-group-inner-border-color: #ececec;
 
@@ -67,6 +67,8 @@ $tab-background-gradient-disabled: 'tab-disabled' !default;
 //buttons
 
 //my
+$button-default-base-color-over: adjust-color($base-color, $hue: -6.667deg, $saturation: 44.444%, $lightness: 10.588%) !default; //E4F3FF
+$button-toolbar-border-color: adjust-color($button-default-base-color-over, $hue: 8.177deg, $saturation: -28.283%, $lightness: -12.745%) !default;
 $button-small-border-radius: 13px;
 $button-large-border-radius: 17px;
 $grid-row-cell-font-size: 16px;
@@ -82,13 +84,13 @@ $form-label-font-size: 16px;
 //$form-trigger-width: 27px !default;
 //$form-trigger-icon-background-position: 7px 6px !default;
 //
-$button-default-base-color: #f8f8f8;
+$button-default-base-color: #E1E1E1;//#f8f8f8;
 $button-default-base-color-over: #f3f3f3;
 $button-default-base-color-focus: $button-default-base-color-over;
-$button-default-base-color-pressed: #d6d6d6;
+$button-default-base-color-pressed: #c6c6c6;//#d6d6d6;
 $button-default-base-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
 
-$button-default-border-color: #bbbbbb;
+$button-default-border-color: #9d9d9d;//#bbbbbb;
 $button-default-border-color-over: #9d9d9d;
 $button-default-border-color-focus: $button-default-border-color-over;
 $button-default-border-color-pressed: $button-default-border-color-over;
@@ -109,13 +111,13 @@ $button-default-background-gradient-color-stops-disabled: null;
 
 $button-toolbar-base-color: $button-default-base-color;
 
-$button-toolbar-border-color: transparent !default;
+$button-toolbar-border-color: $button-default-border-color-over;//transparent !default;
 $button-toolbar-border-color-over: $button-default-border-color-over;
 $button-toolbar-border-color-focus: $button-default-border-color-focus;
 $button-toolbar-border-color-pressed: $button-default-border-color-pressed;
 $button-toolbar-border-color-disabled: $button-default-border-color-disabled;
 
-$button-toolbar-background-color: transparent !default;
+$button-toolbar-background-color: $button-default-base-color-over;//transparent !default;
 $button-toolbar-background-color-over: $button-default-base-color-over;
 $button-toolbar-background-color-focus: $button-default-base-color-focus;
 $button-toolbar-background-color-pressed: $button-default-base-color-pressed;
