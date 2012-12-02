@@ -170,8 +170,8 @@
         <copy todir="${build.dir}">
             <fileset dir="${app.dir}"
                      includes="resources/**/*, data/**/*"
-                     excludes="resources/sass,
-                               resources/theme"/>
+                     excludes="resources/sass/,
+                               resources/theme/"/>
         </copy>
         
         <script language="javascript">
