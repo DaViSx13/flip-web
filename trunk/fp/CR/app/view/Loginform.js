@@ -1,7 +1,7 @@
-﻿Ext.define('Courier.view.Loginform', {
+Ext.define('Courier.view.Loginform', {
 	extend : 'Ext.form.Panel',
 	alias : 'widget.loginform',
-	title : 'Здрасте',
+	title : 'Вход',
 	bodyPadding : 10,
 	items : [{
 			xtype : 'textfield',
