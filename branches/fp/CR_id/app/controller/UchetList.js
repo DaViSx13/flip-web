@@ -121,21 +121,23 @@
 	savePod : function (btn) {
 		var win = btn.up('newpodwin');
 		var form_pod = win.down('newpodform');
-		var rec_pod = this.getLocStoreStore().findRecord('ano', form_pod.getValues()['wb_no']);
-		rec_pod.set('tdd', form_pod.getValues()['tdd']);
-		rec_pod.set('rcpn', form_pod.getValues()['rcpn']);
-		
-		this.getLocStoFlagStore().load();
-		var rec_flag = this.getLocStoFlagStore().findRecord('ano', form_pod.getValues()['wb_no']);
-		if (!rec_flag) {
-			this.getLocStoFlagStore().add({
-				ano : form_pod.getValues()['wb_no']
-			});
-			this.getLocStoFlagStore().sync();
-		}
-		
-		win.close();
-		console.log(this.getLocStoFlagStore());
+		if (form_pod.form.isValid()) {
+			var rec_pod = this.getLocStoreStore().findRecord('ano', form_pod.getValues()['wb_no']);
+			rec_pod.set('tdd', form_pod.getValues()['tdd']);
+			rec_pod.set('rcpn', form_pod.getValues()['rcpn']);
+			
+			this.getLocStoFlagStore().load();
+			var rec_flag = this.getLocStoFlagStore().findRecord('ano', form_pod.getValues()['wb_no']);
+			if (!rec_flag) {
+				this.getLocStoFlagStore().add({
+					ano : form_pod.getValues()['wb_no']
+				});
+				this.getLocStoFlagStore().sync();
+			}
+			
+			win.close();
+		};
+		//console.log(this.getLocStoFlagStore());
 	},
 	saveCount : function (btn) {
 		var win = btn.up('newcountwin');
@@ -532,11 +534,11 @@
 			target : lbl,
 			duration : 1000,
 			/*from : {
-				color : 'green'
+			color : 'green'
 			},*/
 			to : {
 				//color : 'white'
-				width: 300
+				width : 300
 			}
 		});
 		
