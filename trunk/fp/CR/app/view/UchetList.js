@@ -4,11 +4,6 @@ Ext.define('Courier.view.UchetList', {
 	store : 'LocStore', //'Uchets',
 	requires : ['Courier.view.NewPodWin', 'Courier.view.Info', 'Courier.view.Actions'],
 	viewConfig : {
-		/* plugins: {
-		ptype: 'gridviewdragdrop',
-		dragText: 'Перетащите для сортировки',
-		
-		},*/
 		getRowClass : function (record, index) {
 			if (record.get('isview') == 1) {
 				var ret = 'rec-';
@@ -18,18 +13,14 @@ Ext.define('Courier.view.UchetList', {
 			
 			if (record.get('isredy') == 1 || record.get('tdd')) {
 				ret = ret + 'gray';
-				//				return ret;
 			} else if ((!record.get('tdd') && record.get('rectype') == 1) || record.get('ordstatus') != 'Не готов' || record.get('rectype') == 2) {
 				ret = ret + 'green';
-				//				return ret;
 			} else if (record.get('ordstatus') == 'Не готов') {
 				ret = ret + 'red';
-				//				return ret;
 			}
 			
 			return ret;
 		}
-		
 	},
 	columns : [{
 			itemId : '0',
@@ -60,14 +51,14 @@ Ext.define('Courier.view.UchetList', {
 			menuDisabled : true,
 			itemId : '2',
 			flex : 1,
-			dataIndex : 'aaddress'
-			, tdCls: 'wrap'
+			dataIndex : 'aaddress',
+			tdCls : 'wrap'
 		}, {
 			text : 'Клиент',
 			menuDisabled : true,
 			itemId : '3',
-			dataIndex : 'client'
-			, tdCls: 'wrap'
+			dataIndex : 'client',
+			tdCls : 'wrap'
 		}, {
 			text : 'С',
 			itemId : '4',
@@ -143,22 +134,14 @@ Ext.define('Courier.view.UchetList', {
 			dataIndex : 'packs',
 			itemId : 'packs'
 		}
-		/*, {
-		dataIndex : 'rectype',
-		text : 'Тип',
-		xtype : 'numbercolumn',
-		format : '0'
-		}*/
 	],
 	
 	dockedItems : [{
 			xtype : 'actions',
 			dock : 'left'
+		}, {
+			xtype : 'info',
+			dock : 'top'
 		}
-		/*, {
-		xtype : 'info',
-		dock : 'top'
-		}*/
-		
 	]
 });

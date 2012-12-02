@@ -1,5 +1,4 @@
 Ext.define('Courier.view.WbWin', {
-//	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.wbwin',
 	requires : ['Courier.view.WbForm'],
@@ -10,17 +9,13 @@ Ext.define('Courier.view.WbWin', {
 	width : 700,
 	resizable : false,
 	modal : true,
-	closeAction: 'hide',
+	closeAction : 'hide',
 	initComponent : function () {
 		this.items = [{
 				xtype : 'wbform'
 			}
 		];
-		this.buttons = [/*{
-			text : 'Сохранить',
-			action : 'save'
-			}, */
-			{
+		this.buttons = [{
 				text : 'Закрыть',
 				scope : this,
 				handler : this.close

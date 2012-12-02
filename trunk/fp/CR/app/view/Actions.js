@@ -5,14 +5,14 @@ Ext.define('Courier.view.Actions', {
 			//tooltip :'Строку вверх',
 			scale : 'large',
 			iconCls : 'up',
-			action : 'up'
-			, disabled: true
+			action : 'up',
+			disabled : true
 		}, {
 			//tooltip :'Строку вниз',
 			iconCls : 'down',
 			scale : 'large',
-			action : 'down'
-			, disabled: true
+			action : 'down',
+			disabled : true
 		}, {
 			//tooltip :'Просмотр',
 			iconCls : 'view',
@@ -21,19 +21,20 @@ Ext.define('Courier.view.Actions', {
 		}, {
 			//tooltip :'Просмотр',
 			//iconCls : 'view',
-			text: 'ЯК',
+			text : 'ЯК',
 			scale : 'large',
 			action : 'yamap'
-		},
-		'->', {
-			xtype : 'button',
-			text : 'test',
-			action : 'test'
-		}, {
-			xtype : 'button',
-			text : 'clearLS',
-			action : 'clearLS'
 		}
-		
+		/*,
+		'->', {
+		xtype : 'button',
+		text : 'test',
+		action : 'test'
+		}, {
+		xtype : 'button',
+		text : 'clearLS',
+		action : 'clearLS'
+		}
+		 */
 	]
 });

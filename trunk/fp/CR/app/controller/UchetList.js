@@ -87,8 +87,6 @@
 					};
 				},
 				select : this.controlActions
-				//selectionchange : this.controlActions
-				//selectionchange: function(){console.log('uchetlist on selectionchange')}
 			}
 		});
 		
@@ -96,7 +94,6 @@
 			scope : this,
 			load : this.makeUchetList1
 		});
-		
 	},
 	
 	setRefreshed : function () {
@@ -106,18 +103,11 @@
 	},
 	
 	controlActions : function (rowmodel, record, index) {
-		//console.log(selmodel);
-		//console.log(arguments);
-		//console.log(rowmodel);
-		//console.log(record);
-		console.log(index);
-		console.log(record.store.count());
-		
 		var actions = this.getActions();
 		actions.down('[action=up]').setDisabled(index == 0);
 		actions.down('[action=down]').setDisabled(index == record.store.count() - 1);
-		
 	},
+	
 	savePod : function (btn) {
 		var win = btn.up('newpodwin');
 		var form_pod = win.down('newpodform');
@@ -139,6 +129,7 @@
 		};
 		//console.log(this.getLocStoFlagStore());
 	},
+	
 	saveCount : function (btn) {
 		var win = btn.up('newcountwin');
 		var form = win.down('newcountform');
@@ -148,6 +139,7 @@
 		this.getLocStoreStore().sync();
 		win.close();
 	},
+	
 	setWay : function (column, action, grid, rowIndex, colIndex, record, node) {
 		
 		if (record.get('inway') == 0 && !record.get('tdd') && record.get('isredy') == 0) {
@@ -199,9 +191,9 @@
 					},
 					success : function (response, options) {
 						var text = Ext.decode(response.responseText);
-						console.log(text);
+						//console.log(text);
 						if (text.success == true) {
-							console.log('syncOnServer - success: ' + text.msg);
+							//console.log('syncOnServer - success: ' + text.msg);
 							var ano = options.params.wb_no;
 							var fs = this.getLocStoFlagStore();
 							fs.remove(fs.findRecord('ano', ano));
@@ -220,26 +212,7 @@
 		//console.log('syncOnServer - stop');
 	},
 	
-	logLastTime : null,
-	
-	log : function (str) {
-		if (this.logLastTime == null) {
-			this.logLastTime = Ext.Date.now()
-		};
-		var logStr = '';
-		logStr = Ext.String.format('{0} ({1}) - {2}', Ext.Date.format(new Date(), 'H:i:s.u'), (Ext.Date.now() - this.logLastTime), str);
-		console.log(logStr);
-		
-		var txt = this.getInfo().down('[name=message]');
-		txt.setValue(logStr + '\n' + txt.getValue());
-		this.logLastTime = Ext.Date.now();
-	},
-	
 	makeUchetList1 : function (store, records, success) {
-		//this.log('start');
-		//return;
-		//console.log('loaded');
-		
 		if (success) {
 			Ext.suspendLayouts();
 			var viewstore = this.getLocStoreStore();
@@ -292,124 +265,25 @@
 		//this.log('end');
 	},
 	
-	makeUchetList : function (store, records, success) {
-		return;
-		var sTime,
-		eTime;
-		sTime = Ext.Date.now();
-		
-		var me = this;
-		if (success) {
-			me.getLocStoreStore().load();
-			me.getLocStoFlagStore().load();
-			if (me.getUchetsStore().getCount() > 0) {
-				var jsonArray = me.getUchetsStore().getRange(); //me.getLocStoreStore().getRange();
-				
-				
-				var resArray = new Array();
-				var LocStoreFlagCount = me.getLocStoFlagStore().getCount();
-				var Flag_Store = me.getLocStoFlagStore();
-				var IsDelet = 1;
-				var sel = me.getUchetList().getSelectionModel().getCurrentPosition();
-				
-				for (var i = 0; i < jsonArray.length; i++) {
-					store.each(function () {
-						
-						if (jsonArray[i].get('ano') == this.get('ano')) { //Нужно: Сравниваем OrderAndWbStore с LocalStore
-							IsDelet = 0;
-							Ext.Array.remove(records, this); // delete from OrderAndWbStore
-						}
-						
-					})
-					if (IsDelet == 1) {
-						me.getUchetsStore().removeAt(i);
-						console.log('remove');
-					} else {
-						IsDelet = 1;
-					}
-					
-				}
-				
-				if (records.length > 0) {
-					this.countNew = this.countNew + records.length;
-				}
-				
-				me.getUchetsStore().loadRawData(records, true); //remove UchetsStore data
-				//add data in UchetsStore from new array
-				
-				me.getLocStoreStore().remove(me.getLocStoreStore().getRange());
-				me.getLocStoreStore().sync();
-				for (var i = 0; i < me.getUchetsStore().getCount(); i++) {
-					me.getLocStoreStore().add(me.getUchetsStore().getRange(i, i)[0].data);
-					me.getLocStoreStore().sync();
-				}
-				
-			} else {
-				console.log(me.getLocStoreStore().getCount());
-				if (me.getLocStoreStore().getCount() > 0) {
-					console.log('loc');
-					this.countNew = me.getLocStoreStore().getCount();
-					me.getUchetsStore().loadRawData(me.getLocStoreStore().getRange());
-				} else {
-					console.log('ser');
-					me.getUchetsStore().loadRawData(records);
-					this.countNew = records.length;
-				}
-			}
-			
-			if (this.countNew > 0) {
-				me.getInfo().down('label[itemId=count]').setText("Количество новых заказов : " + this.countNew);
-			}
-			
-		}
-		if (sel) {
-			me.getUchetList().getSelectionModel().select(sel.row);
-		}
-		this.syncOnServer();
-		
-		eTime = Ext.Date.now();
-		var logStr = '';
-		logStr = Ext.Date.format(new Date(), 'H:i:s') + ' - ' + (eTime - sTime);
-		console.log(logStr);
-		var txt = this.getInfo().down('[name=message]');
-		txt.setValue(logStr + '\n' + txt.getValue());
-		
-	},
-	/*Exit : function (but) {
-	this.syncOnServer();
-	
-	
-	
-	},*/
 	insertPod : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
-		//console.log(this.getPodWin());
-		//		if(this.getPodWin()){Ext.widget('newpodwin')};
-		//console.log(this.getPodWin());
 		if ((!rec.data['tdd']) && (rec.data['rectype'] == 1)) {
-			//this.insertNewDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a']);
-			var newdop = this.getPodWin(); //Ext.widget('newpodwin').show();
-			//console.log(Ext.widget('newpodwin'));
-			//console.log(newdop);
+			var newdop = this.getPodWin();
 			var formdop = newdop.down('newpodform');
 			formdop.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.ano + '</font>', false);
 			formdop.down('textfield[name=wb_no]').setValue(rec.data.ano);
 			newdop.show();
-		} else {
-			//this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
 		}
 	},
+	
 	insertCount : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
-		
-		if (/*rec.data['rectype'] == 1 || */
-			rec.data['rectype'] == 0) {
-			
-			var newcount = this.getCountWin(); //Ext.widget('newcountwin').show();
+		if (rec.data['rectype'] == 0) {
+			var newcount = this.getCountWin();
 			var formcount = newcount.down('newcountform');
 			formcount.down('label[itemId=wb_no]').setText('<font size="5">Заказ:   ' + rec.data.displayno + '</font>', false);
 			formcount.down('textfield[name=wb_no]').setValue(rec.data.ano);
 			formcount.down('textfield[name=packs]').setValue(rec.data['packs']);
 			newcount.show();
-		} else {}
+		}
 	},
 	
 	showDetails : function (btn) {
@@ -439,6 +313,7 @@
 			Ext.resumeLayouts(true);
 		}
 	},
+	
 	upRow : function (btn) {
 		var sm = this.getUchetList().getSelectionModel();
 		var st = sm.getStore();
@@ -463,6 +338,7 @@
 			
 		}
 	},
+	
 	downRow : function (btn) {
 		var sm = this.getUchetList().getSelectionModel();
 		var st = sm.getStore();
@@ -487,6 +363,7 @@
 			
 		}
 	},
+	
 	clearLS : function () {
 		Ext.suspendLayouts();
 		
@@ -501,9 +378,8 @@
 		
 		Ext.resumeLayouts(true);
 	},
+	
 	setCount : function (addNew) {
-		//if (!addNew)			return;
-		
 		var st = this.getLocStoreStore();
 		var total = st.getCount();
 		var countNew = total - st.sum('isview');
@@ -564,6 +440,7 @@
 		window.open('http://maps.yandex.ru/' + adr);
 		 */
 	},
+	
 	testbtn : function () {
 		this.syncOnServer();
 		/*

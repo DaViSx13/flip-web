@@ -7,8 +7,8 @@
 			selector : 'info'
 		}
 	],
+
 	init : function () {
-		//console.log('Initialized LoginForm');
 		this.control({
 			'loginform button[action=login]' : {
 				click : this.doLogin
@@ -18,6 +18,7 @@
 			}
 		});
 	},
+	
 	doLogin : function (button) {
 		var form = button.up('form').form;
 		if (form.isValid()) {
@@ -40,13 +41,6 @@
 							localStorage.setItem('courDate', courDate);
 							localStorage.setItem('courClearStorage', true);
 						}
-						
-						/*Courier.model.Courier.load(0, {
-						scope : this,
-						success : function (cour) {
-						this.getInfo().down('label').setText("Курьер : " + cour.get('name'));
-						}
-						})*/
 					} else {
 						Ext.Msg.alert('Внимание', action.result.msg);
 					}
@@ -57,6 +51,7 @@
 			});
 		}
 	},
+	
 	doLogout : function (button) {
 		var me = this;
 		Ext.Ajax.request({
