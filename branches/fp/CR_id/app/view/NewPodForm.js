@@ -30,9 +30,10 @@ Ext.define('Courier.view.NewPodForm', {
 			name : 'tdd',
 			fieldLabel : 'Время',
 			format : 'H:i',
+			minValue : '8:00',
+			maxValue : '20:00',
 			hideTrigger : true,
-			allowBlank : false,
-			editable: false
+			allowBlank : false
 		}, {
 			xtype : 'textfield',
 			name : 'rcpn',
