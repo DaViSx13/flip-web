@@ -8,6 +8,7 @@ Ext.define('Courier.view.NewPodWin', {
 	//autoShow : true,
 	height : 240,
 	width : 350,
+	y: 50,
 	resizable : false,
 	modal : true,
 	closeAction: 'hide',

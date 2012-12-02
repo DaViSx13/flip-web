@@ -8,6 +8,7 @@ Ext.define('Courier.view.NewCountWin', {
 	autoShow : true,
 	height : 170,
 	width : 290,
+	y: 50,
 	resizable : false,
 	modal : true,
 	closeAction: 'hide',
