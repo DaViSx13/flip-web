@@ -1,6 +1,6 @@
 ﻿Ext.define('Courier.controller.Info', {
 	extend : 'Ext.app.Controller',
-	views : ['Main', 'Info'],
+	views : ['Info'],
 	models : ['Courier'],
 	stores : ['OrderAndWb', 'Uchets'],
 	refs : [{
@@ -8,7 +8,7 @@
 			selector : 'info'
 		}
 	],
-
+	
 	init : function () {
 		this.control({
 			'info' : {

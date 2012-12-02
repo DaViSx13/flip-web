@@ -1,7 +1,6 @@
 ﻿Ext.define('Courier.controller.Loginform', {
 	extend : 'Ext.app.Controller',
 	views : ['Loginform', 'UchetList', 'Loginformcontainer', 'Info'],
-	models : ['Courier'],
 	refs : [{
 			ref : 'Info',
 			selector : 'info'
@@ -29,7 +28,7 @@
 					if (action.result.success == true) {
 						var aviewport = button.up('viewport');
 						aviewport.removeAll(true);
-						aviewport.add(Ext.widget('main'));
+						aviewport.add(Ext.widget('uchetlist'));
 						this.getInfo().down('label').setText("Курьер : " + action.result.username);
 						
 						var courId = action.result.msg;
