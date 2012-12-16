@@ -24,7 +24,10 @@ Ext.define('Courier.view.Actions', {
 			text : 'ЯК',
 			scale : 'large',
 			action : 'yamap'
-		}, '->', '-', {
+		}, '->', {
+			text : 'Всё',
+			action : 'readall'
+		}, '-', {
 			text : 'Выход',
 			action : 'logout'
 		}

@@ -78,6 +78,9 @@
 			'info button[action=testbtn]' : {
 				click : this.testbtn
 			},
+			'actions button[action=readall]' : {
+				click : this.viewAll
+			},
 			'uchetlist' : {
 				added : function () {
 					this.countNew = 0;
@@ -400,6 +403,23 @@
 			adr = '?text=Москва ' + adr
 				window.open('http://maps.yandex.ru/' + adr);
 		}
+	},
+	
+	viewAll : function () {
+		Ext.Msg.confirm('Все', 'Отметить все как просмотренные?', function (button) {
+			if (button === 'yes') {
+				var grid = this.getUchetList();
+				var store = grid.getStore();
+				Ext.suspendLayouts();
+				store.each(function (record) {
+					record.set('isview', 1);
+				});
+				store.sync();
+				Ext.resumeLayouts();
+				this.setCount();
+			}
+		},
+			this);
 	},
 	
 	test : function () {
