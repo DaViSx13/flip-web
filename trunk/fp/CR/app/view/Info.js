@@ -5,14 +5,7 @@ Ext.define('Courier.view.Info', {
 	items : [{
 			xtype : 'label',
 			text : ''
-		}, '-', {
-			text : 'Выход',
-			action : 'logout'
 		},
-		/*, '-', {
-		text : 'testBtn',
-		action : 'testbtn'
-		}*/
 		'->', {
 			xtype : 'label',
 			itemId : 'refresh',
