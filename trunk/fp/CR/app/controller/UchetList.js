@@ -262,10 +262,12 @@
 			}
 			
 			Ext.resumeLayouts(true);
+			
+			this.setRefreshed(success);
+			this.syncOnServer();
+		} else {
+			Ext.getDoc().dom.location.reload()
 		};
-		this.setRefreshed(success);
-		this.syncOnServer();
-		//this.log('end');
 	},
 	
 	insertPod : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
