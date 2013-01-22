@@ -126,7 +126,13 @@ Ext.define('Courier.view.UchetList', {
 			dataIndex : 'tdd',
 			width : 60,
 			menuDisabled : true,
-			itemId : 'pod'
+			itemId : 'pod',
+			renderer : function (value, metadata, record) {
+				if (record.get('rectype') == 1 && value == '') {
+					return 'ПОД';
+				} else
+					return value;
+			}
 		}, {
 			text : 'Кол.',
 			width : 35,
