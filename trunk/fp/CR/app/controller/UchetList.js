@@ -274,6 +274,7 @@
 		if ((!rec.data['tdd']) && (rec.data['rectype'] == 1)) {
 			var newdop = this.getPodWin();
 			var formdop = newdop.down('newpodform');
+			formdop.form.reset();
 			formdop.down('label[itemId=wb_no]').setText('<font size="5">Накладная:   ' + rec.data.ano + '</font>', false);
 			formdop.down('textfield[name=wb_no]').setValue(rec.data.ano);
 			newdop.show();
