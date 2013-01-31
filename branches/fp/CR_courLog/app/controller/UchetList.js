@@ -119,14 +119,17 @@
 			rec_pod.set('tdd', form_pod.getValues()['tdd']);
 			rec_pod.set('rcpn', form_pod.getValues()['rcpn']);
 			
+			/*
 			this.getLocStoFlagStore().load();
 			var rec_flag = this.getLocStoFlagStore().findRecord('ano', form_pod.getValues()['wb_no']);
 			if (!rec_flag) {
-				this.getLocStoFlagStore().add({
-					ano : form_pod.getValues()['wb_no']
-				});
-				this.getLocStoFlagStore().sync();
+			this.getLocStoFlagStore().add({
+			ano : form_pod.getValues()['wb_no']
+			});
+			this.getLocStoFlagStore().sync();
 			}
+			 */
+			this.courLog(form_pod.getValues()['wb_no'], 'pod');
 			
 			win.close();
 		};
@@ -150,6 +153,7 @@
 				this.set('inway', 0);
 			})
 			record.set('inway', 1);
+			this.courLog(record.get('ano'), 'go');
 			//record.set('isredy', 0);
 		} else {
 			record.set('inway', 0);
@@ -162,6 +166,7 @@
 		if (record.get('isredy') == 0) {
 			record.set('isredy', 1);
 			record.set('inway', 0);
+			this.courLog(record.get('ano'), 'ready');
 		} else {
 			record.set('isredy', 0);
 		};
@@ -180,37 +185,66 @@
 		//console.log(flag_count);
 		for (i = 0; i < flag_count; i++) {
 			var flag_rec = data[i];
-			var datarec = localstore.getById(flag_rec.get('ano'));
-			if (datarec) {
-				Ext.Ajax.request({
-					scope : this,
-					url : 'data/data.php',
-					params : {
-						dbAct : 'SetPOD',
-						wb_no : datarec.get('ano'),
-						rcpn : datarec.get('rcpn'),
-						tdd : datarec.get('tdd'),
-						p_d_in : dtd
-					},
-					success : function (response, options) {
-						var text = Ext.decode(response.responseText);
-						//console.log(text);
-						if (text.success == true) {
-							//console.log('syncOnServer - success: ' + text.msg);
-							var ano = options.params.wb_no;
-							var fs = this.getLocStoFlagStore();
-							fs.remove(fs.findRecord('ano', ano));
-							fs.sync();
-						} else {
-							console.log('syncOnServer - failed: ' + text.msg);
+			var f_event = flag_rec.get('event');
+			var f_ano = flag_rec.get('ano');
+			
+			//отправка ПОДа
+			if (f_event == 'pod') {
+				var datarec = localstore.getById(flag_rec.get('ano'));
+				if (datarec) {
+					Ext.Ajax.request({
+						scope : this,
+						url : 'data/data.php',
+						params : {
+							dbAct : 'SetPOD',
+							wb_no : datarec.get('ano'),
+							rcpn : datarec.get('rcpn'),
+							tdd : datarec.get('tdd'),
+							p_d_in : dtd
+						},
+						success : function (response, options) {
+							var text = Ext.decode(response.responseText);
+							//console.log(text);
+							if (text.success == true) {
+								console.log('syncOnServer - success: ' + text.msg);
+							} else {
+								console.log('syncOnServer - failed: ' + text.msg);
+							}
+						},
+						failure : function (response) {
+							console.log('syncOnServer - Сервер недоступен! ' + response.statusText);
 						}
-					},
-					failure : function (response) {
-						console.log('syncOnServer - Сервер недоступен! ' + response.statusText);
-					}
-				});
+					});
+				};
 			};
 			
+			//отправка лога
+			Ext.Ajax.request({
+				scope : this,
+				url : 'data/data.php',
+				params : {
+					dbAct : 'courLog',
+					ano : f_ano,
+					event : f_event,
+					eventtime : flag_rec.get('eventtime')
+				},
+				success : function (response, options) {
+					var text = Ext.decode(response.responseText);
+					//console.log(text);
+					if (text.success == true) {
+						//console.log('syncOnServer - success: ' + text.msg);
+						//var ano = options.params.wb_no;
+						var fs = this.getLocStoFlagStore();
+						fs.remove(flag_rec);
+						fs.sync();
+					} else {
+						console.log('syncOnServer - failed: ' + text.msg);
+					}
+				},
+				failure : function (response) {
+					console.log('syncOnServer - Сервер недоступен! ' + response.statusText);
+				}
+			});
 		};
 		//console.log('syncOnServer - stop');
 	},
@@ -423,6 +457,17 @@
 			}
 		},
 			this);
+	},
+	
+	courLog : function (ano1, event1) {
+		var fstore = this.getLocStoFlagStore();
+		var now = Ext.Date.format(new Date(), 'Ymd H:i');
+		fstore.add({
+			ano : ano1,
+			event : event1,
+			eventtime : now
+		});
+		fstore.sync();
 	},
 	
 	test : function () {

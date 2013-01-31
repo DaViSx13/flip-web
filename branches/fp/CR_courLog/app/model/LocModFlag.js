@@ -3,6 +3,12 @@ Ext.define('Courier.model.LocModFlag', {
 	fields : [{
 			name : 'ano',
 			type : 'string'
+		}, {
+			name : 'event',
+			type : 'string'
+		}, {
+			name : 'eventtime',
+			type : 'string'
 		}
 	]
 });
