@@ -14,7 +14,12 @@ Ext.define('FPAgent.view.orders.OrdTool', {
 			text : 'Редактировать',
 			iconCls : 'editdoc',
 			action : 'edit'
-		}, '-', '->', '-', {
+		}, '-', {
+			text : 'Экспорт в Excel',
+			iconCls : 'excel',
+			action : 'excel'
+		},
+		'->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'

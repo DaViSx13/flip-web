@@ -57,6 +57,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'admtool comboagent' : {
 				select : this.changeAgent
+			},
+			'ordtool button[action=excel]' : {
+				click : this.exportExcel
 			}
 		});
 		this.getOrderStStore().on({
@@ -67,6 +70,14 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+	},
+	exportExcel : function (btn) {
+		var sm = btn.up('ordgrid').getSelectionModel();
+		if (sm.getCount() > 0) {
+		window.location.href = 'srv/getOrderXLS.php?ordnum=' + sm.getSelection()[0].get('rordnum');
+		} else {
+				Ext.Msg.alert('Внимание!', 'Выберите заказ для экспорта');
+			}
 	},
 	changeAgent : function (comp, newValue) {
 		var me = this;
