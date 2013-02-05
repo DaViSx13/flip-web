@@ -16,7 +16,7 @@ CREATE TABLE [dbo].[wwwCourLog](
 	[courId] [int] NOT NULL,
 	[ano] [varchar](50) NOT NULL,
 	[event] [varchar](50) NOT NULL,
-	[courTime] [datetime] NOT NULL,
+	[eventTime] [datetime] NOT NULL,
 	[aTime] [datetime] NOT NULL,
 	[rem] [varchar](50) NULL,
  CONSTRAINT [PK_wwwCourLog] PRIMARY KEY CLUSTERED 

@@ -4,7 +4,7 @@ as
 
 if LTRIM(rtrim(@rem)) = '' set @rem = NULL
 
-insert wwwCourLog (courId, ano, [event], courTime, aTime, rem)
+insert wwwCourLog (courId, ano, [event], eventTime, aTime, rem)
 			values(@courId,@ano, @event, @eventTime, GETDATE(), @rem)
 
 go
