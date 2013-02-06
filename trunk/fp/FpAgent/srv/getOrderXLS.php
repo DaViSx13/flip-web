@@ -40,7 +40,11 @@ $format_page =& $workbook->addFormat();
 $format_page->setBold();
 $format_page->setAlign('center');
 
-$worksheet->setColumn ( 0 , 3 , 50 );
+$worksheet->setColumn ( 0 , 0 , 20 );
+$worksheet->setColumn ( 1 , 1 , 40 );
+$worksheet->setColumn ( 2 , 2 , 20 );
+$worksheet->setColumn ( 3 , 3 , 40 );
+
 $worksheet->setRow ( 0, 20);
 $worksheet->setRow ( 12, 45);
 
@@ -169,7 +173,7 @@ $worksheet->write(24, 0, $row['courdate'], $format_data);
 $worksheet->write(23, 1, 'Время с', $format_title);
 $worksheet->write(24, 1, $row['courtimef'], $format_data);
 
-$worksheet->write(23, 2, 'Время с', $format_title);
+$worksheet->write(23, 2, 'Время по', $format_title);
 $worksheet->write(24, 2, $row['courtimet'], $format_data);
 
 $worksheet->setMerge(26, 0, 26, 3 );
