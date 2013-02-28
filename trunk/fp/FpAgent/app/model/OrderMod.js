@@ -64,6 +64,16 @@ Ext.define('FPAgent.model.OrderMod', {
 			name : 'courtimef'
 		}, {
 			name : 'courtimet'
+		}, {
+			name : 'fileplase'
+		}, {
+			name : 'realfilename'
+		}, {
+			name : 'autorfilename'
+		}, {
+			name : 'fileowner'
+		}, {
+			name : 'status'
 		}
 	]
 });

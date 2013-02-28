@@ -2,11 +2,11 @@ Ext.define('FPAgent.view.orders.OrdWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.ordwin',
-	requires : ['FPAgent.view.orders.OrdForm'],
+	requires : ['FPAgent.view.orders.OrdForm', 'FPAgent.view.orders.LoadFileForm'],
 	title : 'Новый заказ',
-	layout : 'fit',
+	layout : 'vbox',
 	autoShow : true,
-	height : 620,
+	height : 658,
 	width : 770,
 	resizable : false,
 	modal : true,
@@ -14,6 +14,8 @@ Ext.define('FPAgent.view.orders.OrdWin', {
 		this.items = [{
 				xtype : 'ordform'
 				
+			},{
+			xtype : 'loadfileform'
 			}
 		];
 		this.buttons = [{

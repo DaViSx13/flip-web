@@ -49,7 +49,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'editagorder':
 			$id =  $_REQUEST[id];
-			$query = "exec wwwEditAgOrders @id={$id}";
+			$agent = $_SESSION['xAgentID'];
+			$query = "exec wwwEditAgOrders @id={$id}, @agent={$agent}";
 			break;
 		case 'saveagorder':
 			$CName=$_POST[cname];

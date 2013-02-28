@@ -209,6 +209,18 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 			x : 10,
 			y : 510,
 			width : 360
-		}
+		}/*,{
+		x : 10,
+		y : 560,
+        xtype: 'filefield',
+        name: 'lf',
+        fieldLabel: 'Файл',
+        labelWidth: 50,
+        msgTarget: 'side',
+        
+        //anchor: '100%',
+		width : 700,
+        buttonText: 'Выберите файл'
+    }*/
 	]
 });

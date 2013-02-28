@@ -24,6 +24,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'AdmTool',
 			selector : 'admtool'
+		}, {
+			ref : 'LoadFileForm',
+			selector : 'loadfileform'
 		}
 	],
 	init : function () {
@@ -49,8 +52,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordtool numyear' : {
 				change : this.yearChange
 			},
-			'ordform' : {
-				actioncomplete : this.showOrd
+			'loadfileform button[action=delete]' : {
+				click : this.fileDel
 			},
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
@@ -74,10 +77,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	exportExcel : function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
-		window.location.href = 'srv/getOrderXLS.php?ordnum=' + sm.getSelection()[0].get('rordnum');
+			window.location.href = 'srv/getOrderXLS.php?ordnum=' + sm.getSelection()[0].get('rordnum');
 		} else {
-				Ext.Msg.alert('Внимание!', 'Выберите заказ для экспорта');
-			}
+			Ext.Msg.alert('Внимание!', 'Выберите заказ для экспорта');
+		}
 	},
 	changeAgent : function (comp, newValue) {
 		var me = this;
@@ -98,7 +101,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
 			});
-			
 		}
 	},
 	loadOrds : function (y, m) {
@@ -115,7 +117,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		this.loadOrds(ye, mo);
 	},
 	openOrdWin : function (btn) {
-		var edit = Ext.widget('ordwin').show();
+		var edit = Ext.widget('ordwin');
+		edit.show();
+		var form_lf = edit.down('loadfileform');
+		form_lf.down('filefield[name=uploadFile]').setVisible(true);
 	},
 	dblclickOrdGr : function (gr, rec) {
 		var tt = this.getOrdTool();
@@ -136,7 +141,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 							id : sm.getSelection()[0].get('rordnum')
 						}
 					});
-				
 				if (btn.action == 'view') {
 					win.down('button[action=save]').setVisible(false);
 				} else {
@@ -154,8 +158,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 	},
 	saveOrder : function (btn) {
+		var me = this;
 		var win = btn.up('ordwin');
 		var form_ord = win.down('ordform');
+		var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
 		if (org.value == null) {
@@ -200,7 +206,31 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+					if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
+						if (form_lf.getForm().isValid()) {
+							form_lf.submit({
+								url : 'srv/upload.php',
+								params : {
+									act : 'ins',
+									orderNum : action.result.data[0].rordnum
+								},
+								success : function (form, action) {
+									form.reset();
+									me.getOrdForm().up('ordwin').close();
+									me.loadOrdGr();
+									Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+								},
+								failure : function (form, action) {
+									Ext.Msg.alert('Файл не сохранен!', action.result.msg);
+								}
+							});
+						}
+					} else {
+						form.reset();
+						me.getOrdForm().up('ordwin').close();
+						me.loadOrdGr();
+						Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+					}
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
@@ -220,16 +250,44 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var mo = aTol.down('combomonth').value;
 		this.loadOrds(newz, mo);
 	},
-	showOrd : function (form, action) {
-		if (action.type == 'submit' && action.result['success'] == true) {
-			form.reset();
-			this.getOrdForm().up('ordwin').close();
-			this.loadOrdGr();
-		}
+	fileDel : function (but) {
+		var form_lf = but.up('loadfileform');
+		var form_ord = this.getOrdForm();
+		Ext.Ajax.request({
+			url : 'srv/upload.php',
+			params : {
+				orderNum : form_ord.down('textfield[name=rordnum]').getValue(),
+				act : 'del'
+			},
+			success : function (fp) {
+				jData = Ext.decode(fp.responseText);
+				form_lf.down('label[name=urlf]').setText('', false);
+				form_lf.down('button[action=delete]').hide();
+				form_lf.down('filefield[name=uploadFile]').show();
+			},
+			failure : function (response) {
+				Ext.Msg.alert('error!');
+			}
+		});
 	},
 	loadOrdStore : function (st, rec, suc) {
 		var edi = this.getOrdWin();
 		var form_ord = edi.down('ordform');
+		var form_lf = edi.down('loadfileform');
+		if (rec[0].data.autorfilename) {
+			form_lf.down('filefield[name=uploadFile]').setVisible(false);
+			form_lf.down('label[name=urlf]').setVisible(true);
+			if (rec[0].data.fileowner == 1 && rec[0].data.status == 'заявлен') {
+				form_lf.down('button[action=delete]').show();
+			}
+			form_lf.down('label[name=urlf]').setText('<a href="srv/downloadfile.php?fn=' + rec[0].data.realfilename + '"   target="_blank">Скачать прикрепленный файл: ' + rec[0].data.autorfilename + '</a>', false);
+		} else {
+			if (rec[0].data.fileowner == 1 && rec[0].data.status == 'заявлен') {
+				form_lf.down('filefield[name=uploadFile]').setVisible(true);
+			}
+			form_lf.down('label[name=urlf]').setVisible(false);
+			form_lf.down('button[action=delete]').hide();
+		}
 		form_ord.loadRecord(rec[0]);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
 		var cb_org = form_ord.down('combocity[name=org]');
@@ -250,6 +308,5 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText('Количество заказов: ' + st.getCount());
-		
 	}
 });
