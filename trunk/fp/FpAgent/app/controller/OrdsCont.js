@@ -278,6 +278,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 									Ext.Msg.alert('Заказ сохранен!', action.result.msg);
 								},
 								failure : function (form, action) {
+									form.reset();									
+									me.getOrdForm().up('ordwin').close();
+									me.loadOrdGr();
 									Ext.Msg.alert('Файл не сохранен!', action.result.msg);
 								}
 							});
