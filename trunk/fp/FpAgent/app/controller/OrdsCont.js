@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt'],
 	refs : [{
@@ -27,6 +27,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'LoadFileForm',
 			selector : 'loadfileform'
+		}, {
+			ref : 'WbNoWin',
+			selector : 'wbnowin'
+		}, {
+			ref : 'WbNoForm',
+			selector : 'wbnoform'
 		}
 	],
 	init : function () {
@@ -63,6 +69,15 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'ordtool button[action=excel]' : {
 				click : this.exportExcel
+			},
+			'ordtool button[action=wbno]' : {
+				click : this.editWbno
+			},
+			'wbnowin button[action=save]' : {
+				click : this.saveWbno
+			},
+			'wbnoform textfield' : {
+				keypress : this.pressEnter
 			}
 		});
 		this.getOrderStStore().on({
@@ -73,6 +88,48 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+	},
+	pressEnter : function (fild, e) {
+		var keyCode = e.getKey();
+		if (keyCode == 13) {
+			this.saveWbno(fild.up('wbnoform').up('wbnowin').down('button[action=save]'));
+		}
+	},
+	saveWbno : function (btn) {
+		var me = this;
+		var win = btn.up('wbnowin');
+		var form_wbno = win.down('wbnoform');
+		if (form_wbno.getForm().isValid()) {
+			form_wbno.submit({
+				url : 'srv/data.php',
+				params : {
+					dbAct : 'SetWbno'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					form.reset();
+					win.close();
+					me.loadOrdGr();
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Номер накладной не сохранен!', action.result.msg);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Нет номера накладной!', 'Откорректируйте информацию')
+		}
+	},
+	editWbno : function (btn) {
+		var sm = btn.up('ordgrid').getSelectionModel();
+		if (sm.getCount() > 0) {
+			var win = Ext.widget('wbnowin');
+			win.show();
+			var form = win.down('wbnoform');
+			form.down('textfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
+			form.down('textfield[name=rordnum]').setValue(sm.getSelection()[0].get('rordnum'));
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите заказ');
+		}
 	},
 	exportExcel : function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();

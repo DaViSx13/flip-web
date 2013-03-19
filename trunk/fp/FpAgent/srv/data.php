@@ -145,7 +145,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'GetAgents':
 			$query = "exec wwwGetAgents";
-			break;	
+			break;
+		case 'SetWbno':
+			$rordnum = $_POST[rordnum] ? $_POST[rordnum] : 0;
+			$wbno = $_POST[wbno] ? $_POST[wbno] : 0;
+			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
+			break;
     }
 
     if (!isset($query)) {
