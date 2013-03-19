@@ -20,6 +20,7 @@ class Loader
 	public $fsize;
 	public $fnewname;
 	public $res; //resultat zagruzki
+	public $maxUploadFileSize;
 	
 	function __construct($folder, $whitelist)
 	{
@@ -45,8 +46,15 @@ class Loader
 	/* загружает файл на диск, возвращает статус загрузки*/
 	function loads()
 	{	
-		if ($this->noWhitelist($_FILES['uploadFile']['name']))
-		return false;//die("Ошибка,  Вы не можете загружать файл этого типа");
+		$this->maxUploadFileSize=((int)$this->maxUploadFileSize>0)?((int)$this->maxUploadFileSize):(ini_get('file_uploads'));
+	
+	if ($this->noWhitelist($_FILES['uploadFile']['name']))
+		{return -1;}
+		
+	$this->fsize = $_FILES['uploadFile']['size'];
+	
+	if ((int)$this->fsize > (int)$this->maxUploadFileSize)
+		{return -2;}
 		
 		/*$uploadedFile путь для загрузки + имя файла*/
 		$uploadedFile = $this->folder.basename($_FILES['uploadFile']['name']);
@@ -60,16 +68,16 @@ class Loader
 			if(move_uploaded_file($_FILES['uploadFile']['tmp_name'],   $uploadedFile))
 			{  
 				$this->setProp ( $file_name);	
-				return true;
+				return 1;
 			}
 			else   
 			{
-				return false;  
+				return -3;  
 			}
 		}
 		else
 		{  
-			return false;  
+			return -4;  
 		}
 	}
 	

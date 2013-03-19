@@ -20,19 +20,21 @@ GO
 
 
 create   PROCEDURE [dbo].[wwwSelectAgFiles]	 
-	@ROrdNum [int]
+	@ROrdNum [int]= null,
+    @RealFileName [varchar](50) = ''
 AS
 SET dateformat dmy
-select top 1	[ROrdNum],
-	[UploadFileTime]= CONVERT(varchar(20),[UploadFileTime],104)+' '+CONVERT(varchar(20),[UploadFileTime],108),
-	[AutorFileName],
-	[RealFileName] ,
-	[FileType] as FType,
-	[FileSize] as FSize ,
-	[FilePlase],
-	[InsUsr] 
-	from [dbo].[AgFiles]
-	where ([ROrdNum] like ROrdNum )
+select top 1    [ROrdNum],
+    [UploadFileTime]= CONVERT(varchar(20),[UploadFileTime],104)+' '+CONVERT(varchar(20),[UploadFileTime],108),
+    [AutorFileName],
+    [RealFileName] ,
+    [FileType] as FType,
+    [FileSize] as FSize ,
+    [FilePlase],
+    [InsUsr] 
+    from [dbo].[AgFiles]
+    where ([ROrdNum] like ROrdNum )
+    or (RealFileName like @RealFileName)
 order by [UploadFileTime]desc
 
 return @@error

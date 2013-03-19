@@ -13,7 +13,7 @@ Ext.define('FPAgent.view.orders.LoadFileForm', {
 		//y : 560,
         xtype: 'filefield',
         name: 'uploadFile',
-        fieldLabel: 'Файл формата .xls или .pdf, до 1 Мб.',
+        fieldLabel: 'Файл формата .xls, .pdf, .doc до 1 Мб.',
         labelWidth: 230,
         msgTarget: 'side',
         allowBlank: false,

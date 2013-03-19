@@ -13,18 +13,33 @@ $usID = $_SESSION['xAgentID'];
 $act = $_POST['act'];	
 	
 
+$msg =  "ошибка";
+
 if ($act == 'ins')
 {
 	/*obj загрузчик */
-	$a = new Loader (GetCWD()."/tmpfolder/", array("gif", "jpeg", "jpg", "png","xls","xlsx","pdf"));
+	$a = new Loader (GetCWD()."/tmpfolder/", array("pdf","xls","xlsx","doc","docx"));
 	/* загружаем */
-	if( $a->loads())
+	$a->maxUploadFileSize = 1024*1024*1;//размер загружаемого файла в байтах !!!!
+	$res=$a->loads();
+	if( $res >0)
 		{
 		InsBD ($a,$orderN,$usID);
 		}
 		else 
 		{
-		echo '{success: false, msg:"Вы не можете загружать файл этого типа"}';
+		switch ($res) {
+      case -1:
+          $msg = "файлы этого типа загружать зпрещено";
+		  break;
+      case -2:
+          $msg =  "превышен допустимый размер файла: " . round($a->maxUploadFileSize/1024,2) ."кб. (размер файла: ".round($a->fsize/1024,2) ."кб.)";
+		  break;
+      default:
+          $msg =  "ошибка загрузки";
+	}
+		
+		echo "{'success': false, 'msg':'".$msg."'}";
 		}
 	/*
 	$a = new Loader ('https://webdav.yandex.ru', array("gif", "jpeg", "jpg", "png","xls","xlsx","zip"));
@@ -42,7 +57,8 @@ else
 {
 	if ($act == 'del')
 	{
-	$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID, '.', 'pod', '','alert_f');
+	$msg =  "ошибка удаления.";
+	$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID, '.', 'dvs', '','alert_f');
 	$res = false;
 	if (( strlen($dbins->orderNum) > 0)&&( strlen($dbins->userID) > 0))
 		{
@@ -52,7 +68,7 @@ else
 		{
 		if (sizeof($res[0])>1)
 			{
-			$a = new Loader (GetCWD()."/tmpfolder/", array("gif", "jpeg", "jpg", "png","xls","xlsx","pdf"));
+			$a = new Loader (GetCWD()."/tmpfolder/", array("gif", "jpeg", "jpg", "png","xls","xlsx","zip"));
 			$a->fnewname = $res[0]['RealDelName'];
 			$del = $a->delFile();
 			if ($del)
@@ -61,16 +77,16 @@ else
 				}
 			else
 				{
-				echo "{'success': false}";
+				echo "{'success': false, 'res':'".$msg."'}";
 				}
 			}
 		else {
-			echo "{'success': false}";
+			echo "{'success': false, 'res':'".$msg."'}";
 			}
 		}
 	else 
 		{
-		echo "{'success': false}";
+		echo "{'success': false, 'res':'".$msg."'}";
 		}
 	}
 	
@@ -78,7 +94,7 @@ else
 	{
 		if ($act == 'onl')
 		{
-		$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID, '.', 'pod', '','alert_f');
+		$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID, '.', 'dvs', '','alert_f');
 		$res = false;
 		if (( strlen($dbins->orderNum) > 0)&&( strlen($dbins->userID) > 0))
 			{
@@ -90,21 +106,15 @@ else
 			echo "{'success': true, 'file': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."', 'delbtn':".$btn."}";
 			}
 		else {
-			echo "{'success': false}";
+		echo "{'success': false, 'res':'".$msg."'}";
 			}
-		
-		
 		}
 	}
-}		
-
-		
-		
-		
+}				
 	/*obj запись в БД и выборка из БД */
 function InsBD ($b,$orderNum,$userID)
 {
-	$dbins = new DBInsert ($b->fname, $b->ftype, $b->fsize, $b->fnewname, "/tmpfolder/"/*$b->folder*/, $orderNum, $userID, '.', 'dvs', '','alert_f');
+	$dbins = new DBInsert ($b->fname, $b->ftype, $b->fsize, $b->fnewname, $b->folder, $orderNum, $userID, '.', 'dvs', '','alert_f');
 	$res = false;
 	/*занесем в базу, что загрузили*/
 	if ( strlen($dbins->fname) > 0) 
@@ -120,12 +130,12 @@ function InsBD ($b,$orderNum,$userID)
 			echo "{'success': true, 'file': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."'}";
 			}
 		else {
-			echo "{'success': false}";
+		echo "{'success': false, 'res':'".$msg."'}";
 			}
 		}
 	else 
 		{
-		echo "{'success': false}";
+		echo "{'success': false, 'res':'".$msg."'}";
 		}
 }	
 
