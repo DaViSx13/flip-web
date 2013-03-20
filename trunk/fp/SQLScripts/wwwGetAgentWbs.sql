@@ -73,7 +73,7 @@ from MnfHdr mh
 	
 	where  ( (mh.OrgAgentID = @agID) or (mh.DestAgentID= @agID) )
 	and (	((@dir <> 'ove') and mh.Shpd between @bDate and @eDate) 
-		or  ((@dir = 'ove') and (m.DOD is null and m.dtd < GETDATE()))
+		or  ((@dir = 'ove') and (m.DOD is null and m.dtd < convert(date,GETDATE())))
 		)
 	and m.Wb_No is not null
 	and ((@dir = 'in' and mh.DestTrk='mow') or ((@dir = 'out' or @dir = 'ove') and mh.DestTrk!='mow')  or (@dir = 'all' ) )
