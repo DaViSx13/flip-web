@@ -28,3 +28,6 @@ where ROrdNum = @rordnum
 GO
 
 
+grant execute on [dbo].[wwwSetWbno] to pod
+go
+

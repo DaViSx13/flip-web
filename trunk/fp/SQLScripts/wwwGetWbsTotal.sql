@@ -58,11 +58,15 @@ from MnfHdr mh
 	left join tAChgReq req on req.interId = icOUT.interId and req.aState = 0
 	
 	where  ( (mh.OrgAgentID = @agID) or (mh.DestAgentID= @agID) )
-	and ((mh.Shpd between @bDate and @eDate and (@dir = 'in' or @dir = 'out' or @dir = 'all')) or @dir = 'ove')
+	and (	((@dir <> 'ove') and mh.Shpd between @bDate and @eDate) 
+		or  ((@dir = 'ove') and (m.DOD is null and m.dtd < GETDATE()))
+		)
 	and m.Wb_No is not null
-	and ((@dir = 'in' and mh.DestTrk='mow') or (@dir = 'out' and mh.DestTrk!='mow') or (@dir = 'all' ) or (@dir = 'ove' and m.DOD is null and m.dtd <= GETDATE()))
+	and ((@dir = 'in' and mh.DestTrk='mow') or ((@dir = 'out' or @dir = 'ove') and mh.DestTrk!='mow')  or (@dir = 'all' ) )
 --group by m.wb_no
 
 GO
 
+grant execute on [dbo].[wwwGetWbsTotal] to pod
+go
 
