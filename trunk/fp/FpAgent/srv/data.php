@@ -148,7 +148,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'SetWbno':
 			$rordnum = $_POST[rordnum] ? $_POST[rordnum] : 0;
-			$wbno = $_POST[wbno] ? $_POST[wbno] : 0;
+			$wbno = $_POST[wbno] ? $_POST[wbno] : 'NULL';
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
     }

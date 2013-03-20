@@ -20,6 +20,8 @@ create procedure [dbo].[wwwSetWbno]
 	@rordnum int,
 	@wbno varchar(50)
 as
+if @wbno = 'NULL' set @wbno = NULL
+
 update AgOrders
 set Wb_no = @wbno
 where ROrdNum = @rordnum
