@@ -10,6 +10,9 @@
 .excel {
 	background-image : url(../../resources/images/excel_.png);
 }
+.overduebox {
+	background-image : url(../../resources/images/overdue.png);
+}
 .wbno {
 	background-image : url(../../resources/images/wbno.png);
 }

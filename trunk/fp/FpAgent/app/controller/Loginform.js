@@ -1,6 +1,7 @@
 Ext.define('FPAgent.controller.Loginform', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.Loginform', 'mainform.MainPanel', 'mainform.Loginformcontainer', 'Viewport'],
+	stores : ['WbsStore'],
 	refs : [{
 			ref : 'AdmTool',
 			selector : 'admtool'
@@ -22,7 +23,6 @@ Ext.define('FPAgent.controller.Loginform', {
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
 		if (keyCode == 13) {
-			
 			this.doLogin(fild.up('loginform').down('button[action=login]'));
 		}
 	},
@@ -88,36 +88,48 @@ Ext.define('FPAgent.controller.Loginform', {
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
 						aviewport.down('mainpanel').down('label').setText(action.result.username);
+						Ext.Ajax.request({
+							url : 'srv/data.php',
+							params : {
+								dbAct : 'GetAgentWbs',
+								dir : 'ove',
+								newPeriod : ''
+							},
+							success : function (response) {
+								var text = Ext.decode(response.responseText);
+								if (text.success == true && text.data.length > 0) {
+									Ext.Msg.alert('У Вас есть просроченные накладные в количестве: ' + text.data.length + ' шт.!', 'Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"');
+								}
+							},
+							failure : function (response) {
+								Ext.Msg.alert('Ошибка', 'Сервер недоступен!');
+							}
+						});
 					};
-					
-					//checkSession
 					Ext.TaskManager.start({
 						run : function () {
 							Ext.Ajax.request({
 								url : 'srv/launch.php',
 								success : function (response) {
-									//console.log('checkSession')
 									var text = Ext.decode(response.responseText);
 									if (text.success == false) {
 										Ext.getDoc().dom.location.reload()
 									}
 								},
 								failure : function (response) {
-									console.log('checkSession - Сервер недоступен!: ' + response.statusText);
+									Ext.Msg.alert('Ошибка', 'checkSession - Сервер недоступен!: ' + response.statusText);
 								}
 							});
 						},
 						interval : 33 * 60 * 1000,
 						scope : this
 					});
-					
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Ошибка', action.result.msg);
 				}
 			});
 		};
-		
 	},
 	doLogout : function (button) {
 		var me = this;

@@ -19,6 +19,11 @@ Ext.define('FPAgent.view.wbs.WbsTool', {
 					iconCls : 'allbox',
 					enableToggle : true,
 					action : 'all'
+				}, {
+					text : 'Просрочено',
+					iconCls : 'overduebox',
+					enableToggle : true,
+					action : 'overdue'
 				}
 			]
 		}, {

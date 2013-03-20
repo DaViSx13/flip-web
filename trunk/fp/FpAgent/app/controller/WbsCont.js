@@ -43,6 +43,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 			'wbsgrid button[action=in]' : {
 				click : this.inWbs
 			},
+			'wbsgrid button[action=overdue]' : {
+				click : this.overdueWbs
+			},
 			'wbsgrid button[action=pod]' : {
 				click : this.newPod
 			},
@@ -163,6 +166,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 				break;
 			case this.getWbsTool().down('button[action=out]').pressed:
 				var t_dir = 'out';
+				break;
+			case this.getWbsTool().down('button[action=overdue]').pressed:
+				var t_dir = 'ove';
 				break;
 			}
 			Ext.Ajax.request({
@@ -293,7 +299,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 			formdop.down('textfield[name=dtd_txt]').setValue(d_dtd_txt);
 			formdop.down('textfield[name=interid]').setValue(d_tar_ag_id);
 		} else {}
-		
+
 	},
 	exportExcel : function (btn) {
 		switch (true) {
@@ -358,6 +364,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 		case this.getWbsTool().down('button[action=out]').pressed:
 			store.getProxy().setExtraParam('dir', 'out');
 			break;
+		case this.getWbsTool().down('button[action=overdue]').pressed:
+			store.getProxy().setExtraParam('dir', 'ove');
+			break;
 		}
 	},
 	beforeloadWbsStore : function (store, operation) {
@@ -372,6 +381,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
+		aTol.down('button[action=overdue]').toggle(false);
 		this.loadWbs();
 		this.viewTotal();
 	},
@@ -380,6 +390,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
+		aTol.down('button[action=overdue]').toggle(false);
 		this.loadWbs();
 		this.viewTotal();
 	},
@@ -388,6 +399,16 @@ Ext.define('FPAgent.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=out]').toggle(false);
+		aTol.down('button[action=overdue]').toggle(false);
+		this.loadWbs();
+		this.viewTotal();
+	},
+	overdueWbs : function (btn) {
+		btn.toggle(true);
+		var aTol = btn.up('wbstool');
+		aTol.down('button[action=all]').toggle(false);
+		aTol.down('button[action=out]').toggle(false);
+		aTol.down('button[action=in]').toggle(false);
 		this.loadWbs();
 		this.viewTotal();
 	},
