@@ -36,12 +36,13 @@ set @eDate = dateadd(d, -1, DATEADD(m,1,@bDate))
 
 select distinct m.wb_no
 , d_acc_txt=CONVERT(varchar(20), d_acc,104), d_acc
-, dod_txt=CONVERT(varchar(20), dod,104) + ' ' + CONVERT(varchar(5), tdd, 108)--, dod
+, dod_txt=CONVERT(varchar(20), dod,104) + ' ' + CONVERT(varchar(5), tdd, 108)
+, dod = CONVERT(datetime, CONVERT(varchar(20), dod,104) + ' ' + CONVERT(varchar(5), tdd, 108), 104)
 , rcpn
 --, tdd_txt = CONVERT(varchar(5), tdd, 108)
 ,p_d_in
 , p_d_in_txt=CONVERT(varchar(20), p_d_in,104)--, p_d_in
-, dtd_txt=CONVERT(varchar(20), m.dtd,104)--, dtd
+, dtd_txt=CONVERT(varchar(20), m.dtd,104), m.dtd
 , m.org, m.dest, m.s_co, m.r_co, m.wt, m.vol_wt, t_srv
 , dir = case when mh.DestTrk='mow' then 'in' else 'out' end
 

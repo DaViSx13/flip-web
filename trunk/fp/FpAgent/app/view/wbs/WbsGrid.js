@@ -43,7 +43,14 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				dataIndex : 'wb_no'
 			}, {
 				text : 'Принято',
-				dataIndex : 'd_acc_txt'
+				dataIndex : 'd_acc',
+				xtype : 'datecolumn',
+				format : 'd.m.Y'
+			}, {
+				text : 'РДД',
+				dataIndex : 'dtd',
+				xtype : 'datecolumn',
+				format : 'd.m.Y'
 			}, {
 				text : 'Доставлено',
 				dataIndex : 'dod_txt'

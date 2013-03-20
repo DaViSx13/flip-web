@@ -6,9 +6,15 @@ Ext.define('FPAgent.model.WbsMod', {
 		}, {
 			name : 'd_acc_txt'
 		}, {
-			name : 'd_acc'
+			name : 'd_acc',
+			dateFormat : 'Y-m-d H:i:s',
+			type : 'date'
 		}, {
 			name : 'dod_txt'
+		}, {
+			name : 'dod',
+			dateFormat : 'Y-m-d H:i:s',
+			type : 'date'
 		}, {
 			name : 'rcpn'
 		}, {
@@ -17,6 +23,10 @@ Ext.define('FPAgent.model.WbsMod', {
 			type : 'date'
 		}, {
 			name : 'dtd_txt'
+		}, {
+			name : 'dtd',
+			dateFormat : 'Y-m-d H:i:s',
+			type : 'date'
 		}, {
 			name : 'org',
 			type : 'string'
