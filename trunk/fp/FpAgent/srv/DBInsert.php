@@ -22,12 +22,12 @@ class DBInsert
 	public $place;
 	public $orderNum;
 	public $userID;
-	protected $hostname;
+	/*protected $hostname;
 	protected $username;
 	protected $password;
-	protected $udatabase;
+	protected $udatabase;*/
 
-	function __construct($fname, $ftype, $fsize, $fnewname, $place,$orderNum, $userID, $hostname, $username, $password, $udatabase)
+	function __construct($fname, $ftype, $fsize, $fnewname, $place,$orderNum, $userID/*, $hostname, $username, $password, $udatabase*/)
 	{
 		$this->fname = $fname;
 		$this->ftype = $ftype;
@@ -36,34 +36,34 @@ class DBInsert
 		$this->place = $place;
 		$this->orderNum = $orderNum;
 		$this->userID = $userID;
-		$this->hostname = $hostname;
-		$this->username = $username;
-		$this->password = $password;
-		$this->udatabase = $udatabase;
+		//$this->hostname = $hostname;
+		//$this->username = $username;
+		//$this->password = $password;
+		//$this->udatabase = $udatabase;
 	}
 /*подключение к БД*/
 	function connDB()
 	{
-		ini_set("mssql.datetimeconvert", 0);
+		/*ini_set("mssql.datetimeconvert", 0);
 		$d = mssql_connect($this->hostname, $this->username, $this->password);       
 		mssql_select_db($this->udatabase);
-		return $d;				
+		return $d;	*/			
 	}
 	/*вставляет данные в таблицу*/
 	function insertDB()
 	{
-		$db = $this->connDB();
+		include "dbConnect.php";//$db = $this->connDB();
 		$query = " exec wwwInsertAgFiles  @ROrdNum={$this->orderNum}, @AutorFileName='{$this->fname}',@RealFileName='{$this->fnewname}',@FileType='{$this->ftype}',@FileSize='{$this->fsize}',@FilePlase='{$this->place}',@InsUsr='{$this->userID}'"; //@InsUsr='{$_SESSION[xUser]}'
 	    $query = iconv("UTF-8", "windows-1251", $query);
 		$result = mssql_query($query);// true good? false bad
-		mssql_close($db); 
+		//mssql_close($db); 
 		return $result ;
 	}
 
 	/*yдаляет данные из табоицы*/
 	function delDB()
 	{
-		$db = $this->connDB();
+		include "dbConnect.php";//$db = $this->connDB();
 		$query = "exec wwwDeleteAgFiles @ROrdNum ='{$this->orderNum}', @InsUsr='{$this->userID}',  @RealFileName='{$this->fnewname}'";
 	    $query = iconv("UTF-8", "windows-1251", $query);
 		$result = mssql_query($query);// true good? false bad
@@ -90,7 +90,7 @@ class DBInsert
 		{
 			$inputvals[0]= array ("err" => "no data");
 		}
-		mssql_close($db);
+		//mssql_close($db);
 		
 	return $inputvals ;
 	
@@ -99,7 +99,7 @@ class DBInsert
 	/*выбирает данные из таблицы */	
 	function prints()
 	{
-		$db = $this->connDB();
+		include "dbConnect.php";//$db = $this->connDB();
 		$inputvals = array();
 		
 		$query = "exec wwwSelectAgFiles   @ROrdNum='{$this->orderNum}'";
@@ -138,7 +138,7 @@ class DBInsert
 		{
 			$inputvals[0]= array ("err" => "no data");
 		}
-	mssql_close($db);
+	//mssql_close($db);
 	/*возвращаем значение*/
 	
 	return $inputvals;

@@ -58,7 +58,7 @@ else
 	if ($act == 'del')
 	{
 	$msg =  "ошибка удаления.";
-	$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID, '.', 'dvs', '','alert_f');
+	$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID/*, '.', 'dvs', '','alert_f'*/);
 	$res = false;
 	if (( strlen($dbins->orderNum) > 0)&&( strlen($dbins->userID) > 0))
 		{
@@ -77,16 +77,16 @@ else
 				}
 			else
 				{
-				echo "{'success': false, 'res':'".$msg."'}";
+				echo "{'success': false, 'msg':'".$msg."'}";
 				}
 			}
 		else {
-			echo "{'success': false, 'res':'".$msg."'}";
+			echo "{'success': false, 'msg':'".$msg."'}";
 			}
 		}
 	else 
 		{
-		echo "{'success': false, 'res':'".$msg."'}";
+		echo "{'success': false, 'msg':'".$msg."'}";
 		}
 	}
 	
@@ -94,7 +94,7 @@ else
 	{
 		if ($act == 'onl')
 		{
-		$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID, '.', 'dvs', '','alert_f');
+		$dbins = new DBInsert ('', '', '', '', '', $orderN, $usID/*, '.', 'dvs', '','alert_f'*/);
 		$res = false;
 		if (( strlen($dbins->orderNum) > 0)&&( strlen($dbins->userID) > 0))
 			{
@@ -106,7 +106,7 @@ else
 			echo "{'success': true, 'file': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."', 'delbtn':".$btn."}";
 			}
 		else {
-		echo "{'success': false, 'res':'".$msg."'}";
+		echo "{'success': false, 'msg':'".$msg."'}";
 			}
 		}
 	}
@@ -114,7 +114,7 @@ else
 	/*obj запись в БД и выборка из БД */
 function InsBD ($b,$orderNum,$userID)
 {
-	$dbins = new DBInsert ($b->fname, $b->ftype, $b->fsize, $b->fnewname, $b->folder, $orderNum, $userID, '.', 'dvs', '','alert_f');
+	$dbins = new DBInsert ($b->fname, $b->ftype, $b->fsize, $b->fnewname, $b->folder, $orderNum, $userID/*, '.', 'dvs', '','alert_f'*/);
 	$res = false;
 	/*занесем в базу, что загрузили*/
 	if ( strlen($dbins->fname) > 0) 
@@ -130,12 +130,12 @@ function InsBD ($b,$orderNum,$userID)
 			echo "{'success': true, 'file': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."'}";
 			}
 		else {
-		echo "{'success': false, 'res':'".$msg."'}";
+		echo "{'success': false, 'msg':'".$msg."'}";
 			}
 		}
 	else 
 		{
-		echo "{'success': false, 'res':'".$msg."'}";
+		echo "{'success': false, 'msg':'".$msg."'}";
 		}
 }	
 
