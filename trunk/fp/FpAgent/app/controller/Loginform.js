@@ -98,7 +98,12 @@ Ext.define('FPAgent.controller.Loginform', {
 							success : function (response) {
 								var text = Ext.decode(response.responseText);
 								if (text.success == true && text.data.length > 0) {
-									Ext.Msg.alert('У Вас есть просроченные накладные в количестве: ' + text.data.length + ' шт.!', 'Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"');
+									Ext.Msg.show({
+										title: 'Внимание!',
+										msg: 'У Вас есть просроченные накладные в количестве ' + text.data.length + ' шт.!<br/>Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"',
+										buttons: Ext.Msg.OK,
+										icon: Ext.MessageBox.WARNING
+									});									
 								}
 							},
 							failure : function (response) {
