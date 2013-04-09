@@ -1,0 +1,45 @@
+.exit-user {
+	background-image : url(../../resources/images/exit.gif);
+}
+.x-action-col-cell img.ex-col {
+	background-image : url(../../resources/images/ex.gif);
+	height : 16px;
+	width : 16px;
+	cursor : pointer;
+}
+.excel {
+	background-image : url(../../resources/images/excel_.png);
+}
+.overduebox {
+	background-image : url(../../resources/images/overdue.png);
+}
+.wbno {
+	background-image : url(../../resources/images/wbno.png);
+}
+.newex {
+	background-image : url(../../resources/images/newex.png);
+}
+.newpod {
+	background-image : url(../../resources/images/newpod.png);
+}
+.filter {
+	background-image : url(../../resources/images/filter_.png);
+}
+.inbox {
+	background-image : url(../../resources/images/outbox.png);
+}
+.outbox {
+	background-image : url(../../resources/images/inbox.png);
+}
+.allbox {
+	background-image : url(../../resources/images/allbox.png);
+}
+.newdoc {
+	background-image : url(../../resources/images/newdoc.png);
+}
+.viewdoc {
+	background-image : url(../../resources/images/viewdoc.png);
+}
+.editdoc {
+	background-image : url(../../resources/images/editdoc.png);
+}
