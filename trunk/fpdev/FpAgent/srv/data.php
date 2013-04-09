@@ -2,13 +2,17 @@
 //завязка
 session_start();
 header("Content-type: text/plain; charset=utf-8");
-error_reporting(0);
+//error_reporting(0);
 class Response
 {
-    public $success = false;
+    
+	public $success = false;
     public $msg = '';
 }
 $response = new Response();
+$iserror = false;
+$errormsg = ''; 
+include "errorhandler.php";
 
 //кульминация
 
@@ -28,8 +32,7 @@ if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'ok';
     switch ($dbAct) {
         case 'dbTest':
-            $query = "select '$params[test]' as test";
-			//$query = "select cast(null as varchar(10)) as test";
+            $query = "select '$params[test]' as test";			
             break;
         case 'getAgOrders':
             $ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
@@ -152,8 +155,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwGetAgents";
 			break;
 		case 'SetWbno':
-			$rordnum = $params[rordnum] ? $params[rordnum] : 0;
-			$wbno = $params[wbno] ? $params[wbno] : 'NULL';
+			$paging = false;
+			$rordnum = $params['rordnum'] ? $params['rordnum'] : 0;
+			$wbno = $params['wbno'] ? $params['wbno'] : 'NULL';
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
     }
@@ -165,10 +169,11 @@ if (!isset($_REQUEST['dbAct'])) {
         $query = stripslashes($query);
 
         try {
-            include "dbConnect.php";
-            $result = mssql_query($query);
+            include "dbConnect.php";			
+			$result = mssql_query($query);
+			
             if ($result) {
-
+				
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
 				}
@@ -214,13 +219,15 @@ if (!isset($_REQUEST['dbAct'])) {
                       $multisort = new multisort();
                       $response->data = $multisort->run($response->data, $sortKey, $sortDir);
                     }
-
+					
                     //paging
 		  			$page = $params['page'];
         			$start = $params['start'];
         			$limit = $params['limit'];
 					$response->total = count($response->data);
-					$response->data = array_slice($response->data, $start, $limit);
+					if ($response->data){
+						$response->data = array_slice($response->data, $start, $limit);
+					}
 				}
 				
                 mssql_free_result($result);
@@ -250,9 +257,15 @@ function my_json_encode($arr)
 
 }
 
+if ($iserror){
+$response->success = false;
+$response->msg = $errormsg;
+}
+
 if (extension_loaded('mbstring')) {
     echo my_json_encode($response);
 } else {
     echo json_encode($response);
 }
+
 ?>

@@ -73,7 +73,7 @@ else
 			$del = $a->delFile();
 			if ($del)
 				{
-				echo "{'success': true, 'file': '". $res[0]['AutorDelName'] ."'}";
+				echo "{'success': true, 'msg': '". $res[0]['AutorDelName'] ."'}";
 				}
 			else
 				{
@@ -103,7 +103,7 @@ else
 		if (sizeof($res[0])>1)
 			{
 			$btn =  ($dbins->userID!=$usID)?"n":"y";
-			echo "{'success': true, 'file': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."', 'delbtn':".$btn."}";
+			echo "{'success': true, 'msg': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."', 'delbtn':".$btn."}";
 			}
 		else {
 		echo "{'success': false, 'msg':'".$msg."'}";
@@ -127,7 +127,7 @@ function InsBD ($b,$orderNum,$userID)
 		if (sizeof($resarray[0])>1)
 			{
 			//echo "{'success': true, 'file': '". $resarray[0]['AutorFileName'].'('.$resarray[0]['FSize'].')' ."' ,'dataurl': '". $resarray[0]['RealFileName'] ."'}";
-			echo "{'success': true, 'file': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."'}";
+			echo "{'success': true, 'msg': 'Загружен файл: ". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."'}";
 			}
 		else {
 		echo "{'success': false, 'msg':'".$msg."'}";

@@ -36,13 +36,12 @@ set @eDate = dateadd(d, -1, DATEADD(m,1,@bDate))
 
 select distinct m.wb_no
 , d_acc_txt=CONVERT(varchar(20), d_acc,104), d_acc
-, dod_txt=CONVERT(varchar(20), dod,104) + ' ' + CONVERT(varchar(5), tdd, 108)
-, dod = CONVERT(datetime, CONVERT(varchar(20), dod,104) + ' ' + CONVERT(varchar(5), tdd, 108), 104)
+, dod_txt=CONVERT(varchar(20), dod,104) + ' ' + CONVERT(varchar(5), tdd, 108)--, dod
 , rcpn
 --, tdd_txt = CONVERT(varchar(5), tdd, 108)
 ,p_d_in
 , p_d_in_txt=CONVERT(varchar(20), p_d_in,104)--, p_d_in
-, dtd_txt=CONVERT(varchar(20), m.dtd,104), m.dtd
+, dtd_txt=CONVERT(varchar(20), m.dtd,104)--, dtd
 , m.org, m.dest, m.s_co, m.r_co, m.wt, m.vol_wt, t_srv
 , dir = case when mh.DestTrk='mow' then 'in' else 'out' end
 
@@ -72,16 +71,12 @@ from MnfHdr mh
 	left join tAChgReq req on req.interId = icOUT.interId and req.aState = 0
 	
 	where  ( (mh.OrgAgentID = @agID) or (mh.DestAgentID= @agID) )
-	and (	((@dir <> 'ove') and mh.Shpd between @bDate and @eDate) 
-		or  ((@dir = 'ove') and mh.Shpd > DATEADD(YEAR, -1, getDate()) and (m.DOD is null and m.dtd < convert(date,GETDATE())))
-		)
+	and ((mh.Shpd between @bDate and @eDate and (@dir = 'in' or @dir = 'out' or @dir = 'all')) or @dir = 'ove')
 	and m.Wb_No is not null
-	and ((@dir = 'in' and mh.DestTrk='mow') or ((@dir = 'out' or @dir = 'ove') and mh.DestTrk!='mow')  or (@dir = 'all' ) )
-	
+	and ((@dir = 'in' and mh.DestTrk='mow') or (@dir = 'out' and mh.DestTrk!='mow') or (@dir = 'all' ) or (@dir = 'ove' and m.DOD is null and m.dtd <= GETDATE()))
 order by m.D_Acc desc
 
 
 GO
 
-grant execute on [dbo].[wwwGetAgentWbs] to pod
-go
+

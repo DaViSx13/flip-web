@@ -93,6 +93,7 @@ class Loader
 	{
 	
 	return unlink($this->folder.$this->fnewname);
+	
 	}
 	function LoadYandex ()
 	{
