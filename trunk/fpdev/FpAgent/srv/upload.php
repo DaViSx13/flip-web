@@ -4,6 +4,13 @@ session_start();
 include_once('Loader.php');
 include_once('DBInsert.php');
 error_reporting(0);
+class Response
+{    
+	public $success = false;
+    public $msg = '';
+}
+$response = new Response();
+
 /*если загрузка на сервере запрещена, разрешим*/
 if (!ini_get('file_uploads')) 	{	ini_set('file_uploads', '1');
 	}
@@ -30,16 +37,19 @@ if ($act == 'ins')
 		{
 		switch ($res) {
       case -1:
-          $msg = "файлы этого типа загружать зпрещено";
+          $response->msg = 'Файлы этого типа загружать зпрещено';
+		  $response->success = false;
 		  break;
       case -2:
-          $msg =  "превышен допустимый размер файла: " . round($a->maxUploadFileSize/1024,2) ."кб. (размер файла: ".round($a->fsize/1024,2) ."кб.)";
+          $response->msg = "Превышен допустимый размер файла: ".round($a->maxUploadFileSize/1024,2)."кб. (размер файла: ".round($a->fsize/1024,2)."кб.)";
+		  $response->success = false;
 		  break;
       default:
-          $msg =  "ошибка загрузки";
+          $response->msg = 'Ошибка загрузки';
+		  $response->success = false;
 	}
 		
-		echo "{'success': false, 'msg':'".$msg."'}";
+		echo json_encode($response);//echo "{'success': false, 'msg':'".$msg."'}";
 		}
 	/*
 	$a = new Loader ('https://webdav.yandex.ru', array("gif", "jpeg", "jpg", "png","xls","xlsx","zip"));
@@ -73,21 +83,30 @@ else
 			$del = $a->delFile();
 			if ($del)
 				{
-				echo "{'success': true, 'msg': '". $res[0]['AutorDelName'] ."'}";
+				//echo "{'success': true, 'msg': '". $res[0]['AutorDelName'] ."'}";
+				$response->msg = 'Файл удален';
+				$response->success = true;
 				}
 			else
 				{
-				echo "{'success': false, 'msg':'".$msg."'}";
+				//echo "{'success': false, 'msg':'".$msg."'}";
+				$response->msg = $msg;
+				$response->success = false;
 				}
 			}
 		else {
-			echo "{'success': false, 'msg':'".$msg."'}";
+			//echo "{'success': false, 'msg':'".$msg."'}";
+			$response->msg = $msg;
+			$response->success = false;
 			}
 		}
 	else 
 		{
-		echo "{'success': false, 'msg':'".$msg."'}";
+		//echo "{'success': false, 'msg':'".$msg."'}";
+		$response->msg = $msg;
+		$response->success = false;
 		}
+	echo json_encode($response);	
 	}
 	
 	else
@@ -103,11 +122,16 @@ else
 		if (sizeof($res[0])>1)
 			{
 			$btn =  ($dbins->userID!=$usID)?"n":"y";
-			echo "{'success': true, 'msg': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."', 'delbtn':".$btn."}";
+			//echo "{'success': true, 'msg': '". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."', 'delbtn':".$btn."}";
+			$response->msg = $dbins->fname.'('.$dbins->fsize.')';
+			$response->success = true;
 			}
 		else {
-		echo "{'success': false, 'msg':'".$msg."'}";
+		//echo "{'success': false, 'msg':'".$msg."'}";
+		$response->msg = $msg;
+		$response->success = false;
 			}
+		echo json_encode($response);	
 		}
 	}
 }				
@@ -126,17 +150,24 @@ function InsBD ($b,$orderNum,$userID)
 		$resarray = $dbins->prints();
 		if (sizeof($resarray[0])>1)
 			{
-			//echo "{'success': true, 'file': '". $resarray[0]['AutorFileName'].'('.$resarray[0]['FSize'].')' ."' ,'dataurl': '". $resarray[0]['RealFileName'] ."'}";
-			echo "{'success': true, 'msg': 'Загружен файл: ". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."'}";
+			
+			//echo"{'success': true, 'msg': 'Загружен файл: ". $dbins->fname.'('.$dbins->fsize.')' ."' ,'dataurl': '". $dbins->fnewname."'}";
+			$response->msg = 'Загружен файл: '.$dbins->fname.'('.$dbins->fsize.')';
+			$response->success = true;
 			}
 		else {
-		echo "{'success': false, 'msg':'".$msg."'}";
+		//echo "{'success': false, 'msg':'".$msg."'}";
+		$response->msg = 'Ошибка записи в БД! Нет данных!';
+		$response->success = false;
 			}
 		}
 	else 
 		{
-		echo "{'success': false, 'msg':'".$msg."'}";
+		$response->msg = 'Ошибка записи в БД! Не смог записать!';
+		$response->success = false;
+		//echo "{'success': false, 'msg':'".$msg."'}";
 		}
+	echo json_encode($response);	
 }	
 
 
