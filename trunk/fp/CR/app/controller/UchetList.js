@@ -348,6 +348,7 @@
 				var ord = this.getOrdWin();
 				var ordf = ord.down('orderform');
 				ordf.loadRecord(record);
+				this.courLog(record.get('ano'), 'vieword');
 				ord.show();
 			}
 			Ext.resumeLayouts(true);
@@ -450,7 +451,10 @@
 				Ext.suspendLayouts();
 				store.each(function (record) {
 					record.set('isview', 1);
-				});
+					if (record.get('rectype') == 0) {
+						this.courLog(record.get('ano'), 'vieword');
+					}
+				}, this);
 				store.sync();
 				Ext.resumeLayouts();
 				this.setCount();
