@@ -375,6 +375,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 	loadWbsGrid : function (comp) {
 		var aTol = this.getWbsTool();
 		this.allWbs(aTol.down('button[action=all]'));
+		this.getAdmTool().down('button[action=list]').setVisible(false);
+		this.getAdmTool().down('button[action=templ]').setVisible(false);
 	},
 	allWbs : function (btn) {
 		btn.toggle(true);

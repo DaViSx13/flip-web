@@ -1,8 +1,8 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt'],
+	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt'],
 	refs : [{
 			ref : 'OrdForm',
 			selector : 'ordform'
@@ -33,11 +33,24 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'WbNoForm',
 			selector : 'wbnoform'
+		}, {
+			ref : 'MainPanel',
+			selector : 'mainpanel'
+		}, {
+			ref : 'OrdGrid',
+			selector : 'ordgrid'
+		}, {
+			ref : 'TemplGrid',
+			selector : 'templgrid'
+		}, {
+			ref : 'OrdsPanel',
+			selector : 'ordspanel'
 		}
+		
 	],
 	init : function () {
-		this.control({
-			'ordgrid' : {
+		this.control({			
+			'ordspanel': {
 				activate : this.loadOrdGr
 			},
 			'ordgrid button[action=new]' : {
@@ -67,6 +80,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'admtool comboagent' : {
 				select : this.changeAgent
 			},
+			'admtool button[action=list]' : {
+				click : this.clkList
+			},
+			'admtool button[action=templ]' : {
+				click : this.clkTempl
+			},
 			'ordtool button[action=excel]' : {
 				click : this.exportExcel
 			},
@@ -88,6 +107,23 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+	},
+	clkList : function (btn) {
+		btn.toggle(true);
+		var aTol = btn.up('admtool');		
+		aTol.down('button[action=templ]').toggle(false);
+		this.getOrdsPanel().down('templgrid').setVisible(false);
+		this.getOrdsPanel().down('ordgrid').setVisible(true);
+		
+	},
+	clkTempl : function (btn) {
+		btn.toggle(true);
+		var aTol = btn.up('admtool');		
+		aTol.down('button[action=list]').toggle(false);		
+		this.getOrdsPanel().down('ordgrid').setVisible(false);
+		this.getOrdsPanel().down('templgrid').setVisible(true);
+		this.getTemplStStore().load();
+		
 	},
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
@@ -167,7 +203,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 	},
-	loadOrdGr : function () {
+	loadOrdGr : function (Pan) {
+		var adTol = this.getAdmTool();
+		var btnList = adTol.down('button[action=list]');
+		var btnTempl = adTol.down('button[action=templ]');
+		btnList.setVisible(true);
+		btnTempl.setVisible(true);
+		this.clkList(btnList);
 		var aTol = this.getOrdTool();
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;

@@ -8,7 +8,11 @@ Ext.define('FPAgent.view.mainform.MainPanel', {
 			xtype : 'wbsgrid',
 			title : 'Накладные'
 		}, {
-			xtype : 'ordgrid',
+			xtype : 'ordspanel',
+			border: false,
+			style: {    
+					borderStyle: 'none'
+			},
 			title : 'Заказы'
 		}, {
 			xtype : 'mnfpanel',
