@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt'],
 	refs : [{
@@ -45,16 +45,21 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'OrdsPanel',
 			selector : 'ordspanel'
+		}, {
+			ref : 'UseTemplForm',
+			selector : 'usetemplform'
 		}
-		
 	],
 	init : function () {
-		this.control({			
-			'ordspanel': {
+		this.control({
+			'ordspanel' : {
 				activate : this.loadOrdGr
 			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
+			},
+			'ordgrid button[action=newtpl]' : {
+				click : this.openTpl
 			},
 			'ordgrid button[action=edit]' : {
 				click : this.editOrdWin
@@ -97,6 +102,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'wbnoform textfield' : {
 				keypress : this.pressEnter
+			},
+			'usetemplwin button[action=set]' : {
+				click : this.setTpl
+			},
+			'usetemplform combobox' : {
+				keypress : this.pressTpl
 			}
 		});
 		this.getOrderStStore().on({
@@ -110,25 +121,29 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	clkList : function (btn) {
 		btn.toggle(true);
-		var aTol = btn.up('admtool');		
+		var aTol = btn.up('admtool');
 		aTol.down('button[action=templ]').toggle(false);
 		this.getOrdsPanel().down('templgrid').setVisible(false);
 		this.getOrdsPanel().down('ordgrid').setVisible(true);
-		
 	},
 	clkTempl : function (btn) {
 		btn.toggle(true);
-		var aTol = btn.up('admtool');		
-		aTol.down('button[action=list]').toggle(false);		
+		var aTol = btn.up('admtool');
+		aTol.down('button[action=list]').toggle(false);
 		this.getOrdsPanel().down('ordgrid').setVisible(false);
 		this.getOrdsPanel().down('templgrid').setVisible(true);
 		this.getTemplStStore().load();
-		
 	},
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
 		if (keyCode == 13) {
 			this.saveWbno(fild.up('wbnoform').up('wbnowin').down('button[action=save]'));
+		}
+	},
+	pressTpl : function (fild, e) {
+		var keyCode = e.getKey();
+		if (keyCode == 13) {
+			this.setTpl();
 		}
 	},
 	saveWbno : function (btn) {
@@ -163,6 +178,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			var form = win.down('wbnoform');
 			form.down('textfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
 			form.down('textfield[name=rordnum]').setValue(sm.getSelection()[0].get('rordnum'));
+			form.down('textfield[name=wbno]').focus(false, true);
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
@@ -220,6 +236,43 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		edit.show();
 		var form_lf = edit.down('loadfileform');
 		form_lf.down('filefield[name=uploadFile]').setVisible(true);
+		edit.down('ordform').down('combocity[name=org]').focus(false, true);
+	},
+	openTpl : function (btn) {
+		this.getTemplStStore().load();
+		if (this.getTemplStStore().getCount() > 0) {
+			var win = Ext.widget('usetemplwin');
+			win.show();
+			win.down('usetemplform').down('combobox[name=tplname]').focus(false, true);
+		} else {
+			Ext.Msg.alert('Запрещено!', 'У Вас нет шаблонов!');
+		}
+	},
+	setTpl : function (btn) {
+		var tplform = this.getUseTemplForm();
+		if (tplform.getForm().isValid()) {
+			var record = this.getTemplStStore().findRecord('id', tplform.down('combobox[name=tplname]').getValue());
+			tplform.getForm().reset();
+			tplform.up('usetemplwin').close();
+			var win = Ext.widget('ordwin');
+			var form = win.down('ordform');
+			form.loadRecord(record);
+			var cb_org = form.down('combocity[name=org]');
+			cb_org.store.load({
+				params : {
+					query : cb_org.getValue()
+				}
+			});
+			cb_org.select(record.data['orgcode']);
+			var cb_des = form.down('combocity[name=dest]');
+			cb_des.store.load({
+				params : {
+					query : cb_des.getValue()
+				}
+			});
+			cb_des.select(record.data['destcode']);
+			this.getLoadFileForm().down('filefield[name=uploadFile]').setVisible(true);
+		}
 	},
 	dblclickOrdGr : function (gr, rec) {
 		var tt = this.getOrdTool();
@@ -320,7 +373,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 									Ext.Msg.alert('Заказ сохранен!', action.result.msg);
 								},
 								failure : function (form, action) {
-									form.reset();									
+									form.reset();
 									me.getOrdForm().up('ordwin').close();
 									me.loadOrdGr();
 									Ext.Msg.alert('Файл не сохранен!', action.result.msg);
@@ -406,6 +459,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 		cb_des.select(rec[0].data['destcode']);
+		form_ord.down('combocity[name=org]').focus(false, true);
 	},
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();

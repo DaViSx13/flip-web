@@ -194,6 +194,10 @@ if (!isset($_REQUEST['dbAct'])) {
 			@DContMail='$params[dcontmail]',
 			@DESTRems='$DESTRems'";			
 			break;
+		case 'DelAgTemplates':
+			$id = $params['id'];			
+			$query = "exec wwwDelAgTemplates @id={$id}";
+			break;
     }
 
     if (!isset($query)) {

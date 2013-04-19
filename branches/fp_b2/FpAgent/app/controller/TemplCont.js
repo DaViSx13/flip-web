@@ -21,49 +21,77 @@ Ext.define('FPAgent.controller.TemplCont', {
 			},
 			'templwin button[action=save]' : {
 				click : this.saveTempl
+			},
+			'templtool button[action=deltpl]' : {
+				click : this.delTempl
+			},
+			'templgrid > tableview' : {
+				itemdblclick : this.dblclickTpl
 			}
 		});
+	},
+	dblclickTpl : function (gr, rec) {		
+		this.clkEdit(this.getTemplTool().down('button[action=edittpl]'));
 	},
 	clkNew : function (btn) {
 		var win = Ext.widget('templwin');
 		win.show();
+		win.down('templform').down('textfield[name=templatename]').focus(false, true);
+	},
+	delTempl : function (btn) {
+		var me = this;
+		var sm = btn.up('templgrid').getSelectionModel();
+		if (sm.getCount() > 0) {
+			Ext.Ajax.request({
+				url : 'srv/data.php',
+				params : {
+					dbAct : 'DelAgTemplates',
+					id : sm.getSelection()[0].get('id')
+				},
+				success : function (response) {
+					jData = Ext.decode(response.responseText);
+					Ext.Msg.alert('Успешное удаление!', 'Шаблон удален: ' + jData.msg);
+					me.getTemplStStore().reload();
+				},
+				failure : function (response) {
+					jData = Ext.decode(response.responseText);
+					Ext.Msg.alert('Ошибка!', 'Не удалось удалить шаблон: ' + jData.msg);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите шаблон для удаления');
+		}
 	},
 	clkEdit : function (btn) {
 		var sm = btn.up('templgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
-			
-				var win = Ext.widget('templwin');
-				var form = win.down('templform');
-				//var rec_pod = this.getLocStoreStore().findRecord('ano', form_pod.getValues()['wb_no']);
-				var record = sm.getSelection()[0];
-				//console.log(record);
-				//var reс = this.getTemplStStore().findRecord('ano', form_pod.getValues()['wb_no'])
-				form.loadRecord(record);
-				var cb_org = form.down('combocity[name=org]');
-		cb_org.store.load({
-			params : {
-				query : cb_org.getValue()
-			}
-		});
-		cb_org.select(record.data['orgcode']);
-		var cb_des = form.down('combocity[name=dest]');
-		cb_des.store.load({
-			params : {
-				query : cb_des.getValue()
-			}
-		});
-		cb_des.select(record.data['destcode']);
-			
+			var win = Ext.widget('templwin');
+			var form = win.down('templform');
+			var record = sm.getSelection()[0];
+			form.loadRecord(record);
+			var cb_org = form.down('combocity[name=org]');
+			cb_org.store.load({
+				params : {
+					query : cb_org.getValue()
+				}
+			});
+			cb_org.select(record.data['orgcode']);
+			var cb_des = form.down('combocity[name=dest]');
+			cb_des.store.load({
+				params : {
+					query : cb_des.getValue()
+				}
+			});
+			cb_des.select(record.data['destcode']);
+			form.down('textfield[name=templatename]').focus(false, true);
 		} else {
-			
-				Ext.Msg.alert('Внимание!', 'Выберите шаблон для редактирования');			
+			Ext.Msg.alert('Внимание!', 'Выберите шаблон для редактирования');
 		}
 	},
 	saveTempl : function (btn) {
 		var me = this;
 		var win = btn.up('templwin');
 		var form_ord = win.down('templform');
-		//var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
 		if (org.value == null) {
@@ -107,12 +135,11 @@ Ext.define('FPAgent.controller.TemplCont', {
 					dbAct : 'SetAgTemplates'
 				},
 				submitEmptyText : false,
-				success : function (form, action) {										
-						form.reset();
-						me.getTemplForm().up('templwin').close();
-						me.getTemplStStore().reload();
-						Ext.Msg.alert('Шаблон сохранен!', 'Сохранение шаблона заказа прошло успешно ' + action.result.msg);
-					
+				success : function (form, action) {
+					form.reset();
+					me.getTemplForm().up('templwin').close();
+					me.getTemplStStore().reload();
+					Ext.Msg.alert('Шаблон сохранен!', 'Сохранение шаблона заказа прошло успешно ' + action.result.msg);
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Ошибка сохранения', 'Шаблон заказа не сохранен! ' + action.result.msg);
