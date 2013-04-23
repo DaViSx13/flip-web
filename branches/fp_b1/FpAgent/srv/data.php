@@ -234,7 +234,7 @@ if (!isset($_REQUEST['dbAct'])) {
                 $response->success = true;
                 
             } else {
-                $response->msg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
+                $errormsg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
             }
         }
         catch (exception $e) {

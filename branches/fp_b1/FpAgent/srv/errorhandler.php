@@ -30,7 +30,7 @@ if (error_reporting() & $code)
             E_USER_DEPRECATED => 'E_USER_DEPRECATED',
         );
 		$iserror = true;
-		$errormsg = "<b>{$errors[$code]}</b>[$code] $msg ($file на $line строке)<br />\n";		
+		$errormsg = "{$errors[$code]}[$code] $msg ($file на $line строке)";		
 	}
 	return true;
 }
