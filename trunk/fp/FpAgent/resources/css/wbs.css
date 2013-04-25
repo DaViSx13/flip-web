@@ -13,6 +13,12 @@
 .overduebox {
 	background-image : url(../../resources/images/overdue.png);
 }
+.list {
+	background-image : url(../../resources/images/list.png);
+}
+.templ {
+	background-image : url(../../resources/images/template.png);
+}
 .wbno {
 	background-image : url(../../resources/images/wbno.png);
 }
@@ -37,9 +43,15 @@
 .newdoc {
 	background-image : url(../../resources/images/newdoc.png);
 }
+.newtpl {
+	background-image : url(../../resources/images/fromtpl.png);
+}
 .viewdoc {
 	background-image : url(../../resources/images/viewdoc.png);
 }
 .editdoc {
 	background-image : url(../../resources/images/editdoc.png);
+}
+.deldoc {
+	background-image : url(../../resources/images/delet.png);
 }

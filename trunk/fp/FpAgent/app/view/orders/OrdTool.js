@@ -6,6 +6,10 @@ Ext.define('FPAgent.view.orders.OrdTool', {
 			text : 'Новый',
 			iconCls : 'newdoc',
 			action : 'new'
+		}, '-',{
+			text : 'Из шаблона',
+			iconCls : 'newtpl',
+			action : 'newtpl'
 		}, '-', {
 			text : 'Просмотр',
 			iconCls : 'viewdoc',

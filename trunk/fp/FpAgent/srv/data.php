@@ -161,6 +161,48 @@ if (!isset($_REQUEST['dbAct'])) {
 			$wbno = $params['wbno'] ? $params['wbno'] : 'NULL';
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
+		case 'getAgTemplates':
+			$ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
+			$query = "exec wwwGetAgTemplates @agentID={$ag}";
+			break;
+		case 'SetAgTemplates':
+			$CName=$params['cname'];
+			$ag=$_SESSION['xAgentID'];
+			$DName=$params['dname'];
+			$id=$params['id'] ? $params['id'] : 0;
+			$Address=$params['address'];
+			$ContName=$params['contname'];
+			$OrgRems=$params['orgrems'];
+			$DContName=$params['dcontname'];
+			$DAdr=$params['dadr'];
+			$DESTRems=$params['destrems'];			
+			$ContPhone=$params['contphone'];
+			$DContPhone=$params['dcontphone'];			
+
+			$query = "exec wwwSetAgTemplates
+			@TemplateName='$params[templatename]',
+			@agentID=$ag,
+			@id=$id,
+			@ORG=$params[org],
+			@CName='$CName',
+			@Address='$Address',
+			@ContName='$ContName',
+			@ContPhone='$ContPhone',
+			@ContMail='$params[contmail]',
+			@OrgRems='$OrgRems',
+			@DEST=$params[dest],
+			@DName='$DName',
+			@DAdr='$DAdr',
+			@DContName='$DContName',
+			@DContPhone='$DContPhone',
+			@DContMail='$params[dcontmail]',
+			@DESTRems='$DESTRems'";			
+			break;
+		case 'DelAgTemplates':
+			$id = $params['id'];			
+			$query = "exec wwwDelAgTemplates @id={$id}";
+			break;
     }
 
     if (!isset($query)) {
