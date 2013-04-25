@@ -55,8 +55,7 @@ class DBInsert
 		include "dbConnect.php";//$db = $this->connDB();
 		$query = " exec wwwInsertAgFiles  @ROrdNum={$this->orderNum}, @AutorFileName='{$this->fname}',@RealFileName='{$this->fnewname}',@FileType='{$this->ftype}',@FileSize='{$this->fsize}',@FilePlase='{$this->place}',@InsUsr='{$this->userID}'"; //@InsUsr='{$_SESSION[xUser]}'
 	    $query = iconv("UTF-8", "windows-1251", $query);
-		$result = mssql_query($query);// true good? false bad
-		//mssql_close($db); 
+		$result = mssql_query($query);// true good? false bad		
 		return $result ;
 	}
 

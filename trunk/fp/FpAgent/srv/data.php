@@ -2,13 +2,17 @@
 //завязка
 session_start();
 header("Content-type: text/plain; charset=utf-8");
-error_reporting(0);
+//error_reporting(0);
 class Response
 {
-    public $success = false;
+    
+	public $success = false;
     public $msg = '';
 }
 $response = new Response();
+$iserror = false;
+$errormsg = ''; 
+include "errorhandler.php";
 
 //кульминация
 
@@ -152,8 +156,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwGetAgents";
 			break;
 		case 'SetWbno':
-			$rordnum = $params[rordnum] ? $params[rordnum] : 0;
-			$wbno = $params[wbno] ? $params[wbno] : 'NULL';
+			$paging = false;
+			$rordnum = $params['rordnum'] ? $params['rordnum'] : 0;
+			$wbno = $params['wbno'] ? $params['wbno'] : 'NULL';
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
     }
@@ -166,7 +171,7 @@ if (!isset($_REQUEST['dbAct'])) {
 
         try {
             include "dbConnect.php";
-            $result = mssql_query($query);
+			$result = mssql_query($query);
             if ($result) {
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
@@ -220,14 +225,16 @@ if (!isset($_REQUEST['dbAct'])) {
         			$start = $params['start'];
         			$limit = $params['limit'];
 					$response->total = count($response->data);
-					$response->data = array_slice($response->data, $start, $limit);
+					if ($response->data){
+						$response->data = array_slice($response->data, $start, $limit);
+					}
 				}
 				
                 mssql_free_result($result);
                 $response->success = true;
                 
             } else {
-                $response->msg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
+                $errormsg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
             }
         }
         catch (exception $e) {
@@ -248,6 +255,11 @@ function my_json_encode($arr)
         0,
         0xffff), 'UTF-8');
 
+}
+
+if ($iserror){
+$response->success = false;
+$response->msg = $errormsg;
 }
 
 if (extension_loaded('mbstring')) {
