@@ -73,7 +73,12 @@ Ext.define('FPAgent.controller.UsersCont', {
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
-					me.getUsersStStore().load();
+					var rec = me.getUsersStStore().findRecord('id', sm.getSelection()[0].get('id'));
+					if (sm.getSelection()[0].get('active') > 0) {
+						rec.set('active', 0);
+					} else {
+						rec.set('active', 1);
+					}
 				},
 				failure : function (response) {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
@@ -120,9 +125,12 @@ Ext.define('FPAgent.controller.UsersCont', {
 							submitEmptyText : false,
 							success : function (form, action) {
 								if (action.result.success == true) {
+									if (form.getValues()['id'] > 0) {
+										var rec = me.getUsersStStore().findRecord('id', form.getValues()['id']);
+										rec.set('auser', form.getValues()['auser']);
+									}
 									form.reset();
 									win.close();
-									me.getUsersStStore().load();
 								}
 							},
 							failure : function (form, action) {

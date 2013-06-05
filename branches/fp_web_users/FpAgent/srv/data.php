@@ -207,7 +207,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwGetUsers";
 			break;
 		case 'setUsers':						
-			$query = "exec wwwSetUsers @id={$params[id]}, @auser='{$params[auser]}', @pass='{$passfirst}', @agentID={$params[agents]}"; 
+			$query = "exec wwwSetUsers @id={$params[id]}, @auser='{$params[auser]}', @pass='{$params[passfirst]}', @agentID={$params[agents]}"; 
 			break;
 		case 'setActive':			
 			$query = "exec wwwSetActive @id={$params[id]}, @active={$params[active]}"; 
