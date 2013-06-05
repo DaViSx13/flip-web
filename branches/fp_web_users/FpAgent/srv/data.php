@@ -203,6 +203,18 @@ if (!isset($_REQUEST['dbAct'])) {
 			$id = $params['id'];			
 			$query = "exec wwwDelAgTemplates @id={$id}";
 			break;
+		case 'getUsers':			  
+			$query = "exec wwwGetUsers";
+			break;
+		case 'setUsers':						
+			$query = "exec wwwSetUsers @id={$params[id]}, @auser='{$params[auser]}', @pass='{$passfirst}', @agentID={$params[agents]}"; 
+			break;
+		case 'setActive':			
+			$query = "exec wwwSetActive @id={$params[id]}, @active={$params[active]}"; 
+			break;
+		case 'GetAgentsList':
+			$query = "exec wwwGetAgentsList";
+			break;
     }
 
     if (!isset($query)) {

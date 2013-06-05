@@ -38,6 +38,7 @@ Ext.define('FPAgent.controller.Loginform', {
 				if (text.success == true) {
 					me.getAdmTool().down('comboagent').store.add(text.data);
 					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
+					
 				} else {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
@@ -59,6 +60,7 @@ Ext.define('FPAgent.controller.Loginform', {
 					aviewport.add(Ext.widget('mainpanel'));
 					if (text.msg == '-1') {
 						me.loadAdmPan();
+						aviewport.down('mainpanel').child('#users').tab.show();
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
 						aviewport.down('mainpanel').down('label').setText(text.username);
@@ -85,6 +87,7 @@ Ext.define('FPAgent.controller.Loginform', {
 					aviewport.add(Ext.widget('mainpanel'));
 					if (action.result.msg == '-1') {
 						me.loadAdmPan();
+						aviewport.down('mainpanel').child('#users').tab.show();
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
 						aviewport.down('mainpanel').down('label').setText(action.result.username);

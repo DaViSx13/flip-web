@@ -9,14 +9,19 @@ Ext.define('FPAgent.view.mainform.MainPanel', {
 			title : 'Накладные'
 		}, {
 			xtype : 'ordspanel',
-			border: false,
-			style: {    
-					borderStyle: 'none'
+			border : false,
+			style : {
+				borderStyle : 'none'
 			},
 			title : 'Заказы'
 		}, {
 			xtype : 'mnfpanel',
 			title : 'Манифесты'
+		}, {
+			xtype : 'usersgrid',
+			title : 'Пользователи',
+			itemId : 'users',
+			hidden : true
 		}
 	],
 	dockedItems : [{
