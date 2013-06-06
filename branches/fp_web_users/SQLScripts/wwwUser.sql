@@ -11,3 +11,7 @@ CREATE UNIQUE NONCLUSTERED INDEX IX_wwwUser ON dbo.wwwUser
 	(
 	aUser
 	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	
+	go
+	update Partinf set PartName = 'ООО «T&K Интернешнл»' where PartCode = 78
+	go

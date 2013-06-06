@@ -79,6 +79,8 @@ Ext.define('FPAgent.controller.UsersCont', {
 					} else {
 						rec.set('active', 1);
 					}
+					me.getUsersGrid().getSelectionModel().select(0);
+					me.getUsersGrid().getSelectionModel().select(rec);
 				},
 				failure : function (response) {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
@@ -128,6 +130,7 @@ Ext.define('FPAgent.controller.UsersCont', {
 									if (form.getValues()['id'] > 0) {
 										var rec = me.getUsersStStore().findRecord('id', form.getValues()['id']);
 										rec.set('auser', form.getValues()['auser']);
+										me.getUsersGrid().getSelectionModel().select(rec);
 									}
 									form.reset();
 									win.close();
@@ -146,7 +149,7 @@ Ext.define('FPAgent.controller.UsersCont', {
 				if (form.getForm().findField('id').getValue() == 0) {
 					Ext.Msg.show({
 						title : 'Сохранить изменения?',
-						msg : 'Название агента "<font size="3" color="blue">' + form.getForm().findField('agents').getRawValue() + '</font>" выбранное для логина "<font size="3" color="blue">' + form.getForm().findField('auser').getValue() + '</font>" в дальнейшем изменить нельзя! Сохранить?',
+						msg : '<p>Агент: "<font size="2" color="blue">' + form.getForm().findField('agents').getRawValue() + '</font>".</p>  <p>Логин: "<font size="2" color="blue">' + form.getForm().findField('auser').getValue() + '</font>".</p>  <p>Сохранить?</p>',
 						buttons : Ext.Msg.YESNOCANCEL,
 						fn : showResult,
 						icon : Ext.Msg.QUESTION
