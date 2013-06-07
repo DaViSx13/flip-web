@@ -317,7 +317,7 @@ $response->msg = $errormsg;
 }
 
 if (extension_loaded('mbstring')) {
-    echo my_json_encode($response);
+    echo json_encode($response);
 } else {
     echo json_encode($response);
 }
