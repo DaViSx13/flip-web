@@ -55,3 +55,27 @@
 .deldoc {
 	background-image : url(../../resources/images/delet.png);
 }
+.adduser {
+	background-image : url(../../resources/images/adduser.png);
+}
+.x-action-col-cell img.red-usr {
+	background-image : url(../../resources/images/userred.png);
+	height : 16px;
+	width : 16px;	
+}
+.x-action-col-cell img.gre-usr {
+	background-image : url(../../resources/images/usergreen.png);
+	height : 16px;
+	width : 16px;	
+}
+.redusr {
+	background-image : url(../../resources/images/userred.png);
+}
+.greusr {
+	background-image : url(../../resources/images/usergreen.png);
+}
+.x-action-col-cell img.cut{
+	background-image : url(../../resources/images/cut.png);
+	height : 16px;
+	width : 16px;	
+}

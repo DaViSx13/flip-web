@@ -203,6 +203,18 @@ if (!isset($_REQUEST['dbAct'])) {
 			$id = $params['id'];			
 			$query = "exec wwwDelAgTemplates @id={$id}";
 			break;
+		case 'getUsers':			  
+			$query = "exec wwwGetUsers";
+			break;
+		case 'setUsers':						
+			$query = "exec wwwSetUsers @id={$params[id]}, @auser='{$params[auser]}', @pass='{$params[passfirst]}', @agentID={$params[agents]}"; 
+			break;
+		case 'setActive':			
+			$query = "exec wwwSetActive @id={$params[id]}, @active={$params[active]}"; 
+			break;
+		case 'GetAgentsList':
+			$query = "exec wwwGetAgentsList";
+			break;
     }
 
     if (!isset($query)) {
@@ -303,10 +315,12 @@ if ($iserror){
 $response->success = false;
 $response->msg = $errormsg;
 }
-
+/*
 if (extension_loaded('mbstring')) {
     echo my_json_encode($response);
 } else {
     echo json_encode($response);
 }
+*/
+echo json_encode($response);
 ?>
