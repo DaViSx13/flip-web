@@ -131,6 +131,8 @@ Ext.define('FPAgent.controller.UsersCont', {
 										var rec = me.getUsersStStore().findRecord('id', form.getValues()['id']);
 										rec.set('auser', form.getValues()['auser']);
 										me.getUsersGrid().getSelectionModel().select(rec);
+									} else {
+									me.getUsersStStore().load();
 									}
 									form.reset();
 									win.close();
