@@ -64,7 +64,26 @@ function fCalc(){
     dsTarif.loadData();
     }
 
+function fCalcVvol(x ,y ,z){
+	return x*y*z/6000
+}
 
+function  doCalcVvol(){
+	edix = document.getElementById('ix');
+	ediy = document.getElementById('iy');
+	ediz = document.getElementById('iz');
+	
+	x = parseInt(edix.value);
+	y = parseInt(ediy.value);
+	z = parseInt(ediz.value);
+	
+	edvvol = document.getElementById('vvol');
+	if( !isNaN(x) && !isNaN(y) && !isNaN(z) ){
+		edvvol.value = fCalcVvol(x, y, z);
+	} else {
+		edvvol.value = '';
+	}
+}
 </script>    
     
 </head>
@@ -124,7 +143,12 @@ function fCalc(){
 
 <p> <span title="<?php	echo $frmId; ?>">*</span> - стоимость указана без НДС<br />
 
-
+<br />
+<div>
+<span class="header">Расчет объемного веса</span><br /><br />
+Габариты, см: <input id="ix" size="5" onkeydown1="doCalcVvol()" />&nbsp;x&nbsp;<input id="iy"  size="5" onkeydown1="doCalcVvol()" />&nbsp;x&nbsp;<input id="iz"  size="5" onkeydown1="doCalcVvol()" /> &nbsp; <input type="button" value="Рассчитать" onclick="doCalcVvol()"><br />
+Объемный вес: <input id="vvol" readonly1> кг.
+</div>
 
 </body>
 
