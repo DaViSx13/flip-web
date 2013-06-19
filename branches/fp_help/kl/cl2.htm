@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; windows-1251" />
+	<meta name="author" content="admin" />
+
+	<title>clients</title>
+
+    <script type="text/javascript" src="../spry/includes/xpath.js"></script>
+    <script type="text/javascript" src="../spry/includes/SpryData.js"></script>    
+    <script type="text/javascript" src="../spry/includes/SpryAutoSuggest.js"></script>
+    <link href="SpryAutoSuggest.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+//var ds = new Spry.Data.XMLDataSet("getKlients2.php?cname=строй", "data/row", { headers: { encoding: "Windows-1251", "Content-Type":"text/plain; charset=windows-1251"}}); 
+var ds = new Spry.Data.XMLDataSet("getKlients2.php", "data/row");   
+</script>
+
+</head>
+
+<body>
+
+<div id="mySuggest">
+<input type="text" name="product" size="100"/>
+  <div id="resultsDIV" spry:region="ds">
+    <span>Записей: {ds_RowCount} / {ds_UnfilteredRowCount} </span>
+    <table>
+        <tr spry:repeat="ds" spry:suggest="{@c_co}">
+            <td>{@cacc}</td><td>{@c_co}</td><td>{@c_adr}</td>
+        </tr>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+	var theSuggest = new Spry.Widget.AutoSuggest("mySuggest","resultsDIV", "ds","@c_co",{containsString: true, minCharsType:3, loadFromServer: true, urlParam: "cname"});
+//	var theSuggest = new Spry.Widget.AutoSuggest("mySuggest","resultsDIV", "ds","@c_co",{containsString: true, minCharsType:3});
+</script>
+
+</body>
+</html>
