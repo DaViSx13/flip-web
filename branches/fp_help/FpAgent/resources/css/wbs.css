@@ -46,6 +46,9 @@
 .newtpl {
 	background-image : url(../../resources/images/fromtpl.png);
 }
+.help {
+	background-image : url(../../resources/images/book.png);
+}
 .viewdoc {
 	background-image : url(../../resources/images/viewdoc.png);
 }

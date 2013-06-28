@@ -45,6 +45,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			},
 			'admtool comboagent' : {
 				select : this.changeAgent
+			},
+			'admtool button[action=help]' : {
+				click : this.showHelp
 			}
 		});
 		this.getMnfStStore().on({
@@ -95,6 +98,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 				is_Ready : tab
 			}
 		});
+	},
+	showHelp : function (btn) {
+		window.open('help/index.html');
 	},
 	loadMnf : function (ThePanel) {
 		this.openOutmnf(ThePanel.down('button[action=out]'));

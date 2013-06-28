@@ -13,33 +13,32 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 				marginLeft : '2px',
 				marginRight : '20px'
 			}
-		},' ',			
-			{
+		}, ' ', {
 			tooltip : 'Список',
 			text : 'Список',
 			iconCls : 'list',
 			action : 'list',
-			
 			enableToggle : true,
 			xtype : 'button'
-		},' ',{
+		}, ' ', {
 			tooltip : 'Шаблоны',
 			text : 'Шаблоны',
 			iconCls : 'templ',
 			action : 'templ',
-			
 			enableToggle : true,
 			xtype : 'button'
-		},' ',
-		'->', {
+		}, ' ', '->', {
 			xtype : 'label',
 			text : 'UserName'
-		},
-		' ', ' ', ' ', {
+		}, ' ', ' ', ' ', {
+			tooltip : 'Помощь',
+			iconCls : 'help',
+			action : 'help',
+			xtype : 'button'
+		}, {
 			tooltip : 'Разлогиниться',
 			iconCls : 'exit-user',
 			action : 'logout',
 			xtype : 'button'
-		}, ' '
-	]
+		}, ' ']
 });
