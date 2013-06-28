@@ -149,6 +149,7 @@ function  doCalcVvol(){
 Габариты, см: <input id="ix" size="5" onkeydown1="doCalcVvol()" />&nbsp;x&nbsp;<input id="iy"  size="5" onkeydown1="doCalcVvol()" />&nbsp;x&nbsp;<input id="iz"  size="5" onkeydown1="doCalcVvol()" /> &nbsp; <input type="button" value="Рассчитать" onclick="doCalcVvol()"><br />
 Объемный вес: <input id="vvol" readonly1> кг.
 </div>
+<p> ** - При расчете стоимости отправления учитывается наибольший вес из фактического и объемного.
 
 </body>
 
