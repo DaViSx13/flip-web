@@ -4,7 +4,7 @@ $frmId = $_REQUEST["frmid"] ? $_REQUEST["frmid"] : 4;
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=windows-1251" />
-	<title>Расчет стоимости</title>
+	<title>Опредение сроков</title>
 <style>
 body {font-family: verdana; font-size: 10pt; margin: 0;}
 
@@ -36,7 +36,7 @@ var dsTarif = new Spry.Data.XMLDataSet("getTarif.php", "data/row", {useCache: fa
 
 function fCalc(){
     var frm = document.getElementById('frmCalc')
-    var wt = frm.wt.value  
+    var wt = 0.1 //frm.wt.value  
     var code
     var frmid = frm.frmid.value
     
@@ -64,26 +64,7 @@ function fCalc(){
     dsTarif.loadData();
     }
 
-function fCalcVvol(x ,y ,z){
-	return x*y*z/6000
-}
 
-function  doCalcVvol(){
-	edix = document.getElementById('ix');
-	ediy = document.getElementById('iy');
-	ediz = document.getElementById('iz');
-	
-	x = parseInt(edix.value);
-	y = parseInt(ediy.value);
-	z = parseInt(ediz.value);
-	
-	edvvol = document.getElementById('vvol');
-	if( !isNaN(x) && !isNaN(y) && !isNaN(z) ){
-		edvvol.value = fCalcVvol(x, y, z);
-	} else {
-		edvvol.value = '';
-	}
-}
 </script>    
     
 </head>
@@ -104,9 +85,9 @@ function  doCalcVvol(){
 <table class="tblData">
     <tr>
         <th>Пункт назначения</th>
-        <th>Вес, кг</th>
-        <th>Срок доставки, дней***</th>
-        <th>Стоимость, руб *</th>
+        <!--th>Вес, кг</th-->
+        <th>Срок доставки, дней*</th>
+        <!--th>Стоимость, руб *</th-->
      </tr>
     <tr>
         <td><!-- выпадающий список нас.пунктов-->
@@ -126,31 +107,24 @@ function  doCalcVvol(){
             	</div>
             </span>
             <script type="text/javascript">
-        	//var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname', {minCharsType: 2, loadFromServer: true, urlParam: "pName"});
-        	var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname');
+        	var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname', {minCharsType: 2, loadFromServer: true, urlParam: "pName"});
+        	//var asDest = new Spry.Widget.AutoSuggest("dest", "destCodes", "dsCity", '@fname');
             </script>
        
         </td>
         
-        <td><input name="wt" size="7"/></td>
+        <!--td><input name="wt" size="7"/></td-->
         <td style="text-align: right;"><span spry:region="dsTarif">{@del}</span></td>
-        <td style="text-align: right;"><span spry:region="dsTarif">{@price}</span></td>
+        <!--td style="text-align: right;"><span spry:region="dsTarif">{@price}</span></td-->
     </tr>
 </table>
 <input type="button" value="Рассчитать" onclick="fCalc()"/>
 <input type="hidden" name="frmid" value="<?php	echo $frmId; ?>"/>
 </form>
 
-<p><span title="<?php	echo $frmId; ?>">*</span> - стоимость указана без НДС<br />
+<!--p> <span title="<?php	echo $frmId; ?>">*</span> - стоимость указана без НДС<br /-->
+<p> <span>*</span> - не считая дня забора, выходных и праздничных дней<br />
 
-<br />
-<div>
-<span class="header">Расчет объемного веса</span><br /><br />
-Габариты, см: <input id="ix" size="5" onkeydown1="doCalcVvol()" />&nbsp;x&nbsp;<input id="iy"  size="5" onkeydown1="doCalcVvol()" />&nbsp;x&nbsp;<input id="iz"  size="5" onkeydown1="doCalcVvol()" /> &nbsp; <input type="button" value="Рассчитать" onclick="doCalcVvol()"><br />
-Объемный вес: <input id="vvol" readonly1> кг.
-</div>
-<p> ** - При расчете стоимости отправления учитывается наибольший вес из фактического и объемного.
-<p> *** - не считая дня забора, выходных и праздничных дней.
 
 </body>
 
