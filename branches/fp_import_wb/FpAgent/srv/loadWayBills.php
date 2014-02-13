@@ -98,9 +98,12 @@ if ($acttion == 'imp'){
 					}//end while
 					fclose($handle_f);
 					
-					$try = "BEGIN TRY create table #resp_wb_n (wb_no varchar(11),countNo int,ex int); BEGIN TRAN  ";
-					$catch =  "  if  ((select count(*) from #resp_wb_n where countNo + ex < 2)=0)  begin  select cn = -1; COMMIT TRAN; end  "
-							. "  else  begin select top 1 wb_no  from #resp_wb_n where countNo + ex < 2; ROLLBACK; end drop table #resp_wb_n ; "
+					$try = "BEGIN TRY create table #resp_wb_n (wb_no varchar(11),countNo int,ex int,gd int); BEGIN TRAN  ";
+					$catch =  
+					         "  if  ((select count(*) from #resp_wb_n where countNo + ex + gd < 3)=0)  begin  select cn = -1; COMMIT TRAN; end  "
+							. "  else  begin select top 1 cn=convert(char(1),countNo)+'*'+convert(char(1),ex)+'*'+convert(char(1),gd)+'*'+wb_no "
+							. " from #resp_wb_n where countNo + ex + gd < 3; "
+							. " ROLLBACK; end drop table #resp_wb_n ; "
 							. "  END TRY BEGIN  CATCH ROLLBACK TRAN  DECLARE @ErrorMessage NVARCHAR(4000); "
 							. "  SELECT @ErrorMessage = 'Error : '+ ERROR_MESSAGE() ;  RAISERROR (@ErrorMessage, 16, 1 );  END CATCH ";
 					$query = $try . $all_query . $catch;
@@ -116,7 +119,7 @@ if ($acttion == 'imp'){
 							while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 								foreach ($row as $f => &$value) {
 									if((($response->fields[$f] == 'char')||($response->fields[$f] == 'text'))&&($value)){
-										$value = iconv("windows-1251", "UTF-8", $value);
+										$value1 = iconv("windows-1251", "UTF-8", $value);
 									}
 								}
 								$response->data[] = array_change_key_case($row);
@@ -127,7 +130,10 @@ if ($acttion == 'imp'){
 							}
 							else{
 								$response->success = false;
-								$response->msg = "ошибка в накладной '{$value }'. удалите не правильную строку.";
+								$arr = explode("*", $value1);
+								$err = "№".$arr[3]
+								. ( ($arr[0]!='1')?' не является для Вас входящей.' :(($arr[1]!='1')?' не существует.' :' имеет не корректную дату доставки.'));
+								$response->msg = "ошибка! накладная {$err }";
 							}
 							unset($response->fields);				
 							mssql_free_result($result);

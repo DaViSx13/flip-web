@@ -330,10 +330,10 @@ Ext.define('FPAgent.controller.WbsCont', {
 		//console.log(newloadwin.down('loadwbform'));
 	},
 	importWBs : function (btn) {
+	var me = this;
 		var win = btn.up('loadwbwin');
 		var form_imp = win.down('loadwbform');
 		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
-			//console.log(form_imp.down('filefield[name=uploadFile]'));
 			form_imp.submit({
 				url : 'srv/loadWayBills.php',
 				params : {
@@ -341,6 +341,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 				},
 				success : function (form, action) {
 					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+					me.loadWbs();
+					me.viewTotal();
 					win.close();
 				},
 				failure : function (form, action) {
