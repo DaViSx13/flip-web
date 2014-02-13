@@ -26,7 +26,7 @@ declare @exist int
 select @exist = COUNT(*) 
 from Main where Wb_No = ltrim(rtrim(@wb_no))
 
-select @goodDate = case when (DATEDIFF (hour,DTD,@p_d_in)<1)then 0 else 1 end
+select @goodDate = case when (DATEDIFF (hour,D_Acc,@p_d_in)<1)then 0 else 1 end
 from Main where Wb_No = ltrim(rtrim(@wb_no))
 
 
