@@ -21,7 +21,7 @@ CREATE procedure [dbo].[wwwSetPOD_import]
 	@wb_no varchar(50), @p_d_in datetime, @tdd datetime, @rcpn varchar(15), @user varchar(50)=null
 as
 declare @exist int
-,@goodDate int
+,@goodDate int=0
  
 select @exist = COUNT(*) 
 from Main where Wb_No = ltrim(rtrim(@wb_no))
