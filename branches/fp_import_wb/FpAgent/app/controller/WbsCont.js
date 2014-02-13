@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.WbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin'],
+	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin'],
 	models : ['WbsMod', 'ExCodeMod', 'ViewExMod'],
 	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore'],
 	refs : [{
@@ -9,6 +9,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 		}, {
 			ref : 'NewDopWin',
 			selector : 'newdopwin'
+		}, {
+			ref : 'LoadWBWin',
+			selector : 'loadwbwin'
 		}, {
 			ref : 'NewExWin',
 			selector : 'newexwin'
@@ -58,6 +61,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 			'newdopwin button[action=save]' : {
 				click : this.saveDop
 			},
+			'wbstool button[action=import]' : {
+				click : this.loadWBsWin
+			},
 			'newexwin button[action=save]' : {
 				click : this.saveEx
 			},
@@ -81,6 +87,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 			},
 			'admtool comboagent' : {
 				select : this.changeAgent
+			},
+			'loadwbwin button[action=imp]' : {
+				click : this.importWBs
 			}
 		});
 		this.getWbsStoreStore().on({
@@ -314,6 +323,31 @@ Ext.define('FPAgent.controller.WbsCont', {
 			break;
 		}
 		window.location.href = 'srv/getAgentWbsXLS.php?newPeriod=' + this.getPeriod() + '&filter=' + t_dir;
+	},
+	loadWBsWin : function (btn) {
+		//console.log('import');
+		var newloadwin = Ext.widget('loadwbwin').show();
+		//console.log(newloadwin.down('loadwbform'));
+	},
+	importWBs : function (btn) {
+		var win = btn.up('loadwbwin');
+		var form_imp = win.down('loadwbform');
+		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
+			//console.log(form_imp.down('filefield[name=uploadFile]'));
+			form_imp.submit({
+				url : 'srv/loadWayBills.php',
+				params : {
+					act : 'imp'
+				},
+				success : function (form, action) {
+					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+					win.close();
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+				}
+			});
+		}
 	},
 	viewExGrid : function (ex_wb_no) {
 		if (ex_wb_no) {

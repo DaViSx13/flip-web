@@ -10,6 +10,9 @@
 .excel {
 	background-image : url(../../resources/images/excel_.png);
 }
+.import {
+	background-image : url(../../resources/images/import.png);
+}
 .overduebox {
 	background-image : url(../../resources/images/overdue.png);
 }
