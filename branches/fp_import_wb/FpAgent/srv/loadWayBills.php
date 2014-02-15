@@ -47,24 +47,34 @@ if ($acttion == 'imp'){
 								if ($dt1 || $dt2){ //если есть дата в 1м из форматов //соберем каждую нормальную строку тут
 									$rcpn = charset_x_win($data_f[2] ); //из a.charset.php
 									$wb_no =  charset_x_win($data_f[0]); //из a.charset.php
+									//дата
 									$dateIn = explode('.', $data_f[1]);
 									$addYear = (strlen($dateIn[2])==10)?"":"20";
-									if (!checkdate( $dateIn[1] ,$dateIn[0], $addYear.$dateIn[2])){//не является корректной датой
+									//время
+									$timeHM = explode(' ', $dateIn[2]);
+									$timeHM = explode(':', $timeHM[1]);
+									
+									if ((!checkdate( $dateIn[1] ,$dateIn[0], $addYear.$dateIn[2]))||( (int)$timeHM[0]>=24)||((int)$timeHM[1]>=60)){
+										//не является корректной датой
 										$response->success = false;
 										$response->msg = 'не верный формат данных (дата) в '.(round($count_rowws/3) +1).' строке содержимого файла.';
 										echo json_encode($response);
 										exit;
 									}
-									if (mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) >=  time()){//привет из будующего
+									if (mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) >=  time()){
+										//привет из будующего
 										$response->success = false;
 										$response->msg = 'дата не может быть больше текущей. в '.(round($count_rowws/3) +1).' строке содержимого файла.';
 										echo json_encode($response);
 										exit;
 									}
-									$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) );
+									
+									$p_d_in = //strftime('%Y%m%d', mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) );
+												strftime('%Y%m%d %H:%M', mktime($timeHM[0],$timeHM[1],0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) );
 									$query = "insert into  #resp_wb_n  exec wwwSetPOD_import @wb_no='{$wb_no}', @p_d_in='{$p_d_in}', @tdd='{$p_d_in}', @rcpn='{$rcpn}', @user='{$_SESSION[xUser]}'; ";
 									$query = stripslashes($query);
 									$count_rowws++; 
+									
 								}
 								else{
 									$response->success = false;
