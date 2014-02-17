@@ -31,7 +31,7 @@ if ($acttion == 'imp'){
 						if (sizeof($data_f) == 3){
 							if ($empty_rows>0){//не пустая после пустой - смело ругаемся
 								$response->success = false;
-								$response->msg = 'не верный формат данных. наличие пустой строки в файле.';
+								$response->msg = 'Не верный формат данных: наличие пустой строки в файле.';
 								echo json_encode($response);
 								exit;
 							}
@@ -57,14 +57,14 @@ if ($acttion == 'imp'){
 									if ((!checkdate( $dateIn[1] ,$dateIn[0], $addYear.$dateIn[2]))||( (int)$timeHM[0]>=24)||((int)$timeHM[1]>=60)){
 										//не является корректной датой
 										$response->success = false;
-										$response->msg = 'не верный формат данных (дата) в '.(round($count_rowws/3) +1).' строке содержимого файла.';
+										$response->msg = 'Не верный формат данных (дата) в '.(round($count_rowws/3) +1).' строке содержимого файла.';
 										echo json_encode($response);
 										exit;
 									}
 									if (mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) >=  time()){
 										//привет из будующего
 										$response->success = false;
-										$response->msg = 'дата не может быть больше текущей. в '.(round($count_rowws/3) +1).' строке содержимого файла.';
+										$response->msg = 'Дата не может быть больше текущей. В '.(round($count_rowws/3) +1).' строке содержимого файла.';
 										echo json_encode($response);
 										exit;
 									}
@@ -78,13 +78,13 @@ if ($acttion == 'imp'){
 								}
 								else{
 									$response->success = false;
-									$response->msg = 'не верный формат данных в '.(round($count_rowws/3) +1).' строке содержимого или не верная кодировка файла.';
+									$response->msg = 'Не верный формат данных в '.(round($count_rowws/3) +1).' строке содержимого или не верная кодировка файла.';
 									echo json_encode($response);
 									exit;
 								}
 								if(strlen($rcpn )< 1){
 									$response->success = false;
-									$response->msg = 'не верный формат данных (пустое имя) содержимого или не верная кодировка файла.';
+									$response->msg = 'Не верный формат данных (пустое имя) содержимого или не верная кодировка файла.';
 									echo json_encode($response);
 									exit;
 								}
@@ -95,7 +95,7 @@ if ($acttion == 'imp'){
 							$data_f[1] = trim($data_f[1]);
 							if ((!empty($data_f[1]))&&(count($data_f)<2)){//не пустая - поругаемся
 								$response->success = false;
-								$response->msg ='не верный разделитель в строке '.(round($count_rowws/3) +1). ".".count($data_f). "." ;
+								$response->msg ='Не верный разделитель в строке '.(round($count_rowws/3) +1). ".".count($data_f). "." ;
 								echo json_encode($response);
 								exit;
 							}
@@ -143,13 +143,13 @@ if ($acttion == 'imp'){
 								$arr = explode("*", $value1);
 								$err = "№".$arr[3]
 								. ( ($arr[0]!='1')?' не является для Вас входящей.' :(($arr[1]!='1')?' не существует.' :' имеет не корректную дату доставки.'));
-								$response->msg = "ошибка! накладная {$err }";
+								$response->msg = "Ошибка: накладная {$err }";
 							}
 							unset($response->fields);				
 							mssql_free_result($result);
 						}
 						else {
-							$errormsg = 'ошибка sql: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
+							$errormsg = 'Ошибка sql: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
 						}
 					}catch (exception $e) {
 						$response->msg = $e->getMessage();
