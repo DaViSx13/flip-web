@@ -340,10 +340,11 @@ Ext.define('FPAgent.controller.WbsCont', {
 					act : 'imp'
 				},
 				success : function (form, action) {
-					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+					
 					me.loadWbs();
 					me.viewTotal();
 					win.close();
+					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Ошибка импорта!', action.result.msg);

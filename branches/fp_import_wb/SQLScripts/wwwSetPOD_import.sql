@@ -47,3 +47,5 @@ GO
 GRANT EXECUTE ON [dbo].[wwwSetPOD_import] TO [pod] AS [dbo]
 GO
 
+GRANT UPDATE ON [dbo].Main TO [pod] AS [dbo]
+GO
