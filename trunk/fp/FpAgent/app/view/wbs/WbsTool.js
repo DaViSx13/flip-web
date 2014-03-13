@@ -40,6 +40,10 @@ Ext.define('FPAgent.view.wbs.WbsTool', {
 					text : 'Экспорт в Excel',
 					iconCls : 'excel',
 					action : 'excel'
+				}, {
+					text : 'Импорт ПОД',
+					iconCls : 'import',
+					action : 'import'
 				}
 			]
 		}, '-', {
