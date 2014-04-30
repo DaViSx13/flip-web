@@ -35,7 +35,14 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 			xtype : 'label',
 			text : 'UserName'
 		},
-		' ', ' ', ' ', {
+		' ', ' ', ' ',
+		 {
+			tooltip : 'Помощь',
+			iconCls : 'help',
+			action : 'help',
+			xtype : 'button'
+		},
+		{
 			tooltip : 'Разлогиниться',
 			iconCls : 'exit-user',
 			action : 'logout',
