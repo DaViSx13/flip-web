@@ -146,8 +146,11 @@
        td.idxtable    { background: #F4F4F4 }
 
        /* font definitions for keyword section, keywords and popup links */
-       .idxsection  { font-family: Arial,Helvetica; font-weight: normal; font-size: 14pt; color: #000000; text-decoration: none;
-                      margin-top: 15px; margin-bottom: 15px; }
+       .idxsection  {   /*тут должно выводиться окошко для поиска в индексах. но нам ненать его. display: none;*/
+         display: none;
+       font-family: Arial,Helvetica; font-weight: normal; font-size: 14pt; color: #000000; text-decoration: none;
+                      margin-top: 15px; margin-bottom: 15px; 
+                      }
        .idxkeyword  { font-family: Arial,Helvetica; font-weight: normal; font-size: 10pt; color: #000000; text-decoration: none; }
        .idxkeyword2 { font-family: Arial,Helvetica; font-weight: normal; font-size: 10pt; color: #000000; text-decoration: none; }
        .idxlink     { font-family: Arial,Helvetica; font-weight: normal; font-size: 8pt; color: #000000; text-decoration: none; }
@@ -224,6 +227,10 @@
   }
 </script>
 <div id="idx" style="margin:0;padding:0;border:none">
+<a name="Z" id="Z"></a><p class="idxsection">- Z -</p>
+<p class="idxkeyword"><a href="zakaz.html" target="hmcontent"><span class="idxkeyword">заказ</span></a></p>
+<p class="idxkeyword"><a href="manif.html" target="hmcontent"><span class="idxkeyword">манифест</span></a></p>
+<p class="idxkeyword"><a href="naklad.html" target="hmcontent"><span class="idxkeyword">накладная</span></a></p>
 </div>
 
  </div>
