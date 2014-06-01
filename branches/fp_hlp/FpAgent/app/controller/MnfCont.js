@@ -104,7 +104,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 	},
 	loadMnf : function (ThePanel) {
 		this.openOutmnf(ThePanel.down('button[action=out]'));
-		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);
+		if (this.getAdmTool().down('label').text == 'WEB Администратор'){
+		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);		
+		}
 		this.getAdmTool().down('button[action=list]').setVisible(false);
 		this.getAdmTool().down('button[action=templ]').setVisible(false);
 	},
