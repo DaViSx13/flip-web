@@ -100,7 +100,14 @@ Ext.define('FPAgent.controller.MnfCont', {
 		});
 	},
 	showHelp : function (btn) {
-		window.open('help/index.html');
+	//получаем ид активного таба
+		var tab = btn.up('mainpanel').getActiveTab();
+		var actIndex = tab.getId();
+	//тут смотрим и сопоставляем название таба с названием раздела хелпа	
+		var part = (actIndex.indexOf('wbsgrid')>-1)?'naklad':((actIndex.indexOf('ordspanel')>-1)?'zakaz':((actIndex.indexOf('mnfpane')>-1)?'manif':''));
+	//если не подходит ни 1 из разделов, то ссыль просто на хелп в целом	
+		var parthelp = (part!='')?('?'+part+'.html'):'';
+		window.open('help/index.html'+parthelp);
 	},
 	loadMnf : function (ThePanel) {
 		this.openOutmnf(ThePanel.down('button[action=out]'));
