@@ -3,6 +3,7 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 	alias : 'widget.admtool',
 	items : [{
 			xtype : 'buttongroup',
+			hidden : true,
 			itemId : 'admgroup',
 			items : [{
 					xtype : 'comboagent'
@@ -35,8 +36,15 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 			xtype : 'label',
 			text : 'UserName'
 		},
-		' ', ' ', ' ', {
-			tooltip : 'Разлогиниться',
+		' ', ' ', ' ',
+		 {
+			tooltip : 'Помощь',
+			iconCls : 'help',
+			action : 'help',
+			xtype : 'button'
+		},
+		{
+			tooltip : 'Выход',
 			iconCls : 'exit-user',
 			action : 'logout',
 			xtype : 'button'

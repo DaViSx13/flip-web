@@ -87,10 +87,10 @@ Ext.define('FPAgent.controller.Loginform', {
 					aviewport.add(Ext.widget('mainpanel'));
 					if (action.result.msg == '-1') {
 						me.loadAdmPan();
-						aviewport.down('mainpanel').child('#users').tab.show();
+						aviewport.down('mainpanel').child('#users').tab.show();						
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
-						aviewport.down('mainpanel').down('label').setText(action.result.username);
+						aviewport.down('mainpanel').down('label').setText(action.result.username);						
 						Ext.Ajax.request({
 							url : 'srv/data.php',
 							params : {

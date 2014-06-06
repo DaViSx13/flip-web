@@ -221,7 +221,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	loadOrdGr : function (Pan) {
 		var adTol = this.getAdmTool();
-		adTol.down('buttongroup[itemId=admgroup]').setVisible(true);
+		if (adTol.down('label').text == 'WEB Администратор'){
+		adTol.down('buttongroup[itemId=admgroup]').setVisible(true);		
+		}
 		var btnList = adTol.down('button[action=list]');
 		var btnTempl = adTol.down('button[action=templ]');
 		btnList.setVisible(true);

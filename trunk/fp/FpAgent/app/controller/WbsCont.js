@@ -412,7 +412,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 	loadWbsGrid : function (comp) {
 		var aTol = this.getWbsTool();
 		this.allWbs(aTol.down('button[action=all]'));
+		if (this.getAdmTool().down('label').text == 'WEB Администратор'){
 		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);
+		}
 		this.getAdmTool().down('button[action=list]').setVisible(false);
 		this.getAdmTool().down('button[action=templ]').setVisible(false);
 	},

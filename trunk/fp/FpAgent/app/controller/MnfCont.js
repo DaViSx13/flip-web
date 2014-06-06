@@ -45,6 +45,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			},
 			'admtool comboagent' : {
 				select : this.changeAgent
+			},
+			'admtool button[action=help]' : {
+				click : this.showHelp
 			}
 		});
 		this.getMnfStStore().on({
@@ -96,9 +99,21 @@ Ext.define('FPAgent.controller.MnfCont', {
 			}
 		});
 	},
+	showHelp : function (btn) {
+	//получаем ид активного таба
+		var tab = btn.up('mainpanel').getActiveTab();
+		var actIndex = tab.getId();
+	//тут смотрим и сопоставляем название таба с названием раздела хелпа	
+		var part = (actIndex.indexOf('wbsgrid')>-1)?'naklad':((actIndex.indexOf('ordspanel')>-1)?'zakaz':((actIndex.indexOf('mnfpane')>-1)?'manif':''));
+	//если не подходит ни 1 из разделов, то ссыль просто на хелп в целом	
+		var parthelp = (part!='')?('?'+part+'.html'):'';
+		window.open('help/index.html'+parthelp);
+	},
 	loadMnf : function (ThePanel) {
 		this.openOutmnf(ThePanel.down('button[action=out]'));
-		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);
+		if (this.getAdmTool().down('label').text == 'WEB Администратор'){
+		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);		
+		}
 		this.getAdmTool().down('button[action=list]').setVisible(false);
 		this.getAdmTool().down('button[action=templ]').setVisible(false);
 	},
