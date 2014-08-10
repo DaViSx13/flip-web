@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" />
+    <meta charset="utf-8"/>
+	<meta name="author" content="DaViS" />
+
+	<title>Flippost API</title>
+</head>
+
+<body>
+
+<p/><b>Flippost API</b> 
+
+
+<p/>Доступ к API осуществляется через запросы к скрипту api.php, базовая часть URL та же, что и у этого файла.
+<p/>Например: 
+<p/></p>этот файл - http://web.flippost.com/fp/client/api.htm
+<p/>API  - http://web.flippost.com/fp/client/api.php 
+
+<p/><b>1. Формат запроса</b> 
+<pre>
+.../api.php?dbAct=&lt;action&gt;&amp;param1=value1&amp;..paramN=valueN
+</pre>
+<p/>-	action - тип запроса к API 
+<p/>-	param1.. paramN – парамеры
+
+<p/>Отправка параметров на api.php возможна методами как GET, так и POST.
+<p/><b>2. Формат ответа</b>
+<p/>Ответ приходит в формате JSON, следующего вида:
+<pre>
+{   "success":false
+    ,"msg":"совсем не правильный запрос"
+    ,"data":[]
+}
+</pre>
+
+<p/> success - признак успеха выполнения запроса, принимает значения true и false.
+<p/> msg - текстовое сообщение, комментирующее success, может содержать описание ошибки
+<p/> data - массив данных
+
+<p/><b>3. Типы запросов</b> 
+
+<p/><b>3.1. getCountries</b> 
+
+<pre>
+api.php?dbAct=getCountries
+</pre>
+
+<p>Возвращает список стран. Доп параметров нет.
+
+<pre>
+{   "success":true
+    ,"msg":"ok"
+    ,"data":[{"code":"AU","country":"Австралия"}
+            ,{"code":"AT","country":"Австрия"}
+            ,...]
+}
+</pre>
+
+<p/><b>3.2. getStates</b> 
+
+<pre>
+api.php?dbAct=getStates&amp;country=&lt;countyCode&gt;
+</pre>
+
+<p>Возвращает список областей(штатов) страны &lt;countyCode&gt;.
+<p>&lt;countyCode&gt; - код страны, возвращаемый запросом getCountries, по-умолчанию 'RUS' (необязательный) 
+
+<pre>
+{   "success":true
+    ,"msg":"ok"
+    ,"data":[{"ccode":"RUS","state":"Адыгея"}
+            ,{"ccode":"RUS","state":"Алтайский"}
+            ,...]
+}
+</pre>
+
+<p/><b>3.3. getCities</b> 
+
+<pre>
+api.php?dbAct=getCities&amp;country=&lt;countyCode&gt;&amp;state=&lt;stateName&gt;&amp;city=&lt;cityStarts&gt;
+</pre>
+
+<p>Возвращает список населенных пунктов, отфильтрованный по &lt;countyCode&gt;, &lt;stateName&gt; и &lt;cityStarts&gt;.
+<p>&lt;countyCode&gt; - код страны, возвращаемый запросом getCountries, по-умолчанию '' (необязательный)
+<p>&lt;stateName&gt; - наименование области, возвращаемое запросом getStates, по-умолчанию '' (необязательный) 
+<p>&lt;cityStarts&gt; - первые символы названия нас.пункта, по-умолчанию '' (необязательный)
+
+<p> Пример: api.php?dbAct=getCities&amp;city=уф
+
+<pre>
+{   "success":true
+    ,"msg":"ok"
+    ,"data":[{"code":"UFA","city":"Уфа","country":"Россия","state":"Башкортостан","fullname":"Уфа, Россия, Башкортостан"}
+            ,{"code":"UFA00","city":"Уфа-74","country":"Россия","state":"Башкортостан","fullname":"Уфа-74, Россия, Башкортостан"}
+            ,{"code":"DE1","city":"Уффенхайм","country":"Германия","state":"Бавария","fullname":"Уффенхайм, Германия, Бавария"}]
+}
+</pre>
+
+<p/><b>3.4. getTarif</b> 
+
+<pre>
+api.php?dbAct=getTarif&amp;org=&lt;orgCityCode&gt;&amp;dest=&lt;destCityCode&gt;&amp;weight=&lt;weight&gt;
+</pre>
+
+<p>Возвращает стоимость доставки отправления в рублях.
+<p>&lt;orgCityCode&gt; - код нас.пункта(code) отправителя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)
+<p>&lt;destCityCode&gt; - код нас.пункта(code) получателя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)
+<p>&lt;weight&gt; - вес отправления в кг, по-умолчанию 0.1 (необязательный)
+
+<p> Пример: api.php?dbAct=getTarif&amp;org=MOW&amp;dest=VOZ&amp;weight=2.7
+
+<pre>
+{   "success":true
+    ,"msg":"ok"
+    ,"data":[{"tarif":"538.65"}]
+}
+</pre>
+
+</body>
+</html>
