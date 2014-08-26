@@ -1,0 +1,86 @@
+.exit-user {
+	background-image : url(../../resources/images/exit.gif);
+}
+.x-action-col-cell img.ex-col {
+	background-image : url(../../resources/images/ex.gif);
+	height : 16px;
+	width : 16px;
+	cursor : pointer;
+}
+.excel {
+	background-image : url(../../resources/images/excel_.png);
+}
+.import {
+	background-image : url(../../resources/images/import.png);
+}
+.overduebox {
+	background-image : url(../../resources/images/overdue.png);
+}
+.list {
+	background-image : url(../../resources/images/list.png);
+}
+.templ {
+	background-image : url(../../resources/images/template.png);
+}
+.wbno {
+	background-image : url(../../resources/images/wbno.png);
+}
+.newex {
+	background-image : url(../../resources/images/newex.png);
+}
+.newpod {
+	background-image : url(../../resources/images/newpod.png);
+}
+.filter {
+	background-image : url(../../resources/images/filter_.png);
+}
+.inbox {
+	background-image : url(../../resources/images/outbox.png);
+}
+.outbox {
+	background-image : url(../../resources/images/inbox.png);
+}
+.allbox {
+	background-image : url(../../resources/images/allbox.png);
+}
+.newdoc {
+	background-image : url(../../resources/images/newdoc.png);
+}
+.newtpl {
+	background-image : url(../../resources/images/fromtpl.png);
+}
+.help {
+	background-image : url(../../resources/images/book.png);
+}.viewdoc {
+	background-image : url(../../resources/images/viewdoc.png);
+}
+.editdoc {
+	background-image : url(../../resources/images/editdoc.png);
+}
+.deldoc {
+	background-image : url(../../resources/images/delet.png);
+}
+.adduser {
+	background-image : url(../../resources/images/adduser.png);
+}
+.x-action-col-cell img.red-usr {
+	background-image : url(../../resources/images/userred.png);
+	height : 16px;
+	width : 16px;	
+}
+.x-action-col-cell img.gre-usr {
+	background-image : url(../../resources/images/usergreen.png);
+	height : 16px;
+	width : 16px;	
+}
+.redusr {
+	background-image : url(../../resources/images/userred.png);
+}
+.greusr {
+	background-image : url(../../resources/images/usergreen.png);
+}
+.x-action-col-cell img.cut{
+	background-image : url(../../resources/images/cut.png);
+	height : 16px;
+	width : 16px;	
+}
