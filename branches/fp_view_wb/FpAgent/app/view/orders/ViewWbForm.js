@@ -7,6 +7,7 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 	bodyPadding : 5,
 	items : [{
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 154,
 			x : 320,
 			y : 35,
@@ -14,17 +15,20 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 		}, {
 			xtype : 'displayfield',
 			width : 154,
+			fieldCls : 'otherstr',
 			x : 10,
 			y : 28,
 			name : 'd_acc'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 154,
 			x : 144,
 			y : 28,
 			name : 'org'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 154,
 			x : 225,
 			y : 28,
@@ -59,12 +63,14 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 			name : 's_tel'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 154,
 			x : 3,
 			y : 130,
 			name : 's_cnt'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 154,
 			x : 282,
 			y : 160,
@@ -80,18 +86,21 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 			name : 's_adr'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 278,
 			x : 3,
 			y : 160,
 			name : 's_city'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 420,
 			x : 3,
 			y : 225,
 			name : 's_ref'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 420,
 			x : 120,
 			y : 259,
@@ -125,18 +134,21 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 			name : 'r_adr'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 420,
 			x : 3,
 			y : 322,
 			name : 'r_cnt'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 420,
 			x : 282,
 			y : 352,
 			name : 'r_zip'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 420,
 			x : 3,
 			y : 352,
@@ -149,36 +161,42 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 			name : 'pers'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 190,
 			x : 530,
 			y : 487,
 			name : 'rcpn'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 100,
 			x : 535,
 			y : 513,
 			name : 'dod'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 100,
 			x : 662,
 			y : 513,
 			name : 'tdd'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 50,
 			x : 10,
 			y : 500,
 			name : 'pcs'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 50,
 			x : 70,
 			y : 485,
 			name : 'wt'
 		}, {
 			xtype : 'displayfield',
+			fieldCls : 'otherstr',
 			width : 50,
 			x : 358,
 			y : 500,
@@ -211,7 +229,7 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 			xtype : 'displayfield',
 			width : 5,
 			x : 545,
-			y : 79,
+			y : 77,
 			name : 'payr_1',
 			value : 'X',
 			hidden : true

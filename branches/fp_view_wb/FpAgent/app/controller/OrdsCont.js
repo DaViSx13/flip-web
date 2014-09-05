@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt'],
 	refs : [{
@@ -39,6 +39,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'MainPanel',
 			selector : 'mainpanel'
+		}, {
+			ref : 'WbsGrid',
+			selector : 'wbsgrid'
 		}, {
 			ref : 'OrdGrid',
 			selector : 'ordgrid'
@@ -81,6 +84,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'loadfileform button[action=delete]' : {
 				click : this.fileDel
+			},
+			'wbsgrid > tableview' : {
+				itemdblclick : this.dblclickWbsGr
 			},
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
@@ -200,9 +206,19 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				params : {
 					wb_no : sm.getSelection()[0].get('wb_no')
 				}
-			});
-			//form.down('displayfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
-			//form.down('textfield[name=rordnum]').setValue(sm.getSelection()[0].get('rordnum'));
+			});			
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
+		}
+	},
+	dblclickWbsGr : function (gr, rec) {
+		var sm = gr.getSelectionModel();
+		if (sm.getSelection()[0].get('wb_no')) {
+			this.getViewWbStStore().load({
+				params : {
+					wb_no : sm.getSelection()[0].get('wb_no')
+				}
+			});			
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
 		}

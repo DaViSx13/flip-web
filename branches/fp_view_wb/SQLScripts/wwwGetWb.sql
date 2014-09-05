@@ -26,15 +26,15 @@ SELECT [Wb_No]	--  1
       ,[DEST]    -- 4    
       ,[S_Name] --  5
       ,CASE 
-		WHEN len(S_Tel) < 12 THEN char(10) + S_Tel
+		WHEN len(S_Tel) < 20 THEN char(10) + S_Tel
 	   ELSE S_Tel
        END  as S_Tel --  6
       ,CASE 
-		WHEN len(S_Co) < 31 THEN char(10) + S_Co
+		WHEN len(S_Co) < 39 THEN char(10) + S_Co
 	   ELSE S_Co
        END  as S_Co	--7
       ,CASE 
-		WHEN len(S_Adr) < 53 THEN char(10) + S_Adr
+		WHEN len(S_Adr) < 59 THEN char(10) + S_Adr
        ELSE S_Adr
        END  as S_Adr -- 8
       ,[S_Cnt]	-- 9
@@ -43,15 +43,15 @@ SELECT [Wb_No]	--  1
       ,isnull(KL1.C_City,' л-т удален') as S_City	--12 
       ,[R_Name]	-- 13
       ,CASE 
-		WHEN len(R_Tel) < 12 THEN char(10) + R_Tel
+		WHEN len(R_Tel) < 20 THEN char(10) + R_Tel
        ELSE R_Tel
        END  as R_Tel	-- 14
       ,CASE 
-		WHEN len(R_Co) < 31 THEN char(10) + R_Co
+		WHEN len(R_Co) < 39 THEN char(10) + R_Co
        ELSE R_Co
        END  as R_Co	-- 15
       ,CASE 
-		WHEN len(R_Adr) < 53 THEN char(10) + R_Adr
+		WHEN len(R_Adr) < 59 THEN char(10) + R_Adr
        ELSE R_Adr
        END  as R_Adr  -- 16
       ,[R_Cnt]  -- 17

@@ -31,12 +31,16 @@
 	background-size: contain;	
 }
 .wbview {
-	background-image : url(../../resources/images/wbview.png);
+	background-image : url(../../resources/images/wbview.png);	
 }
-.longstr, textarea.x-form-field{
+.longstr, textarea.x-form-field {
 	background-color: transparent;
 	border-style: none;
 	background-image: none;
+	font-family: Courier New;
+}
+.otherstr {		
+	font-family: Courier New;
 }
 .newex {
 	background-image : url(../../resources/images/newex.png);
