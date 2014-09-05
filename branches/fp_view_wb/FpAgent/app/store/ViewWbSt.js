@@ -4,7 +4,7 @@ Ext.define('FPAgent.store.ViewWbSt', {
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',
-		actionMethods: 'POST',
+		actionMethods : 'POST',
 		reader : {
 			type : 'json',
 			root : 'data'

@@ -206,7 +206,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				params : {
 					wb_no : sm.getSelection()[0].get('wb_no')
 				}
-			});			
+			});
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
 		}
@@ -218,7 +218,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				params : {
 					wb_no : sm.getSelection()[0].get('wb_no')
 				}
-			});			
+			});
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
 		}
@@ -239,75 +239,75 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				}
 				switch (rec[0].data.t_srv) {
 				case 'EX': {
-						form.down('displayfield[name=t_srv_ex]').setVisible(true);						
+						form.down('displayfield[name=t_srv_ex]').setVisible(true);
 						break;
 					}
 				case 'ST': {
-						form.down('displayfield[name=t_srv_st]').setVisible(true);						
+						form.down('displayfield[name=t_srv_st]').setVisible(true);
 						break;
 					}
 				case 'AF': {
-						form.down('displayfield[name=t_srv_af]').setVisible(true);						
+						form.down('displayfield[name=t_srv_af]').setVisible(true);
 						break;
 					}
 				}
 				switch (rec[0].data.payr) {
 				case 1: {
-						form.down('displayfield[name=payr_1]').setVisible(true);						
+						form.down('displayfield[name=payr_1]').setVisible(true);
 						break;
 					}
 				case 2: {
-						form.down('displayfield[name=payr_2]').setVisible(true);						
+						form.down('displayfield[name=payr_2]').setVisible(true);
 						break;
 					}
 				case 3: {
-						form.down('displayfield[name=payr_3]').setVisible(true);						
+						form.down('displayfield[name=payr_3]').setVisible(true);
 						break;
 					}
 				}
 				switch (rec[0].data.t_pak) {
 				case 'LE': {
-						form.down('displayfield[name=t_pak_le]').setVisible(true);						
+						form.down('displayfield[name=t_pak_le]').setVisible(true);
 						break;
 					}
 				case 'PL': {
-						form.down('displayfield[name=t_pak_pl]').setVisible(true);						
+						form.down('displayfield[name=t_pak_pl]').setVisible(true);
 						break;
-					}				
+					}
 				}
 				switch (rec[0].data.metpaym) {
 				case 'CSH': {
-						form.down('displayfield[name=metpaym_csh]').setVisible(true);						
+						form.down('displayfield[name=metpaym_csh]').setVisible(true);
 						break;
 					}
 				case 'INV': {
-						form.down('displayfield[name=metpaym_inv]').setVisible(true);						
+						form.down('displayfield[name=metpaym_inv]').setVisible(true);
 						break;
-					}				
+					}
 				}
 				switch (rec[0].data.t_del) {
 				case 'AD': {
-						form.down('displayfield[name=t_del_ad]').setVisible(true);						
+						form.down('displayfield[name=t_del_ad]').setVisible(true);
 						break;
 					}
 				case 'HO': {
-						form.down('displayfield[name=t_del_ho]').setVisible(true);						
+						form.down('displayfield[name=t_del_ho]').setVisible(true);
 						break;
 					}
 				case 'TA': {
-						form.down('displayfield[name=t_del_ta]').setVisible(true);						
+						form.down('displayfield[name=t_del_ta]').setVisible(true);
 						break;
-					}					
-				}	
+					}
+				}
 				switch (rec[0].data.ins) {
 				case 0: {
-						form.down('displayfield[name=ins_0]').setVisible(true);						
+						form.down('displayfield[name=ins_0]').setVisible(true);
 						break;
 					}
 				default: {
-						form.down('displayfield[name=ins_1]').setVisible(true);	
-					}				
-				}				
+						form.down('displayfield[name=ins_1]').setVisible(true);
+					}
+				}
 				form.loadRecord(rec[0]);
 				win.show();
 			}

@@ -53,7 +53,7 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 			name : 's_co'
 		}, {
 			xtype : 'textarea',
-			border : false,			
+			border : false,
 			readOnly : true,
 			cls : 'longstr',
 			width : 140,
