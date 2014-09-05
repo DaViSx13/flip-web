@@ -215,6 +215,9 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetAgentsList':
 			$query = "exec wwwGetAgentsList";
 			break;
+		case 'GetWb':
+			$query = "exec wwwGetWb @wb_no='{$params[wb_no]}'";
+			break;
     }
 
     if (!isset($query)) {
