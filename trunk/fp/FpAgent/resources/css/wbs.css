@@ -25,6 +25,23 @@
 .wbno {
 	background-image : url(../../resources/images/wbno.png);
 }
+.wbtemplate {
+	background-image : url(../../resources/images/wbtemplate.jpg);	
+	background-repeat: no-repeat;
+	background-size: contain;	
+}
+.wbview {
+	background-image : url(../../resources/images/wbview.png);	
+}
+.longstr, textarea.x-form-field {
+	background-color: transparent;
+	border-style: none;
+	background-image: none;
+	font-family: Courier New;
+}
+.otherstr {		
+	font-family: Courier New;
+}
 .newex {
 	background-image : url(../../resources/images/newex.png);
 }

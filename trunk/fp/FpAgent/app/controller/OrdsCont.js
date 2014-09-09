@@ -1,8 +1,8 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt'],
+	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt'],
 	refs : [{
 			ref : 'OrdForm',
 			selector : 'ordform'
@@ -28,6 +28,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			ref : 'LoadFileForm',
 			selector : 'loadfileform'
 		}, {
+			ref : 'ViewWbWin',
+			selector : 'viewwbwin'
+		}, {
 			ref : 'WbNoWin',
 			selector : 'wbnowin'
 		}, {
@@ -36,6 +39,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'MainPanel',
 			selector : 'mainpanel'
+		}, {
+			ref : 'WbsGrid',
+			selector : 'wbsgrid'
 		}, {
 			ref : 'OrdGrid',
 			selector : 'ordgrid'
@@ -79,6 +85,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'loadfileform button[action=delete]' : {
 				click : this.fileDel
 			},
+			'wbsgrid > tableview' : {
+				itemdblclick : this.dblclickWbsGr
+			},
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
 			},
@@ -97,6 +106,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordtool button[action=wbno]' : {
 				click : this.editWbno
 			},
+			'ordtool button[action=wbview]' : {
+				click : this.viewWb
+			},
 			'wbnowin button[action=save]' : {
 				click : this.saveWbno
 			},
@@ -113,6 +125,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		this.getOrderStStore().on({
 			scope : this,
 			load : this.loadOrdStore
+		});
+		this.getViewWbStStore().on({
+			scope : this,
+			load : this.loadViewWbSt
 		});
 		this.getOrdsStStore().on({
 			scope : this,
@@ -183,6 +199,122 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
+	viewWb : function (btn) {
+		var sm = btn.up('ordgrid').getSelectionModel();
+		if (sm.getSelection()[0].get('wb_no')) {
+			this.getViewWbStStore().load({
+				params : {
+					wb_no : sm.getSelection()[0].get('wb_no')
+				}
+			});
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
+		}
+	},
+	dblclickWbsGr : function (gr, rec) {
+		var sm = gr.getSelectionModel();
+		if (sm.getSelection()[0].get('wb_no')) {
+			this.getViewWbStStore().load({
+				params : {
+					wb_no : sm.getSelection()[0].get('wb_no')
+				}
+			});
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
+		}
+	},
+	loadViewWbSt : function (st, rec, suc) {
+		if (suc) {
+			if (rec[0].data.wbstatus == 0) {
+				Ext.Msg.alert('Внимание!', 'Накладная не введена в систему!');
+			} else {
+				var win = Ext.widget('viewwbwin');
+				var form = win.down('viewwbform');
+				rec[0].data.d_acc = Ext.Date.format(rec[0].data.d_acc, "d / m / y");
+				rec[0].data.dod = Ext.Date.format(rec[0].data.dod, "d / m / y");
+				rec[0].data.tdd = Ext.Date.format(rec[0].data.tdd, "H : i");
+				if (rec[0].data.timing) {
+					form.down('displayfield[name=timing_check]').setVisible(true);
+					rec[0].data.timing = Ext.Date.format(rec[0].data.timing, "H:i");
+				}
+				switch (rec[0].data.t_srv) {
+				case 'EX': {
+						form.down('displayfield[name=t_srv_ex]').setVisible(true);
+						break;
+					}
+				case 'ST': {
+						form.down('displayfield[name=t_srv_st]').setVisible(true);
+						break;
+					}
+				case 'AF': {
+						form.down('displayfield[name=t_srv_af]').setVisible(true);
+						break;
+					}
+				}
+				switch (rec[0].data.payr) {
+				case 1: {
+						form.down('displayfield[name=payr_1]').setVisible(true);
+						break;
+					}
+				case 2: {
+						form.down('displayfield[name=payr_2]').setVisible(true);
+						break;
+					}
+				case 3: {
+						form.down('displayfield[name=payr_3]').setVisible(true);
+						break;
+					}
+				}
+				switch (rec[0].data.t_pak) {
+				case 'LE': {
+						form.down('displayfield[name=t_pak_le]').setVisible(true);
+						break;
+					}
+				case 'PL': {
+						form.down('displayfield[name=t_pak_pl]').setVisible(true);
+						break;
+					}
+				}
+				switch (rec[0].data.metpaym) {
+				case 'CSH': {
+						form.down('displayfield[name=metpaym_csh]').setVisible(true);
+						break;
+					}
+				case 'INV': {
+						form.down('displayfield[name=metpaym_inv]').setVisible(true);
+						break;
+					}
+				}
+				switch (rec[0].data.t_del) {
+				case 'AD': {
+						form.down('displayfield[name=t_del_ad]').setVisible(true);
+						break;
+					}
+				case 'HO': {
+						form.down('displayfield[name=t_del_ho]').setVisible(true);
+						break;
+					}
+				case 'TA': {
+						form.down('displayfield[name=t_del_ta]').setVisible(true);
+						break;
+					}
+				}
+				switch (rec[0].data.ins) {
+				case 0: {
+						form.down('displayfield[name=ins_0]').setVisible(true);
+						break;
+					}
+				default: {
+						form.down('displayfield[name=ins_1]').setVisible(true);
+					}
+				}
+				form.loadRecord(rec[0]);
+				win.show();
+			}
+		} else {
+			Ext.Msg.alert('Ошибка!', 'Ошибка связи с сервером!');
+		}
+	},
 	exportExcel : function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
@@ -221,8 +353,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	loadOrdGr : function (Pan) {
 		var adTol = this.getAdmTool();
-		if (adTol.down('label').text == 'WEB Администратор'){
-		adTol.down('buttongroup[itemId=admgroup]').setVisible(true);		
+		if (adTol.down('label').text == 'WEB Администратор') {
+			adTol.down('buttongroup[itemId=admgroup]').setVisible(true);
 		}
 		var btnList = adTol.down('button[action=list]');
 		var btnTempl = adTol.down('button[action=templ]');
