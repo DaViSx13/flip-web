@@ -25,10 +25,10 @@ Ext.define('FPAgent.view.wbs.NewPodForm', {
 			startDay : 1,
 			allowBlank : false
 		}, {
-			xtype : 'timefield',
+			xtype : 'textfield',
 			name : 'tdd',
 			fieldLabel : 'Время',
-			format : 'H:i',
+			vtype: 'time',
 			allowBlank : false
 		}, {
 			xtype : 'textfield',

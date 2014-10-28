@@ -151,15 +151,15 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					startDay : 1,
 					format : 'd.m.Y'
 				}, {
-					xtype : 'timefield',
+					xtype : 'textfield',
 					name : 'courtimef',
 					fieldLabel : 'Время с',
-					format : 'H:i'
+					vtype: 'time'
 				}, {
-					xtype : 'timefield',
+					xtype : 'textfield',
 					name : 'courtimet',
 					fieldLabel : 'Время до',
-					format : 'H:i'
+					vtype: 'time'
 				}
 			]
 		}, {

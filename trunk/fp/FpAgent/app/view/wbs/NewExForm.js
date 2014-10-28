@@ -24,10 +24,10 @@ Ext.define('FPAgent.view.wbs.NewExForm', {
 			format : 'd.m.Y',
 			allowBlank : false
 		}, {
-			xtype : 'timefield',
+			xtype : 'textfield',
 			name : 'exRaisedTime',
 			fieldLabel : 'Время события',
-			format : 'H:i',
+			vtype: 'time',
 			allowBlank : false
 		}, {
 			xtype : 'datefield',
