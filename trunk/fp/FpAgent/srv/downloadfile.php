@@ -8,7 +8,7 @@ $file = ("tmpfolder/".$_GET['fn']."");
 	//$udatabase='alert_f';
 	//$db = mssql_connect($hostname, $username, $password);       
 	//mssql_select_db($udatabase);
-	$query = "exec wwwSelectAgFiles @RealFileName='{$file}' ";
+	$query = "exec wwwSelectAgFiles @RealFileName='{$_GET['fn']}' ";
 	$query = iconv("UTF-8", "windows-1251", $query);
 	include "dbConnect.php";
 	$result = mssql_query($query);
