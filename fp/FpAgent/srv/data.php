@@ -12,6 +12,8 @@ class Response
 $response = new Response();
 $iserror = false;
 $errormsg = ''; 
+$paging = false;
+
 include "errorhandler.php";
 
 //кульминация
@@ -36,51 +38,51 @@ if (!isset($_REQUEST['dbAct'])) {
 			//$query = "select cast(null as varchar(10)) as test";
             break;
         case 'getAgOrders':
-            $ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
+            $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
             $query = "exec wwwGetAgOrders @period='$params[newPeriod]', @agentID={$ag}";
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
-			$ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetMnf @period='$params[period]', @agentID={$ag}, @is_Ready={$is_Ready}";
+			$query = "exec wwwGetMnf @period='{$params['period']}', @agentID={$ag}, @is_Ready={$is_Ready}";
 			break;
 		case 'GetWbMnf':
 			$mnfRefNo = $params['mnfRefNo'];
-			$ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetWbMnf @agentID={$ag}, @mnfRefNo='{$mnfRefNo}'";
 			break;
 		case 'GetCity':
-			$pName = $params['query'] ? $params['query'] : '';  
+			$pName = isset($params['query']) ? $params['query'] : '';  
 			$query = "exec wwwGetCity @pName = '{$pName}'";
 			break;
 		case 'editagorder':
-			$id =  $params[id];
+			$id =  $params['id'];
 			$agent = $_SESSION['xAgentID'];
 			$query = "exec wwwEditAgOrders @id={$id}, @agent={$agent}";
 			break;
 		case 'saveagorder':
-			$CName=$params[cname];
+			$CName=$params['cname'];
 			$ag=$_SESSION['xAgentID'];
-			$DName=$params[dname];
-			$Amt=$params[amt] ? $params[amt] : 0;
-			$CurId=$params[curid] ? $params[curid] : 0;
-			$VolWt=$params[volwt] ? $params[volwt] : 0;
-			$Rordnum=$params[rordnum] ? $params[rordnum] : 0;
-			$Address=$params[address];
-			$ContName=$params[contname];
-			$OrgRems=$params[orgrems];
-			$DContName=$params[dcontname];
-			$DAdr=$params[dadr];
-			$DESTRems=$params[destrems];
+			$DName=$params['dname'];
+			$Amt=isset($params['amt']) ? $params['amt'] : 0;
+			$CurId=isset($params['curid']) ? $params['curid'] : 0;
+			$VolWt=$params['volwt'] ? $params['volwt'] : 0;
+			$Rordnum=$params['rordnum'] ? $params['rordnum'] : 0;
+			$Address=$params['address'];
+			$ContName=$params['contname'];
+			$OrgRems=$params['orgrems'];
+			$DContName=$params['dcontname'];
+			$DAdr=$params['dadr'];
+			$DESTRems=$params['destrems'];
 			$UserIn= $_SESSION['xUser'];
-			$courdate=$params[courdate];
-			$courtimef=$params[courtimef];
-			$courtimet=$params[courtimet];
-			$ContPhone=$params[contphone];
-			$DContPhone=$params[dcontphone];
+			$courdate=$params['courdate'];
+			$courtimef=$params['courtimef'];
+			$courtimet=$params['courtimet'];
+			$ContPhone=$params['contphone'];
+			$DContPhone=$params['dcontphone'];
 
 			if($courdate){
 				$d = explode('.', $courdate);
@@ -114,7 +116,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@RordNum=$Rordnum";			
 			break;
 		case 'GetAgentWbs':
-			$ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetAgentWbs @period='$params[newPeriod]', @agentID={$ag}, @dir='$params[dir]'";
             $paging = true;
@@ -131,7 +133,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$rem_ag = $params['rem_ag'];   
 			$rem_ag = stripslashes($rem_ag);
 			$tar_a_ag = strtr($params['tar_a_ag'], ',', '.');  
-			$query = "exec wwwSetTar_a_ag @wb_no='{$params[wb_no]}', @interid={$params['interid']}, @tar_a_ag={$tar_a_ag}, @rem='{$rem_ag}', @user='{$_SESSION[xUser]}' ";
+			$query = "exec wwwSetTar_a_ag @wb_no='{$params['wb_no']}', @interid={$params['interid']}, @tar_a_ag={$tar_a_ag}, @rem='{$rem_ag}', @user='{$_SESSION['xUser']}' ";
 			break;
 		case 'NewEx':
 			$exContent = $params['exContent'];   
@@ -139,30 +141,30 @@ if (!isset($_REQUEST['dbAct'])) {
 			$exRaised = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ) . ' ' . $params['exRaisedTime'];
 			$d = explode('.', $params['exRptd']);
 			$exRptd = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
-			$query = "exec wwwNewEx @wb_no='{$params[wb_no]}', @raised='{$exRaised}', @rptd='{$exRptd}', @loc='{$params[exLoc]}', @exCode = '{$params[exCode]}', @Content = '$exContent' , @user='{$_SESSION[xUser]}' ";
+			$query = "exec wwwNewEx @wb_no='{$params['wb_no']}', @raised='{$exRaised}', @rptd='{$exRptd}', @loc='{$params['exLoc']}', @exCode = '{$params['exCode']}', @Content = '$exContent' , @user='{$_SESSION['xUser']}' ";
 			break;	
 		case 'SetPOD':
 			$rcpn = $params['rcpn'];
 			$d = explode('.', $params['p_d_in']);
 			$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
-			$query = "exec wwwSetPOD @wb_no='{$params[wb_no]}', @p_d_in='{$p_d_in}', @tdd='{$params[tdd]}', @rcpn='{$rcpn}', @user='{$_SESSION[xUser]}' ";
+			$query = "exec wwwSetPOD @wb_no='{$params['wb_no']}', @p_d_in='{$p_d_in}', @tdd='{$params['tdd']}', @rcpn='{$rcpn}', @user='{$_SESSION['xUser']}' ";
 			break;
 		case 'GetWbsTotal':
-			$ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetWbsTotal @dir='{$params[dir]}', @period='{$params[period]}',  @agentID={$ag} ";
+			$query = "exec wwwGetWbsTotal @dir='{$params['dir']}', @period='{$params['period']}',  @agentID={$ag} ";
 			break;
 		case 'GetAgents':
 			$query = "exec wwwGetAgents";
 			break;
 		case 'SetWbno':
 			$paging = false;
-			$rordnum = $params['rordnum'] ? $params['rordnum'] : 0;
-			$wbno = $params['wbno'] ? $params['wbno'] : 'NULL';
+			$rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
+			$wbno = isset($params['wbno']) ? $params['wbno'] : 'NULL';
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
 		case 'getAgTemplates':
-			$ag = $params['newAgent'] ? $params['newAgent'] : $_SESSION['xAgentID'];
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetAgTemplates @agentID={$ag}";
 			break;
@@ -207,16 +209,16 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwGetUsers";
 			break;
 		case 'setUsers':						
-			$query = "exec wwwSetUsers @id={$params[id]}, @auser='{$params[auser]}', @pass='{$params[passfirst]}', @agentID={$params[agents]}"; 
+			$query = "exec wwwSetUsers @id={$params['id']}, @auser='{$params['auser']}', @pass='{$params['passfirst']}', @agentID={$params['agents']}"; 
 			break;
 		case 'setActive':			
-			$query = "exec wwwSetActive @id={$params[id]}, @active={$params[active]}"; 
+			$query = "exec wwwSetActive @id={$params['id']}, @active={$params['active']}"; 
 			break;
 		case 'GetAgentsList':
 			$query = "exec wwwGetAgentsList";
 			break;
 		case 'GetWb':
-			$query = "exec wwwGetWb @wb_no='{$params[wb_no]}'";
+			$query = "exec wwwGetWb @wb_no='{$params['wb_no']}'";
 			break;
     }
 
