@@ -1,200 +1,276 @@
 <?php
-	require_once "secureCheck.php";
+require_once 'Excel/PHPExcel.php';
+include 'dbConnect.php';
+require_once 'Excel/PHPExcel/Writer/Excel5.php';
+require_once "CellStyle.php";
 
-    include "dbConnect.php";
-
-    require_once 'Spreadsheet/Excel/Writer.php';
+function setCellStyle($sheet, $cell, $arrstyle){	
+	$sheet->getStyle($cell)->applyFromArray($arrstyle);
+}
 
 $ordnum = $_REQUEST['ordnum']; 
 $query = "exec wwwExportAgOrder @ordnum={$ordnum}";
 $result=mssql_query($query);
 
 // Creating a workbook
-$workbook = new Spreadsheet_Excel_Writer();
+$workbook = new PHPExcel();
 
-// sending HTTP headers
-$workbook->send('çàêàç Ôëèïïîñò ¹'.$ordnum.'.xls');
+// Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¸Ð½Ð´ÐµÐºÑ Ð°ÐºÑ‚Ð¸Ð²Ð½Ð¾Ð³Ð¾ Ð»Ð¸ÑÑ‚Ð°
+$workbook->setActiveSheetIndex(0);
+// ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð°ÐºÑ‚Ð¸Ð²Ð½Ñ‹Ð¹ Ð»Ð¸ÑÑ‚
+$worksheet = $workbook->getActiveSheet();
+$worksheet->setTitle('Ð·Ð°ÐºÐ°Ð· Ð¤Ð»Ð¸Ð¿Ð¿Ð¾ÑÑ‚ â„–'.$ordnum);
 
-// Creating a worksheet
-$worksheet =& $workbook->addWorksheet('çàêàç Ôëèïïîñò ¹'.$ordnum);
+//Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚
 
-//ôîðìàò
-$format_title =& $workbook->addFormat();
-$format_title->setBold();
-$format_title->setColor('white'); 
-$format_title->setFgColor(23+7);
-$format_title->setAlign('center'); 
-$format_title->setBorder(1);
-$format_title->setBorderColor(17+7);
+$worksheet->getColumnDimension('A')->setWidth(20);// ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ ÑÑ‚Ð¾Ð»Ð±Ñ†Ñƒ ÑˆÐ¸Ñ€Ð¸Ð½Ñƒ
+$worksheet->getColumnDimension('B')->setWidth(40);
+$worksheet->getColumnDimension('C')->setWidth(20);// ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ ÑÑ‚Ð¾Ð»Ð±Ñ†Ñƒ ÑˆÐ¸Ñ€Ð¸Ð½Ñƒ
+$worksheet->getColumnDimension('D')->setWidth(40);
+$worksheet->getRowDimension(1)->setRowHeight(20);//  ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ ÑÑ‚Ñ€Ð¾ÐºÐµ Ð²Ñ‹ÑÐ¾Ñ‚Ñƒ
+$worksheet->getRowDimension(13)->setRowHeight(45);
+$worksheet->getStyle('A13')->getAlignment()->setWrapText(true);
 
-$format_data =& $workbook->addFormat();
-$format_data->setBorder(1);
-$format_data->setBorderColor(17+7);
+$worksheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$worksheet->getStyle('A1')->getFont()->setBold(true);
+$worksheet->getStyle('A1')->getFont()->setName('Arial');
+$worksheet->getStyle('A1')->getFont()->setSize(10);
 
-$format_default =& $workbook->addFormat();
-$format_default->setBorder(1);
-$format_default->setBorderColor(17+7);
-$format_default->setTextWrap(1);
+setCellStyle($worksheet, 'A2', $titleStyle);
+setCellStyle($worksheet, 'B2', $titleStyle);
+setCellStyle($worksheet, 'C2', $titleStyle);
+setCellStyle($worksheet, 'D2', $titleStyle);
 
-$format_page =& $workbook->addFormat();
-$format_page->setBold();
-$format_page->setAlign('center');
+setCellStyle($worksheet, 'A3', $titleStyle);
+setCellStyle($worksheet, 'A4', $titleStyle);
+setCellStyle($worksheet, 'A5', $titleStyle);
+setCellStyle($worksheet, 'A6', $titleStyle);
+setCellStyle($worksheet, 'A7', $titleStyle);
+setCellStyle($worksheet, 'A8', $titleStyle);
+setCellStyle($worksheet, 'A9', $titleStyle);
+setCellStyle($worksheet, 'A10', $titleStyle);
 
-$worksheet->setColumn ( 0 , 0 , 20 );
-$worksheet->setColumn ( 1 , 1 , 40 );
-$worksheet->setColumn ( 2 , 2 , 20 );
-$worksheet->setColumn ( 3 , 3 , 40 );
+setCellStyle($worksheet, 'C3', $titleStyle);
+setCellStyle($worksheet, 'C4', $titleStyle);
+setCellStyle($worksheet, 'C5', $titleStyle);
+setCellStyle($worksheet, 'C6', $titleStyle);
+setCellStyle($worksheet, 'C7', $titleStyle);
+setCellStyle($worksheet, 'C8', $titleStyle);
+setCellStyle($worksheet, 'C9', $titleStyle);
+setCellStyle($worksheet, 'C10', $titleStyle);
 
-$worksheet->setRow ( 0, 20);
-$worksheet->setRow ( 12, 45);
+setCellStyle($worksheet, 'A12', $titleStyle);
+setCellStyle($worksheet, 'B12', $titleStyle);
+setCellStyle($worksheet, 'C12', $titleStyle);
+setCellStyle($worksheet, 'D12', $titleStyle);
 
-//ïèøåì çàãîëîâêè
+setCellStyle($worksheet, 'A15', $titleStyle);
+setCellStyle($worksheet, 'B15', $titleStyle);
+setCellStyle($worksheet, 'C15', $titleStyle);
+setCellStyle($worksheet, 'D15', $titleStyle);
+
+setCellStyle($worksheet, 'A16', $titleStyle);
+setCellStyle($worksheet, 'B16', $titleStyle);
+setCellStyle($worksheet, 'C16', $titleStyle);
+setCellStyle($worksheet, 'D16', $titleStyle);
+
+setCellStyle($worksheet, 'A19', $titleStyle);
+setCellStyle($worksheet, 'B19', $titleStyle);
+setCellStyle($worksheet, 'C19', $titleStyle);
+
+setCellStyle($worksheet, 'A20', $titleStyle);
+setCellStyle($worksheet, 'B20', $titleStyle);
+setCellStyle($worksheet, 'C20', $titleStyle);
+
+setCellStyle($worksheet, 'A23', $titleStyle);
+setCellStyle($worksheet, 'B23', $titleStyle);
+setCellStyle($worksheet, 'C23', $titleStyle);
+
+setCellStyle($worksheet, 'A24', $titleStyle);
+setCellStyle($worksheet, 'B24', $titleStyle);
+setCellStyle($worksheet, 'C24', $titleStyle);
+
+setCellStyle($worksheet, 'A27', $titleStyle);
+setCellStyle($worksheet, 'B27', $titleStyle);
+setCellStyle($worksheet, 'C27', $titleStyle);
+setCellStyle($worksheet, 'D27', $titleStyle);
+
+setCellStyle($worksheet, 'A28', $titleStyle);
+setCellStyle($worksheet, 'B28', $titleStyle);
+setCellStyle($worksheet, 'C28', $titleStyle);
+setCellStyle($worksheet, 'D28', $titleStyle);
+
+setCellStyle($worksheet, 'B3', $rowStyle);
+setCellStyle($worksheet, 'B4', $rowStyle);
+setCellStyle($worksheet, 'B5', $rowStyle);
+setCellStyle($worksheet, 'B6', $rowStyle);
+setCellStyle($worksheet, 'B7', $rowStyle);
+setCellStyle($worksheet, 'B8', $rowStyle);
+setCellStyle($worksheet, 'B9', $rowStyle);
+setCellStyle($worksheet, 'B10', $rowStyle);
+
+setCellStyle($worksheet, 'D3', $rowStyle);
+setCellStyle($worksheet, 'D4', $rowStyle);
+setCellStyle($worksheet, 'D5', $rowStyle);
+setCellStyle($worksheet, 'D6', $rowStyle);
+setCellStyle($worksheet, 'D7', $rowStyle);
+setCellStyle($worksheet, 'D8', $rowStyle);
+setCellStyle($worksheet, 'D9', $rowStyle);
+setCellStyle($worksheet, 'D10', $rowStyle);
+
+setCellStyle($worksheet, 'A13', $rowStyle);
+setCellStyle($worksheet, 'B13', $rowStyle);
+setCellStyle($worksheet, 'C13', $rowStyle);
+setCellStyle($worksheet, 'D13', $rowStyle);
+
+setCellStyle($worksheet, 'A17', $rowStyle);
+setCellStyle($worksheet, 'B17', $rowStyle);
+setCellStyle($worksheet, 'C17', $rowStyle);
+setCellStyle($worksheet, 'D17', $rowStyle);
+
+setCellStyle($worksheet, 'A21', $rowStyle);
+setCellStyle($worksheet, 'B21', $rowStyle);
+setCellStyle($worksheet, 'C21', $rowStyle);
+
+setCellStyle($worksheet, 'A25', $rowStyle);
+setCellStyle($worksheet, 'B25', $rowStyle);
+setCellStyle($worksheet, 'C25', $rowStyle);
+
+setCellStyle($worksheet, 'A29', $rowStyle);
+setCellStyle($worksheet, 'B29', $rowStyle);
+setCellStyle($worksheet, 'C29', $rowStyle);
+setCellStyle($worksheet, 'D29', $rowStyle);
+
+//Ð¿Ð¸ÑˆÐµÐ¼ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¸
 $row = mssql_fetch_array($result, MSSQL_ASSOC);
 
-$worksheet->setMerge(0, 0, 0, 3 );
-$worksheet->write(0, 0, 'Àíãåíòñêèé çàêàç ¹'.$ordnum, $format_page);
+$worksheet->mergeCells('A1:D1');
+$worksheet->setCellValueByColumnAndRow(0, 1, 'ÐÐ½Ð³ÐµÐ½Ñ‚ÑÐºÐ¸Ð¹ Ð·Ð°ÐºÐ°Ð· â„–'.$ordnum);
 
-$worksheet->setMerge(1, 0, 1, 1 );
-$worksheet->write(1, 0, 'Îòïðàâèòåëü', $format_title);
-$worksheet->write(1, 1, null, $format_title);
+$worksheet->mergeCells('A2:B2');
+$worksheet->setCellValueByColumnAndRow(0, 2, 'ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÐµÐ»ÑŒ');//y,x,value
 
-$worksheet->write(2, 0, 'ORG', $format_title);
-$worksheet->write(2, 1, $row['org'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 3, 'ORG');
+$worksheet->setCellValueByColumnAndRow(1, 3, $row['org']);
 
-$worksheet->write(3, 0, 'Ãîðîä', $format_title);
-$worksheet->write(3, 1, $row['orgcity'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 4, 'Ð“Ð¾Ñ€Ð¾Ð´');
+$worksheet->setCellValueByColumnAndRow(1, 4, iconv("windows-1251", "UTF-8", $row['orgcity']));
 
-$worksheet->write(4, 0, 'Îòïðàâèòåëü', $format_title);
-$worksheet->write(4, 1, $row['cname'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 5, 'ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÐµÐ»ÑŒ');
+$worksheet->setCellValueByColumnAndRow(1, 5, iconv("windows-1251", "UTF-8", $row['cname']));
 
-$worksheet->write(5, 0, 'Àäðåñ', $format_title);
-$worksheet->write(5, 1, $row['address'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 6, 'ÐÐ´Ñ€ÐµÑ');
+$worksheet->setCellValueByColumnAndRow(1, 6, iconv("windows-1251", "UTF-8", $row['address']));
 
-$worksheet->write(6, 0, 'Êîíòàêò', $format_title);
-$worksheet->write(6, 1, $row['contname'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 7, 'ÐšÐ¾Ð½Ñ‚Ð°ÐºÑ‚');
+$worksheet->setCellValueByColumnAndRow(1, 7, iconv("windows-1251", "UTF-8", $row['contname']));
 
-$worksheet->write(7, 0, 'Òåëåôîí', $format_title);
-$worksheet->writeString(7, 1, $row['contphone'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 8, 'Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½');
+$worksheet->setCellValueExplicitByColumnAndRow(1, 8, iconv("windows-1251", "UTF-8", $row['contphone']), PHPExcel_Cell_DataType::TYPE_STRING);
 
-$worksheet->write(8, 0, 'E-Mail', $format_title);
-$worksheet->write(8, 1, $row['contmail'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 9, 'E-Mail');
+$worksheet->setCellValueByColumnAndRow(1, 9, iconv("windows-1251", "UTF-8", $row['contmail']));
 
-$worksheet->write(9, 0, 'Ôàêñ', $format_title);
-$worksheet->write(9, 1, $row['contfax'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 10, 'Ð¤Ð°ÐºÑ');
+$worksheet->setCellValueExplicitByColumnAndRow(1, 10, iconv("windows-1251", "UTF-8", $row['contfax']), PHPExcel_Cell_DataType::TYPE_STRING);
 
-$worksheet->setMerge(11, 0, 11, 1);
-$worksheet->write(11, 0, 'Ïðèìå÷àíèå', $format_title);
-$worksheet->write(11, 1, null, $format_title);
+$worksheet->mergeCells('A12:B12');
+$worksheet->setCellValueByColumnAndRow(0, 12, 'ÐŸÑ€Ð¸Ð¼ÐµÑ‡Ð°Ð½Ð¸Ðµ');
 
-$worksheet->setMerge(12, 0, 12, 1);
-$worksheet->write(12, 0, $row['orgrems'], $format_default);
-$worksheet->write(12, 1, null, $format_data);
+$worksheet->mergeCells('A13:B13');
+$worksheet->setCellValueByColumnAndRow(0, 13, iconv("windows-1251", "UTF-8", $row['orgrems']));
 
+$worksheet->mergeCells('C2:D2');
+$worksheet->setCellValueByColumnAndRow(2, 2, 'ÐŸÐ¾Ð»ÑƒÑ‡Ð°Ñ‚ÐµÐ»ÑŒ');
 
-$worksheet->write(1, 2, 'Ïîëó÷àòåëü', $format_title);
-$worksheet->setMerge(1, 2, 1, 3 );
-$worksheet->write(1, 3, null, $format_title);
+$worksheet->setCellValueByColumnAndRow(2, 3, 'DEST');
+$worksheet->setCellValueByColumnAndRow(3, 3, $row['dest']);
 
-$worksheet->write(2, 2, 'DEST', $format_title);
-$worksheet->write(2, 3, $row['dest'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 4, 'Ð“Ð¾Ñ€Ð¾Ð´');
+$worksheet->setCellValueByColumnAndRow(3, 4, iconv("windows-1251", "UTF-8", $row['destcity']));
 
-$worksheet->write(3, 2, 'Ãîðîä', $format_title);
-$worksheet->write(3, 3, $row['destcity'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 5, 'ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÐµÐ»ÑŒ');
+$worksheet->setCellValueByColumnAndRow(3, 5, iconv("windows-1251", "UTF-8", $row['dname']));
 
-$worksheet->write(4, 2, 'Îòïðàâèòåëü', $format_title);
-$worksheet->write(4, 3, $row['dname'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 6, 'ÐÐ´Ñ€ÐµÑ');
+$worksheet->setCellValueByColumnAndRow(3, 6, iconv("windows-1251", "UTF-8", $row['dadr']));
 
-$worksheet->write(5, 2, 'Àäðåñ', $format_title);
-$worksheet->write(5, 3, $row['dadr'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 7, 'ÐšÐ¾Ð½Ñ‚Ð°ÐºÑ‚');
+$worksheet->setCellValueByColumnAndRow(3, 7, iconv("windows-1251", "UTF-8", $row['dcontname']));
 
-$worksheet->write(6, 2, 'Êîíòàêò', $format_title);
-$worksheet->write(6, 3, $row['dcontname'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 8, 'Ð¢ÐµÐ»ÐµÑ„Ð¾Ð½');
+$worksheet->setCellValueExplicitByColumnAndRow(3, 8, $row['dcontphone'], PHPExcel_Cell_DataType::TYPE_STRING);
 
-$worksheet->write(7, 2, 'Òåëåôîí', $format_title);
-$worksheet->writeString(7, 3, $row['dcontphone'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 9, 'E-Mail');
+$worksheet->setCellValueByColumnAndRow(3, 9, $row['dcontmail']);
 
-$worksheet->write(8, 2, 'E-Mail', $format_title);
-$worksheet->write(8, 3, $row['dcontmail'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 10, 'Ð¤Ð°ÐºÑ');
+$worksheet->setCellValueExplicitByColumnAndRow(3, 10, $row['dcontfax'], PHPExcel_Cell_DataType::TYPE_STRING);
 
-$worksheet->write(9, 2, 'Ôàêñ', $format_title);
-$worksheet->write(9, 3, $row['dcontfax'], $format_data);
+$worksheet->mergeCells('C12:D12');
+$worksheet->setCellValueByColumnAndRow(2, 12, 'ÐŸÑ€Ð¸Ð¼ÐµÑ‡Ð°Ð½Ð¸Ðµ');
 
-$worksheet->setMerge(11, 2, 11, 3);
-$worksheet->write(11, 2, 'Ïðèìå÷àíèå', $format_title);
-$worksheet->write(12, 3, null, $format_title);
+$worksheet->mergeCells('C13:D13');
+$worksheet->setCellValueByColumnAndRow(12, 2, iconv("windows-1251", "UTF-8", $row['destrems']));
 
-$worksheet->setMerge(12, 2, 12, 3);
-$worksheet->write(12, 2, $row['destrems'], $format_default);
-$worksheet->write(12, 3, null, $format_data);
+$worksheet->mergeCells('A15:D15');
+$worksheet->setCellValueByColumnAndRow(0, 15, 'Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ Ð¿Ð»Ð°Ñ‚ÐµÐ»ÑŒÑ‰Ð¸ÐºÐµ');
 
-$worksheet->setMerge(14, 0, 14, 3 );
-$worksheet->write(14, 0, 'Èíôîðìàöèÿ î ïëàòåëüùèêå', $format_title);
-$worksheet->write(14, 1, null, $format_title);
-$worksheet->write(14, 2, null, $format_title);
-$worksheet->write(14, 3, null, $format_title);
+$worksheet->setCellValueByColumnAndRow(0, 16, 'ÐšÑ‚Ð¾ Ð¿Ð»Ð°Ñ‚Ð¸Ñ‚');
+$worksheet->setCellValueByColumnAndRow(0, 17, iconv("windows-1251", "UTF-8", $row['payr']));
 
-$worksheet->write(15, 0, 'Êòî ïëàòèò', $format_title);
-$worksheet->write(16, 0, $row['payr'], $format_data);
+$worksheet->setCellValueByColumnAndRow(1, 16, 'Ð’Ð¸Ð´ Ð¾Ð¿Ð»Ð°Ñ‚Ñ‹');
+$worksheet->setCellValueByColumnAndRow(1, 17, iconv("windows-1251", "UTF-8", $row['paytype']));
 
-$worksheet->write(15, 1, 'Âèä îïëàòû', $format_title);
-$worksheet->write(16, 1, $row['paytype'], $format_data);
+$worksheet->mergeCells('C16:D16');
+$worksheet->setCellValueByColumnAndRow(2, 16, 'ÐŸÐ»Ð°Ñ‚ÐµÐ»ÑŒÑ‰Ð¸Ðº');
 
-$worksheet->setMerge(15, 2, 15, 3 );
-$worksheet->write(15, 2, 'Ïëàòåëüùèê', $format_title);
-$worksheet->write(15, 3, null, $format_title);
-$worksheet->setMerge(16, 2, 16, 3 );
-$worksheet->write(16, 2, $row['pname'], $format_data);
-$worksheet->write(16, 3, null, $format_data);
+$worksheet->mergeCells('C17:D17');
+$worksheet->setCellValueByColumnAndRow(2, 17, iconv("windows-1251", "UTF-8", $row['pname']));
 
-$worksheet->setMerge(18, 0, 18, 2 );
-$worksheet->write(18, 0, 'Èíôîðìàöèÿ î çàêàçå', $format_title);
-$worksheet->write(18, 1, null, $format_title);
-$worksheet->write(18, 2, null, $format_title);
-//$worksheet->write(18, 3, null, $format_title);
+$worksheet->mergeCells('A19:C19');
+$worksheet->setCellValueByColumnAndRow(0, 19, 'Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ Ð·Ð°ÐºÐ°Ð·Ðµ');
 
-$worksheet->write(19, 0, 'Ñòàòóñ', $format_title);
-$worksheet->write(20, 0, $row['status'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 20, 'Ð¡Ñ‚Ð°Ñ‚ÑƒÑ');
+$worksheet->setCellValueByColumnAndRow(0, 21, iconv("windows-1251", "UTF-8", $row['status']));
 
-$worksheet->write(19, 1, '¹ íàêëàäíîé', $format_title);
-$worksheet->write(20, 1, $row['wb_no'], $format_data);
+$worksheet->setCellValueByColumnAndRow(1, 20, 'â„– Ð½Ð°ÐºÐ»Ð°Ð´Ð½Ð¾Ð¹');
+$worksheet->setCellValueByColumnAndRow(1, 21, $row['wb_no']);
 
-$worksheet->write(19, 2, 'Çàêàç ïðèíÿò', $format_title);
-$worksheet->write(20, 2, $row['datein'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 20, 'Ð—Ð°ÐºÐ°Ð· Ð¿Ñ€Ð¸Ð½ÑÑ‚');
+$worksheet->setCellValueByColumnAndRow(2, 21, $row['datein']);
 
-$worksheet->setMerge(22, 0, 22, 2 );
-$worksheet->write(22, 0, 'Äàòà ïðèåçäà', $format_title);
-$worksheet->write(22, 1, null, $format_title);
-$worksheet->write(22, 2, null, $format_title);
-//$worksheet->write(22, 3, null, $format_title);
+$worksheet->mergeCells('A23:C23');
+$worksheet->setCellValueByColumnAndRow(0, 23, 'Ð”Ð°Ñ‚Ð° Ð¿Ñ€Ð¸ÐµÐ·Ð´Ð°');
 
-$worksheet->write(23, 0, 'Äàòà', $format_title);
-$worksheet->write(24, 0, $row['courdate'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 24, 'Ð”Ð°Ñ‚Ð°');
+$worksheet->setCellValueByColumnAndRow(0, 25, substr($row['courdate'], 0, 10));
 
-$worksheet->write(23, 1, 'Âðåìÿ ñ', $format_title);
-$worksheet->write(24, 1, $row['courtimef'], $format_data);
+$worksheet->setCellValueByColumnAndRow(1, 24, 'Ð’Ñ€ÐµÐ¼Ñ Ñ');
+$worksheet->setCellValueByColumnAndRow(1, 25, $row['courtimef']);
 
-$worksheet->write(23, 2, 'Âðåìÿ ïî', $format_title);
-$worksheet->write(24, 2, $row['courtimet'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 24, 'Ð’Ñ€ÐµÐ¼Ñ Ð¿Ð¾');
+$worksheet->setCellValueByColumnAndRow(2, 25, $row['courtimet']);
 
-$worksheet->setMerge(26, 0, 26, 3 );
-$worksheet->write(26, 0, 'Èíôîðìàöèÿ î ãðóçå', $format_title);
-$worksheet->write(26, 1, null, $format_title);
-$worksheet->write(26, 2, null, $format_title);
-$worksheet->write(26, 3, null, $format_title);
+$worksheet->mergeCells('A27:D27');
+$worksheet->setCellValueByColumnAndRow(0, 27, 'Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ Ð³Ñ€ÑƒÐ·Ðµ');
 
-$worksheet->write(27, 0, 'Òèï ãðóçà', $format_title);
-$worksheet->write(28, 0, $row['type'], $format_data);
+$worksheet->setCellValueByColumnAndRow(0, 28, 'Ð¢Ð¸Ð¿ Ð³Ñ€ÑƒÐ·Ð°');
+$worksheet->setCellValueByColumnAndRow(0, 29, iconv("windows-1251", "UTF-8", $row['type']));
 
-$worksheet->write(27, 1, 'Êîë-âî', $format_title);
-$worksheet->write(28, 1, $row['packs'], $format_data);
+$worksheet->setCellValueByColumnAndRow(1, 28, 'ÐšÐ¾Ð»-Ð²Ð¾');
+$worksheet->setCellValueByColumnAndRow(1, 29, $row['packs']);
 
-$worksheet->write(27, 2, 'Âåñ', $format_title);
-$worksheet->write(28, 2, $row['wt'], $format_data);
+$worksheet->setCellValueByColumnAndRow(2, 28, 'Ð’ÐµÑ');
+$worksheet->setCellValueByColumnAndRow(2, 29, $row['wt']);
 
-$worksheet->write(27, 3, 'îáúåìíûé âåñ', $format_title);
-$worksheet->write(28, 3, $row['volwt'], $format_data);
+$worksheet->setCellValueByColumnAndRow(3, 28, 'Ð¾Ð±ÑŠÐµÐ¼Ð½Ñ‹Ð¹ Ð²ÐµÑ');
+$worksheet->setCellValueByColumnAndRow(3, 29, $row['volwt']);
 
-// Let's send the file
-$workbook->close();
+//ÐžÑ‚Ð´Ð°ÐµÐ¼ Ð½Ð° ÑÐºÐ°Ñ‡Ð¸Ð²Ð°Ð½Ð¸Ðµ
+header("Content-Type:application/vnd.ms-excel");
+header("Content-Disposition:attachment;filename='Ð·Ð°ÐºÐ°Ð· Ð¤Ð»Ð¸Ð¿Ð¿Ð¾ÑÑ‚ â„–$ordnum.xls'");
 
+$objWriter = new PHPExcel_Writer_Excel5($workbook);
+$objWriter->save('php://output');
 ?>

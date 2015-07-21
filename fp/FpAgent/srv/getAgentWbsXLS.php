@@ -1,150 +1,167 @@
 <?php
-	require_once "secureCheck.php";
+require_once 'Excel/PHPExcel.php';
+require_once "secureCheck.php";
+include 'dbConnect.php';
+require_once 'Excel/PHPExcel/Writer/Excel5.php';
+require_once "CellStyle.php";
 
-    include "dbConnect.php";
-
-    require_once 'Spreadsheet/Excel/Writer.php';
-
+function setCellStyle($sheet, $cell, $arrstyle){	
+	$sheet->getStyle($cell)->applyFromArray($arrstyle);
+}
 
 $ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID']; 
 if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];} 
 $filter = $_REQUEST['filter'];
 
-//$query = "exec wwwGetAgentWbs @period='20100201', @agentID=54";
 $query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}, @dir='{$filter}'";
 $result=mssql_query($query);
 
 // Creating a workbook
-$workbook = new Spreadsheet_Excel_Writer();
+$workbook = new PHPExcel();
+$workbook->setActiveSheetIndex(0);
 
-// sending HTTP headers
-$workbook->send('îòïðàâêè Ôëèïïîñò.xls');
-
-// Creating a worksheet
-$worksheet =& $workbook->addWorksheet('Ôëèïïîñò');
+$worksheet = $workbook->getActiveSheet();
+$worksheet->setTitle('Ð¤Ð»Ð¸Ð¿Ð¿Ð¾ÑÑ‚');
 
 // The actual data
 
-//ñîîòâåòñòâèå çàãîëîâêîâ è ïîëåé
-$fields['ÈÑ'] = 'is_ex';
-$fields['Íàêëàäíàÿ'] = 'wb_no';
-$fields['Ïðèíÿòî'] = 'd_acc_txt';
-$fields['Äîñòàâëåíî'] = 'dod_txt';
-$fields['Ïîëó÷èë'] = 'rcpn';
-$fields['Ïîäòâ.'] = 'p_d_in_txt';
+//ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²Ð¸Ðµ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¾Ð² Ð¸ Ð¿Ð¾Ð»ÐµÐ¹
+$fields['Ð˜Ð¡'] = 'is_ex';
+$fields['ÐÐ°ÐºÐ»Ð°Ð´Ð½Ð°Ñ'] = 'wb_no';
+$fields['ÐŸÑ€Ð¸Ð½ÑÑ‚Ð¾'] = 'd_acc_txt';
+$fields['Ð”Ð¾ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¾'] = 'dod_txt';
+$fields['ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ð»'] = 'rcpn';
+$fields['ÐŸÐ¾Ð´Ñ‚Ð².'] = 'p_d_in_txt';
 $fields['ORG'] = 'org';
 $fields['DEST'] = 'dest';
-$fields['Óñëóãà'] = 't_srv';
-$fields['Îòïðàâèòåëü'] = 's_co';
-$fields['Ïîëó÷àòåëü'] = 'r_co';
-$fields['Âåñ'] = 'wt';
-$fields['Îá.âåñ'] = 'vol_wt';
+$fields['Ð£ÑÐ»ÑƒÐ³Ð°'] = 't_srv';
+$fields['ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÐµÐ»ÑŒ'] = 's_co';
+$fields['ÐŸÐ¾Ð»ÑƒÑ‡Ð°Ñ‚ÐµÐ»ÑŒ'] = 'r_co';
+$fields['Ð’ÐµÑ'] = 'wt';
+$fields['ÐžÐ±.Ð²ÐµÑ'] = 'vol_wt';
 
-$fields['áàç.'] = 'tar_flip_b';
-$fields['äîï.'] = 'tar_flip_a';
-$fields['Âñåãî'] = 'tar_flip_t';
-$fields['ïðèì.'] = 'rem_flip';
+$fields['Ð±Ð°Ð·.'] = 'tar_flip_b';
+$fields['Ð´Ð¾Ð¿.'] = 'tar_flip_a';
+$fields['Ð’ÑÐµÐ³Ð¾'] = 'tar_flip_t';
+$fields['Ð¿Ñ€Ð¸Ð¼.'] = 'rem_flip';
 
-$fields[' áàç.'] = 'tar_ag_b';
-$fields[' äîï.'] = 'tar_ag_a';
-$fields[' Âñåãî'] = 'tar_ag_t';
-$fields[' ïðèì.'] = 'rem_ag';
+$fields[' Ð±Ð°Ð·.'] = 'tar_ag_b';
+$fields[' Ð´Ð¾Ð¿.'] = 'tar_ag_a';
+$fields[' Ð’ÑÐµÐ³Ð¾'] = 'tar_ag_t';
+$fields[' Ð¿Ñ€Ð¸Ð¼.'] = 'rem_ag';
 
-//ôîðìàò
-$format_title =& $workbook->addFormat();
-$format_title->setBold();
-$format_title->setColor('white'); 
-$format_title->setFgColor(56);
-$format_title->setAlign('center'); 
-$format_title->setBorder(1);
-$format_title->setBorderColor(22);
+$rowNo = 1;
+$startColNo = 1;
 
-$format_data =& $workbook->addFormat();
-$format_data->setBorder(1);
-$format_data->setBorderColor(56);
+function cellsToMergeByColsRow($start = -1, $end = -1, $row = -1){
+	$merge = 'A1:A1';
+	if($start>=0 && $end>=0 && $row>=0){
+		$start = PHPExcel_Cell::stringFromColumnIndex($start);
+		$end = PHPExcel_Cell::stringFromColumnIndex($end);
+		$merge = "$start{$row}:$end{$row}";
+	}
+	return $merge;
+}
 
-
-$rowNo = 0;
-$startColNo = 0;
-
-
-
-//ïèøåì çàãîëîâêè
+//Ð¿Ð¸ÑˆÐµÐ¼ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¸
 
 $startColNo = array_search('tar_flip_b', array_values($fields));
-$worksheet->write($rowNo, $startColNo, 'òàðèô Ôëèï', $format_title);
-$worksheet->setMerge($rowNo, $startColNo, $rowNo, $startColNo+3 );
-
+$worksheet->setCellValueByColumnAndRow($startColNo, $rowNo, 'Ñ‚Ð°Ñ€Ð¸Ñ„ Ð¤Ð»Ð¸Ð¿');
+$worksheet->mergeCells(cellsToMergeByColsRow($startColNo,$startColNo+3,$rowNo));
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+1).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+2).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+3).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_ag_b', array_values($fields));
-$worksheet->write($rowNo, $startColNo, 'òàðèô Àã', $format_title);
-$worksheet->setMerge($rowNo, $startColNo, $rowNo, $startColNo+3 );
+$worksheet->setCellValueByColumnAndRow($startColNo, $rowNo, 'Ñ‚Ð°Ñ€Ð¸Ñ„ ÐÐ³');
+$worksheet->mergeCells(cellsToMergeByColsRow($startColNo,$startColNo+3,$rowNo));
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+1).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+2).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+3).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $rowNo++;
 
 $startColNo = 0;
 foreach ($fields as $f => $value) {
-    $worksheet->write($rowNo, $startColNo++, $f, $format_title);
-    };
-    
+	setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
+	$worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $f);	
+};
+
 $rowNo++;
 
 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
-//ïèøåì äàííûå
-    if($filter == 'all' || $row['dir'] == $filter ){
-        $startColNo = 0;
-        foreach ($fields as $f => $value) {
-            $worksheet->write($rowNo, $startColNo++, $row[$value], $format_data);
-            };
-        $rowNo++;
-    }
+	//Ð¿Ð¸ÑˆÐµÐ¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ
+	if($filter == 'all' || $row['dir'] == $filter ){
+		$startColNo = 0;
+		foreach ($fields as $f => $value) {
+			setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $rowStyle);            
+			if ($value == 'wb_no') {
+				$worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);	
+			} else {
+				$worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]));
+			}
+		};
+		$rowNo++;
+	}
 }
 
-//èòîãè
+//Ð¸Ñ‚Ð¾Ð³Ð¸
 
 $startColNo = array_search('wt', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
-
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('vol_wt', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_flip_b', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_flip_a', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_flip_t', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_ag_b', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_ag_a', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_ag_t', array_values($fields));
-$cell1 = Spreadsheet_Excel_Writer::rowcolToCell(2, $startColNo);
-$cell2 = Spreadsheet_Excel_Writer::rowcolToCell($rowNo-1, $startColNo);
-$worksheet->writeFormula($rowNo, $startColNo, "=SUM($cell1:$cell2)", $format_title);
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
+//ÐžÑ‚Ð´Ð°ÐµÐ¼ Ð½Ð° ÑÐºÐ°Ñ‡Ð¸Ð²Ð°Ð½Ð¸Ðµ
+header("Content-Type:application/vnd.ms-excel");
+header("Content-Disposition:attachment;filename='Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸ Ð¤Ð»Ð¸Ð¿Ð¿Ð¾ÑÑ‚.xls'");
 
-// Let's send the file
-$workbook->close();
+$objWriter = new PHPExcel_Writer_Excel5($workbook);
+$objWriter->save('php://output');
 
 ?>
