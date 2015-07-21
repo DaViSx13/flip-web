@@ -9,7 +9,7 @@ function setCellStyle($sheet, $cell, $arrstyle){
 	$sheet->getStyle($cell)->applyFromArray($arrstyle);
 }
 
-$ag = $_REQUEST['newAgent'] ? $_REQUEST['newAgent'] : $_SESSION['xAgentID']; 
+$ag = isset($_REQUEST['newAgent']) ? $_REQUEST['newAgent'] : $_SESSION['xAgentID']; 
 if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];} 
 $filter = $_REQUEST['filter'];
 
