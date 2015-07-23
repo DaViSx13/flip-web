@@ -269,7 +269,7 @@ $worksheet->setCellValueByColumnAndRow(3, 29, $row['volwt']);
 
 //Отдаем на скачивание
 header("Content-Type:application/vnd.ms-excel");
-header("Content-Disposition:attachment;filename='заказ Флиппост №$ordnum.xls'");
+header("Content-Disposition:attachment;filename=\"заказ Флиппост №$ordnum.xls\"");
 
 $objWriter = new PHPExcel_Writer_Excel5($workbook);
 $objWriter->save('php://output');

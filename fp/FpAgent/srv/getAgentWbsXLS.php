@@ -159,7 +159,7 @@ setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowN
 
 //Отдаем на скачивание
 header("Content-Type:application/vnd.ms-excel");
-header("Content-Disposition:attachment;filename='отправки Флиппост.xls'");
+header("Content-Disposition:attachment;filename=\"отправки Флиппост.xls\"");
 
 $objWriter = new PHPExcel_Writer_Excel5($workbook);
 $objWriter->save('php://output');
