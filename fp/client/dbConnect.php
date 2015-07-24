@@ -1,5 +1,5 @@
 <?php
-mssql_connect(".", "pod", "");
+mssql_connect("rocket", "pod", "");
 //mssql_connect("ROCKET", "pod", "ytabupfgznstcnfdbnm");
 mssql_select_db("alert_f");
 mssql_query("set quoted_identifier on

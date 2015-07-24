@@ -87,7 +87,7 @@ api.php?dbAct=getCities&amp;country=&lt;countyCode&gt;&amp;state=&lt;stateName&g
 <p>&lt;stateName&gt; - наименование области, возвращаемое запросом getStates, по-умолчанию '' (необязательный) 
 <p>&lt;cityStarts&gt; - первые символы названия нас.пункта, по-умолчанию '' (необязательный)
 
-<p> Пример: api.php?dbAct=getCities&amp;city=уф
+<p> Пример: <a href="api.php?dbAct=getCities&city=уф"  target=_blank>api.php?dbAct=getCities&amp;city=уф</a>
 
 <pre>
 {   "success":true
@@ -104,17 +104,29 @@ api.php?dbAct=getCities&amp;country=&lt;countyCode&gt;&amp;state=&lt;stateName&g
 api.php?dbAct=getTarif&amp;org=&lt;orgCityCode&gt;&amp;dest=&lt;destCityCode&gt;&amp;weight=&lt;weight&gt;
 </pre>
 
-<p>Возвращает стоимость доставки отправления в рублях.
+<p> Где:
 <p>&lt;orgCityCode&gt; - код нас.пункта(code) отправителя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)
 <p>&lt;destCityCode&gt; - код нас.пункта(code) получателя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)
 <p>&lt;weight&gt; - вес отправления в кг, по-умолчанию 0.1 (необязательный)
 
-<p> Пример: api.php?dbAct=getTarif&amp;org=MOW&amp;dest=VOZ&amp;weight=2.7
+<p>Возвращает: 
+<p> - tarif - стоимость доставки отправления в рублях
+<p> - delivery - срок доставки в днях
+
+<p> Пример: <a href="api.php?dbAct=getTarif&org=MOW&dest=VOZ&weight=2.7" target=_blank>api.php?dbAct=getTarif&amp;org=MOW&amp;dest=VOZ&amp;weight=2.7</a>
 
 <pre>
-{   "success":true
-    ,"msg":"ok"
-    ,"data":[{"tarif":"538.65"}]
+{
+	"success" : true,
+	"msg" : "ok",
+	"data" : [{
+			"tarif" : "635.61",
+			"delivery" : 2,
+			"org" : "MOW",
+			"dest" : "VOZ",
+			"weight" : 2.7
+		}
+	]
 }
 </pre>
 
