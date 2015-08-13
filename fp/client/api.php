@@ -10,6 +10,8 @@ class Response
 }
 $response = new Response();
 $errMsg = '';
+$paging = false;
+$resultIsXML = false;
 
 //кульминация
 
@@ -46,6 +48,11 @@ if (!isset($_REQUEST['dbAct'])) {
 				$query = "exec wwwAPIgetTarif @org='$_REQUEST[org]', @dest = '$_REQUEST[dest]', @wt = {$weight}";
 				}
             break;
+        case 'getWb':
+			$resultIsXML  = true;
+			$wbno = $_REQUEST['wbno'];  
+            $query = "exec wwwAPIgetWbXML @wbno='$wbno'";
+            break;
 	    }
 
     if (!isset($query)) {
@@ -62,16 +69,29 @@ if (!isset($_REQUEST['dbAct'])) {
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
 				}
-			
-                while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
-                    foreach ($row as $f => &$value) {
-						if((($response->fields[$f] == 'char')||($response->fields[$f] == 'text'))&&($value)){
-							$value = iconv("windows-1251", "UTF-8", $value);
+					
+				if(!$resultIsXML){
+					while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
+						foreach ($row as $f => &$value) {
+							if((($response->fields[$f] == 'char')||($response->fields[$f] == 'text'))&&($value)){
+								$value = iconv("windows-1251", "UTF-8", $value);
+							}
 						}
-                    }
 
-                    $response->data[] = array_change_key_case($row);
-                }
+						$response->data[] = array_change_key_case($row);
+					}
+				}
+				else{
+					//если результат в виде XML (например через FOR XML)
+					$row = mssql_fetch_row($result);
+					$xmlstr = $row[0];
+					$xmlstr = iconv("windows-1251", "UTF-8", $xmlstr);
+					$xml = simplexml_load_string($xmlstr);
+					$json = json_encode($xml);
+					$array = json_decode($json,TRUE);					
+					
+					$response->data[] = $array;
+				};
 
                 //$response->dvs = 'превед';
                 unset($response->fields);
