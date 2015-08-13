@@ -46,6 +46,12 @@ if (!isset($_REQUEST['dbAct'])) {
 				$query = "exec wwwAPIgetTarif @org='$_REQUEST[org]', @dest = '$_REQUEST[dest]', @wt = {$weight}";
 				}
             break;
+        case 'getWb':
+            $query = "exec [wwwAPIgetWb] @wbno='$_REQUEST[wbno]'";
+            break;
+        case 'getWbEx':
+            $query = "exec [wwwAPIGetWbEx] @wbno='$_REQUEST[wbno]'";
+            break;
 	    }
 
     if (!isset($query)) {

@@ -40,7 +40,15 @@
 <p/> data - массив данных
 
 <p/><b>3. Типы запросов</b> 
+<br/>
+<a href="#getCountries">3.1. getCountries -  список стран</a><br/>
+<a href="#getStates">3.2. getStates - список областей(штатов) страны</a><br/>
+<a href="#getCities">3.3. getCities - список населенных пунктов</a><br/>
+<a href="#getTarif">3.4. getTarif - стоимость доставки отправления</a><br/>
+<a href="#getWb">3.5. getWb - Информация по накладной</a><br/>
+<a href="#getWbEx">3.6. getWbEx - Исключения по накладной</a><br/>
 
+<a name="getCountries"></a>
 <p/><b>3.1. getCountries</b> 
 
 <pre>
@@ -58,6 +66,7 @@ api.php?dbAct=getCountries
 }
 </pre>
 
+<a name="getStates"></a>
 <p/><b>3.2. getStates</b> 
 
 <pre>
@@ -76,6 +85,7 @@ api.php?dbAct=getStates&amp;country=&lt;countyCode&gt;
 }
 </pre>
 
+<a name="getCities"></a>
 <p/><b>3.3. getCities</b> 
 
 <pre>
@@ -98,6 +108,7 @@ api.php?dbAct=getCities&amp;country=&lt;countyCode&gt;&amp;state=&lt;stateName&g
 }
 </pre>
 
+<a name="getTarif"></a>
 <p/><b>3.4. getTarif</b> 
 
 <pre>
@@ -125,6 +136,85 @@ api.php?dbAct=getTarif&amp;org=&lt;orgCityCode&gt;&amp;dest=&lt;destCityCode&gt;
 			"org" : "MOW",
 			"dest" : "VOZ",
 			"weight" : 2.7
+		}
+	]
+}
+</pre>
+
+<a name="getWb"></a>
+<p/><b>3.5. getWb</b> 
+
+<p>Информация по накладной
+
+<pre>
+api.php?dbAct=getWb&amp;wbno=&lt;wbno&gt;
+</pre>
+
+<p> Где:
+<p>&lt;wbno&gt; - номер накладной
+
+<p>Возвращает: 
+<p> - wbno - номер накладной
+<p> - shipper - отправитель
+<p> - cnee - получатель
+<p> - dateacc - дата принятия накладной
+<p> - dtd - расчетная дата доставки
+<p> - dod - фактическая дата доставки
+<p> - rcpn - кто получил
+<p> - senddate - дата включения накладной в манифест
+
+<p> Пример: <a href="api.php?dbAct=getWb&wbno=99-0087856" target=_blank>api.php?dbAct=getWB&amp;wbno=99-0087856</a>
+
+<pre>
+{
+	"success" : true,
+	"msg" : "ok",
+	"data" : [{
+			"wbno" : "99-0087856",
+			"shipper" : "ИВАНОВСКАЯ СЛУЖБА ДОСТАВКИ ООО",
+			"cnee" : ".",
+			"dateacc" : "Aug  7 2015 12:00:00:000AM",
+			"dtd" : "Aug 11 2015 12:00:00:000AM",
+			"dod" : "Aug 10 2015 01:25:00:000PM",
+			"rcpn" : "Кудряшова",
+			"senddate" : "Aug  7 2015 12:40:08:683PM"
+		}
+	]
+}
+</pre>
+
+<a name="getWbEx"></a>
+<p/><b>3.6. getWbEx</b> 
+
+<p>Исключения по накладной
+
+<pre>
+api.php?dbAct=getWbEx&amp;wbno=&lt;wbno&gt;
+</pre>
+
+<p> Где:
+<p>&lt;wbno&gt; - номер накладной
+
+<p>Возвращает: 
+<p> - wbno - номер накладной
+<p> - raised - дата возникновения ИС
+<p> - loc - код места
+<p> - excode - код ИС
+<p> - exdesc - описание ИС
+
+<p> Пример: <a href="api.php?dbAct=getWbEx&wbno=99-0087856" target=_blank>api.php?dbAct=getWBEx&amp;wbno=99-0087856</a>
+
+<pre>
+{
+	"success" : true,
+	"msg" : "ok",
+	"data" : [{
+			"wbno" : "99-0087856",
+			"rptd" : "07.08.2015 00:00",
+			"raised" : "07.08.2015 07:22",
+			"loc" : "CSY",
+			"excode" : "22",
+			"exdesc" : "НЕВЕРНО ОФОРМЛЕНЫ СОПРОВОДИТЕЛЬНЫЕ ДОКУМЕНТЫ"
 		}
 	]
 }
