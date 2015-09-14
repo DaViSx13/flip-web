@@ -2,12 +2,13 @@
 //завязка
 session_start();
 header("Content-type: text/plain; charset=utf-8");
-//error_reporting(0);
+error_reporting(0);
 class Response
 {
     
 	public $success = false;
     public $msg = '';
+	public $data = null;
 }
 $response = new Response();
 $iserror = false;

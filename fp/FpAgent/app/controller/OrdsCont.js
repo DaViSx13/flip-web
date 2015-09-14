@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt'],
 	refs : [{
@@ -54,6 +54,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'UseTemplForm',
 			selector : 'usetemplform'
+		}, {
+			ref : 'LoadOrdersWin',
+			selector : 'loadorderswin'
 		}
 	],
 	init : function () {
@@ -120,6 +123,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'usetemplform combobox' : {
 				keypress : this.pressTpl
+			},
+			'ordtool button[action=import]' : {
+				click : this.loadOrdersWin
+			},
+			'loadorderswin button[action=imp]' : {
+				click : this.importOrders
 			}
 		});
 		this.getOrderStStore().on({
@@ -134,6 +143,31 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+	},
+	importOrders : function (btn) {
+	var me = this;
+		var win = btn.up('loadorderswin');
+		var form_imp = win.down('loadordersform');
+		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
+			form_imp.submit({
+				url : 'srv/import/import.php',
+				params : {
+					act : 'importOrders'
+				},
+				success : function (form, action) {
+					
+					me.loadOrdGr();
+					win.close();
+					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+				}
+			});
+		}
+	},
+	loadOrdersWin : function (btn) {		
+		var newloadwin = Ext.widget('loadorderswin').show();		
 	},
 	clkList : function (btn) {
 		btn.toggle(true);

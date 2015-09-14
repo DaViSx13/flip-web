@@ -335,9 +335,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 		var form_imp = win.down('loadwbform');
 		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
 			form_imp.submit({
-				url : 'srv/loadWayBills.php',
+				url : 'srv/import/import.php',
 				params : {
-					act : 'imp'
+					act : 'importPod'
 				},
 				success : function (form, action) {
 					
