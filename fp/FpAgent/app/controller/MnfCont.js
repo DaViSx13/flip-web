@@ -113,8 +113,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 		window.open('help/index.html'+parthelp);
 	},
 	downloadTariffs : function (btn) {
-	console.log('gettarif');
-	window.location.href = 'srv/downloadTariffs.php'
+		window.location.href = 'srv/downloadTariffs.php'
 	},
 	loadMnf : function (ThePanel) {
 		this.openOutmnf(ThePanel.down('button[action=out]'));
