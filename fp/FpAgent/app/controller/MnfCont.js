@@ -48,6 +48,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			},
 			'admtool button[action=help]' : {
 				click : this.showHelp
+			},
+			'admtool button[action=tariffs]' : {
+				click : this.downloadTariffs
 			}
 		});
 		this.getMnfStStore().on({
@@ -108,6 +111,10 @@ Ext.define('FPAgent.controller.MnfCont', {
 	//если не подходит ни 1 из разделов, то ссыль просто на хелп в целом	
 		var parthelp = (part!='')?('?'+part+'.html'):'';
 		window.open('help/index.html'+parthelp);
+	},
+	downloadTariffs : function (btn) {
+	console.log('gettarif');
+	window.location.href = 'srv/downloadTariffs.php'
 	},
 	loadMnf : function (ThePanel) {
 		this.openOutmnf(ThePanel.down('button[action=out]'));
