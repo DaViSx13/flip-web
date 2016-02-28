@@ -1,11 +1,12 @@
 <?php
-/*закрузка файла с сервера*/   
-$file = ("tmpfolder/tarif_20160201.xls");
-$rName='Тарифы ФлипПост с 01.02.2016.xls';
+/*закрузка тарифов с сервера: для корректной работы на сервере должны быть файлы с тарифами TariffsFlipPost<номер тарифа в таблице Klient поле PlanNo>.xls*/
+session_start();
+$agp = $_SESSION['xAgentPlanNo'];
+$file = ("tmpfolder/TariffsFlipPost{$agp}.xls");
+$rName='Тарифы ФлипПост.xls';
 header ("Content-Type: application/octet-stream");
 header ("Accept-Ranges: bytes");
 header ("Content-Length: ".filesize($file)); 
 header ("Content-Disposition: attachment; filename=\"$rName\""); 
 readfile($file);
-
 ?>
