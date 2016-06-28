@@ -52,6 +52,9 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getWbEx':
             $query = "exec [wwwAPIGetWbEx] @wbno='$_REQUEST[wbno]'";
             break;
+        case 'getTrackInfo':
+            $query = "exec [wwwGetWbTrackingInfo] @wbno='$_REQUEST[wbno]'";
+            break;
 	    }
 
     if (!isset($query)) {

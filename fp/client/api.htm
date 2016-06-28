@@ -22,8 +22,8 @@
 <pre>
 .../api.php?dbAct=&lt;action&gt;&amp;param1=value1&amp;..paramN=valueN
 </pre>
-<p/>-	action - тип запроса к API 
-<p/>-	param1.. paramN – парамеры
+- action - тип запроса к API<br/>
+- param1.. paramN – парамеры<br/>
 
 <p/>Отправка параметров на api.php возможна методами как GET, так и POST.
 <p/><b>2. Формат ответа</b>
@@ -35,9 +35,9 @@
 }
 </pre>
 
-<p/> success - признак успеха выполнения запроса, принимает значения true и false.
-<p/> msg - текстовое сообщение, комментирующее success, может содержать описание ошибки
-<p/> data - массив данных
+- success - признак успеха выполнения запроса, принимает значения true и false.<br/>
+- msg - текстовое сообщение, комментирующее success, может содержать описание ошибки<br/>
+- data - массив данных<br/>
 
 <p/><b>3. Типы запросов</b> 
 <br/>
@@ -47,6 +47,7 @@
 <a href="#getTarif">3.4. getTarif - стоимость доставки отправления</a><br/>
 <a href="#getWb">3.5. getWb - Информация по накладной</a><br/>
 <a href="#getWbEx">3.6. getWbEx - Исключения по накладной</a><br/>
+<a href="#getTrackInfo">3.7. getTrackInfo - Информация для отслеживания накладной</a><br/>
 
 <a name="getCountries"></a>
 <p/><b>3.1. getCountries</b> 
@@ -92,10 +93,10 @@ api.php?dbAct=getStates&amp;country=&lt;countyCode&gt;
 api.php?dbAct=getCities&amp;country=&lt;countyCode&gt;&amp;state=&lt;stateName&gt;&amp;city=&lt;cityStarts&gt;
 </pre>
 
-<p>Возвращает список населенных пунктов, отфильтрованный по &lt;countyCode&gt;, &lt;stateName&gt; и &lt;cityStarts&gt;.
-<p>&lt;countyCode&gt; - код страны, возвращаемый запросом getCountries, по-умолчанию '' (необязательный)
-<p>&lt;stateName&gt; - наименование области, возвращаемое запросом getStates, по-умолчанию '' (необязательный) 
-<p>&lt;cityStarts&gt; - первые символы названия нас.пункта, по-умолчанию '' (необязательный)
+<p>Возвращает список населенных пунктов, отфильтрованный по &lt;countyCode&gt;, &lt;stateName&gt; и &lt;cityStarts&gt;.<br/>
+- &lt;countyCode&gt; - код страны, возвращаемый запросом getCountries, по-умолчанию '' (необязательный)<br/>
+- &lt;stateName&gt; - наименование области, возвращаемое запросом getStates, по-умолчанию '' (необязательный)<br/>
+- &lt;cityStarts&gt; - первые символы названия нас.пункта, по-умолчанию '' (необязательный)
 
 <p> Пример: <a href="api.php?dbAct=getCities&city=уф"  target=_blank>api.php?dbAct=getCities&amp;city=уф</a>
 
@@ -115,14 +116,14 @@ api.php?dbAct=getCities&amp;country=&lt;countyCode&gt;&amp;state=&lt;stateName&g
 api.php?dbAct=getTarif&amp;org=&lt;orgCityCode&gt;&amp;dest=&lt;destCityCode&gt;&amp;weight=&lt;weight&gt;
 </pre>
 
-<p> Где:
-<p>&lt;orgCityCode&gt; - код нас.пункта(code) отправителя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)
-<p>&lt;destCityCode&gt; - код нас.пункта(code) получателя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)
-<p>&lt;weight&gt; - вес отправления в кг, по-умолчанию 0.1 (необязательный)
+<p> Где:<br/>
+- &lt;orgCityCode&gt; - код нас.пункта(code) отправителя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)<br/>
+- &lt;destCityCode&gt; - код нас.пункта(code) получателя, возвращаемый запросом getCities, по-умолчанию 'MOW' (необязательный)<br/>
+- &lt;weight&gt; - вес отправления в кг, по-умолчанию 0.1 (необязательный)
 
-<p>Возвращает: 
-<p> - tarif - стоимость доставки отправления в рублях
-<p> - delivery - срок доставки в днях
+<p>Возвращает: </br>
+- tarif - стоимость доставки отправления в рублях</br>
+- delivery - срок доставки в днях</br>
 
 <p> Пример: <a href="api.php?dbAct=getTarif&org=MOW&dest=VOZ&weight=2.7" target=_blank>api.php?dbAct=getTarif&amp;org=MOW&amp;dest=VOZ&amp;weight=2.7</a>
 
@@ -150,22 +151,23 @@ api.php?dbAct=getTarif&amp;org=&lt;orgCityCode&gt;&amp;dest=&lt;destCityCode&gt;
 api.php?dbAct=getWb&amp;wbno=&lt;wbno&gt;
 </pre>
 
-<p> Где:
-<p>&lt;wbno&gt; - номер накладной
+<p> Где:<br/>
+- &lt;wbno&gt; - номер накладной
 
-<p>Возвращает: 
-<p> - wbno - номер накладной
-<p> - shipper - отправитель
-<p> - cnee - получатель
-<p> - dateacc - дата принятия накладной
-<p> - dtd - расчетная дата доставки
-<p> - dod - фактическая дата доставки
-<p> - rcpn - кто получил
-<p> - senddate - дата включения накладной в манифест
-<p> - org - код города отправителя
-<p> - dest - код города получателя
-<p> - scity - город отправителя
-<p> - rcity - город получателя
+<p>Возвращает: </br>
+- wbno - номер накладной</br>
+- shipper - отправитель</br>
+- cnee - получатель</br>
+- dateacc - дата принятия накладной</br>
+- dtd - расчетная дата доставки</br>
+- dod - фактическая дата доставки</br>
+- rcpn - кто получил</br>
+- senddate - дата включения накладной в манифест</br>
+- org - код города отправителя</br>
+- dest - код города получателя</br>
+- scity - город отправителя</br>
+- rcity - город получателя</br>
+- trackinfo - информация для отслеживания</br>
 
 <p> Пример: <a href="api.php?dbAct=getWb&wbno=99-0087856" target=_blank>api.php?dbAct=getWB&amp;wbno=99-0087856</a>
 
@@ -185,10 +187,12 @@ api.php?dbAct=getWb&amp;wbno=&lt;wbno&gt;
 			"org" : "IVO",
 			"dest" : "CSY",
 			"scity" : "Иваново",
-			"rcity" : "Чебоксары"
+			"rcity" : "Чебоксары",
+			"trackinfo" : "10.08.15: Доставлено:  Кудряшова"
 		}
 	]
-}</pre>
+}
+</pre>
 
 <a name="getWbEx"></a>
 <p/><b>3.6. getWbEx</b> 
@@ -199,15 +203,15 @@ api.php?dbAct=getWb&amp;wbno=&lt;wbno&gt;
 api.php?dbAct=getWbEx&amp;wbno=&lt;wbno&gt;
 </pre>
 
-<p> Где:
-<p>&lt;wbno&gt; - номер накладной
+<p> Где:<br/>
+- &lt;wbno&gt; - номер накладной
 
-<p>Возвращает: 
-<p> - wbno - номер накладной
-<p> - raised - дата возникновения ИС
-<p> - loc - код места
-<p> - excode - код ИС
-<p> - exdesc - описание ИС
+<p>Возвращает массив объектов с полями:</br> 
+- wbno - номер накладной</br> 
+- raised - дата возникновения ИС</br> 
+- loc - код места</br> 
+- excode - код ИС</br> 
+- exdesc - описание ИС</br> 
 
 <p> Пример: <a href="api.php?dbAct=getWbEx&wbno=99-0087856" target=_blank>api.php?dbAct=getWBEx&amp;wbno=99-0087856</a>
 
@@ -222,6 +226,49 @@ api.php?dbAct=getWbEx&amp;wbno=&lt;wbno&gt;
 			"loc" : "CSY",
 			"excode" : "22",
 			"exdesc" : "НЕВЕРНО ОФОРМЛЕНЫ СОПРОВОДИТЕЛЬНЫЕ ДОКУМЕНТЫ"
+		}
+	]
+}
+</pre>
+
+
+<a name="getTrackInfo"></a>
+<p/><b>3.7. getTrackInfo</b> 
+
+<p>Информация для отслеживания накладной
+
+<pre>
+api.php?dbAct=getTrackInfo&amp;wbno=&lt;wbno&gt;
+</pre>
+
+<p> Где:<br/>
+- &lt;wbno&gt; - номер накладной<br/>
+
+<p>Возвращает массив объектов с полями:<br/>
+- id - id<br/>
+- trackinfo - инфомация для отслеживания<br/>
+
+<p> Пример: <a href="api.php?dbAct=getTrackInfo&wbno=99-0087856" target=_blank>api.php?dbAct=getTrackInfo&amp;wbno=99-0087856</a>
+
+<pre>
+{
+	"success" : true,
+	"msg" : "ok",
+	"data" : [{
+			"id" : 1,
+			"trackinfo" : "06/08/15: В пути Иваново - Москва"
+		}, {
+			"id" : 2,
+			"trackinfo" : "07/08/15: Прибыло в г.Москва"
+		}, {
+			"id" : 3,
+			"trackinfo" : "07/08/15: В пути Москва - Чебоксары"
+		}, {
+			"id" : 4,
+			"trackinfo" : "10/08/15: Прибыло в г.Чебоксары"
+		}, {
+			"id" : 5,
+			"trackinfo" : "10/08/15 13:25: Доставлено:  Кудряшова"
 		}
 	]
 }
