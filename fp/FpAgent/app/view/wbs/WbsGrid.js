@@ -25,6 +25,7 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				text : 'ИС',
 				name : 'exaction',
 				width : 40,
+				dataIndex : 'is_ex',
 				items : [{
 						getClass : function (v, meta, rec) {
 							if (rec.get('is_ex') > 0) {
@@ -44,11 +45,6 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 			}, {
 				text : 'Принято',
 				dataIndex : 'd_acc',
-				xtype : 'datecolumn',
-				format : 'd.m.Y'
-			}, {
-				text : 'РДД',
-				dataIndex : 'dtd',
 				xtype : 'datecolumn',
 				format : 'd.m.Y'
 			}, {
