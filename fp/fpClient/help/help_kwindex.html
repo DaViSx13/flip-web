@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html><head>
+   <title>ФлипПост WEB помощь</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+   <!-- This line includes the general project style sheet (not required) -->
+   <link type="text/css" href="default.css" rel="stylesheet" />
+
+   <style type="text/css">
+       body {      /*фрейм индексации*/
+       background-color:  #FFFFFF;
+       margin:0;
+       padding:0;
+       width: 100%;
+       height:100%;
+       }
+      .navbar   { 
+        /*навигация в левой части окна */
+       height: 30px;
+       -moz-box-sizing: border-box;
+       background-color: #E3E4E6;
+
+     background-image: -moz-linear-gradient(center top , #F9F9F9, #E3E4E6); /* FireFox */
+     background-image: -o-linear-gradient(center top , #F9F9F9, #E3E4E6); /* Opera */
+     background-image: -webkit-gradient(center top , #F9F9F9, #E3E4E6); /* chrome, safary, etc. webkit */
+     background-image:-webkit-linear-gradient( top , #F9F9F9, #E3E4E6);
+     background-image:linear-gradient(center top , #F9F9F9, #E3E4E6)
+     filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#F9F9F9,endColorStr=#E3E4E6); /* MS IE 7 */
+     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F9F9F9', endColorstr='#E3E4E6')"; /* MS IE 8 */
+
+       font-size: 10pt; 
+       position: relative;  
+       }
+       .line {
+        height: 5px;
+        position: relative;
+        top:0px;
+        -moz-box-sizing: border-box;
+        background-color: #E3E4E6;
+
+        background-image: -moz-linear-gradient(center top , #F9F9F9, #E3E4E6); /* FireFox */
+        background-image: -o-linear-gradient(center top , #F9F9F9, #E3E4E6); /* Opera */
+        background-image: -webkit-gradient( top , #F9F9F9, #E3E4E6); /* chrome, safary, etc. webkit */
+        background-image:-webkit-linear-gradient( top , #F9F9F9, #E3E4E6);
+        background-image:linear-gradient(center top , #F9F9F9, #E3E4E6)
+     filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#F9F9F9,endColorStr=#E3E4E6); /* MS IE 7 */
+     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F9F9F9', endColorstr='#E3E4E6')"; /* MS IE 8 */
+
+
+
+        width: 100%;
+       } 
+       .cont{
+        padding:10px;
+       }
+       
+    .btn {
+    left: 0;
+    top: 0;
+    height:100%;
+    text-align: center; 
+    background-repeat: no-repeat;
+    cursor:pointer;
+    cursor:hand;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    -moz-box-sizing: border-box;
+    font-family: tahoma,arial,verdana,sans-serif;
+    color: #416DA3;
+    font-size: 10pt;
+        
+     }
+     a:hover .btn , a:active .btn  {    /*наведен*/      /*активна*/
+     background-color: #CBDBEF;
+
+     background-image: -moz-linear-gradient(center top , #DDE8F5, #CBDBEF); /* FireFox */
+     background-image: -o-linear-gradient(center top , #DDE8F5, #CBDBEF); /* Opera */
+     background-image: -webkit-gradient( top , #DDE8F5, #CBDBEF); /* chrome, safary, etc. webkit */
+     background-image:-webkit-linear-gradient( top , #DDE8F5, #CBDBEF);
+     background-image:linear-gradient(center top , #DDE8F5, #CBDBEF)
+     filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#DDE8F5,endColorStr=#CBDBEF); /* MS IE 7 */
+     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#DDE8F5', endColorstr='#CBDBEF')"; /* MS IE 8 */
+
+     border-radius: 3px;
+     border: 1px solid #a3bae9;
+     
+      }
+         .st {
+        border-bottom: 1px solid #a3bae9;  
+        top:0px;
+        width: 34%;
+        position: absolute;
+        height:29px;
+      
+         }
+          .st a, .st a div.btn {
+          width: 100%;
+          }
+         .l{
+         float:left ;
+         left:0px;
+        
+        
+         }
+         .r{
+         float:right ;
+         left:66%;
+
+        
+         }
+
+       .btn p {    
+       margin-top: 5px;
+       text-align: center;
+       width: 100%;
+       }
+        .ths  {
+     position: absolute;
+     left:34%;   
+     width: 32%;
+     border-top: 1px solid #a3bae9;
+     border-left: 1px solid #a3bae9;
+     border-right: 1px solid #a3bae9;
+     height:100%;
+     cursor: text;
+        }
+		
+       
+
+       #idx          { margin: 0; padding: 0 }     /* div tag that wraps the keyword index */
+       #idx a        { color: #000; text-decoration: none }  /* all links in index appear as text */
+
+       #idx p             { margin: 2px }        /* keywords and secondary keywords */
+       #idx p.idxkeyword2 { margin-left: 20px }  /* indentation for secondary keywords */
+
+       table.idxtable { background: #F4F4F4;
+                        border: 1px solid #000000;
+                        border-collapse: collapse;
+                        -moz-box-shadow: 2px 2px 2px #B0B0B0;
+                        -webkit-box-shadow: 2px 2px 2px #B0B0B0;
+                        box-shadow: 2px 2px 2px #B0B0B0;
+                        filter: progid:DXImageTransform.Microsoft.Shadow(color=B0B0B0, Direction=135, Strength=4); }
+       td.idxtable    { background: #F4F4F4 }
+
+       /* font definitions for keyword section, keywords and popup links */
+       .idxsection  {   /*тут должно выводиться окошко для поиска в индексах. но нам ненать его. display: none;*/
+         display: none;
+       font-family: Arial,Helvetica; font-weight: normal; font-size: 14pt; color: #000000; text-decoration: none;
+                      margin-top: 15px; margin-bottom: 15px; 
+                      }
+       .idxkeyword  { font-family: Arial,Helvetica; font-weight: normal; font-size: 10pt; color: #000000; text-decoration: none; }
+       .idxkeyword2 { font-family: Arial,Helvetica; font-weight: normal; font-size: 10pt; color: #000000; text-decoration: none; }
+       .idxlink     { font-family: Arial,Helvetica; font-weight: normal; font-size: 8pt; color: #000000; text-decoration: none; }
+
+   </style>
+   <script type="text/javascript" src="jquery.js"></script>
+   <script type="text/javascript" src="helpman_settings.js"></script>
+   <script type="text/javascript" src="help_contextids.js"></script>
+</head>
+<body>
+
+<div class="navbar">
+
+<div   class= "st l">
+<a href="help_content.html"><div class="btn"><p>Содержание</p></div></a>
+</div>
+
+ 
+<div class="btn ths"><p>Указатель</p></div>
+
+ 
+<div   class= "st r">
+  
+<a href="help_ftsearch.html"><div class="btn"><p>Поиск</p></div></a>
+
+</div>
+
+</div>
+
+<div class="line">
+</div>
+<div class="cont">   
+  <!-- Place holder for the keyword index - this variable is REQUIRED! -->
+  <script type="text/javascript">
+
+  function hmInitHideLinks(cssCode) {
+  	var styleElement = document.createElement("style");
+  	styleElement.type = "text/css";
+  	if (styleElement.styleSheet) {
+    	styleElement.styleSheet.cssText = cssCode;
+  	}
+  	else {
+    	styleElement.appendChild(document.createTextNode(cssCode));
+  	}
+  	document.getElementsByTagName("head")[0].appendChild(styleElement);
+  }
+
+  hmInitHideLinks("#idx div { display: none }");
+
+  var currentdiv = null;
+  var canhidelinks = true;
+
+  function hmshowLinks(divID) {
+    var thisdiv = document.getElementById(divID);
+    canhidelinks = true;
+    hmhideLinks();
+    if (thisdiv) {
+      currentdiv = thisdiv;
+      $(currentdiv).show();
+      $(currentdiv).mouseover(hmdivMouseOver).mouseout(hmdivMouseOut);
+      $(document).mouseup(hmhideLinks);
+    }
+  }
+  function hmdivMouseOver() { canhidelinks = false; };
+  function hmdivMouseOut() { canhidelinks = true; };
+  function hmhideLinks() {
+    if (canhidelinks) {
+      if (currentdiv) {
+        $(currentdiv).hide();
+        $(currentdiv).unbind("onmouseover", "onmouseout");
+      }
+      currentdiv = null;
+      $(document).unbind("onmouseup");
+    }
+  }
+</script>
+<div id="idx" style="margin:0;padding:0;border:none">
+<a name="Z" id="Z"></a><p class="idxsection">- Z -</p>
+<p class="idxkeyword"><a href="zakaz.html" target="hmcontent"><span class="idxkeyword">заказ</span></a></p>
+<p class="idxkeyword"><a href="manif.html" target="hmcontent"><span class="idxkeyword">манифест</span></a></p>
+<p class="idxkeyword"><a href="naklad.html" target="hmcontent"><span class="idxkeyword">накладная</span></a></p>
+</div>
+
+ </div>
+</body>
+</html>
