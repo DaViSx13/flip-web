@@ -115,10 +115,10 @@ if (!isset($_REQUEST['dbAct'])) {
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum";			
 			break;
-		case 'GetAgentWbs':
-			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
+		case 'GetClientWbs':
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetAgentWbs @period='$params[newPeriod]', @agentID={$ag}, @dir='$params[dir]'";
+			$query = "exec [wwwClientGetWbs] @period='$params[newPeriod]', @clientID='{$ag}', @dir='$params[dir]'";
             $paging = true;
 			break;
 		case 'GetExCodes':
@@ -150,9 +150,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwSetPOD @wb_no='{$params['wb_no']}', @p_d_in='{$p_d_in}', @tdd='{$params['tdd']}', @rcpn='{$rcpn}', @user='{$_SESSION['xUser']}' ";
 			break;
 		case 'GetWbsTotal':
-			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetWbsTotal @dir='{$params['dir']}', @period='{$params['period']}',  @agentID={$ag} ";
+			$query = "exec [wwwClientGetWbsTotal] @period='{$params['period']}',  @clientID='{$ag}' ";
 			break;
 		case 'GetAgents':
 			$query = "exec wwwGetAgents";

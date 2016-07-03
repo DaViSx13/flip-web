@@ -15,6 +15,9 @@ if ( !empty( $_SESSION['xUser'] ) && !empty( $_SESSION['xAgentID'] )) {
 	$response->msg = $_SESSION['xAgentID'];
     $response->username =$_SESSION['xAgentName'];               
     
+	$response->clientID = $_SESSION['xClientID']; 
+    $response->clientName = $_SESSION['xClientName']; 
+    
     } else {
 	$_SESSION['AdmAgentID']=null;
 	$response->success = false;

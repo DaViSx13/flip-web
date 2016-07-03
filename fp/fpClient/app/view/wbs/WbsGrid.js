@@ -47,11 +47,6 @@ Ext.define('FPClient.view.wbs.WbsGrid', {
 				xtype : 'datecolumn',
 				format : 'd.m.Y'
 			}, {
-				text : 'РДД',
-				dataIndex : 'dtd',
-				xtype : 'datecolumn',
-				format : 'd.m.Y'
-			}, {
 				text : 'Доставлено',
 				dataIndex : 'dod_txt'
 			}, {
@@ -70,10 +65,6 @@ Ext.define('FPClient.view.wbs.WbsGrid', {
 				text : 'DEST',
 				width : 50,
 				dataIndex : 'dest'
-			}, {
-				text : 'Услуга',
-				width : 45,
-				dataIndex : 't_srv'
 			}, {
 				text : 'Отправитель',
 				flex : 1,
@@ -94,63 +85,6 @@ Ext.define('FPClient.view.wbs.WbsGrid', {
 				xtype : 'numbercolumn',
 				format : '0.00',
 				dataIndex : 'vol_wt'
-			}, {
-				text : 'Тариф Флип',
-				columns : [{
-						text : 'баз.',
-						width : 45,
-						xtype : 'numbercolumn',
-						format : '0.00',
-						dataIndex : 'tar_flip_b'
-					}, {
-						text : 'доп.',
-						width : 45,
-						xtype : 'numbercolumn',
-						format : '0.00',
-						dataIndex : 'tar_flip_a'
-					}, {
-						text : 'Всего',
-						width : 45,
-						xtype : 'numbercolumn',
-						format : '0.00',
-						dataIndex : 'tar_flip_t'
-					}, {
-						text : 'прим.',
-						dataIndex : 'rem_flip'
-					}
-				]
-			}, {
-				text : 'Тариф Аг',
-				columns : [{
-						text : 'баз.',
-						width : 45,
-						xtype : 'numbercolumn',
-						format : '0.00',
-						dataIndex : 'tar_ag_b'
-					}, {
-						text : 'доп.',
-						width : 45,
-						xtype : 'numbercolumn',
-						format : '0.00',
-						dataIndex : 'tar_ag_a'
-					}, {
-						text : 'Всего',
-						width : 45,
-						xtype : 'numbercolumn',
-						format : '0.00',
-						dataIndex : 'tar_ag_t'
-					}, {
-						text : 'прим.',
-						dataIndex : 'rem_ag'
-					}
-				]
-			}, {
-				xtype : 'numbercolumn',
-				text : 'Заявка',
-				itemId : 'dop',
-				dataIndex : 'req_tar_a',
-				width : 45,
-				renderer : this.change
 			}
 		];
 		this.dockedItems = [{

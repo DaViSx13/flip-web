@@ -63,7 +63,7 @@ Ext.define('FPClient.controller.Loginform', {
 						aviewport.down('mainpanel').child('#users').tab.show();
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
-						aviewport.down('mainpanel').down('label').setText(text.username);
+						aviewport.down('mainpanel').down('label').setText(text.clientName);
 					}
 				} else {
 					var aviewport = Ext.widget('fpmnfviewport');
@@ -90,7 +90,7 @@ Ext.define('FPClient.controller.Loginform', {
 						aviewport.down('mainpanel').child('#users').tab.show();						
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
-						aviewport.down('mainpanel').down('label').setText(action.result.username);						
+						aviewport.down('mainpanel').down('label').setText(action.result.clientName);						
 						Ext.Ajax.request({
 							url : 'srv/data.php',
 							params : {

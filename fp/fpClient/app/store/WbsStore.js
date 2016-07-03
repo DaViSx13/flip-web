@@ -14,7 +14,7 @@ Ext.define('FPClient.store.WbsStore', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetAgentWbs'
+			dbAct : 'GetClientWbs'
 		}
 	}
 });

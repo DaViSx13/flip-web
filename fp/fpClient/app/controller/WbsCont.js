@@ -192,24 +192,12 @@ Ext.define('FPClient.controller.WbsCont', {
 					twt.down('label[itemId=lab1]').setText('Всего: ' + text.data[0].s_wb);
 					twt.down('label[itemId=lab2]').setText('Вес: ' + text.data[0].s_wt);
 					twt.down('label[itemId=lab3]').setText('V вес: ' + text.data[0].s_vol_wt);
-					twt.down('label[itemId=lab4]').setText('тар флип баз: ' + text.data[0].s_flip_b);
-					twt.down('label[itemId=lab5]').setText('тар флип доп: ' + text.data[0].s_flip_a);
-					twt.down('label[itemId=lab6]').setText('тар флип всего: ' + text.data[0].s_flip_t);
-					twt.down('label[itemId=lab7]').setText('тар аг баз: ' + text.data[0].s_ag_b);
-					twt.down('label[itemId=lab8]').setText('тар аг доп: ' + text.data[0].s_ag_a);
-					twt.down('label[itemId=lab9]').setText('тар аг всего: ' + text.data[0].s_ag_t);
 				}
 			});
 		} else {
 			twt.down('label[itemId=lab1]').setText('');
 			twt.down('label[itemId=lab2]').setText('');
 			twt.down('label[itemId=lab3]').setText('');
-			twt.down('label[itemId=lab4]').setText('');
-			twt.down('label[itemId=lab5]').setText('');
-			twt.down('label[itemId=lab6]').setText('');
-			twt.down('label[itemId=lab7]').setText('');
-			twt.down('label[itemId=lab8]').setText('');
-			twt.down('label[itemId=lab9]').setText('');
 		}
 	},
 	savePod : function (btn) {
