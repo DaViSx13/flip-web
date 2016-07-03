@@ -53,11 +53,6 @@ Ext.define('FPClient.view.wbs.WbsGrid', {
 				text : 'Получил',
 				dataIndex : 'rcpn'
 			}, {
-				text : 'Подтв.',
-				dataIndex : 'p_d_in',
-				xtype : 'datecolumn',
-				format : 'd.m.Y'
-			}, {
 				text : 'ORG',
 				width : 50,
 				dataIndex : 'org'

@@ -4,6 +4,7 @@ Ext.define('FPClient.view.wbs.WbsTool', {
 	requires : ['FPClient.view.mainform.ComboMonth', 'FPClient.view.mainform.NumYear', 'FPClient.view.mainform.ComboAgent'],
 	items : [{
 			xtype : 'buttongroup',
+			hidden: true,
 			items : [{
 					text : 'Входящие',
 					enableToggle : true,
@@ -28,6 +29,7 @@ Ext.define('FPClient.view.wbs.WbsTool', {
 			]
 		}, {
 			xtype : 'buttongroup',
+			hidden: true,
 			items : [{
 					text : 'Внести ПОД',
 					iconCls : 'newpod',

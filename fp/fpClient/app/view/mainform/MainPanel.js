@@ -2,12 +2,9 @@ Ext.define('FPClient.view.mainform.MainPanel', {
 	extend : 'Ext.tab.Panel',
 	alias : 'widget.mainpanel',
 	requires : ['FPClient.view.mainform.AdmTool'],
-	activeTab : 1,
+	activeTab : 0,
 	margins : '5 5 5 5',
 	items : [{
-			xtype : 'wbsgrid',
-			title : 'Накладные'
-		}, {
 			xtype : 'ordspanel',
 			border : false,
 			style : {
@@ -15,8 +12,12 @@ Ext.define('FPClient.view.mainform.MainPanel', {
 			},
 			title : 'Заказы'
 		}, {
+			xtype : 'wbsgrid',
+			title : 'Накладные'
+		}, {
 			xtype : 'mnfpanel',
-			title : 'Манифесты'
+			title : 'Манифесты',
+			hidden : true
 		}, {
 			xtype : 'usersgrid',
 			title : 'Пользователи',

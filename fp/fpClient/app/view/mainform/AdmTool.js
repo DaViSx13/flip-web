@@ -41,7 +41,8 @@ Ext.define('FPClient.view.mainform.AdmTool', {
 			tooltip : 'Помощь',
 			iconCls : 'help',
 			action : 'help',
-			xtype : 'button'
+			xtype : 'button',
+			hidden: true
 		},
 		{
 			tooltip : 'Выход',
