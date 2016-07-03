@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.wbs.ViewExForm', {
+Ext.define('FPClient.view.wbs.ViewExForm', {
 	alias : 'widget.viewexform',
 	extend : 'Ext.form.Panel',
 	layout : {

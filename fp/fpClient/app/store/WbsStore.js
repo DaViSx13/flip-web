@@ -1,6 +1,6 @@
-Ext.define('FPAgent.store.WbsStore', {
+Ext.define('FPClient.store.WbsStore', {
 	extend : 'Ext.data.Store',
-	model : 'FPAgent.model.WbsMod',
+	model : 'FPClient.model.WbsMod',
 	buffered : true,
 	pageSize : 100,
 	leadingBufferZone : 300,

@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.MnfMod', {
+Ext.define('FPClient.model.MnfMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'mnfregno'

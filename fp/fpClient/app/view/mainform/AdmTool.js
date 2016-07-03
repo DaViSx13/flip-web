@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.mainform.AdmTool', {
+Ext.define('FPClient.view.mainform.AdmTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.admtool',
 	items : [{

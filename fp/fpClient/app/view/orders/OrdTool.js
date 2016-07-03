@@ -1,7 +1,7 @@
-Ext.define('FPAgent.view.orders.OrdTool', {
+Ext.define('FPClient.view.orders.OrdTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.ordtool',
-	requires : ['FPAgent.view.mainform.ComboMonth', 'FPAgent.view.mainform.NumYear', 'FPAgent.view.mainform.ComboAgent'],
+	requires : ['FPClient.view.mainform.ComboMonth', 'FPClient.view.mainform.NumYear', 'FPClient.view.mainform.ComboAgent'],
 	items : [{
 			text : 'Новый',
 			iconCls : 'newdoc',

@@ -1,8 +1,8 @@
-Ext.define('FPAgent.view.wbs.NewExWin', {
+Ext.define('FPClient.view.wbs.NewExWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.newexwin',
-	requires : ['FPAgent.view.wbs.NewExForm'],
+	requires : ['FPClient.view.wbs.NewExForm'],
 	title : 'Новое исключение',
 	layout : 'fit',
 	autoShow : true,

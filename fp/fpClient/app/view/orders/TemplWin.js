@@ -1,8 +1,8 @@
-Ext.define('FPAgent.view.orders.TemplWin', {
+Ext.define('FPClient.view.orders.TemplWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.templwin',
-	requires : ['FPAgent.view.orders.TemplForm'],
+	requires : ['FPClient.view.orders.TemplForm'],
 	title : 'Новый шаблон',
 	layout : 'vbox',
 	autoShow : true,

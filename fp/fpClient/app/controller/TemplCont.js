@@ -1,4 +1,4 @@
-Ext.define('FPAgent.controller.TemplCont', {
+Ext.define('FPClient.controller.TemplCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.TemplForm', 'orders.TemplWin', 'orders.TemplGrid'],
 	models : ['TemplMod'],

@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.TypeMod', {
+Ext.define('FPClient.model.TypeMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'Name'

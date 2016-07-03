@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.TemplMod', {
+Ext.define('FPClient.model.TemplMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'id',

@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.mainform.TotalTool', {
+Ext.define('FPClient.view.mainform.TotalTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.totaltool',
 	items : ['->', {

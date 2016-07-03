@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.orders.WbNoForm', {
+Ext.define('FPClient.view.orders.WbNoForm', {
 	alias : 'widget.wbnoform',
 	extend : 'Ext.form.Panel',
 	width : 758,

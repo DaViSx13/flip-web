@@ -1,8 +1,8 @@
-Ext.define('FPAgent.view.orders.OrdWin', {
+Ext.define('FPClient.view.orders.OrdWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.ordwin',
-	requires : ['FPAgent.view.orders.OrdForm', 'FPAgent.view.orders.LoadFileForm'],
+	requires : ['FPClient.view.orders.OrdForm', 'FPClient.view.orders.LoadFileForm'],
 	title : 'Новый заказ',
 	layout : 'vbox',
 	autoShow : true,

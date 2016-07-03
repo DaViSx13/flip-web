@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.users.UsersForm', {
+Ext.define('FPClient.view.users.UsersForm', {
 	alias : 'widget.usersform',
 	extend : 'Ext.form.Panel',
 	layout : {

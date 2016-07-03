@@ -1,8 +1,8 @@
-Ext.define('FPAgent.view.users.UsersWin', {
+Ext.define('FPClient.view.users.UsersWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.userswin',
-	requires : ['FPAgent.view.users.UsersForm'],
+	requires : ['FPClient.view.users.UsersForm'],
 	title : 'Добавить пользователя',
 	layout : 'fit',
 	autoShow : true,

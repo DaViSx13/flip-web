@@ -1,7 +1,7 @@
-Ext.define('FPAgent.view.users.UsersGrid', {
+Ext.define('FPClient.view.users.UsersGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.usersgrid',
-	requires : ['FPAgent.view.users.UsersTool'],
+	requires : ['FPClient.view.users.UsersTool'],
 	store : 'UsersSt',
 	columns : [{
 			text : 'Логин',

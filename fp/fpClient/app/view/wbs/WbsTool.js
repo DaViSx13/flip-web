@@ -1,7 +1,7 @@
-Ext.define('FPAgent.view.wbs.WbsTool', {
+Ext.define('FPClient.view.wbs.WbsTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.wbstool',
-	requires : ['FPAgent.view.mainform.ComboMonth', 'FPAgent.view.mainform.NumYear', 'FPAgent.view.mainform.ComboAgent'],
+	requires : ['FPClient.view.mainform.ComboMonth', 'FPClient.view.mainform.NumYear', 'FPClient.view.mainform.ComboAgent'],
 	items : [{
 			xtype : 'buttongroup',
 			items : [{

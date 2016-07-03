@@ -1,8 +1,8 @@
-Ext.define('FPAgent.view.wbs.NewDopWin', {
+Ext.define('FPClient.view.wbs.NewDopWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.newdopwin',
-	requires : ['FPAgent.view.wbs.NewDopForm'],
+	requires : ['FPClient.view.wbs.NewDopForm'],
 	title : 'Заявка на доп. тариф',
 	layout : 'fit',
 	autoShow : true,

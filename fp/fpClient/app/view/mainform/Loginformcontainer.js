@@ -1,7 +1,7 @@
-Ext.define('FPAgent.view.mainform.Loginformcontainer', {
+Ext.define('FPClient.view.mainform.Loginformcontainer', {
 	extend : 'Ext.container.Container',
 	alias : 'widget.loginformcontainer',
-	requires : ['FPAgent.view.mainform.Loginform'],
+	requires : ['FPClient.view.mainform.Loginform'],
 	layout : {
 		type : 'vbox',
 		align : 'center',

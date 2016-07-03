@@ -1,7 +1,7 @@
-Ext.define('FPAgent.view.mainform.MnfGrid', {
+Ext.define('FPClient.view.mainform.MnfGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.mnfgrid',
-	requires : ['FPAgent.view.mainform.MnfTool', 'FPAgent.view.mainform.TotalTool'],
+	requires : ['FPClient.view.mainform.MnfTool', 'FPClient.view.mainform.TotalTool'],
 	store : 'MnfSt',
 	columns : [{
 			text : 'Манифест',

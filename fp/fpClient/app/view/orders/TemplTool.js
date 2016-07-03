@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.orders.TemplTool', {
+Ext.define('FPClient.view.orders.TemplTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.templtool',	
 	items : [{

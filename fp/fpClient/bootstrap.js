@@ -1,355 +1,349 @@
 Ext.Loader.addClassPathMappings({
   "Ext": "ext/src",
-  "FPAgent": "app",
+  "FPClient": "app",
   "Ext.ux.GroupTreeChunker": "ext/src/ux/GroupTabPanel.js"
 });Ext.ClassManager.addNameAlternateMappings({
-  "FPAgent.controller.Main": [],
-  "FPAgent.view.users.UsersForm": [],
-  "FPAgent.model.UsersMod": [],
-  "FPAgent.view.mainform.Loginform": [],
-  "FPAgent.view.wbs.ViewExWin": [],
-  "FPAgent.store.AgentsSt": [],
+  "FPClient.view.mainform.MnfGrid": [],
+  "FPClient.store.WbsStore": [],
+  "FPClient.store.TypeSt": [],
   "Ext.ux.grid.TransformGrid": [],
   "Ext.ux.ajax.DataSimlet": [],
-  "FPAgent.view.wbs.NewExForm": [],
-  "FPAgent.view.orders.TemplGrid": [],
-  "FPAgent.view.wbs.WbsGrid": [],
-  "FPAgent.view.wbs.ViewExGrid": [],
-  "FPAgent.view.orders.WbNoForm": [],
+  "FPClient.view.orders.OrdTotal": [],
+  "FPClient.controller.Loginform": [],
+  "FPClient.view.mainform.NumYear": [],
+  "FPClient.store.OrdsSt": [],
+  "FPClient.controller.TemplCont": [],
+  "FPClient.view.wbs.ViewExForm": [],
   "Ext.ux.event.Driver": [],
   "Ext.ux.ajax.XmlSimlet": [],
-  "FPAgent.view.orders.UseTemplWin": [],
-  "FPAgent.model.TemplMod": [],
+  "FPClient.controller.Main": [],
+  "FPClient.store.OrderSt": [],
+  "FPClient.store.ExCodeStore": [],
   "Ext.ux.DataView.DragSelector": [],
+  "FPClient.model.TypeMod": [],
+  "FPClient.controller.WbsCont": [],
   "Ext.ux.grid.menu.ListMenu": [],
-  "FPAgent.model.ViewWbMod": [],
-  "FPAgent.view.mainform.MnfPanel": [],
   "Ext.ux.form.MultiSelect": [
     "Ext.ux.Multiselect"
   ],
-  "FPAgent.view.orders.OrdForm": [],
-  "FPAgent.store.AgentsListSt": [],
+  "FPClient.model.AgentsListMod": [],
+  "FPClient.model.ViewWbMod": [],
+  "FPClient.view.mainform.TotalTool": [],
   "Ext.ux.CheckColumn": [],
-  "FPAgent.store.ExCodeStore": [],
   "Ext.ux.PreviewPlugin": [],
-  "FPAgent.view.mainform.WbGrid": [],
-  "FPAgent.model.ExCodeMod": [],
-  "FPAgent.store.UsersSt": [],
-  "FPAgent.view.orders.TemplTool": [],
-  "FPAgent.view.mainform.Loginformcontainer": [],
+  "FPClient.view.wbs.LoadWBForm": [],
   "Ext.ux.ajax.SimXhr": [],
-  "FPAgent.model.OrderMod": [],
   "Ext.ux.event.RecorderManager": [],
-  "FPAgent.view.orders.ComboCity": [],
   "Ext.ux.ProgressBarPager": [],
-  "FPAgent.controller.UsersCont": [],
-  "FPAgent.view.wbs.NewDopForm": [],
-  "FPAgent.model.OrdsMod": [],
+  "FPClient.view.wbs.NewDopForm": [],
+  "FPClient.view.orders.ViewWbForm": [],
   "Ext.ux.ajax.Simlet": [],
   "Ext.ux.SlidingPager": [],
-  "FPAgent.store.CityStOrg": [],
+  "FPClient.view.orders.UseTemplWin": [],
   "Ext.ux.TabReorderer": [],
+  "FPClient.store.AgentsListSt": [],
   "Ext.ux.grid.filter.NumericFilter": [],
-  "FPAgent.view.orders.OrdsPanel": [],
-  "FPAgent.view.mainform.MainPanel": [],
-  "FPAgent.model.TypeMod": [],
-  "FPAgent.view.wbs.WbsTotal": [],
+  "FPClient.view.wbs.NewPodForm": [],
+  "FPClient.model.ViewExMod": [],
   "Ext.ux.event.Recorder": [],
-  "FPAgent.view.mainform.TotalWb": [],
-  "FPAgent.view.mainform.ComboMonth": [],
-  "FPAgent.store.ViewWbSt": [],
-  "FPAgent.view.orders.OrdTool": [],
-  "FPAgent.model.aMonth": [],
-  "FPAgent.model.AgentsMod": [],
+  "FPClient.store.ViewExStore": [],
+  "FPClient.view.wbs.LoadWBWin": [],
+  "FPClient.view.wbs.NewExWin": [],
+  "FPClient.view.mainform.AdmTool": [],
+  "FPClient.model.AgentsMod": [],
   "Ext.ux.ajax.SimManager": [],
-  "FPAgent.controller.WbsCont": [],
-  "FPAgent.view.users.UsersTool": [],
+  "FPClient.store.CityStDes": [],
+  "FPClient.view.wbs.NewPodWin": [],
+  "FPClient.view.orders.TemplGrid": [],
   "Ext.ux.grid.filter.BooleanFilter": [],
-  "FPAgent.store.TemplSt": [],
-  "FPAgent.view.orders.WbNoWin": [],
-  "FPAgent.controller.TemplCont": [],
-  "FPAgent.model.WbsMod": [],
+  "FPClient.store.UsersSt": [],
+  "FPClient.view.orders.UseTemplForm": [],
+  "FPClient.controller.UsersCont": [],
+  "FPClient.view.orders.TemplWin": [],
   "Ext.ux.TabScrollerMenu": [],
+  "FPClient.view.wbs.NewDopWin": [],
   "Ext.ux.IFrame": [],
-  "FPAgent.view.mainform.MnfTool": [],
-  "FPAgent.store.OrdsSt": [],
-  "FPAgent.view.wbs.LoadWBWin": [],
-  "FPAgent.model.WbMod": [],
-  "FPAgent.view.wbs.WbsTool": [],
-  "FPAgent.view.orders.UseTemplForm": [],
+  "FPClient.view.mainform.ComboMonth": [],
+  "FPClient.view.orders.TemplTool": [],
+  "FPClient.store.ViewWbSt": [],
+  "FPClient.view.orders.OrdWin": [],
+  "FPClient.view.mainform.TotalWb": [],
+  "FPClient.model.ExCodeMod": [],
   "Ext.ux.form.SearchField": [],
+  "FPClient.model.aMonth": [],
+  "FPClient.view.orders.OrdGrid": [],
   "Ext.ux.LiveSearchGridPanel": [],
-  "FPAgent.view.wbs.NewPodWin": [],
   "Ext.ux.grid.filter.DateFilter": [],
+  "FPClient.model.TemplMod": [],
   "Ext.ux.TreePicker": [],
-  "FPAgent.view.orders.TemplWin": [],
-  "FPAgent.view.mainform.TotalTool": [],
+  "FPClient.model.WbMod": [],
+  "FPClient.view.mainform.Loginformcontainer": [],
   "Ext.ux.data.PagingMemoryProxy": [
     "Ext.data.PagingMemoryProxy"
   ],
+  "FPClient.view.orders.OrdsPanel": [],
   "Ext.ux.BoxReorderer": [],
+  "FPClient.view.orders.OrdForm": [],
   "Ext.ux.grid.filter.Filter": [],
-  "FPAgent.view.mainform.ComboAgent": [],
-  "FPAgent.view.wbs.ViewExForm": [],
-  "FPAgent.store.aMonths": [],
+  "FPClient.view.Main": [],
+  "FPClient.view.orders.ViewWbWin": [],
+  "FPClient.view.orders.WbNoWin": [],
+  "FPClient.view.orders.WbNoForm": [],
   "Ext.ux.FieldReplicator": [],
-  "FPAgent.store.ViewExStore": [],
+  "FPClient.store.MnfSt": [],
   "Ext.ux.grid.filter.ListFilter": [],
-  "FPAgent.view.wbs.NewPodForm": [],
-  "FPAgent.view.orders.ViewWbWin": [],
-  "FPAgent.view.wbs.NewExWin": [],
+  "FPClient.store.WbSt": [],
+  "FPClient.store.AgentsSt": [],
+  "FPClient.view.mainform.MnfPanel": [],
+  "FPClient.view.wbs.NewExForm": [],
+  "FPClient.model.MnfMod": [],
+  "FPClient.view.users.UsersForm": [],
   "Ext.ux.GMapPanel": [],
-  "FPAgent.controller.OrdsCont": [],
+  "FPClient.controller.ViewExCont": [],
+  "FPClient.store.aMonths": [],
+  "FPClient.store.TemplSt": [],
   "Ext.ux.GroupTabPanel": [],
   "Ext.ux.DataView.LabelEditor": [],
   "Ext.ux.grid.filter.StringFilter": [],
   "Ext.ux.GroupTreeChunker": [],
   "Ext.ux.statusbar.ValidationStatus": [],
+  "FPClient.view.orders.TemplForm": [],
+  "FPClient.model.UsersMod": [],
   "Ext.ux.layout.Center": [],
-  "FPAgent.model.CityMod": [],
-  "FPAgent.view.mainform.NumYear": [],
-  "FPAgent.model.MnfMod": [],
+  "FPClient.model.OrdsMod": [],
+  "FPClient.view.wbs.ViewExGrid": [],
+  "FPClient.view.wbs.WbsTotal": [],
+  "FPClient.view.wbs.WbsTool": [],
+  "FPClient.view.mainform.MainPanel": [],
   "Ext.ux.DataView.Animated": [],
-  "FPAgent.view.orders.ViewWbForm": [],
-  "FPAgent.view.Main": [],
-  "FPAgent.view.orders.LoadFileForm": [],
-  "FPAgent.model.AgentsListMod": [],
+  "FPClient.view.orders.LoadFileForm": [],
+  "FPClient.view.mainform.WbGrid": [],
+  "FPClient.view.mainform.ComboAgent": [],
+  "FPClient.view.wbs.WbsGrid": [],
+  "FPClient.view.users.UsersWin": [],
   "Ext.ux.statusbar.StatusBar": [
     "Ext.ux.StatusBar"
   ],
-  "FPAgent.view.mainform.AdmTool": [],
-  "FPAgent.controller.ViewExCont": [],
-  "FPAgent.view.Viewport": [],
-  "FPAgent.view.orders.OrdTotal": [],
-  "FPAgent.store.CityStDes": [],
-  "FPAgent.controller.Loginform": [],
+  "FPClient.model.OrderMod": [],
+  "FPClient.view.orders.ComboCity": [],
   "Ext.ux.grid.menu.RangeMenu": [],
-  "FPAgent.view.users.UsersWin": [],
-  "FPAgent.view.orders.TemplForm": [],
   "Ext.ux.RowExpander": [],
   "Ext.ux.event.Player": [],
-  "FPAgent.model.ViewExMod": [],
-  "FPAgent.store.OrderSt": [],
-  "FPAgent.view.orders.OrdGrid": [],
-  "FPAgent.store.MnfSt": [],
+  "FPClient.view.users.UsersTool": [],
+  "FPClient.view.Viewport": [],
   "Ext.ux.ToolbarDroppable": [],
-  "FPAgent.view.mainform.MnfGrid": [],
+  "FPClient.model.WbsMod": [],
   "Ext.ux.event.Maker": [],
-  "FPAgent.view.orders.OrdWin": [],
-  "FPAgent.view.wbs.LoadWBForm": [],
+  "FPClient.view.orders.OrdTool": [],
+  "FPClient.view.wbs.ViewExWin": [],
+  "FPClient.view.mainform.Loginform": [],
   "Ext.ux.DataView.Draggable": [],
+  "FPClient.view.mainform.MnfTool": [],
   "Ext.ux.TabCloseMenu": [],
-  "FPAgent.store.WbsStore": [],
+  "FPClient.store.CityStOrg": [],
   "Ext.ux.form.ItemSelector": [
     "Ext.ux.ItemSelector"
   ],
-  "FPAgent.store.TypeSt": [],
   "Ext.ux.ajax.JsonSimlet": [],
-  "FPAgent.controller.MnfCont": [],
+  "FPClient.controller.OrdsCont": [],
   "Ext.ux.Spotlight": [],
   "Ext.ux.grid.FiltersFeature": [],
-  "FPAgent.view.wbs.NewDopWin": [],
-  "FPAgent.store.WbSt": [],
-  "FPAgent.view.users.UsersGrid": []
+  "FPClient.model.CityMod": [],
+  "FPClient.view.users.UsersGrid": [],
+  "FPClient.controller.MnfCont": []
 });Ext.ClassManager.addNameAliasMappings({
-  "FPAgent.controller.Main": [],
-  "FPAgent.view.users.UsersForm": [
-    "widget.usersform"
+  "FPClient.view.mainform.MnfGrid": [
+    "widget.mnfgrid"
   ],
-  "FPAgent.model.UsersMod": [],
-  "FPAgent.view.mainform.Loginform": [
-    "widget.loginform"
-  ],
-  "FPAgent.view.wbs.ViewExWin": [
-    "widget.viewexwin"
-  ],
-  "FPAgent.store.AgentsSt": [],
+  "FPClient.store.WbsStore": [],
+  "FPClient.store.TypeSt": [],
   "Ext.ux.grid.TransformGrid": [],
   "Ext.ux.ajax.DataSimlet": [],
-  "FPAgent.view.wbs.NewExForm": [
-    "widget.newexform"
+  "FPClient.view.orders.OrdTotal": [
+    "widget.ordtotal"
   ],
-  "FPAgent.view.orders.TemplGrid": [
-    "widget.templgrid"
+  "FPClient.controller.Loginform": [],
+  "FPClient.view.mainform.NumYear": [
+    "widget.numyear"
   ],
-  "FPAgent.view.wbs.WbsGrid": [
-    "widget.wbsgrid"
-  ],
-  "FPAgent.view.wbs.ViewExGrid": [
-    "widget.viewexgrid"
-  ],
-  "FPAgent.view.orders.WbNoForm": [
-    "widget.wbnoform"
+  "FPClient.store.OrdsSt": [],
+  "FPClient.controller.TemplCont": [],
+  "FPClient.view.wbs.ViewExForm": [
+    "widget.viewexform"
   ],
   "Ext.ux.event.Driver": [],
   "Ext.ux.ajax.XmlSimlet": [
     "simlet.xml"
   ],
-  "FPAgent.view.orders.UseTemplWin": [
-    "widget.usetemplwin"
-  ],
-  "FPAgent.model.TemplMod": [],
+  "FPClient.controller.Main": [],
+  "FPClient.store.OrderSt": [],
+  "FPClient.store.ExCodeStore": [],
   "Ext.ux.DataView.DragSelector": [],
+  "FPClient.model.TypeMod": [],
+  "FPClient.controller.WbsCont": [],
   "Ext.ux.grid.menu.ListMenu": [],
-  "FPAgent.model.ViewWbMod": [],
-  "FPAgent.view.mainform.MnfPanel": [
-    "widget.mnfpanel"
-  ],
   "Ext.ux.form.MultiSelect": [
     "widget.multiselectfield",
     "widget.multiselect"
   ],
-  "FPAgent.view.orders.OrdForm": [
-    "widget.ordform"
+  "FPClient.model.AgentsListMod": [],
+  "FPClient.model.ViewWbMod": [],
+  "FPClient.view.mainform.TotalTool": [
+    "widget.totaltool"
   ],
-  "FPAgent.store.AgentsListSt": [],
   "Ext.ux.CheckColumn": [
     "widget.checkcolumn"
   ],
-  "FPAgent.store.ExCodeStore": [],
   "Ext.ux.PreviewPlugin": [
     "plugin.preview"
   ],
-  "FPAgent.view.mainform.WbGrid": [
-    "widget.wbgrid"
-  ],
-  "FPAgent.model.ExCodeMod": [],
-  "FPAgent.store.UsersSt": [],
-  "FPAgent.view.orders.TemplTool": [
-    "widget.templtool"
-  ],
-  "FPAgent.view.mainform.Loginformcontainer": [
-    "widget.loginformcontainer"
+  "FPClient.view.wbs.LoadWBForm": [
+    "widget.loadwbform"
   ],
   "Ext.ux.ajax.SimXhr": [],
-  "FPAgent.model.OrderMod": [],
   "Ext.ux.event.RecorderManager": [
     "widget.eventrecordermanager"
   ],
-  "FPAgent.view.orders.ComboCity": [
-    "widget.combocity"
-  ],
   "Ext.ux.ProgressBarPager": [],
-  "FPAgent.controller.UsersCont": [],
-  "FPAgent.view.wbs.NewDopForm": [
+  "FPClient.view.wbs.NewDopForm": [
     "widget.newdopform"
   ],
-  "FPAgent.model.OrdsMod": [],
+  "FPClient.view.orders.ViewWbForm": [
+    "widget.viewwbform"
+  ],
   "Ext.ux.ajax.Simlet": [
     "simlet.basic"
   ],
   "Ext.ux.SlidingPager": [],
-  "FPAgent.store.CityStOrg": [],
+  "FPClient.view.orders.UseTemplWin": [
+    "widget.usetemplwin"
+  ],
   "Ext.ux.TabReorderer": [],
+  "FPClient.store.AgentsListSt": [],
   "Ext.ux.grid.filter.NumericFilter": [
     "gridfilter.numeric"
   ],
-  "FPAgent.view.orders.OrdsPanel": [
-    "widget.ordspanel"
+  "FPClient.view.wbs.NewPodForm": [
+    "widget.newpodform"
   ],
-  "FPAgent.view.mainform.MainPanel": [
-    "widget.mainpanel"
-  ],
-  "FPAgent.model.TypeMod": [],
-  "FPAgent.view.wbs.WbsTotal": [
-    "widget.wbstotal"
-  ],
+  "FPClient.model.ViewExMod": [],
   "Ext.ux.event.Recorder": [],
-  "FPAgent.view.mainform.TotalWb": [
-    "widget.totalwb"
+  "FPClient.store.ViewExStore": [],
+  "FPClient.view.wbs.LoadWBWin": [
+    "widget.loadwbwin"
   ],
-  "FPAgent.view.mainform.ComboMonth": [
-    "widget.combomonth"
+  "FPClient.view.wbs.NewExWin": [
+    "widget.newexwin"
   ],
-  "FPAgent.store.ViewWbSt": [],
-  "FPAgent.view.orders.OrdTool": [
-    "widget.ordtool"
+  "FPClient.view.mainform.AdmTool": [
+    "widget.admtool"
   ],
-  "FPAgent.model.aMonth": [],
-  "FPAgent.model.AgentsMod": [],
+  "FPClient.model.AgentsMod": [],
   "Ext.ux.ajax.SimManager": [],
-  "FPAgent.controller.WbsCont": [],
-  "FPAgent.view.users.UsersTool": [
-    "widget.userstool"
+  "FPClient.store.CityStDes": [],
+  "FPClient.view.wbs.NewPodWin": [
+    "widget.newpodwin"
+  ],
+  "FPClient.view.orders.TemplGrid": [
+    "widget.templgrid"
   ],
   "Ext.ux.grid.filter.BooleanFilter": [
     "gridfilter.boolean"
   ],
-  "FPAgent.store.TemplSt": [],
-  "FPAgent.view.orders.WbNoWin": [
-    "widget.wbnowin"
+  "FPClient.store.UsersSt": [],
+  "FPClient.view.orders.UseTemplForm": [
+    "widget.usetemplform"
   ],
-  "FPAgent.controller.TemplCont": [],
-  "FPAgent.model.WbsMod": [],
+  "FPClient.controller.UsersCont": [],
+  "FPClient.view.orders.TemplWin": [
+    "widget.templwin"
+  ],
   "Ext.ux.TabScrollerMenu": [
     "plugin.tabscrollermenu"
+  ],
+  "FPClient.view.wbs.NewDopWin": [
+    "widget.newdopwin"
   ],
   "Ext.ux.IFrame": [
     "widget.uxiframe"
   ],
-  "FPAgent.view.mainform.MnfTool": [
-    "widget.mnftool"
+  "FPClient.view.mainform.ComboMonth": [
+    "widget.combomonth"
   ],
-  "FPAgent.store.OrdsSt": [],
-  "FPAgent.view.wbs.LoadWBWin": [
-    "widget.loadwbwin"
+  "FPClient.view.orders.TemplTool": [
+    "widget.templtool"
   ],
-  "FPAgent.model.WbMod": [],
-  "FPAgent.view.wbs.WbsTool": [
-    "widget.wbstool"
+  "FPClient.store.ViewWbSt": [],
+  "FPClient.view.orders.OrdWin": [
+    "widget.ordwin"
   ],
-  "FPAgent.view.orders.UseTemplForm": [
-    "widget.usetemplform"
+  "FPClient.view.mainform.TotalWb": [
+    "widget.totalwb"
   ],
+  "FPClient.model.ExCodeMod": [],
   "Ext.ux.form.SearchField": [
     "widget.searchfield"
   ],
-  "Ext.ux.LiveSearchGridPanel": [],
-  "FPAgent.view.wbs.NewPodWin": [
-    "widget.newpodwin"
+  "FPClient.model.aMonth": [],
+  "FPClient.view.orders.OrdGrid": [
+    "widget.ordgrid"
   ],
+  "Ext.ux.LiveSearchGridPanel": [],
   "Ext.ux.grid.filter.DateFilter": [
     "gridfilter.date"
   ],
+  "FPClient.model.TemplMod": [],
   "Ext.ux.TreePicker": [
     "widget.treepicker"
   ],
-  "FPAgent.view.orders.TemplWin": [
-    "widget.templwin"
-  ],
-  "FPAgent.view.mainform.TotalTool": [
-    "widget.totaltool"
+  "FPClient.model.WbMod": [],
+  "FPClient.view.mainform.Loginformcontainer": [
+    "widget.loginformcontainer"
   ],
   "Ext.ux.data.PagingMemoryProxy": [
     "proxy.pagingmemory"
   ],
+  "FPClient.view.orders.OrdsPanel": [
+    "widget.ordspanel"
+  ],
   "Ext.ux.BoxReorderer": [],
+  "FPClient.view.orders.OrdForm": [
+    "widget.ordform"
+  ],
   "Ext.ux.grid.filter.Filter": [],
-  "FPAgent.view.mainform.ComboAgent": [
-    "widget.comboagent"
+  "FPClient.view.Main": [],
+  "FPClient.view.orders.ViewWbWin": [
+    "widget.viewwbwin"
   ],
-  "FPAgent.view.wbs.ViewExForm": [
-    "widget.viewexform"
+  "FPClient.view.orders.WbNoWin": [
+    "widget.wbnowin"
   ],
-  "FPAgent.store.aMonths": [],
+  "FPClient.view.orders.WbNoForm": [
+    "widget.wbnoform"
+  ],
   "Ext.ux.FieldReplicator": [],
-  "FPAgent.store.ViewExStore": [],
+  "FPClient.store.MnfSt": [],
   "Ext.ux.grid.filter.ListFilter": [
     "gridfilter.list"
   ],
-  "FPAgent.view.wbs.NewPodForm": [
-    "widget.newpodform"
+  "FPClient.store.WbSt": [],
+  "FPClient.store.AgentsSt": [],
+  "FPClient.view.mainform.MnfPanel": [
+    "widget.mnfpanel"
   ],
-  "FPAgent.view.orders.ViewWbWin": [
-    "widget.viewwbwin"
+  "FPClient.view.wbs.NewExForm": [
+    "widget.newexform"
   ],
-  "FPAgent.view.wbs.NewExWin": [
-    "widget.newexwin"
+  "FPClient.model.MnfMod": [],
+  "FPClient.view.users.UsersForm": [
+    "widget.usersform"
   ],
   "Ext.ux.GMapPanel": [
     "widget.gmappanel"
   ],
-  "FPAgent.controller.OrdsCont": [],
+  "FPClient.controller.ViewExCont": [],
+  "FPClient.store.aMonths": [],
+  "FPClient.store.TemplSt": [],
   "Ext.ux.GroupTabPanel": [
     "widget.grouptabpanel"
   ],
@@ -359,89 +353,95 @@ Ext.Loader.addClassPathMappings({
   ],
   "Ext.ux.GroupTreeChunker": [],
   "Ext.ux.statusbar.ValidationStatus": [],
+  "FPClient.view.orders.TemplForm": [
+    "widget.templform"
+  ],
+  "FPClient.model.UsersMod": [],
   "Ext.ux.layout.Center": [
     "layout.ux.center"
   ],
-  "FPAgent.model.CityMod": [],
-  "FPAgent.view.mainform.NumYear": [
-    "widget.numyear"
+  "FPClient.model.OrdsMod": [],
+  "FPClient.view.wbs.ViewExGrid": [
+    "widget.viewexgrid"
   ],
-  "FPAgent.model.MnfMod": [],
+  "FPClient.view.wbs.WbsTotal": [
+    "widget.wbstotal"
+  ],
+  "FPClient.view.wbs.WbsTool": [
+    "widget.wbstool"
+  ],
+  "FPClient.view.mainform.MainPanel": [
+    "widget.mainpanel"
+  ],
   "Ext.ux.DataView.Animated": [],
-  "FPAgent.view.orders.ViewWbForm": [
-    "widget.viewwbform"
-  ],
-  "FPAgent.view.Main": [],
-  "FPAgent.view.orders.LoadFileForm": [
+  "FPClient.view.orders.LoadFileForm": [
     "widget.loadfileform"
   ],
-  "FPAgent.model.AgentsListMod": [],
+  "FPClient.view.mainform.WbGrid": [
+    "widget.wbgrid"
+  ],
+  "FPClient.view.mainform.ComboAgent": [
+    "widget.comboagent"
+  ],
+  "FPClient.view.wbs.WbsGrid": [
+    "widget.wbsgrid"
+  ],
+  "FPClient.view.users.UsersWin": [
+    "widget.userswin"
+  ],
   "Ext.ux.statusbar.StatusBar": [
     "widget.statusbar"
   ],
-  "FPAgent.view.mainform.AdmTool": [
-    "widget.admtool"
+  "FPClient.model.OrderMod": [],
+  "FPClient.view.orders.ComboCity": [
+    "widget.combocity"
   ],
-  "FPAgent.controller.ViewExCont": [],
-  "FPAgent.view.Viewport": [
-    "widget.fpmnfviewport"
-  ],
-  "FPAgent.view.orders.OrdTotal": [
-    "widget.ordtotal"
-  ],
-  "FPAgent.store.CityStDes": [],
-  "FPAgent.controller.Loginform": [],
   "Ext.ux.grid.menu.RangeMenu": [],
-  "FPAgent.view.users.UsersWin": [
-    "widget.userswin"
-  ],
-  "FPAgent.view.orders.TemplForm": [
-    "widget.templform"
-  ],
   "Ext.ux.RowExpander": [
     "plugin.rowexpander"
   ],
   "Ext.ux.event.Player": [],
-  "FPAgent.model.ViewExMod": [],
-  "FPAgent.store.OrderSt": [],
-  "FPAgent.view.orders.OrdGrid": [
-    "widget.ordgrid"
+  "FPClient.view.users.UsersTool": [
+    "widget.userstool"
   ],
-  "FPAgent.store.MnfSt": [],
+  "FPClient.view.Viewport": [
+    "widget.fpmnfviewport"
+  ],
   "Ext.ux.ToolbarDroppable": [],
-  "FPAgent.view.mainform.MnfGrid": [
-    "widget.mnfgrid"
-  ],
+  "FPClient.model.WbsMod": [],
   "Ext.ux.event.Maker": [],
-  "FPAgent.view.orders.OrdWin": [
-    "widget.ordwin"
+  "FPClient.view.orders.OrdTool": [
+    "widget.ordtool"
   ],
-  "FPAgent.view.wbs.LoadWBForm": [
-    "widget.loadwbform"
+  "FPClient.view.wbs.ViewExWin": [
+    "widget.viewexwin"
+  ],
+  "FPClient.view.mainform.Loginform": [
+    "widget.loginform"
   ],
   "Ext.ux.DataView.Draggable": [],
+  "FPClient.view.mainform.MnfTool": [
+    "widget.mnftool"
+  ],
   "Ext.ux.TabCloseMenu": [
     "plugin.tabclosemenu"
   ],
-  "FPAgent.store.WbsStore": [],
+  "FPClient.store.CityStOrg": [],
   "Ext.ux.form.ItemSelector": [
     "widget.itemselectorfield",
     "widget.itemselector"
   ],
-  "FPAgent.store.TypeSt": [],
   "Ext.ux.ajax.JsonSimlet": [
     "simlet.json"
   ],
-  "FPAgent.controller.MnfCont": [],
+  "FPClient.controller.OrdsCont": [],
   "Ext.ux.Spotlight": [],
   "Ext.ux.grid.FiltersFeature": [
     "feature.filters"
   ],
-  "FPAgent.view.wbs.NewDopWin": [
-    "widget.newdopwin"
-  ],
-  "FPAgent.store.WbSt": [],
-  "FPAgent.view.users.UsersGrid": [
+  "FPClient.model.CityMod": [],
+  "FPClient.view.users.UsersGrid": [
     "widget.usersgrid"
-  ]
+  ],
+  "FPClient.controller.MnfCont": []
 });

@@ -1,6 +1,6 @@
-Ext.define('FPAgent.store.ViewExStore', {
+Ext.define('FPClient.store.ViewExStore', {
 	extend : 'Ext.data.Store',
-	model : 'FPAgent.model.ViewExMod',
+	model : 'FPClient.model.ViewExMod',
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',

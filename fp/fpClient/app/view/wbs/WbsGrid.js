@@ -1,7 +1,7 @@
-Ext.define('FPAgent.view.wbs.WbsGrid', {
+Ext.define('FPClient.view.wbs.WbsGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.wbsgrid',
-	requires : ['FPAgent.view.wbs.WbsTool', 'FPAgent.view.wbs.WbsTotal'],
+	requires : ['FPClient.view.wbs.WbsTool', 'FPClient.view.wbs.WbsTotal'],
 	store : 'WbsStore',
 	change : function (val) {
 		if (val > 0) {

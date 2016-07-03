@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.ViewWbMod', {
+Ext.define('FPClient.model.ViewWbMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'wb_no',

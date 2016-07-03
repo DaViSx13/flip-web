@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.wbs.ViewExGrid', {
+Ext.define('FPClient.view.wbs.ViewExGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.viewexgrid',
 	autoScroll : true,

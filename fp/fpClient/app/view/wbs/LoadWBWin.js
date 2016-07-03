@@ -1,8 +1,8 @@
-Ext.define('FPAgent.view.wbs.LoadWBWin', {
+Ext.define('FPClient.view.wbs.LoadWBWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.loadwbwin',
-	requires : ['FPAgent.view.wbs.LoadWBForm'],
+	requires : ['FPClient.view.wbs.LoadWBForm'],
 	title : 'Импорт информации о доставке',
 	layout : 'fit',
 	autoShow : true,

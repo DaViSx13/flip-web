@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.orders.ViewWbForm', {
+Ext.define('FPClient.view.orders.ViewWbForm', {
 	alias : 'widget.viewwbform',
 	extend : 'Ext.form.Panel',
 	layout : {
@@ -346,7 +346,7 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 		xtype : 'image',
 		height : 2000,
 		width : 2000,
-		src : 'http://localhost/fp_view_wb/fpagent/resources/images/wbtemplate.svg'
+		src : 'http://localhost/fp_view_wb/FPClient/resources/images/wbtemplate.svg'
 		}*/
 	]
 });

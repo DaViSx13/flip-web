@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.ExCodeMod', {
+Ext.define('FPClient.model.ExCodeMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'excode',

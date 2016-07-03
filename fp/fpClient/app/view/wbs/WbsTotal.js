@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.wbs.WbsTotal', {
+Ext.define('FPClient.view.wbs.WbsTotal', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.wbstotal',
 	items : [{

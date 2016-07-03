@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.AgentsMod', {
+Ext.define('FPClient.model.AgentsMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'partcode',

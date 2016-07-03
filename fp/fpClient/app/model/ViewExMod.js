@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.ViewExMod', {
+Ext.define('FPClient.model.ViewExMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'wbno',

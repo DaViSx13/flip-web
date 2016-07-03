@@ -1,6 +1,6 @@
-Ext.define('FPAgent.store.TemplSt', {
+Ext.define('FPClient.store.TemplSt', {
 	extend : 'Ext.data.Store',
-	model : 'FPAgent.model.TemplMod',
+	model : 'FPClient.model.TemplMod',
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',

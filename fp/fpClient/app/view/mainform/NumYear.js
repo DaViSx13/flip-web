@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.mainform.NumYear', {
+Ext.define('FPClient.view.mainform.NumYear', {
 	extend : 'Ext.form.field.Number',
 	alias : 'widget.numyear',
 	value : Ext.Date.format(new Date(), 'Y'),

@@ -1,4 +1,4 @@
-Ext.define('FPAgent.controller.OrdsCont', {
+Ext.define('FPClient.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
@@ -422,7 +422,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
-				var win = Ext.create('FPAgent.view.orders.OrdWin').show();
+				var win = Ext.create('FPClient.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params : {
 							id : sm.getSelection()[0].get('rordnum')

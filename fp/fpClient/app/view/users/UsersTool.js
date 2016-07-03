@@ -1,4 +1,4 @@
-Ext.define('FPAgent.view.users.UsersTool', {
+Ext.define('FPClient.view.users.UsersTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.userstool',
 	items : [{

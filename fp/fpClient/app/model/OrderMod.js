@@ -1,4 +1,4 @@
-Ext.define('FPAgent.model.OrderMod', {
+Ext.define('FPClient.model.OrderMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'rordnum',

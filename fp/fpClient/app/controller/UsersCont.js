@@ -1,4 +1,4 @@
-Ext.define('FPAgent.controller.UsersCont', {
+Ext.define('FPClient.controller.UsersCont', {
 	extend : 'Ext.app.Controller',
 	views : ['users.UsersGrid', 'users.UsersWin', 'users.UsersForm', 'users.UsersTool', 'mainform.MainPanel'],
 	models : ['UsersMod', 'AgentsMod'],

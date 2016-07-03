@@ -1,8 +1,8 @@
-Ext.define('FPAgent.view.orders.WbNoWin', {
+Ext.define('FPClient.view.orders.WbNoWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.wbnowin',
-	requires : ['FPAgent.view.orders.WbNoForm'],
+	requires : ['FPClient.view.orders.WbNoForm'],
 	title : 'Введите № накладной',
 	layout : 'fit',
 	autoShow : true,
