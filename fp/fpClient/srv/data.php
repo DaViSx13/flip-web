@@ -164,35 +164,23 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
 		case 'getAgTemplates':
-			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetAgTemplates @agentID={$ag}";
+			$query = "exec [wwwClientGetTemplates] @clientID={$ag}";
 			break;
 		case 'SetAgTemplates':
-			$CName=$params['cname'];
-			$ag=$_SESSION['xAgentID'];
+			$ag=$_SESSION['xClientID'];
 			$DName=$params['dname'];
 			$id=$params['id'] ? $params['id'] : 0;
-			$Address=$params['address'];
-			$ContName=$params['contname'];
-			$OrgRems=$params['orgrems'];
 			$DContName=$params['dcontname'];
 			$DAdr=$params['dadr'];
 			$DESTRems=$params['destrems'];			
-			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];			
 
-			$query = "exec wwwSetAgTemplates
+			$query = "exec [wwwClientSetTemplate]
 			@TemplateName='$params[templatename]',
-			@agentID=$ag,
-			@id=$id,
-			@ORG=$params[org],
-			@CName='$CName',
-			@Address='$Address',
-			@ContName='$ContName',
-			@ContPhone='$ContPhone',
-			@ContMail='$params[contmail]',
-			@OrgRems='$OrgRems',
+			@clientID=$ag,
+			@tplID=$id,
 			@DEST=$params[dest],
 			@DName='$DName',
 			@DAdr='$DAdr',
@@ -203,7 +191,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'DelAgTemplates':
 			$id = $params['id'];			
-			$query = "exec wwwDelAgTemplates @id={$id}";
+			$query = "exec [wwwClientDelTemplate] @tplID = {$id}";
 			break;
 		case 'getUsers':			  
 			$query = "exec wwwGetUsers";

@@ -70,12 +70,13 @@ Ext.define('FPClient.controller.TemplCont', {
 			var record = sm.getSelection()[0];
 			form.loadRecord(record);
 			var cb_org = form.down('combocity[name=org]');
-			cb_org.store.load({
+			/*cb_org.store.load({
 				params : {
 					query : cb_org.getValue()
 				}
 			});
 			cb_org.select(record.data['orgcode']);
+			*/
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
 				params : {
@@ -92,9 +93,9 @@ Ext.define('FPClient.controller.TemplCont', {
 		var me = this;
 		var win = btn.up('templwin');
 		var form_ord = win.down('templform');
-		var org = form_ord.down('combocity[name=org]');
+		//var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		if (org.value == null) {
+		/*if (org.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
 				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
@@ -110,7 +111,7 @@ Ext.define('FPClient.controller.TemplCont', {
 				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
 				return;
 			};
-		}
+		}*/
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {

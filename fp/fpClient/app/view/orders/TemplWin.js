@@ -7,7 +7,7 @@ Ext.define('FPClient.view.orders.TemplWin', {
 	layout : 'vbox',
 	autoShow : true,
 	height : 500,
-	width : 770,
+	width : 390,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
