@@ -24,6 +24,18 @@ Ext.define('FPClient.model.UsersMod', {
 		}, {
 			name : 'dateshtdn',
 			type : 'string'
+		}, {
+			name : 'c_co',
+			type : 'string'
+		}, {
+			name : 'c_city',
+			type : 'string'
+		}, {
+			name : 'loc',
+			type : 'string'
+		}, {
+			name : 'cacc',
+			type : 'string'
 		}
 	]
 });

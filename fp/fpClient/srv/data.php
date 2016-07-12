@@ -194,13 +194,15 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec [wwwClientDelTemplate] @tplID = {$id}";
 			break;
 		case 'getUsers':			  
-			$query = "exec wwwGetUsers";
+			$query = "exec wwwClientGetUsers";
 			break;
-		case 'setUsers':						
-			$query = "exec wwwSetUsers @id={$params['id']}, @auser='{$params['auser']}', @pass='{$params['passfirst']}', @agentID={$params['agents']}"; 
+		case 'setUsers':
+			$pass = '';
+			if (isset($params['passfirst'])) {$pass = $params['passfirst'];};
+			$query = "exec [wwwClientSetUser] @id={$params['id']}, @auser='{$params['auser']}', @pass='{$pass}', @agentID={$params['agents']}, @cacc='{$params['cacc']}'"; 
 			break;
 		case 'setActive':			
-			$query = "exec wwwSetActive @id={$params['id']}, @active={$params['active']}"; 
+			$query = "exec [wwwClientSetUserActive] @id={$params['id']}, @active={$params['active']}"; 
 			break;
 		case 'GetAgentsList':
 			$query = "exec wwwGetAgentsList";

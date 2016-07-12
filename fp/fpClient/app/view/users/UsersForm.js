@@ -13,6 +13,11 @@ Ext.define('FPClient.view.users.UsersForm', {
 			width : 250,
 			name : 'auser'
 		}, {
+			xtype : 'checkboxfield',
+			boxLabel : 'Сменить пароль',
+			itemId : 'changepass',
+			hidden : true
+		}, {
 			xtype : 'textfield',
 			fieldLabel : 'Новый пароль',
 			labelAlign : 'top',
@@ -30,6 +35,14 @@ Ext.define('FPClient.view.users.UsersForm', {
 			maskRe : /\w/,
 			allowBlank : false,
 			name : 'passsecond'
+		}, {
+			xtype : 'textfield',
+			fieldLabel : 'CACC',
+			maskRe : /\w/,
+			labelAlign : 'top',
+			allowBlank : false,
+			width : 250,
+			name : 'cacc'
 		}, {
 			xtype : 'combobox',
 			labelAlign : 'top',

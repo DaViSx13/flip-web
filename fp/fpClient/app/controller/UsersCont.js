@@ -36,8 +36,21 @@ Ext.define('FPClient.controller.UsersCont', {
 			},
 			'usersgrid' : {
 				selectionchange : this.isScroll
+			},
+			'usersform > #changepass' : {
+				change : this.changePass
 			}
 		});
+	},
+	changePass : function (cb, newValue, oldValue, eOpts) {
+		var f = this.getUsersForm();
+		if (newValue) {
+			f.down('textfield[name=passfirst]').enable();
+			f.down('textfield[name=passsecond]').enable();
+		} else {
+			f.down('textfield[name=passfirst]').disable();
+			f.down('textfield[name=passsecond]').disable();
+		}
 	},
 	loadUsers : function (ThePanel, newCard) {
 		if (newCard.xtype == 'usersgrid') {
@@ -102,8 +115,13 @@ Ext.define('FPClient.controller.UsersCont', {
 				w.setTitle('Редактирование пользователя:  ' + rec.get('auser'));
 				w.show();
 				var f = this.getUsersForm();
+
+				f.down('#changepass').show();
+				f.down('textfield[name=passfirst]').disable();
+				f.down('textfield[name=passsecond]').disable();
+
 				f.loadRecord(rec);
-				f.down('textfield[name=agents]').setReadOnly(true);
+				//f.down('textfield[name=agents]').setReadOnly(true);
 			} else {
 				Ext.Msg.alert('Запись блокирована', 'Разблокируйте запись перед внесением корректировок')
 			}
@@ -130,9 +148,10 @@ Ext.define('FPClient.controller.UsersCont', {
 									if (form.getValues()['id'] > 0) {
 										var rec = me.getUsersStStore().findRecord('id', form.getValues()['id']);
 										rec.set('auser', form.getValues()['auser']);
+										me.getUsersStStore().load();
 										me.getUsersGrid().getSelectionModel().select(rec);
 									} else {
-									me.getUsersStStore().load();
+										me.getUsersStStore().load();
 									}
 									form.reset();
 									win.close();

@@ -6,7 +6,7 @@ Ext.define('FPClient.view.users.UsersWin', {
 	title : 'Добавить пользователя',
 	layout : 'fit',
 	autoShow : true,
-	height : 280,
+	height : 320,
 	width : 280,
 	resizable : false,
 	modal : true,

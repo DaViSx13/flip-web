@@ -4,14 +4,6 @@ Ext.define('FPClient.view.users.UsersGrid', {
 	requires : ['FPClient.view.users.UsersTool'],
 	store : 'UsersSt',
 	columns : [{
-			text : 'Логин',
-			dataIndex : 'auser',
-			flex : 1
-		}, {
-			text : 'Пользователь',
-			flex : 1,
-			dataIndex : 'partname'
-		}, {
 			xtype : 'actioncolumn',
 			text : 'Доступ',
 			align : 'center',
@@ -26,25 +18,39 @@ Ext.define('FPClient.view.users.UsersGrid', {
 				}
 			}
 		}, {
-			text : 'КОД',
-			width : 50,
-			dataIndex : 'partloc'
+			text : 'Логин',
+			width : 200,
+			dataIndex : 'auser'
 		}, {
-			text : 'Город',
-			width : 150,
-			dataIndex : 'rusname'
-		}, {
-			xtype : 'actioncolumn',
-			text : 'Статус',
-			align : 'center',
-			width : 50,
-			getClass : function (v, meta, rec) {
-				if (rec.get('dateshtdn') > '') {
-					this.items[0].tooltip = 'Отношения прекращены: ' + rec.get('dateshtdn');
-					return 'cut';
+			text : 'Клиент',
+			columns : [{
+					text : 'LOC',
+					width : 50,
+					dataIndex : 'loc'
+				}, {
+					text : 'Город',
+					width : 150,
+					dataIndex : 'c_city'
+				}, {
+					text : 'Компания',
+					width : 300,
+					dataIndex : 'c_co'
 				}
-			}
+			]
+		}, {
+			text : 'Агент',
+			columns : [{
+					text : 'LOC',
+					width : 50,
+					dataIndex : 'partloc'
+				}, {
+					text : 'Агент',
+					width : 300,
+					dataIndex : 'partname'
+				}
+			]
 		}
+
 	],
 	dockedItems : [{
 			xtype : 'userstool',
