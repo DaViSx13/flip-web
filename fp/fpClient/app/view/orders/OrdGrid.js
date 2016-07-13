@@ -5,7 +5,7 @@ Ext.define('FPClient.view.orders.OrdGrid', {
 	store : 'OrdsSt',
 	columns : [{
 			xtype : 'gridcolumn',
-			width : 47,
+			width : 60,
 			dataIndex : 'rordnum',
 			text : '№'
 		}, {

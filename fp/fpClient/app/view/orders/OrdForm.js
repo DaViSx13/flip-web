@@ -14,10 +14,12 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			title : 'Отправитель',
 			x : 10,
 			y : 0,
+			hidden: true,
 			items : [{
 					xtype : 'combocity',
 					name : 'org',
-					store : 'CityStOrg'
+					store : 'CityStOrg',
+					allowBlank : true
 				}, {
 					xtype : 'textfield',
 					name : 'rordnum',
@@ -29,7 +31,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					fieldLabel : 'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
-					allowBlank : false
+					_allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 337,
@@ -37,7 +39,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					maxLength : 70,
 					fieldLabel : 'Адрес',
 					labelAlign : 'top',
-					allowBlank : false
+					_allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 329,
@@ -46,7 +48,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					maxLength : 50,
 					labelAlign : 'top',
 					anchor : '100%',
-					allowBlank : false
+					_allowBlank : false
 				}, {
 					xtype : 'textfield',
 					name : 'contmail',
@@ -61,7 +63,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					fieldLabel : 'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
-					allowBlank : false
+					_allowBlank : false
 				}, {
 					xtype : 'textareafield',
 					name : 'orgrems',

@@ -371,7 +371,15 @@ Ext.define('FPClient.controller.OrdsCont', {
 		edit.show();
 		var form_lf = edit.down('loadfileform');
 		form_lf.down('filefield[name=uploadFile]').setVisible(true);
-		edit.down('ordform').down('combocity[name=org]').focus(false, true);
+		edit.down('ordform').down('combocity[name=dest]').focus(false, true);
+		
+		var timeEdit = edit.down('ordform').down('textfield[name=courtimef]');
+		timeEdit.setReadOnly(true);
+		timeEdit.setValue('10:00');
+		
+		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
+		timeEdit.setReadOnly(true);
+		timeEdit.setValue('19:00');
 	},
 	openTpl : function (btn) {
 		this.getTemplStStore().load();
@@ -451,7 +459,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		if (org.value == null) {
+		/*if (org.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
 				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
@@ -467,7 +475,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
 				return;
 			};
-		}
+		}*/
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {

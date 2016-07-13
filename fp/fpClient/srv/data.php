@@ -38,9 +38,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			//$query = "select cast(null as varchar(10)) as test";
             break;
         case 'getAgOrders':
-            $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
+            $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec wwwGetAgOrders @period='$params[newPeriod]', @agentID={$ag}";
+            $query = "exec [wwwClientGetAgOrders] @period='$params[newPeriod]', @clientID={$ag}";
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
@@ -65,7 +65,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'saveagorder':
 			$CName=$params['cname'];
-			$ag=$_SESSION['xAgentID'];
+			$ag=$_SESSION['xClientID'];
 			$DName=$params['dname'];
 			$Amt=isset($params['amt']) ? $params['amt'] : 0;
 			$CurId=isset($params['curid']) ? $params['curid'] : 0;
@@ -88,7 +88,9 @@ if (!isset($_REQUEST['dbAct'])) {
 				$d = explode('.', $courdate);
 				$courdate = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) );
 			}
-
+			
+			if (!isset($params['org'])) $params['org'] = -1; //магия
+			
 			$query = "exec wwwSaveAgOrders
 			@ORG=$params[org],
 			@CName='$CName',
@@ -113,7 +115,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
 			@UserIn=$UserIn,
-			@RordNum=$Rordnum";			
+			@RordNum=$Rordnum,
+			@clientId = '{$ag}'";			
 			break;
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
