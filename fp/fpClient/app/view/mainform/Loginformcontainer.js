@@ -32,7 +32,7 @@ Ext.define('FPClient.view.mainform.Loginformcontainer', {
 			items: [
 			{
 					xtype : 'panel',
-					title : 'ФлипПост WEB - список изменений',
+					title : 'ФлипПост.Клиент - список изменений',
 					width : 350,
 					height : 240,
 					//autoScroll : true,

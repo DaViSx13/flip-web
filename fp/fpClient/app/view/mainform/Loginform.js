@@ -1,7 +1,7 @@
 Ext.define('FPClient.view.mainform.Loginform', {
 	extend : 'Ext.form.Panel',
 	alias : 'widget.loginform',
-	title : 'Вход в ФлипПост WEB',
+	title : 'Вход в ФлипПост.Клиент',
 	layout : {
 		type : 'vbox'
 	},
