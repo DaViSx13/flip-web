@@ -287,7 +287,7 @@ if (!isset($_REQUEST['dbAct'])) {
 					}
 				}
 				
-                mssql_free_result($result);
+                //mssql_free_result($result);
                 $response->success = true;
                 
             } else {
