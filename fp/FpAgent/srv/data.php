@@ -3,6 +3,11 @@
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 //error_reporting(0);
+
+function isSessionActive(){
+	return isset($_SESSION['xUser']);
+}
+
 class Response
 {
     
@@ -227,6 +232,10 @@ if (!isset($_REQUEST['dbAct'])) {
         $query = stripslashes($query);
 
         try {
+			if (!isSessionActive()){
+				throw new Exception('Сеанс завершен. Обновите страницу.');
+				};
+				
             include "dbConnect.php";
 			$result = mssql_query($query);
             if ($result) {
