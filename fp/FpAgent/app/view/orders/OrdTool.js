@@ -23,6 +23,10 @@ Ext.define('FPAgent.view.orders.OrdTool', {
 			iconCls : 'excel',
 			action : 'excel'
 		}, '-', {
+			text : 'Импорт из Excel',
+			iconCls : 'import',
+			action : 'import'
+		}, '-', {
 			text : '№ накладной',
 			iconCls : 'wbno',
 			action : 'wbno'
