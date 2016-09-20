@@ -106,7 +106,7 @@ function  doCalcVvol(){
         <th>Пункт назначения</th>
         <th>Вес, кг</th>
         <th>Срок доставки, дней***</th>
-        <th>Стоимость, руб *</th>
+        <th>Стоимость, руб</th>
      </tr>
     <tr>
         <td><!-- выпадающий список нас.пунктов-->
@@ -140,8 +140,6 @@ function  doCalcVvol(){
 <input type="button" value="Рассчитать" onclick="fCalc()"/>
 <input type="hidden" name="frmid" value="<?php	echo $frmId; ?>"/>
 </form>
-
-<p><span title="<?php	echo $frmId; ?>">*</span> - стоимость указана без НДС<br />
 
 <br />
 <div>

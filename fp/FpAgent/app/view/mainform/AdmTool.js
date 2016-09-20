@@ -31,12 +31,20 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 			
 			enableToggle : true,
 			xtype : 'button'
+		},' ',		
+		'->',
+		{
+			tooltip : 'Тарифы',
+			text : 'Тарифы',
+			iconCls : 'tariffs',
+			action : 'tariffs',
+			xtype : 'button'
 		},' ',
-		'->', {
+		{
 			xtype : 'label',
 			text : 'UserName'
 		},
-		' ', ' ', ' ',
+		' ', ' ', ' ',		
 		 {
 			tooltip : 'Помощь',
 			iconCls : 'help',

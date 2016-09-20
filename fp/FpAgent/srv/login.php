@@ -29,6 +29,7 @@ if ( !empty( $_POST['user'] )) {
 				   $_SESSION['xUser'] = $_POST['user'];
                    $_SESSION['xAgentID'] = $row['agentid'];
                    $_SESSION['xAgentName'] = iconv("windows-1251", "UTF-8", "{$row['partname']} ({$row['partloc']})");
+				   $_SESSION['xAgentPlanNo'] = $row['planno'];
                    $response->success = true;
 				   $response->msg = $_SESSION['xAgentID']; 
 				   $response->username = $_SESSION['xAgentName'];

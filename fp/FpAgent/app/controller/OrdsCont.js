@@ -406,6 +406,14 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var form_lf = edit.down('loadfileform');
 		form_lf.down('filefield[name=uploadFile]').setVisible(true);
 		edit.down('ordform').down('combocity[name=org]').focus(false, true);
+		
+		var timeEdit = edit.down('ordform').down('textfield[name=courtimef]');
+		timeEdit.setReadOnly(true);
+		timeEdit.setValue('10:00');
+		
+		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
+		timeEdit.setReadOnly(true);
+		timeEdit.setValue('19:00');
 	},
 	openTpl : function (btn) {
 		this.getTemplStStore().load();
@@ -424,6 +432,15 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			tplform.getForm().reset();
 			tplform.up('usetemplwin').close();
 			var win = Ext.widget('ordwin');
+
+			var timeEdit = win.down('ordform').down('textfield[name=courtimef]');
+			timeEdit.setReadOnly(true);
+			timeEdit.setValue('10:00');
+			
+			var timeEdit = win.down('ordform').down('textfield[name=courtimet]');
+			timeEdit.setReadOnly(true);
+			timeEdit.setValue('19:00');
+
 			var form = win.down('ordform');
 			form.loadRecord(record);
 			var cb_org = form.down('combocity[name=org]');
