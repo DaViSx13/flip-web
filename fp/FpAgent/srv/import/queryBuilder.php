@@ -13,13 +13,19 @@ class queryBuilder {
 	var $query;
 	var $error;
 	var $builded;			
-	function queryBuilder($file, $tpl) {																			/* На входе ссылка на валидный файл Excel и на массив-шаблон мапинга столбцов и параметров процедуры */	
+	function queryBuilder($file, $tpl, $ext) {																			/* На входе ссылка на валидный файл Excel и на массив-шаблон мапинга столбцов и параметров процедуры */	
 		$this->builded			= false;
 		$this->worksheetTitle 	= '';
 		$this->value 			= null;	
 		$this->query 			= '';
-		$this->error 			= '';		
-		$objPHPExcel = PHPExcel_IOFactory::load($file);			
+		$this->error 			= '';	
+		if($ext=='csv'){										/* Считывание csv файлов*/
+			$objReader = new PHPExcel_Reader_CSV();
+			$objReader->setDelimiter(';');
+			$objPHPExcel = $objReader->load($file);
+		} else {
+			$objPHPExcel = PHPExcel_IOFactory::load($file);
+		}
 		$objPHPExcel->setActiveSheetIndex(0);
 		$sheet = $objPHPExcel->getActiveSheet();
 		$this->worksheetTitle = $sheet->getTitle();		
