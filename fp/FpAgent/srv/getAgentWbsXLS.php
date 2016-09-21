@@ -9,11 +9,14 @@ function setCellStyle($sheet, $cell, $arrstyle){
 	$sheet->getStyle($cell)->applyFromArray($arrstyle);
 }
 
+set_time_limit(300);
+
 $ag = isset($_REQUEST['newAgent']) ? $_REQUEST['newAgent'] : $_SESSION['xAgentID']; 
 if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];} 
 $filter = $_REQUEST['filter'];
+$period = $_REQUEST['newPeriod'];
 
-$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}, @dir='{$filter}'";
+$query = "exec wwwGetAgentWbs @period='{$period}', @agentID={$ag}, @dir='{$filter}'";
 $result=mssql_query($query);
 
 // Creating a workbook
