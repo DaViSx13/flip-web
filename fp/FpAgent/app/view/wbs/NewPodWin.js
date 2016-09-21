@@ -7,7 +7,7 @@ Ext.define('FPAgent.view.wbs.NewPodWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 220,
-	width : 290,
+	width : 300,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
