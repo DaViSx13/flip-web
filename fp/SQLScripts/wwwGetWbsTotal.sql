@@ -35,8 +35,8 @@ set @eDate = dateadd(d, -1, DATEADD(m,1,@bDate))
 
 
 select s_wb = COUNT(m.Wb_No)
-,s_wt = ISNULL(sum (m.wt),0)
-,s_vol_wt = ISNULL(sum (m.vol_wt),0)
+,s_wt = ISNULL(ROUND(sum (m.wt), 2),0)
+,s_vol_wt = ISNULL(ROUND(sum (m.vol_wt), 2),0)
 
 , s_flip_b = ISNULL(dbo.RoundMoney(sum(icIN.B_Chg)),0)
 , s_flip_a = ISNULL(dbo.RoundMoney(sum(icIN.A_Chg)),0)
