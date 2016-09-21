@@ -6,7 +6,7 @@ Ext.define('FPAgent.view.orders.LoadOrdersWin', {
 	title : 'Импорт информации о заказах',
 	layout : 'fit',
 	autoShow : true,
-	height : 270,
+	height : 290,
 	width : 600,
 	closable : false,
 	resizable : false,

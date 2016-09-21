@@ -11,8 +11,8 @@ Ext.define('FPAgent.view.orders.LoadOrdersForm', {
 	{
         xtype: 'filefield',
         name: 'uploadFile',
-        fieldLabel: 'Файл формата .xls; .xlsx до 1 Мб.',
-        labelWidth: 200,
+        fieldLabel: 'Файл формата .xls; .xlsx; .csv до 1 Мб.',
+        labelWidth: 230,
         msgTarget: 'side',
         allowBlank: false,
         anchor: '100%',
@@ -22,7 +22,7 @@ Ext.define('FPAgent.view.orders.LoadOrdersForm', {
 	{
 		xtype:'fieldset',
 		name:'uploadcomments',
-		html :   ' Загружаемый файл должен быть в формате *.xls или *.xlsx, размером до 1 Мб,<br> '
+		html :   ' Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, размером до 1 Мб,<br> '
 				+' количество строк до 1000. Данные в файле должны представлять собой таблицу<br> '
 				+' из 20 столбцов с заголовками и повторять поля формы ввода нового заказа:<br> ' 
 				+' Город отправителя, Наименование отправителя, Адрес отправителя,<br> '

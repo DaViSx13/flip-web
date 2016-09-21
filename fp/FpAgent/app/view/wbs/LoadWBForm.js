@@ -11,8 +11,8 @@ Ext.define('FPAgent.view.wbs.LoadWBForm', {
 	{
         xtype: 'filefield',
         name: 'uploadFile',
-        fieldLabel: 'Файл формата .xls; .xlsx до 1 Мб.',
-        labelWidth: 200,
+        fieldLabel: 'Файл формата .xls; .xlsx; .csv до 1 Мб.',
+        labelWidth: 230,
         msgTarget: 'side',
         allowBlank: false,
         anchor: '100%',
@@ -22,9 +22,9 @@ Ext.define('FPAgent.view.wbs.LoadWBForm', {
 	{
 		xtype:'fieldset',
 		name:'uploadcomments',
-		html :   ' Загружаемый файл должен быть в формате *.xls или *.xlsx, размером до 1 Мб,<br>'
-				+' количество строк до 1000. Данные в файле должны представлять собой<br> '
-				+' таблицу из 3 столбцов, с заголовком :<br> номер накладной, дата в формате ДД:ММ:ГГГГ ЧЧ:ММ:СС,<br> '
+		html :   ' Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, <br>'
+				+' размером до 1 Мб, количество строк до 1000. Данные в файле <br> '
+				+' должны представлять собой таблицу из 3 столбцов, с заголовком :<br> номер накладной, дата в формате ДД:ММ:ГГГГ ЧЧ:ММ:СС,<br> '
 				+' получатель(до 14 символов).<br> '
 				+' <a href="srv/import/Example_import_POD.xlsx" target="_blank" download>Пример файл для импорта ПОД</a><br>',
         columnWidth: 0.5,
