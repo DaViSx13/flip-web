@@ -19,14 +19,21 @@ class queryBuilder {
 		$this->value 			= null;	
 		$this->query 			= '';
 		$this->error 			= '';	
-		if($ext=='csv'){										/* Считывание csv файлов*/
-			$objReader = new PHPExcel_Reader_CSV();
+		if($ext=='csv'){									/* Считывание csv файлов*/
+			$html = file_get_contents($file);
+            if (detect_cyr_charset($html)=='w')  // проверяем кодировку
+            {
+				$html=iconv("cp1251", "utf-8", $html);
+				file_put_contents($file, $html);
+			}			
+			$objReader = new PHPExcel_Reader_CSV();			
 			$objReader->setDelimiter(';');
+			$objReader->setSheetIndex(0);
 			$objPHPExcel = $objReader->load($file);
 		} else {
 			$objPHPExcel = PHPExcel_IOFactory::load($file);
-		}
-		$objPHPExcel->setActiveSheetIndex(0);
+			$objPHPExcel->setActiveSheetIndex(0);
+		}		
 		$sheet = $objPHPExcel->getActiveSheet();
 		$this->worksheetTitle = $sheet->getTitle();		
 		$nTpl = count($tpl);		
@@ -167,17 +174,27 @@ class queryBuilder {
 	function initDate($type, &$value, $cell, &$error) {
 		if($type == 'date' && !is_null($value)) {	
 			if(PHPExcel_Shared_Date::isDateTime($cell)){
-				$value = gmdate('d.m.Y H:i:s', PHPExcel_Shared_Date::ExcelToPHP($value));			/* Для замены даты в формате INT в стандартный */
+				$value = gmdate('d.m.Y H:i', PHPExcel_Shared_Date::ExcelToPHP($value));			/* Для замены даты в формате INT в стандартный */
 			}
 			$value = preg_replace('|\s+|', ' ', $value);											/* Для замены любых пробельных символов (перевод на новую строку, табуляция, пробел) */
-			if(preg_match("/^\d{2}.\d{2}.\d{2,4} \d{2}:\d{2}:\d{2}$/D", $value) || preg_match("/^\d{2}-\d{2}-\d{2,4} \d{2}:\d{2}:\d{2}$/D", $value)){
+			
+			if(preg_match("/^\d{2}.\d{2}.\d{2,4}( \d{2}:\d{2})?$/D", $value) || preg_match("/^\d{2}-\d{2}-\d{2,4}( \d{2}:\d{2})?$/D", $value)
+				) {
 				$value = preg_replace('/\-/', '.', $value);											/* Заменяем "-" на "." */		
 				$dateIn = explode('.', $value); 													/* Разбиваем на массив */
-				$addYear = (strlen($dateIn[2])>=10)?"":"20";										/* Добавляем тысячелетие и столетие, если их нет */			
-				$timeHM = explode(' ', $dateIn[2]);
+														/* Добавляем тысячелетие и столетие, если их нет */			
+				
+				if (stristr($dateIn[2], ' ') === FALSE){
+					$timeHM[1] = '00:00';
+					$addYear = (strlen($dateIn[2])>=2)?"":"20";
+				} else {
+					$addYear = (strlen($dateIn[2])>=7)?"":"20";
+					$timeHM = explode(' ', $dateIn[2]);
+				}
 				$timeHM = explode(':', $timeHM[1]);	
 				if ((!checkdate( $dateIn[1] ,$dateIn[0], $addYear.$dateIn[2]))||( (int)$timeHM[0]>=24)||((int)$timeHM[1]>=60)){
-					$error = 'Не верная дата! Значение ['.$value.'] не является корректным для типа данных ['.$type.']. Ячейка: '.$cell->getCoordinate().'!';
+					$error = 'Не верная дата! Значение ['.$value.'] не является корректным для типа данных ['.$type.']. Ячейка: '.$cell->getCoordinate().'!'.
+					'Дата должна иметь формат: дд.мм.гггг чч:мм';
 					return false;																	/* Не является корректной датой */
 				}
 				if (mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) >=  time()){	
@@ -199,10 +216,10 @@ class queryBuilder {
 	function initTime($type, &$value, $cell, &$error) {
 		if($type == 'time' && !is_null($value)) {	
 			if(PHPExcel_Shared_Date::isDateTime($cell)){
-				$value = gmdate('H:i:s', PHPExcel_Shared_Date::ExcelToPHP($value));					/* Для замены даты в формате INT в стандартный */
+				$value = gmdate('H:i', PHPExcel_Shared_Date::ExcelToPHP($value));					/* Для замены даты в формате INT в стандартный */
 			}
 			$value = preg_replace('|\s+|', ' ', $value);											/* Для замены любых пробельных символов (перевод на новую строку, табуляция, пробел) */
-			if(preg_match("/^\d{2}:\d{2}:\d{2}$/D", $value)){				
+			if(preg_match("/^\d{2}:\d{2}$/D", $value)){				
 				$timeHM = explode(':', $value);	
 				if (((int)$timeHM[0]>=24)||((int)$timeHM[1]>=60)){
 					$error = 'Не верное время! Значение ['.$value.'] не является корректным для типа данных ['.$type.']. Ячейка: '.$cell->getCoordinate().'!';
