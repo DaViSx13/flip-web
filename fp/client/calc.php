@@ -1,4 +1,5 @@
 <?php
+header("Content-type: text/html; charset=windows-1251");
 $frmId = $_REQUEST["frmid"] ? $_REQUEST["frmid"] : 4; 
 ?>
 <html>

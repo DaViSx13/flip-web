@@ -19,8 +19,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 echo "<row";
     foreach ($row as $f => $col_value) {
 //        echo " $f=\"$col_value\""; //htmlspecialchars 
-        echo " " . strtolower($f) . "=\"" . htmlspecialchars($col_value) . "\""; //htmlspecialchars 
-        
+        echo " " . strtolower($f) . "=\"" . htmlspecialchars($col_value, ENT_COMPAT,'cp1251') . "\""; //htmlspecialchars 
     }
 echo "/>\n";
 }
