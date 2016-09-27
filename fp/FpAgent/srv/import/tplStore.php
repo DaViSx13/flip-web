@@ -20,7 +20,7 @@ class tplStore {
 												array('wb_no', 'str', 0, 1),
 												array('p_d_in', 'date', 1, 1),
 												array('tdd', 'date', 1, 1),
-												array('rcpn', 'str', 2, 0, ''),
+												array('rcpn', 'str', 2, 1),
 												array('auser', 'constant', $_SESSION['xUser'])
 												),
 							'importOrders' => array( 

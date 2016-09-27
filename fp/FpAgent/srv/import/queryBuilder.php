@@ -13,7 +13,7 @@ class queryBuilder {
 	var $query;
 	var $error;
 	var $builded;			
-	function queryBuilder($file, $tpl, $ext) {																			/* На входе ссылка на валидный файл Excel и на массив-шаблон мапинга столбцов и параметров процедуры */	
+	function queryBuilder($file, $tpl, $ext) {				/* На входе ссылка на валидный файл Excel и на массив-шаблон мапинга столбцов и параметров процедуры */	
 		$this->builded			= false;
 		$this->worksheetTitle 	= '';
 		$this->value 			= null;	
@@ -24,8 +24,8 @@ class queryBuilder {
             if (detect_cyr_charset($html)=='w')  // проверяем кодировку
             {
 				$html=iconv("cp1251", "utf-8", $html);
-				file_put_contents($file, $html);
-			}			
+				file_put_contents($file, $html);				
+			}
 			$objReader = new PHPExcel_Reader_CSV();			
 			$objReader->setDelimiter(';');
 			$objReader->setSheetIndex(0);
@@ -173,7 +173,7 @@ class queryBuilder {
 	}
 	function initDate($type, &$value, $cell, &$error) {
 		if($type == 'date' && !is_null($value)) {	
-			if(PHPExcel_Shared_Date::isDateTime($cell)){
+			if((PHPExcel_Shared_Date::isDateTime($cell)) && (ctype_digit($value))){
 				$value = gmdate('d.m.Y H:i', PHPExcel_Shared_Date::ExcelToPHP($value));			/* Для замены даты в формате INT в стандартный */
 			}
 			$value = preg_replace('|\s+|', ' ', $value);											/* Для замены любых пробельных символов (перевод на новую строку, табуляция, пробел) */
@@ -197,10 +197,10 @@ class queryBuilder {
 					'Дата должна иметь формат: дд.мм.гггг чч:мм';
 					return false;																	/* Не является корректной датой */
 				}
-				if (mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) >=  time()){	
-					$error = 'Дата из будущего! Значение ['.$value.'] не является корректным для типа данных ['.$type.']. Ячейка: '.$cell->getCoordinate().'!';
-					return false;																	/* Дата из будующего */
-				}
+				//if (/*mktime(0,0,0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]) >=  time()*/1==1){	
+				//	$error = 'Дата из будущего! Значение ['.strftime('%Y%m%d %H:%M', mktime($timeHM[0],$timeHM[1],0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2])).'] не является корректным для типа данных ['.$type.']. Ячейка: '.$cell->getCoordinate().'!';
+				//	return false;																	// Дата из будующего 
+				//}
 				$value = strftime('%Y%m%d %H:%M', mktime($timeHM[0],$timeHM[1],0, $dateIn[1], $dateIn[0], $addYear.$dateIn[2]));
 					return true;
 			} else {
