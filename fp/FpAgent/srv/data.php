@@ -124,7 +124,9 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetAgentWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetAgentWbs @period='$params[newPeriod]', @agentID={$ag}, @dir='$params[dir]'";
+			$dirWbs = $params['dir'];
+			$newPeriodWbs = $params['newPeriod'];
+	$query = "exec wwwGetAgentWbs @period='{$newPeriodWbs}', @agentID={$ag}, @dir='{$dirWbs}'";
             $paging = true;
 			break;
 		case 'GetExCodes':
