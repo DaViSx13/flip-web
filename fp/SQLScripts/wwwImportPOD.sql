@@ -49,7 +49,11 @@ begin
 select @result = 'Не верная дата накладной.'
 return
 end
-
+if @p_d_in > GETDATE()
+BEGIN
+select @result = 'Дата '+convert(varchar(15), @p_d_in, 104)+' больше текущей '+convert(varchar(15), GETDATE(), 104)
+return
+END
 select @wbIn = dbo.fn_CountMnfBdyForUserById(ltrim(rtrim(@wb_no)),@auser)
 if @wbIn = 0
 begin
