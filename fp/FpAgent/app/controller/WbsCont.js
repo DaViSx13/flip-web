@@ -94,8 +94,12 @@ Ext.define('FPAgent.controller.WbsCont', {
 		});
 		this.getWbsStoreStore().on({
 			scope : this,
-			beforeprefetch : this.beforeprefetchWbsStore
+			load : this.loadWbsStore
 		});
+		/*this.getWbsStoreStore().on({
+			scope : this,
+			beforeprefetch : this.beforeprefetchWbsStore
+		});*/
 		this.getWbsStoreStore().on({
 			scope : this,
 			beforeload : this.beforeloadWbsStore
@@ -104,6 +108,12 @@ Ext.define('FPAgent.controller.WbsCont', {
 			scope : this,
 			load : this.loadViewExStore
 		});
+	},
+	loadWbsStore : function () {		
+		this.getWbsTool().down('button[action=all]').setDisabled(false);
+		this.getWbsTool().down('button[action=in]').setDisabled(false);
+		this.getWbsTool().down('button[action=out]').setDisabled(false);
+		this.getWbsTool().down('button[action=overdue]').setDisabled(false);		
 	},
 	loadViewExStore : function () {
 		this.getViewExGrid().getSelectionModel().select(0);
@@ -210,7 +220,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 			twt.down('label[itemId=lab7]').setText('');
 			twt.down('label[itemId=lab8]').setText('');
 			twt.down('label[itemId=lab9]').setText('');
-		}
+		}		
 	},
 	savePod : function (btn) {
 		var me = this;
@@ -324,10 +334,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 		}
 		window.location.href = 'srv/getAgentWbsXLS.php?newPeriod=' + this.getPeriod() + '&filter=' + t_dir;
 	},
-	loadWBsWin : function (btn) {
-		//console.log('import');
-		var newloadwin = Ext.widget('loadwbwin').show();
-		//console.log(newloadwin.down('loadwbform'));
+	loadWBsWin : function (btn) {		
+		var newloadwin = Ext.widget('loadwbwin').show();		
 	},
 	importWBs : function (btn) {
 	var me = this;
@@ -389,26 +397,28 @@ Ext.define('FPAgent.controller.WbsCont', {
 			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
 		}
 	},
-	beforeprefetchWbsStore : function (store, operation) {
-		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
+	/*beforeprefetchWbsStore*/beforeloadWbsStore: function (store, operation) {
+		var proxy = store.getProxy();
+		proxy.setExtraParam('newPeriod', this.getPeriod());
 		switch (true) {
 		case this.getWbsTool().down('button[action=all]').pressed:
-			store.getProxy().setExtraParam('dir', 'all');
+			proxy.setExtraParam('dir', 'all');
 			break;
 		case this.getWbsTool().down('button[action=in]').pressed:
-			store.getProxy().setExtraParam('dir', 'in');
+			proxy.setExtraParam('dir', 'in');
 			break;
 		case this.getWbsTool().down('button[action=out]').pressed:
-			store.getProxy().setExtraParam('dir', 'out');
+			proxy.setExtraParam('dir', 'out');
 			break;
 		case this.getWbsTool().down('button[action=overdue]').pressed:
-			store.getProxy().setExtraParam('dir', 'ove');
+			proxy.setExtraParam('dir', 'ove');
 			break;
-		}
+		}		
 	},
-	beforeloadWbsStore : function (store, operation) {
+	/*beforeloadWbsStore : function (store, operation) {
 		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
-	},
+		console.log('beforeload');
+	},*/
 	loadWbsGrid : function (comp) {
 		var aTol = this.getWbsTool();
 		this.allWbs(aTol.down('button[action=all]'));
@@ -424,17 +434,25 @@ Ext.define('FPAgent.controller.WbsCont', {
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
 		aTol.down('button[action=overdue]').toggle(false);
+		aTol.down('button[action=out]').setDisabled(true);
+		aTol.down('button[action=in]').setDisabled(true);
+		aTol.down('button[action=overdue]').setDisabled(true);
+		btn.setDisabled(true);
 		this.loadWbs();
 		this.viewTotal();
 	},
-	outWbs : function (btn) {
+	outWbs : function (btn) {		
 		btn.toggle(true);
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
 		aTol.down('button[action=overdue]').toggle(false);
+		aTol.down('button[action=all]').setDisabled(true);
+		aTol.down('button[action=in]').setDisabled(true);
+		aTol.down('button[action=overdue]').setDisabled(true);		
+		btn.setDisabled(true);
 		this.loadWbs();
-		this.viewTotal();
+		this.viewTotal();		
 	},
 	inWbs : function (btn) {
 		btn.toggle(true);
@@ -442,6 +460,10 @@ Ext.define('FPAgent.controller.WbsCont', {
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=overdue]').toggle(false);
+		aTol.down('button[action=all]').setDisabled(true);
+		aTol.down('button[action=out]').setDisabled(true);
+		aTol.down('button[action=overdue]').setDisabled(true);
+		btn.setDisabled(true);
 		this.loadWbs();
 		this.viewTotal();
 	},
@@ -451,6 +473,10 @@ Ext.define('FPAgent.controller.WbsCont', {
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
+		aTol.down('button[action=all]').setDisabled(true);
+		aTol.down('button[action=out]').setDisabled(true);
+		aTol.down('button[action=in]').setDisabled(true);
+		btn.setDisabled(true);
 		this.loadWbs();
 		this.viewTotal();
 	},
