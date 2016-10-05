@@ -1,4 +1,5 @@
 <?php
+session_name("CLIENTSESSIONID");
 session_start();
 error_reporting(0);
 class Response

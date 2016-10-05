@@ -7,6 +7,7 @@ class Response
 	public $username = '';
 }
 $response = new Response();
+session_name("CLIENTSESSIONID");
 session_start();
 if ( !empty( $_SESSION['xUser'] ) && !empty( $_SESSION['xAgentID'] )) {
     

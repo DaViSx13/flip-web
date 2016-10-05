@@ -1,5 +1,6 @@
 <?php
 //завязка
+session_name("CLIENTSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 //error_reporting(0);

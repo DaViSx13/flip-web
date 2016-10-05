@@ -1,4 +1,5 @@
 <?php
+session_name("COURIERSESSIONID");
 session_start();
 class Response
 {

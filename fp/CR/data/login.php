@@ -23,7 +23,8 @@ if (!empty($_POST['user'])) {
 		   $response->msg='Доступ блокирован...';
 		   }
                 else {*/
-                   session_start();
+                   session_name("COURIERSESSIONID");
+		   session_start();
 				   $_SESSION['CourLogin'] = $_POST['user'];
                    $_SESSION['CourID'] = $row['id'];
                    $_SESSION['CourName'] = iconv("windows-1251", "UTF-8", "{$row['FirstName']} {$row['SecondName']}");

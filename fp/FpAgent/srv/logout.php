@@ -5,7 +5,7 @@ class Response
     public $msg = '';
 }
 $response = new Response();
-  
+  session_name("AGENTSESSIONID");  
   session_start();
   //session_destroy();
   //session_unset();

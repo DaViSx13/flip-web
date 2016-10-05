@@ -1,4 +1,5 @@
 <?php
+session_name("CLIENTSESSIONID");
 session_start();
 if (!isset($_SESSION['xUser']))
     {

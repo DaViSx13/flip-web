@@ -1,4 +1,5 @@
 <?php
+session_name("CLIENTSESSIONID");
 session_start();
 
 include_once('Loader.php');

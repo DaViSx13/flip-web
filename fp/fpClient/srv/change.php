@@ -6,6 +6,7 @@ class Response
     public $msg = '';
 }
 $response = new Response();
+session_name("CLIENTSESSIONID");
 session_start();
 if ( !empty( $_POST['agent'] )) {
 	

@@ -4,6 +4,7 @@
 *
 */
 require_once('importerToDB.php');
+session_name("AGENTSESSIONID");
 session_start();
 error_reporting(0);
 

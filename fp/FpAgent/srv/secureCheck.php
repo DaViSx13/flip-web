@@ -1,4 +1,5 @@
 <?php
+session_name("AGENTSESSIONID");
 session_start();
 if (!isset($_SESSION['xUser']))
     {

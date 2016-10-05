@@ -25,6 +25,7 @@ if ( !empty( $_POST['user'] )) {
 		   $response->msg='Доступ блокирован...';
 		   }
                 else {
+		   session_name("AGENTSESSIONID");
                    session_start();
 				   $_SESSION['xUser'] = $_POST['user'];
                    $_SESSION['xAgentID'] = $row['agentid'];

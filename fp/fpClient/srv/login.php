@@ -27,7 +27,8 @@ if ( !empty( $_POST['user'] )) {
 		   $response->msg='Доступ блокирован...';
 		   }
                 else {
-                   session_start();
+                   session_name("CLIENTSESSIONID");
+		   session_start();
 				   $_SESSION['xUser'] = $_POST['user'];
                    $_SESSION['xAgentID'] = $row['agentID'];
                    $_SESSION['xAgentName'] = iconv("windows-1251", "UTF-8", "{$row['agentName']} ({$row['agentLOC']})");

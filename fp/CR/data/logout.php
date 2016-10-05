@@ -6,6 +6,7 @@ class Response
 }
 $response = new Response();
   
+  session_name("COURIERSESSIONID");
   session_start();
   //session_destroy();
   //session_unset();
