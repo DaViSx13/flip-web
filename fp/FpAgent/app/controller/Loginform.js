@@ -10,10 +10,10 @@ Ext.define('FPAgent.controller.Loginform', {
 	init : function () {
 		this.control({
 			'loginform button[action=langRU]' : {
-				click : this.setLangRU
+				toggle : this.toggleLang
 			},
 			'loginform button[action=langEN]' : {
-				click : this.setLangEN
+				toggle : this.toggleLang
 			},
 			'loginform button[action=login]' : {
 				click : this.doLogin
@@ -26,13 +26,24 @@ Ext.define('FPAgent.controller.Loginform', {
 			}
 		});
 	},
-	setLangRU : function () {
-		Ext.util.Cookies.set('myLang', 'ru');
-		window.location.reload();
-	},
-	setLangEN : function () {
-		Ext.util.Cookies.set('myLang', 'en');
-		window.location.reload();
+	toggleLang : function (btn, pressed) {
+		//console.log(btn.action);
+		//console.log(pressed);
+		var lang;
+		if (pressed) {
+			switch (btn.action) {
+			case 'langRU':
+				lang = 'ru';
+				break;
+			case 'langEN':
+				lang = 'en';
+				break;
+
+			}
+			//console.log(lang);
+			Ext.util.Cookies.set('myLang', lang);
+			window.location.reload();
+		}
 	},
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();

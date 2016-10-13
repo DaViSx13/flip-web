@@ -28,11 +28,13 @@
 	buttons : [{
 			text : 'RU',
 			action : 'langRU',
-			toggleGroup : 'langBtn'
+			toggleGroup : 'langBtn',
+			allowDepress : false
 		}, {
 			text : 'EN',
 			action : 'langEN',
-			toggleGroup : 'langBtn'
+			toggleGroup : 'langBtn',
+			allowDepress : false
 		}, '->', {
 			text : 'Вход',
 			action : 'login',
