@@ -12,7 +12,7 @@
 			xtype : 'textfield',
 			width : 230,
 			name : 'user',
-			fieldLabel : FPAgent.lib.Translate.tr("nameLabel"),//__("nameLabel"), //'Имя'
+			fieldLabel : FPAgent.lib.Translate.tr("nameLabel"), //__("nameLabel"), //'Имя'
 			enableKeyEvents : true,
 			allowBlank : false
 		}, {
@@ -20,12 +20,20 @@
 			name : 'password',
 			enableKeyEvents : true,
 			width : 230,
-			fieldLabel : FPAgent.lib.Translate.tr("passwordLabel"),//'Пароль'
+			fieldLabel : FPAgent.lib.Translate.tr("passwordLabel"), //'Пароль'
 			inputType : 'password',
 			allowBlank : false
 		}
 	],
 	buttons : [{
+			text : 'RU',
+			action : 'langRU',
+			toggleGroup : 'langBtn'
+		}, {
+			text : 'EN',
+			action : 'langEN',
+			toggleGroup : 'langBtn'
+		}, '->', {
 			text : 'Вход',
 			action : 'login',
 			formBind : true

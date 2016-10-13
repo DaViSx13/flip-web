@@ -9,6 +9,12 @@ Ext.define('FPAgent.controller.Loginform', {
 	],
 	init : function () {
 		this.control({
+			'loginform button[action=langRU]' : {
+				click : this.setLangRU
+			},
+			'loginform button[action=langEN]' : {
+				click : this.setLangEN
+			},
 			'loginform button[action=login]' : {
 				click : this.doLogin
 			},
@@ -19,6 +25,14 @@ Ext.define('FPAgent.controller.Loginform', {
 				keypress : this.pressEnter
 			}
 		});
+	},
+	setLangRU : function () {
+		Ext.util.Cookies.set('myLang', 'ru');
+		window.location.reload();
+	},
+	setLangEN : function () {
+		Ext.util.Cookies.set('myLang', 'en');
+		window.location.reload();
 	},
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
@@ -38,7 +52,7 @@ Ext.define('FPAgent.controller.Loginform', {
 				if (text.success == true) {
 					me.getAdmTool().down('comboagent').store.add(text.data);
 					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
-					
+
 				} else {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
@@ -87,10 +101,10 @@ Ext.define('FPAgent.controller.Loginform', {
 					aviewport.add(Ext.widget('mainpanel'));
 					if (action.result.msg == '-1') {
 						me.loadAdmPan();
-						aviewport.down('mainpanel').child('#users').tab.show();						
+						aviewport.down('mainpanel').child('#users').tab.show();
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 					} else {
-						aviewport.down('mainpanel').down('label').setText(action.result.username);						
+						aviewport.down('mainpanel').down('label').setText(action.result.username);
 						Ext.Ajax.request({
 							url : 'srv/data.php',
 							params : {
@@ -102,11 +116,11 @@ Ext.define('FPAgent.controller.Loginform', {
 								var text = Ext.decode(response.responseText);
 								if (text.success == true && text.data.length > 0) {
 									Ext.Msg.show({
-										title: 'Внимание!',
-										msg: 'У Вас есть просроченные накладные в количестве ' + text.data.length + ' шт.!<br/>Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"',
-										buttons: Ext.Msg.OK,
-										icon: Ext.MessageBox.WARNING
-									});									
+										title : 'Внимание!',
+										msg : 'У Вас есть просроченные накладные в количестве ' + text.data.length + ' шт.!<br/>Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"',
+										buttons : Ext.Msg.OK,
+										icon : Ext.MessageBox.WARNING
+									});
 								}
 							},
 							failure : function (response) {
