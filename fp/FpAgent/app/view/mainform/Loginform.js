@@ -1,7 +1,7 @@
 ﻿Ext.define('FPAgent.view.mainform.Loginform', {
 	extend : 'Ext.form.Panel',
 	alias : 'widget.loginform',
-	title : 'Вход в ФлипПост WEB',
+	title : FPAgent.lib.Translate.tr("Loginform.title"), //'Вход в ФлипПост WEB',
 	layout : {
 		type : 'vbox'
 	},
@@ -36,7 +36,7 @@
 			toggleGroup : 'langBtn',
 			allowDepress : false
 		}, '->', {
-			text : 'Вход',
+			text : FPAgent.lib.Translate.tr("Loginform.login"),//'Вход',
 			action : 'login',
 			formBind : true
 		}

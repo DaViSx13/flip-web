@@ -12,7 +12,7 @@ Ext.define('FPAgent.view.orders.OrdGrid', {
 			xtype : 'gridcolumn',
 			width : 150,
 			dataIndex : 'status',
-			text : 'Статус'
+			text : FPAgent.lib.Translate.tr("OrdGrid.status")//'Статус'
 		}, {
 			xtype : 'datecolumn',
 			format : 'd.m.Y',
