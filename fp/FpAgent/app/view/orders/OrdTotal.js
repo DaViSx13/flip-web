@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.orders.OrdTotal', {
 	alias : 'widget.ordtotal',
 	items : ['->', {
 			xtype : 'label',
-			text : 'Количество заказов: '
+			text : FPAgent.lib.Translate.tr("OrdTotal.label")//'Количество заказов: '
 		}
 	]
 });

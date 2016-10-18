@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.orders.ViewWbWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.viewwbwin',
 	requires : ['FPAgent.view.orders.ViewWbForm'],
-	title : 'Просмотр накладной',
+	title : FPAgent.lib.Translate.tr("ViewWbWin.title"),//'Просмотр накладной',
 	layout : 'fit',
 	autoShow : true,
 	height : 600,
@@ -18,7 +18,7 @@ Ext.define('FPAgent.view.orders.ViewWbWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Закрыть',
+				text : FPAgent.lib.Translate.tr("ViewWbWin.button.close"),//'Закрыть',
 				scope : this,
 				handler : this.close
 			}

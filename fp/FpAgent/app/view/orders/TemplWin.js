@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.orders.TemplWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.templwin',
 	requires : ['FPAgent.view.orders.TemplForm'],
-	title : 'Новый шаблон',
+	title : FPAgent.lib.Translate.tr("TemplWin.title"),//'Новый шаблон',
 	layout : 'vbox',
 	autoShow : true,
 	height : 500,
@@ -16,10 +16,10 @@ Ext.define('FPAgent.view.orders.TemplWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
+				text : FPAgent.lib.Translate.tr("TemplWin.button.save"),//'Сохранить',
 				action : 'save'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("TemplWin.button.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

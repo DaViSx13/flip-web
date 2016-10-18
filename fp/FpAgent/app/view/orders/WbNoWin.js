@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.orders.WbNoWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.wbnowin',
 	requires : ['FPAgent.view.orders.WbNoForm'],
-	title : 'Введите № накладной',
+	title : FPAgent.lib.Translate.tr("WbNoWin.title"),//'Введите № накладной',
 	layout : 'fit',
 	autoShow : true,
 	height : 95,
@@ -16,10 +16,10 @@ Ext.define('FPAgent.view.orders.WbNoWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
+				text : FPAgent.lib.Translate.tr("WbNoWin.button.save"),//'Сохранить',
 				action : 'save'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("WbNoWin.button.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.orders.OrdWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.ordwin',
 	requires : ['FPAgent.view.orders.OrdForm', 'FPAgent.view.orders.LoadFileForm'],
-	title : 'Новый заказ',
+	title : FPAgent.lib.Translate.tr("OrdWin.title"),//'Новый заказ',
 	layout : 'vbox',
 	autoShow : true,
 	height : 658,
@@ -19,10 +19,10 @@ Ext.define('FPAgent.view.orders.OrdWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
+				text : FPAgent.lib.Translate.tr("OrdWin.button.save"),//'Сохранить',
 				action : 'save'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("OrdWin.button.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

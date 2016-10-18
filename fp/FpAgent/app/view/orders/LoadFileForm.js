@@ -13,24 +13,24 @@ Ext.define('FPAgent.view.orders.LoadFileForm', {
 		//y : 560,
         xtype: 'filefield',
         name: 'uploadFile',
-        fieldLabel: 'Файл формата .xls, .pdf, .doc до 1 Мб.',
+        fieldLabel: FPAgent.lib.Translate.tr("LoadFileForm.uploadFile.fieldLabel"),//'Файл формата .xls, .pdf, .doc до 1 Мб.',
         labelWidth: 230,
         msgTarget: 'side',
         allowBlank: false,
 		hidden :true,
         anchor: '100%',
 		width : 740,
-        buttonText: 'Выбрать'
+        buttonText: FPAgent.lib.Translate.tr("LoadFileForm.uploadFile.buttonText")//'Выбрать'
     },{
 			xtype : 'label',
 			name:'urlf',
 			anchor: '100%',
 			hidden :true,
-			 margin: '0 70 0 10',
+			margin: '0 70 0 10',
 			text : ''
 	},{
 		xtype: 'button',
-		text : 'Удалить',
+		text : FPAgent.lib.Translate.tr("LoadFileForm.button.delete"),//'Удалить',
 		action : 'delete',
 		hidden :true		
 		}

@@ -3,35 +3,35 @@ Ext.define('FPAgent.view.orders.OrdTool', {
 	alias : 'widget.ordtool',
 	requires : ['FPAgent.view.mainform.ComboMonth', 'FPAgent.view.mainform.NumYear', 'FPAgent.view.mainform.ComboAgent'],
 	items : [{
-			text : 'Новый',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.new"),//'Новый',
 			iconCls : 'newdoc',
 			action : 'new'
 		}, '-', {
-			text : 'Из шаблона',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.newtpl"),//'Из шаблона',
 			iconCls : 'newtpl',
 			action : 'newtpl'
 		}, '-', {
-			text : 'Просмотр',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.view"),//'Просмотр',
 			iconCls : 'viewdoc',
 			action : 'view'
 		}, '-', {
-			text : 'Редактировать',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.edit"),//'Редактировать',
 			iconCls : 'editdoc',
 			action : 'edit'
 		}, '-', {
-			text : 'Экспорт в Excel',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.excel"),//'Экспорт в Excel',
 			iconCls : 'excel',
 			action : 'excel'
 		}, '-', {
-			text : 'Импорт из Excel',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.import"),//'Импорт из Excel',
 			iconCls : 'import',
 			action : 'import'
 		}, '-', {
-			text : '№ накладной',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.wbno"),//'№ накладной',
 			iconCls : 'wbno',
 			action : 'wbno'
 		}, '-', {
-			text : 'Просмотр накладной',
+			text : FPAgent.lib.Translate.tr("OrdTool.action.wbview"),//'Просмотр накладной',
 			iconCls : 'wbview',
 			action : 'wbview'
 		}, '->', '-', {

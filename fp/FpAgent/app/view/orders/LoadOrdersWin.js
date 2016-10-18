@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.orders.LoadOrdersWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.loadorderswin',
 	requires : ['FPAgent.view.orders.LoadOrdersForm'],
-	title : 'Импорт информации о заказах',
+	title : FPAgent.lib.Translate.tr("LoadOrdersForm.title"),//'Импорт информации о заказах',
 	layout : 'fit',
 	autoShow : true,
 	height : 290,
@@ -17,10 +17,10 @@ Ext.define('FPAgent.view.orders.LoadOrdersWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Импортировать',
+				text : FPAgent.lib.Translate.tr("LoadOrdersForm.button.imp"),//'Импортировать',
 				action : 'imp'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("LoadOrdersForm.button.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

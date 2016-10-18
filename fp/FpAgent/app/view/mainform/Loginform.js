@@ -12,7 +12,7 @@
 			xtype : 'textfield',
 			width : 230,
 			name : 'user',
-			fieldLabel : FPAgent.lib.Translate.tr("nameLabel"), //__("nameLabel"), //'Имя'
+			fieldLabel : FPAgent.lib.Translate.tr("Loginform.user"), //__("nameLabel"), //'Имя'
 			enableKeyEvents : true,
 			allowBlank : false
 		}, {
@@ -20,7 +20,7 @@
 			name : 'password',
 			enableKeyEvents : true,
 			width : 230,
-			fieldLabel : FPAgent.lib.Translate.tr("passwordLabel"), //'Пароль'
+			fieldLabel : FPAgent.lib.Translate.tr("Loginform.password"), //'Пароль'
 			inputType : 'password',
 			allowBlank : false
 		}

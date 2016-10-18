@@ -16,16 +16,16 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 			}
 		},' ',			
 			{
-			tooltip : 'Список',
-			text : 'Список',
+			tooltip : FPAgent.lib.Translate.tr("AdmTool.list"),//'Список',
+			text : FPAgent.lib.Translate.tr("AdmTool.list"),//'Список',
 			iconCls : 'list',
 			action : 'list',
 			
 			enableToggle : true,
 			xtype : 'button'
 		},' ',{
-			tooltip : 'Шаблоны',
-			text : 'Шаблоны',
+			tooltip : FPAgent.lib.Translate.tr("AdmTool.templ"),//'Шаблоны',
+			text : FPAgent.lib.Translate.tr("AdmTool.templ"),//'Шаблоны',
 			iconCls : 'templ',
 			action : 'templ',
 			
@@ -34,8 +34,8 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 		},' ',		
 		'->',
 		{
-			tooltip : 'Тарифы',
-			text : 'Тарифы',
+			tooltip : FPAgent.lib.Translate.tr("AdmTool.tariffs"),//'Тарифы',
+			text : FPAgent.lib.Translate.tr("AdmTool.tariffs"),//'Тарифы',
 			iconCls : 'tariffs',
 			action : 'tariffs',
 			xtype : 'button'
@@ -46,13 +46,13 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 		},
 		' ', ' ', ' ',		
 		 {
-			tooltip : 'Помощь',
+			tooltip : FPAgent.lib.Translate.tr("AdmTool.help"),//'Помощь',
 			iconCls : 'help',
 			action : 'help',
 			xtype : 'button'
 		},
 		{
-			tooltip : 'Выход',
+			tooltip : FPAgent.lib.Translate.tr("AdmTool.logout"),//'Выход',
 			iconCls : 'exit-user',
 			action : 'logout',
 			xtype : 'button'

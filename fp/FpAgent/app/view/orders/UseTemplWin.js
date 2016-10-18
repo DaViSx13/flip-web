@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.orders.UseTemplWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.usetemplwin',
 	requires : ['FPAgent.view.orders.UseTemplForm'],
-	title : 'Выберите шаблон',
+	title : FPAgent.lib.Translate.tr("UseTemplWin.title"),//'Выберите шаблон',
 	layout : 'fit',
 	autoShow : true,
 	height : 96,
@@ -17,10 +17,10 @@ Ext.define('FPAgent.view.orders.UseTemplWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Выбрать',
+				text : FPAgent.lib.Translate.tr("UseTemplWin.button.set"),//'Выбрать',
 				action : 'set'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("UseTemplWin.button.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

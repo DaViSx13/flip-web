@@ -4,7 +4,7 @@ Ext.define('FPAgent.view.mainform.ComboAgent', {
 	name : 'agents',
 	displayField : 'displayname',
 	valueField : 'partcode',
-	fieldLabel : 'Выберите Агента',
+	fieldLabel : FPAgent.lib.Translate.tr("ComboAgent.fieldLabel"),//'Выберите Агента',
 	width : 350,
 	forceSelection : true,
 	queryMode : 'local',
