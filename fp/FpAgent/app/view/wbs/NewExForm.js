@@ -51,7 +51,7 @@ Ext.define('FPAgent.view.wbs.NewExForm', {
 			xtype : 'textareafield',
 			width : 340,
 			name : 'exContent',
-			fieldLabel : FPAgent.lib.Translate.tr("NewExForm.exContent"),//'Содержание происшествия'
+			fieldLabel : FPAgent.lib.Translate.tr("NewExForm.exContent")//'Содержание происшествия'
 		}
 	]
 });

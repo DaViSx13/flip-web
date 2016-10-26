@@ -27,7 +27,7 @@ Ext.define('FPAgent.view.wbs.NewDopForm', {
 			xtype : 'textareafield',
 			width : 310,
 			name : 'rem_ag',
-			fieldLabel : FPAgent.lib.Translate.tr("NewDopForm.rem_ag"),//'Примечание'
+			fieldLabel : FPAgent.lib.Translate.tr("NewDopForm.rem_ag")//'Примечание'
 		}, {
 			xtype : 'textfield',
 			name : 'interid',

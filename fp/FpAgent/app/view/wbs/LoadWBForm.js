@@ -17,7 +17,7 @@ Ext.define('FPAgent.view.wbs.LoadWBForm', {
         allowBlank: false,
         anchor: '100%',
 		width : 450,
-        buttonText: FPAgent.lib.Translate.tr("LoadWBForm.uploadFile.buttonText"),//'Выбрать'
+        buttonText: FPAgent.lib.Translate.tr("LoadWBForm.uploadFile.buttonText")//'Выбрать'
     },
 	{
 		xtype:'fieldset',
