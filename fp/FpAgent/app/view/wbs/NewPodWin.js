@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.wbs.NewPodWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.newpodwin',
 	requires : ['FPAgent.view.wbs.NewPodForm'],
-	title : 'Подтверждение о доставке накладной',
+	title : FPAgent.lib.Translate.tr("NewPodWin.title"),//'Подтверждение о доставке накладной',
 	layout : 'fit',
 	autoShow : true,
 	height : 220,
@@ -16,10 +16,10 @@ Ext.define('FPAgent.view.wbs.NewPodWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
+				text : FPAgent.lib.Translate.tr("NewPodWin.save"),//'Сохранить',
 				action : 'save'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("NewPodWin.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

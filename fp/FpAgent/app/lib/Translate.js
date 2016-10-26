@@ -17,473 +17,1332 @@
 			this.currentLocale = cookieLocale;
 		} else {
 			this.currentLocale = 'ru';
-			console.log('test');
 		}
 
 		return locString ? locString[this.currentLocale] : stringID;
 	},
 
 	data : [
-  {
-    "stringID": "ComboCity",
-    "ru": "Город",
-    "en": ""
-  },
-  {
-    "stringID": "Loginform.user",
-    "ru": "Пользователь",
-    "en": ""
-  },
-  {
-    "stringID": "Loginform.password",
-    "ru": "Пароль",
-    "en": ""
-  },
-  {
-    "stringID": "Loginform.login",
-    "ru": "Вход",
-    "en": ""
-  },
-  {
-    "stringID": "Loginform.title",
-    "ru": "Вход в ФлипПост WEB",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.status",
-    "ru": "Статус",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.datein",
-    "ru": "Дата",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.orgcity",
-    "ru": "Город",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.cname",
-    "ru": "Отправитель",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.destcity",
-    "ru": "Город",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.dname",
-    "ru": "Получатель",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.packs",
-    "ru": "Кол.",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.wt",
-    "ru": "Вес",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.volwt",
-    "ru": "Об. вес",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.wb_no",
-    "ru": "№ накл.",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.fs.Org",
-    "ru": "Отправитель",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.cname",
-    "ru": "Название клиента",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.address",
-    "ru": "Адрес",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.contname",
-    "ru": "Контактное лицо",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.contphone",
-    "ru": "Телефон",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.orgrems",
-    "ru": "Примечание",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.fs.dest",
-    "ru": "Получатель",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.dname",
-    "ru": "Название клиента",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.dadr",
-    "ru": "Адрес",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.dcontname",
-    "ru": "Контактное лицо",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.dcontphone",
-    "ru": "Телефон",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.destrems",
-    "ru": "Примечание",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.fs.date",
-    "ru": "Дата приезда курьера",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.courdate",
-    "ru": "Дата",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.courtimef",
-    "ru": "Время с",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.courtimet",
-    "ru": "Время до",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.fs.cargo",
-    "ru": "Информация о грузе",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.type",
-    "ru": "Тип груза",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.packs",
-    "ru": "Число мест",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.wt",
-    "ru": "Вес",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.volwt",
-    "ru": "Объемный вес",
-    "en": ""
-  },
-  {
-    "stringID": "OrdGrid.desc",
-    "ru": "*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)",
-    "en": ""
-  },
-  {
-    "stringID": "LoadFileForm.uploadFile.fieldLabel",
-    "ru": "Файл формата .xls, .pdf, .doc до 1 Мб.",
-    "en": ""
-  },
-  {
-    "stringID": "LoadFileForm.uploadFile.buttonText",
-    "ru": "Выбрать",
-    "en": ""
-  },
-  {
-    "stringID": "LoadFileForm.button.delete",
-    "ru": "Удалить",
-    "en": ""
-  },
-  {
-    "stringID": "LoadOrdersForm.uploadcomments.html",
-    "ru": "Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, размером до 1 Мб,<br>количество строк до 1000. Данные в файле должны представлять собой таблицу<br> из 20 столбцов с заголовками и повторять поля формы ввода нового заказа:<br> Город отправителя, Наименование отправителя, Адрес отправителя,<br> Контакт отправителя, Телефон отправителя, Почта отправителя, Описание отправителя,<br> \t Город получателя, Название получателя, Адрес получателя, Контакт получателя,<br> Телефон получателя, Почта получателя, Описание получателя, Количество, Вес,<br> Объемный вес, Дата приезда курьера, Время от, Время до.<br> <a href=\"srv/import/Example_import_AgOrders.xlsx\" target=\"_blank\" download>Пример файл для импорта заказов</a><br>",
-    "en": ""
-  },
-  {
-    "stringID": "LoadOrdersForm.uploadcomments.title",
-    "ru": "Правила загрузки файла",
-    "en": ""
-  },
-  {
-    "stringID": "LoadOrdersForm.title",
-    "ru": "Импорт информации о заказах",
-    "en": ""
-  },
-  {
-    "stringID": "LoadOrdersForm.button.imp",
-    "ru": "Импортировать",
-    "en": ""
-  },
-  {
-    "stringID": "LoadOrdersForm.button.cancel",
-    "ru": "Отмена",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.new",
-    "ru": "Новый",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.newtpl",
-    "ru": "Из шаблона",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.view",
-    "ru": "Просмотр",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.edit",
-    "ru": "Редактировать",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.excel",
-    "ru": "Экспорт в Excel",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.import",
-    "ru": "Импорт из Excel",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.wbno",
-    "ru": "№ накладной",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTool.action.wbview",
-    "ru": "Просмотр накладной",
-    "en": ""
-  },
-  {
-    "stringID": "OrdTotal.label",
-    "ru": "Количество заказов:",
-    "en": ""
-  },
-  {
-    "stringID": "OrdWin.title",
-    "ru": "Новый заказ",
-    "en": ""
-  },
-  {
-    "stringID": "OrdWin.button.save",
-    "ru": "Сохранить",
-    "en": ""
-  },
-  {
-    "stringID": "OrdWin.button.cancel",
-    "ru": "Отмена",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.templatename",
-    "ru": "Название шаблона",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.fs.org",
-    "ru": "Отправитель",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.cname",
-    "ru": "Название клиента",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.address",
-    "ru": "Адрес",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.contname",
-    "ru": "Контактное лицо",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.contphone",
-    "ru": "Телефон",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.orgrems",
-    "ru": "Примечание",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.fs.dest",
-    "ru": "Получатель",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.dname",
-    "ru": "Название клиента",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.dadr",
-    "ru": "Адрес",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.dcontname",
-    "ru": "Контактное лицо",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.dcontphone",
-    "ru": "Телефон",
-    "en": ""
-  },
-  {
-    "stringID": "TemplForm.destrems",
-    "ru": "Примечание",
-    "en": ""
-  },
-  {
-    "stringID": "TemplGrid.templatename",
-    "ru": "Наименование",
-    "en": ""
-  },
-  {
-    "stringID": "TemplTool.newtpl",
-    "ru": "Новый",
-    "en": ""
-  },
-  {
-    "stringID": "TemplTool.edittpl",
-    "ru": "Редактировать",
-    "en": ""
-  },
-  {
-    "stringID": "TemplTool.deltpl",
-    "ru": "Удалить",
-    "en": ""
-  },
-  {
-    "stringID": "TemplWin.title",
-    "ru": "Новый шаблон",
-    "en": ""
-  },
-  {
-    "stringID": "TemplWin.button.save",
-    "ru": "Сохранить",
-    "en": ""
-  },
-  {
-    "stringID": "TemplWin.button.cancel",
-    "ru": "Отмена",
-    "en": ""
-  },
-  {
-    "stringID": "UseTemplWin.title",
-    "ru": "Выберите шаблон",
-    "en": ""
-  },
-  {
-    "stringID": "UseTemplWin.button.set",
-    "ru": "Выбрать",
-    "en": ""
-  },
-  {
-    "stringID": "UseTemplWin.button.cancel",
-    "ru": "Отмена",
-    "en": ""
-  },
-  {
-    "stringID": "ViewWbWin.title",
-    "ru": "Просмотр накладной",
-    "en": ""
-  },
-  {
-    "stringID": "ViewWbWin.button.close",
-    "ru": "Закрыть",
-    "en": ""
-  },
-  {
-    "stringID": "WbNoWin.title",
-    "ru": "Введите № накладной",
-    "en": ""
-  },
-  {
-    "stringID": "WbNoWin.button.save",
-    "ru": "Сохранить",
-    "en": ""
-  },
-  {
-    "stringID": "WbNoWin.button.cancel",
-    "ru": "Отмена",
-    "en": ""
-  },
-  {
-    "stringID": "AdmTool.list",
-    "ru": "Список",
-    "en": ""
-  },
-  {
-    "stringID": "AdmTool.templ",
-    "ru": "Шаблоны",
-    "en": ""
-  },
-  {
-    "stringID": "AdmTool.tariffs",
-    "ru": "Тарифы",
-    "en": ""
-  },
-  {
-    "stringID": "AdmTool.help",
-    "ru": "Помощь",
-    "en": ""
-  },
-  {
-    "stringID": "AdmTool.logout",
-    "ru": "Выход",
-    "en": ""
-  },
-  {
-    "stringID": "ComboAgent.fieldLabel",
-    "ru": "Выберите Агента",
-    "en": ""
-  },
-  {
-    "stringID": "Loginformcontainer.title",
-    "ru": "ФлипПост WEB - список изменений",
-    "en": ""
-  }
+ {
+   "stringID": "ComboCity",
+   "ru": "Город",
+   "en": "City"
+ },
+ {
+   "stringID": "Loginform.user",
+   "ru": "Пользователь",
+   "en": "User"
+ },
+ {
+   "stringID": "Loginform.password",
+   "ru": "Пароль",
+   "en": "Password"
+ },
+ {
+   "stringID": "Loginform.login",
+   "ru": "Вход",
+   "en": "Login"
+ },
+ {
+   "stringID": "Loginform.title",
+   "ru": "Вход в ФлипПост WEB",
+   "en": "Login in FlipPost WEB"
+ },
+ {
+   "stringID": "OrdGrid.status",
+   "ru": "Статус",
+   "en": "Status"
+ },
+ {
+   "stringID": "OrdGrid.datein",
+   "ru": "Дата",
+   "en": "Date"
+ },
+ {
+   "stringID": "OrdGrid.orgcity",
+   "ru": "Город",
+   "en": "City"
+ },
+ {
+   "stringID": "OrdGrid.cname",
+   "ru": "Отправитель",
+   "en": "Sender"
+ },
+ {
+   "stringID": "OrdGrid.destcity",
+   "ru": "Город",
+   "en": "City"
+ },
+ {
+   "stringID": "OrdGrid.dname",
+   "ru": "Получатель",
+   "en": "Recipient"
+ },
+ {
+   "stringID": "OrdGrid.packs",
+   "ru": "Кол.",
+   "en": "Qty."
+ },
+ {
+   "stringID": "OrdGrid.wt",
+   "ru": "Вес",
+   "en": "Wt."
+ },
+ {
+   "stringID": "OrdGrid.volwt",
+   "ru": "Об. вес",
+   "en": "Vol. Wt."
+ },
+ {
+   "stringID": "OrdGrid.wb_no",
+   "ru": "№ накл.",
+   "en": "№ waybill"
+ },
+ {
+   "stringID": "OrdGrid.fs.Org",
+   "ru": "Отправитель",
+   "en": "Sender"
+ },
+ {
+   "stringID": "OrdGrid.cname",
+   "ru": "Название клиента",
+   "en": "Client name"
+ },
+ {
+   "stringID": "OrdGrid.address",
+   "ru": "Адрес",
+   "en": "Address"
+ },
+ {
+   "stringID": "OrdGrid.contname",
+   "ru": "Контактное лицо",
+   "en": "Contact"
+ },
+ {
+   "stringID": "OrdGrid.contphone",
+   "ru": "Телефон",
+   "en": "Phone"
+ },
+ {
+   "stringID": "OrdGrid.orgrems",
+   "ru": "Примечание",
+   "en": "Note"
+ },
+ {
+   "stringID": "OrdGrid.fs.dest",
+   "ru": "Получатель",
+   "en": "Recipient"
+ },
+ {
+   "stringID": "OrdGrid.dname",
+   "ru": "Название клиента",
+   "en": "Client name"
+ },
+ {
+   "stringID": "OrdGrid.dadr",
+   "ru": "Адрес",
+   "en": "Address"
+ },
+ {
+   "stringID": "OrdGrid.dcontname",
+   "ru": "Контактное лицо",
+   "en": "Contact"
+ },
+ {
+   "stringID": "OrdGrid.dcontphone",
+   "ru": "Телефон",
+   "en": "Phone"
+ },
+ {
+   "stringID": "OrdGrid.destrems",
+   "ru": "Примечание",
+   "en": "Note"
+ },
+ {
+   "stringID": "OrdGrid.fs.date",
+   "ru": "Дата приезда курьера",
+   "en": "Courier arrival date"
+ },
+ {
+   "stringID": "OrdGrid.courdate",
+   "ru": "Дата",
+   "en": "Date"
+ },
+ {
+   "stringID": "OrdGrid.courtimef",
+   "ru": "Время с",
+   "en": "Time from"
+ },
+ {
+   "stringID": "OrdGrid.courtimet",
+   "ru": "Время до",
+   "en": "Time to"
+ },
+ {
+   "stringID": "OrdGrid.fs.cargo",
+   "ru": "Информация о грузе",
+   "en": " Cargo info"
+ },
+ {
+   "stringID": "OrdGrid.type",
+   "ru": "Тип груза",
+   "en": "Cargo type"
+ },
+ {
+   "stringID": "OrdGrid.packs",
+   "ru": "Число мест",
+   "en": "Place count"
+ },
+ {
+   "stringID": "OrdGrid.wt",
+   "ru": "Вес",
+   "en": "Wt."
+ },
+ {
+   "stringID": "OrdGrid.volwt",
+   "ru": "Объемный вес",
+   "en": "Vol. Wt."
+ },
+ {
+   "stringID": "OrdGrid.desc",
+   "ru": "*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)",
+   "en": ""
+ },
+ {
+   "stringID": "LoadFileForm.uploadFile.fieldLabel",
+   "ru": "Файл формата .xls, .pdf, .doc до 1 Мб.",
+   "en": "File format .xls, .pdf, .doc limit 1 Mb."
+ },
+ {
+   "stringID": "LoadFileForm.uploadFile.buttonText",
+   "ru": "Выбрать",
+   "en": "Select"
+ },
+ {
+   "stringID": "LoadFileForm.button.delete",
+   "ru": "Удалить",
+   "en": "Delete"
+ },
+ {
+   "stringID": "LoadOrdersForm.uploadcomments.html",
+   "ru": "Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, размером до 1 Мб,<br>количество строк до 1000. Данные в файле должны представлять собой таблицу<br> из 20 столбцов с заголовками и повторять поля формы ввода нового заказа:<br> Город отправителя, Наименование отправителя, Адрес отправителя,<br> Контакт отправителя, Телефон отправителя, Почта отправителя, Описание отправителя,<br> \t Город получателя, Название получателя, Адрес получателя, Контакт получателя,<br> Телефон получателя, Почта получателя, Описание получателя, Количество, Вес,<br> Объемный вес, Дата приезда курьера, Время от, Время до.<br> <a href=\"srv/import/Example_import_AgOrders.xlsx\" target=\"_blank\" download>Пример файл для импорта заказов</a><br>",
+   "en": ""
+ },
+ {
+   "stringID": "LoadOrdersForm.uploadcomments.title",
+   "ru": "Правила загрузки файла",
+   "en": "File download rules"
+ },
+ {
+   "stringID": "LoadOrdersForm.title",
+   "ru": "Импорт информации о заказах",
+   "en": "Imports order information"
+ },
+ {
+   "stringID": "LoadOrdersForm.button.imp",
+   "ru": "Импортировать",
+   "en": "Import"
+ },
+ {
+   "stringID": "LoadOrdersForm.button.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "OrdTool.action.new",
+   "ru": "Новый",
+   "en": "New"
+ },
+ {
+   "stringID": "OrdTool.action.newtpl",
+   "ru": "Из шаблона",
+   "en": "From template"
+ },
+ {
+   "stringID": "OrdTool.action.view",
+   "ru": "Просмотр",
+   "en": "Browsing"
+ },
+ {
+   "stringID": "OrdTool.action.edit",
+   "ru": "Редактировать",
+   "en": "Edite"
+ },
+ {
+   "stringID": "OrdTool.action.excel",
+   "ru": "Экспорт в Excel",
+   "en": "Exports to Excel"
+ },
+ {
+   "stringID": "OrdTool.action.import",
+   "ru": "Импорт из Excel",
+   "en": "Imports from Excel"
+ },
+ {
+   "stringID": "OrdTool.action.wbno",
+   "ru": "№ накладной",
+   "en": "№ waybill"
+ },
+ {
+   "stringID": "OrdTool.action.wbview",
+   "ru": "Просмотр накладной",
+   "en": "Browsing waybill"
+ },
+ {
+   "stringID": "OrdTotal.label",
+   "ru": "Количество заказов: ",
+   "en": "The number of orders"
+ },
+ {
+   "stringID": "OrdWin.title",
+   "ru": "Новый заказ",
+   "en": "New order"
+ },
+ {
+   "stringID": "OrdWin.button.save",
+   "ru": "Сохранить",
+   "en": "Save"
+ },
+ {
+   "stringID": "OrdWin.button.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "TemplForm.templatename",
+   "ru": "Название шаблона",
+   "en": "Template title"
+ },
+ {
+   "stringID": "TemplForm.fs.org",
+   "ru": "Отправитель",
+   "en": "Sender"
+ },
+ {
+   "stringID": "TemplForm.cname",
+   "ru": "Название клиента",
+   "en": "Client name"
+ },
+ {
+   "stringID": "TemplForm.address",
+   "ru": "Адрес",
+   "en": "Address"
+ },
+ {
+   "stringID": "TemplForm.contname",
+   "ru": "Контактное лицо",
+   "en": "The contact person"
+ },
+ {
+   "stringID": "TemplForm.contphone",
+   "ru": "Телефон",
+   "en": "Phone"
+ },
+ {
+   "stringID": "TemplForm.orgrems",
+   "ru": "Примечание",
+   "en": "Comment"
+ },
+ {
+   "stringID": "TemplForm.fs.dest",
+   "ru": "Получатель",
+   "en": "Recipient"
+ },
+ {
+   "stringID": "TemplForm.dname",
+   "ru": "Название клиента",
+   "en": "Client name"
+ },
+ {
+   "stringID": "TemplForm.dadr",
+   "ru": "Адрес",
+   "en": "Address"
+ },
+ {
+   "stringID": "TemplForm.dcontname",
+   "ru": "Контактное лицо",
+   "en": "The contact person"
+ },
+ {
+   "stringID": "TemplForm.dcontphone",
+   "ru": "Телефон",
+   "en": "Phone"
+ },
+ {
+   "stringID": "TemplForm.destrems",
+   "ru": "Примечание",
+   "en": "Comment"
+ },
+ {
+   "stringID": "TemplGrid.templatename",
+   "ru": "Наименование",
+   "en": "Name"
+ },
+ {
+   "stringID": "TemplTool.newtpl",
+   "ru": "Новый",
+   "en": "New"
+ },
+ {
+   "stringID": "TemplTool.edittpl",
+   "ru": "Редактировать",
+   "en": "Edite"
+ },
+ {
+   "stringID": "TemplTool.deltpl",
+   "ru": "Удалить",
+   "en": "Delete"
+ },
+ {
+   "stringID": "TemplWin.title",
+   "ru": "Новый шаблон",
+   "en": "New template "
+ },
+ {
+   "stringID": "TemplWin.button.save",
+   "ru": "Сохранить",
+   "en": "Save"
+ },
+ {
+   "stringID": "TemplWin.button.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "UseTemplWin.title",
+   "ru": "Выберите шаблон",
+   "en": "Select template "
+ },
+ {
+   "stringID": "UseTemplWin.button.set",
+   "ru": "Выбрать",
+   "en": "Select"
+ },
+ {
+   "stringID": "UseTemplWin.button.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "ViewWbWin.title",
+   "ru": "Просмотр накладной",
+   "en": "Browsing waybill"
+ },
+ {
+   "stringID": "ViewWbWin.button.close",
+   "ru": "Закрыть",
+   "en": "Close"
+ },
+ {
+   "stringID": "WbNoWin.title",
+   "ru": "Введите № накладной",
+   "en": "Enter the waybill №"
+ },
+ {
+   "stringID": "WbNoWin.button.save",
+   "ru": "Сохранить",
+   "en": "Save"
+ },
+ {
+   "stringID": "WbNoWin.button.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "AdmTool.list",
+   "ru": "Список",
+   "en": "List"
+ },
+ {
+   "stringID": "AdmTool.templ",
+   "ru": "Шаблоны",
+   "en": "Templates"
+ },
+ {
+   "stringID": "AdmTool.tariffs",
+   "ru": "Тарифы",
+   "en": "Tariffs"
+ },
+ {
+   "stringID": "AdmTool.help",
+   "ru": "Помощь",
+   "en": "Help"
+ },
+ {
+   "stringID": "AdmTool.logout",
+   "ru": "Выход",
+   "en": "Exit"
+ },
+ {
+   "stringID": "ComboAgent.fieldLabel",
+   "ru": "Выберите Агента",
+   "en": "Select agent"
+ },
+ {
+   "stringID": "Loginformcontainer.title",
+   "ru": "ФлипПост WEB - список изменений",
+   "en": "FlipPost WEB - list of changes"
+ },
+ {
+   "stringID": "MainPanel.wbsgrid",
+   "ru": "Накладные",
+   "en": "Waybills"
+ },
+ {
+   "stringID": "MainPanel.mnfpanel",
+   "ru": "Манифесты",
+   "en": "Manifests"
+ },
+ {
+   "stringID": "MainPanel.ordspanel",
+   "ru": "Заказы",
+   "en": "Orders"
+ },
+ {
+   "stringID": "MainPanel.usersgrid",
+   "ru": "Пользователи",
+   "en": "Users"
+ },
+ {
+   "stringID": "MnfGrid.mnfrefno",
+   "ru": "Манифест",
+   "en": "Manifest"
+ },
+ {
+   "stringID": "MnfGrid.shpd",
+   "ru": "Отправлено",
+   "en": "Sent"
+ },
+ {
+   "stringID": "MnfGrid.dtarr",
+   "ru": "РДП",
+   "en": "CAD"
+ },
+ {
+   "stringID": "MnfGrid.darr",
+   "ru": "Доставлено",
+   "en": "Delivered"
+ },
+ {
+   "stringID": "MnfGrid.bpcs",
+   "ru": "Мест",
+   "en": "Places"
+ },
+ {
+   "stringID": "MnfGrid.bwt",
+   "ru": "Вес",
+   "en": "Wt."
+ },
+ {
+   "stringID": "MnfGrid.bvwt",
+   "ru": "V вес",
+   "en": "V wt"
+ },
+ {
+   "stringID": "MnfGrid.descr",
+   "ru": "Перевозчик",
+   "en": "Carrier"
+ },
+ {
+   "stringID": "MnfTool.out",
+   "ru": "Входящие",
+   "en": "Inbox"
+ },
+ {
+   "stringID": "MnfTool.in",
+   "ru": "Исходящие",
+   "en": "Outbox"
+ },
+ {
+   "stringID": "MnfTool.all",
+   "ru": "Все",
+   "en": "All"
+ },
+ {
+   "stringID": "TotalTool.label",
+   "ru": "Количество манифестов: ",
+   "en": "Amount manifests:"
+ },
+ {
+   "stringID": "WbGrid.wb_no",
+   "ru": "№ Накладной",
+   "en": "№ waybill"
+ },
+ {
+   "stringID": "WbGrid.dtd",
+   "ru": "РДД",
+   "en": "CAD"
+ },
+ {
+   "stringID": "WbGrid.s_co",
+   "ru": "Отправитель",
+   "en": "Sender"
+ },
+ {
+   "stringID": "WbGrid.r_co",
+   "ru": "Получатель",
+   "en": "Recipient"
+ },
+ {
+   "stringID": "WbGrid.shpcs",
+   "ru": "Мест",
+   "en": "Places"
+ },
+ {
+   "stringID": "WbGrid.shwt",
+   "ru": "Вес",
+   "en": "Wt."
+ },
+ {
+   "stringID": "WbGrid.shvol_wt",
+   "ru": "V вес",
+   "en": "V wt"
+ },
+ {
+   "stringID": "UsersForm.auser",
+   "ru": "Пользователь",
+   "en": "User"
+ },
+ {
+   "stringID": "UsersForm.passfirst",
+   "ru": "Новый пароль",
+   "en": "New password"
+ },
+ {
+   "stringID": "UsersForm.passsecond",
+   "ru": "Повторно пароль",
+   "en": "Password again"
+ },
+ {
+   "stringID": "UsersForm.agents",
+   "ru": "Выберите Агента",
+   "en": "Select agent"
+ },
+ {
+   "stringID": "UsersGrid.auser",
+   "ru": "Логин",
+   "en": "Login"
+ },
+ {
+   "stringID": "UsersGrid.partname",
+   "ru": "Пользователь",
+   "en": "User"
+ },
+ {
+   "stringID": "UsersGrid.isblocked",
+   "ru": "Доступ",
+   "en": "Access"
+ },
+ {
+   "stringID": "UsersGrid.block_no",
+   "ru": "Не блокирован",
+   "en": "Not blocked"
+ },
+ {
+   "stringID": "UsersGrid.block_yes",
+   "ru": "Блокирован",
+   "en": "Blocked"
+ },
+ {
+   "stringID": "UsersGrid.partloc",
+   "ru": "КОД",
+   "en": "COD"
+ },
+ {
+   "stringID": "UsersGrid.status",
+   "ru": "Статус",
+   "en": "Status"
+ },
+ {
+   "stringID": "UsersGrid.status.tooltip",
+   "ru": "Отношения прекращены: ",
+   "en": "Relationship terminated:"
+ },
+ {
+   "stringID": "UsersTool.new",
+   "ru": "Новый пользователь",
+   "en": "New user"
+ },
+ {
+   "stringID": "UsersTool.active",
+   "ru": "Блокировать",
+   "en": "Block"
+ },
+ {
+   "stringID": "UsersWin.title",
+   "ru": "Добавить пользователя",
+   "en": "Add user"
+ },
+ {
+   "stringID": "UsersWin.button.save",
+   "ru": "Сохранить",
+   "en": "Save"
+ },
+ {
+   "stringID": "UsersWin.button.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "LoadWBForm.uploadFile.fieldLabel",
+   "ru": "Файл формата .xls",
+   "en": "File format .xls"
+ },
+ {
+   "stringID": "LoadWBForm.uploadFile.buttonText",
+   "ru": "Выбрать",
+   "en": "Select"
+ },
+ {
+   "stringID": "LoadWBForm.uploadcomments.html",
+   "ru": "Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, <br> размером до 1 Мб, количество строк до 1000. Данные в файле <br> должны представлять собой таблицу из 3 столбцов, с заголовком :<br> номер накладной, дата в формате ДД.ММ.ГГГГ ЧЧ:ММ,<br> получатель(до 14 символов).<br> <a href=\"srv/import/Example_import_POD.xlsx\" target=\"_blank\" download>Пример файл для импорта ПОД</a><br>",
+   "en": ""
+ },
+ {
+   "stringID": "LoadWBForm.uploadcomments.title",
+   "ru": "Правила загрузки файла",
+   "en": "File download rules"
+ },
+ {
+   "stringID": "LoadWBWin.title",
+   "ru": "Импорт информации о доставке",
+   "en": "Import shipping information"
+ },
+ {
+   "stringID": "LoadWBWin.imp",
+   "ru": "Импортировать",
+   "en": "Import"
+ },
+ {
+   "stringID": "LoadWBWin.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "NewDopForm.wb_no",
+   "ru": "Накладная",
+   "en": "Waybill"
+ },
+ {
+   "stringID": "NewDopForm.dtd_txt",
+   "ru": "РДД",
+   "en": "CAD"
+ },
+ {
+   "stringID": "NewDopForm.tar_a_ag",
+   "ru": "Доп. тариф",
+   "en": "A tariff"
+ },
+ {
+   "stringID": "NewDopForm.rem_ag",
+   "ru": "Примечание",
+   "en": "Comment"
+ },
+ {
+   "stringID": "NewDopWin.title",
+   "ru": "Заявка на доп. тариф",
+   "en": "An application for A tariff"
+ },
+ {
+   "stringID": "NewDopWin.save",
+   "ru": "Сохранить",
+   "en": "Save"
+ },
+ {
+   "stringID": "NewDopWin.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "NewExForm.wb_no",
+   "ru": "Накладная",
+   "en": "Waybill"
+ },
+ {
+   "stringID": "NewExForm.exLoc",
+   "ru": "Код места происшествия",
+   "en": "Event place code"
+ },
+ {
+   "stringID": "NewExForm.exRaised",
+   "ru": "Дата события",
+   "en": "Event date"
+ },
+ {
+   "stringID": "NewExForm.exRptd",
+   "ru": "Дата отчета о событии",
+   "en": "Report of event date "
+ },
+ {
+   "stringID": "NewExForm.exCode",
+   "ru": "Код ИС",
+   "en": "Code EX"
+ },
+ {
+   "stringID": "NewExForm.exContent",
+   "ru": "Содержание происшествия",
+   "en": "Event content"
+ },
+ {
+   "stringID": "NewExWin.title",
+   "ru": "Новое исключение",
+   "en": "New exception"
+ },
+ {
+   "stringID": "NewExWin.save",
+   "ru": "Сохранить",
+   "en": "Save"
+ },
+ {
+   "stringID": "NewExWin.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "NewPodForm.wb_no",
+   "ru": "Накладная",
+   "en": "Waybill"
+ },
+ {
+   "stringID": "NewPodForm.dtd_txt",
+   "ru": "РДД",
+   "en": "CAD"
+ },
+ {
+   "stringID": "NewPodForm.p_d_in",
+   "ru": "Дата",
+   "en": "Date"
+ },
+ {
+   "stringID": "NewPodForm.tdd",
+   "ru": "Время",
+   "en": "Time"
+ },
+ {
+   "stringID": "NewPodForm.rcpn",
+   "ru": "Получатель",
+   "en": "Recipient"
+ },
+ {
+   "stringID": "NewPodWin.title",
+   "ru": "Подтверждение о доставке накладной",
+   "en": "Confirmation of delivery waybill"
+ },
+ {
+   "stringID": "NewPodWin.save",
+   "ru": "Сохранить",
+   "en": "Save"
+ },
+ {
+   "stringID": "NewPodWin.cancel",
+   "ru": "Отмена",
+   "en": "Cancel"
+ },
+ {
+   "stringID": "ViewExGrid.wbno",
+   "ru": "№ Накладной",
+   "en": "№ waybill"
+ },
+ {
+   "stringID": "ViewExGrid.excode",
+   "ru": "Код",
+   "en": "Code"
+ },
+ {
+   "stringID": "ViewExGrid.loc",
+   "ru": "Трек",
+   "en": "Track"
+ },
+ {
+   "stringID": "ViewExGrid.exdesc",
+   "ru": "Описание",
+   "en": "Comment"
+ },
+ {
+   "stringID": "ViewExGrid.raised_txt",
+   "ru": "Дата события",
+   "en": "Event date"
+ },
+ {
+   "stringID": "ViewExWin.title",
+   "ru": "Просмотр исключений",
+   "en": "Exceptions viewing"
+ },
+ {
+   "stringID": "WbsGrid.exaction",
+   "ru": "ИС",
+   "en": "EX"
+ },
+ {
+   "stringID": "WbsGrid.exaction.tooltip",
+   "ru": "Посмотреть ИС",
+   "en": "EX viewing"
+ },
+ {
+   "stringID": "WbsGrid.wb_no",
+   "ru": "Накладная",
+   "en": "Waybill"
+ },
+ {
+   "stringID": "WbsGrid.d_acc",
+   "ru": "Принято",
+   "en": "Accepted"
+ },
+ {
+   "stringID": "WbsGrid.dod_txt",
+   "ru": "Доставлено",
+   "en": "Added"
+ },
+ {
+   "stringID": "WbsGrid.rcpn",
+   "ru": "Получил",
+   "en": "Received"
+ },
+ {
+   "stringID": "WbsGrid.p_d_in",
+   "ru": "Подтв.",
+   "en": "Confirm"
+ },
+ {
+   "stringID": "WbsGrid.t_srv",
+   "ru": "Услуга",
+   "en": "Service"
+ },
+ {
+   "stringID": "WbsGrid.s_co",
+   "ru": "Отправитель",
+   "en": "Sender"
+ },
+ {
+   "stringID": "WbsGrid.r_co",
+   "ru": "Получатель",
+   "en": "Recipient"
+ },
+ {
+   "stringID": "WbsGrid.wt",
+   "ru": "Вес",
+   "en": "Wt."
+ },
+ {
+   "stringID": "WbsGrid.vol_wt",
+   "ru": "Об.вес",
+   "en": "Vol. Wt."
+ },
+ {
+   "stringID": "WbsGrid.tar_flip",
+   "ru": "Тариф Флип",
+   "en": "Tariff Flip"
+ },
+ {
+   "stringID": "WbsGrid.tar_flip_b",
+   "ru": "баз.",
+   "en": "base"
+ },
+ {
+   "stringID": "WbsGrid.tar_flip_a",
+   "ru": "доп.",
+   "en": "addit."
+ },
+ {
+   "stringID": "WbsGrid.tar_flip_t",
+   "ru": "Всего",
+   "en": "Total"
+ },
+ {
+   "stringID": "WbsGrid.rem_flip",
+   "ru": "прим.",
+   "en": "desc"
+ },
+ {
+   "stringID": "WbsGrid.tar_ag",
+   "ru": "Тариф Аг",
+   "en": "Tariff Ag"
+ },
+ {
+   "stringID": "WbsGrid.tar_ag_b",
+   "ru": "баз.",
+   "en": "base"
+ },
+ {
+   "stringID": "WbsGrid.tar_ag_a",
+   "ru": "доп.",
+   "en": "addit."
+ },
+ {
+   "stringID": "WbsGrid.tar_ag_t",
+   "ru": "Всего",
+   "en": "Total"
+ },
+ {
+   "stringID": "WbsGrid.rem_ag",
+   "ru": "прим.",
+   "en": "desc"
+ },
+ {
+   "stringID": "WbsGrid.req_tar_a",
+   "ru": "Заявка",
+   "en": "Request"
+ },
+ {
+   "stringID": "WbsTool.out",
+   "ru": "Входящие",
+   "en": "Inbox"
+ },
+ {
+   "stringID": "WbsTool.in",
+   "ru": "Исходящие",
+   "en": "Outbox"
+ },
+ {
+   "stringID": "WbsTool.all",
+   "ru": "Все",
+   "en": "All"
+ },
+ {
+   "stringID": "WbsTool.overdue",
+   "ru": "Просрочено",
+   "en": "Overdue"
+ },
+ {
+   "stringID": "WbsTool.pod",
+   "ru": "Внести ПОД",
+   "en": "Enter POD"
+ },
+ {
+   "stringID": "WbsTool.ex",
+   "ru": "Новая ИС",
+   "en": "New EX"
+ },
+ {
+   "stringID": "WbsTool.excel",
+   "ru": "Экспорт в Excel",
+   "en": "Exports to Excel"
+ },
+ {
+   "stringID": "WbsTool.import",
+   "ru": "Импорт ПОД",
+   "en": "Import POD"
+ },
+ {
+   "stringID": "WbsTool.filteredit",
+   "ru": "№ накладной",
+   "en": "№ waybill"
+ },
+ {
+   "stringID": "WbsTool.filter",
+   "ru": "Фильтр",
+   "en": "Filter"
+ },
+ {
+   "stringID": "Refresh",
+   "ru": "Обновите страницу",
+   "en": "Refresh"
+ },
+ {
+   "stringID": "Error",
+   "ru": "Ошибка!",
+   "en": "Error!"
+ },
+ {
+   "stringID": "ServerdDown",
+   "ru": "Сервер недоступен!",
+   "en": "Server is not available!"
+ },
+ {
+   "stringID": "Alert",
+   "ru": "Внимание!",
+   "en": "Alert!"
+ },
+ {
+   "stringID": "WbLate.part1",
+   "ru": "У Вас есть просроченные накладные в количестве ",
+   "en": "You have overdue waybills in the amount of "
+ },
+ {
+   "stringID": "WbLate.part2",
+   "ru": " шт.!<br/>Для просмотра информации по накладным перейдите в закладку \"Накладные\" и нажмите вкладку \"Просрочено\"",
+   "en": ""
+ },
+ {
+   "stringID": "MnfCont.MnfCount",
+   "ru": "Количество манифестов: ",
+   "en": ""
+ },
+ {
+   "stringID": "MnfCont.WbCount",
+   "ru": "Количество накладных: ",
+   "en": ""
+ },
+ {
+   "stringID": "MnfCont.ShpcsCount",
+   "ru": "Количество мест: ",
+   "en": ""
+ },
+ {
+   "stringID": "MnfCont.Shwt",
+   "ru": "Общий вес: ",
+   "en": ""
+ },
+ {
+   "stringID": "MnfCont.Shvol_wt",
+   "ru": "Общий V вес: ",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.ImportOk",
+   "ru": "Импортирование завершено успешно!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.ImportError",
+   "ru": "Ошибка импорта!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.WbSaveError",
+   "ru": "Номер накладной не сохранен!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.WbNumEmptyHead",
+   "ru": "Нет номера накладной!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.WbNumEmptyBody",
+   "ru": "Откорректируйте информацию",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.OrderAlertBody",
+   "ru": "Выберите заказ с введенным номером накладной!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.WbEmpty",
+   "ru": "Накладная не введена в систему!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.AlertExportBody",
+   "ru": "Выберите заказ для экспорта",
+   "en": ""
+ },
+ {
+   "stringID": "DenyAccess",
+   "ru": "Запрещено!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.TemplateEmpty",
+   "ru": "У Вас нет шаблонов!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.ErrorOrderEdit",
+   "ru": "Редактировать можно только заявленные заказы",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.GetOrderEdit",
+   "ru": "Выберите заказ для редактирования",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.GetOrderView",
+   "ru": "Выберите заказ для просмотра",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.CityError",
+   "ru": "Ошибка ввода города",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.CitySenderError",
+   "ru": "Неверно введен город Отправителя! Выберите город из выпадающего списка.",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.CityRecipientError",
+   "ru": "Неверно введен город Получателя! Выберите город из выпадающего списка.",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.OrderSave",
+   "ru": "Заказ сохранен!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.FileNotSave",
+   "ru": "Файл не сохранен!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.OrderNotSave",
+   "ru": "Заказ не сохранен!",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.FieldIsEmptyHead",
+   "ru": "Не все поля заполнены",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.FieldIsEmptyBody",
+   "ru": "Откорректируйте информацию",
+   "en": ""
+ },
+ {
+   "stringID": "OrdsCont.OrdersCount",
+   "ru": "Количество заказов: ",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.DeleteOkHead",
+   "ru": "Успешное удаление!",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.DeleteOkBody",
+   "ru": "Шаблон удален: ",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.DeleteErrorBody",
+   "ru": "Не удалось удалить шаблон: ",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.GetTemplateDeleteBody",
+   "ru": "Выберите шаблон для удаления",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.GetTemplateEditBody",
+   "ru": "Выберите шаблон для редактирования",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.TemplateSaveOkHead",
+   "ru": "Шаблон сохранен!",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.TemplateSaveOkBody",
+   "ru": "Сохранение шаблона заказа прошло успешно ",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.TemplateSaveErrorHead",
+   "ru": "Ошибка сохранения",
+   "en": ""
+ },
+ {
+   "stringID": "TemplCont.TemplateSaveErrorBody",
+   "ru": "Шаблон заказа не сохранен! ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.NotEditTarif",
+   "ru": "Для этой накладной нельзя редактировать Доп. тариф",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.Sum",
+   "ru": "Всего: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.Wt",
+   "ru": "Вес: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.VolWt",
+   "ru": "V вес: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.s_flip_b",
+   "ru": "тар флип баз: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.s_flip_a",
+   "ru": "тар флип доп: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.s_flip_t",
+   "ru": "тар флип всего: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.s_ag_b",
+   "ru": "тар аг баз: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.s_ag_a",
+   "ru": "тар аг доп: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.s_ag_t",
+   "ru": "тар аг всего: ",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.SavePod",
+   "ru": "ПОД сохранено!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.NotSavePod",
+   "ru": "ПОД не сохранено!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.SaveEx",
+   "ru": "Происшествие сохранено!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.NotSaveEx",
+   "ru": "Происшествие не сохранено!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.SaveTarif",
+   "ru": "Доп. тариф сохранен!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.NotSaveTarif",
+   "ru": "Доп. тариф не сохранен!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.ImportOk",
+   "ru": "Импортирование завершено успешно!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.ImportError",
+   "ru": "Ошибка импорта!",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.GetWb",
+   "ru": "Выберите накладную",
+   "en": ""
+ },
+ {
+   "stringID": "WbsCont.NotWbPod",
+   "ru": "Для этой накладной нельзя внести ПОД",
+   "en": ""
+ }
 ]
 
 }, function () {

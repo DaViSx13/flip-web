@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.wbs.NewExWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.newexwin',
 	requires : ['FPAgent.view.wbs.NewExForm'],
-	title : 'Новое исключение',
+	title : FPAgent.lib.Translate.tr("NewExWin.title"),//'Новое исключение',
 	layout : 'fit',
 	autoShow : true,
 	height : 340,
@@ -16,10 +16,10 @@ Ext.define('FPAgent.view.wbs.NewExWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
+				text : FPAgent.lib.Translate.tr("NewExWin.save"),//'Сохранить',
 				action : 'save'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("NewExWin.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

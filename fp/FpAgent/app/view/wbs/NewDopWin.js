@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.wbs.NewDopWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.newdopwin',
 	requires : ['FPAgent.view.wbs.NewDopForm'],
-	title : 'Заявка на доп. тариф',
+	title : FPAgent.lib.Translate.tr("NewDopWin.title"),//'Заявка на доп. тариф',
 	layout : 'fit',
 	autoShow : true,
 	height : 250,
@@ -16,10 +16,10 @@ Ext.define('FPAgent.view.wbs.NewDopWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
+				text : FPAgent.lib.Translate.tr("NewDopWin.save"),//'Сохранить',
 				action : 'save'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("NewDopWin.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

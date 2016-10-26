@@ -4,20 +4,20 @@ Ext.define('FPAgent.view.wbs.ViewExGrid', {
 	autoScroll : true,
 	store : 'ViewExStore',
 	columns : [{
-			text : '№ Накладной',
+			text : FPAgent.lib.Translate.tr("ViewExGrid.wbno"),//'№ Накладной',
 			dataIndex : 'wbno'
 		}, {
-			text : 'Код',
+			text : FPAgent.lib.Translate.tr("ViewExGrid.excode"),//'Код',
 			dataIndex : 'excode'
 		}, {
-			text : 'Трек',
+			text : FPAgent.lib.Translate.tr("ViewExGrid.loc"),//'Трек',
 			dataIndex : 'loc'
 		}, {
-			text : 'Описание',
+			text : FPAgent.lib.Translate.tr("ViewExGrid.exdesc"),//'Описание',
 			flex : 1,
 			dataIndex : 'exdesc'
 		}, {
-			text : 'Дата события',
+			text : FPAgent.lib.Translate.tr("ViewExGrid.raised_txt"),//'Дата события',
 			dataIndex : 'raised_txt'
 		}
 	]

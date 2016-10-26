@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.wbs.LoadWBWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.loadwbwin',
 	requires : ['FPAgent.view.wbs.LoadWBForm'],
-	title : 'Импорт информации о доставке',
+	title : FPAgent.lib.Translate.tr("LoadWBWin.title"),//'Импорт информации о доставке',
 	layout : 'fit',
 	autoShow : true,
 	height : 270,
@@ -17,10 +17,10 @@ Ext.define('FPAgent.view.wbs.LoadWBWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Импортировать',
+				text : FPAgent.lib.Translate.tr("LoadWBWin.imp"),//'Импортировать',
 				action : 'imp'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("LoadWBWin.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}

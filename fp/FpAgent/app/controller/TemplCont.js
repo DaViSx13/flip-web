@@ -50,16 +50,16 @@ Ext.define('FPAgent.controller.TemplCont', {
 				},
 				success : function (response) {
 					jData = Ext.decode(response.responseText);
-					Ext.Msg.alert('Успешное удаление!', 'Шаблон удален: ' + jData.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("TemplCont.DeleteOkHead")/*'Успешное удаление!'*/, FPAgent.lib.Translate.tr("TemplCont.DeleteOkBody")/*'Шаблон удален: '*/ + jData.msg);
 					me.getTemplStStore().reload();
 				},
 				failure : function (response) {
 					jData = Ext.decode(response.responseText);
-					Ext.Msg.alert('Ошибка!', 'Не удалось удалить шаблон: ' + jData.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("Error")/*'Ошибка!'*/, FPAgent.lib.Translate.tr("TemplCont.DeleteErrorBody")/*'Не удалось удалить шаблон: '*/ + jData.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите шаблон для удаления');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("TemplCont.GetTemplateDeleteBody")/*'Выберите шаблон для удаления'*/);
 		}
 	},
 	clkEdit : function (btn) {
@@ -85,7 +85,7 @@ Ext.define('FPAgent.controller.TemplCont', {
 			cb_des.select(record.data['destcode']);
 			form.down('textfield[name=templatename]').focus(false, true);
 		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите шаблон для редактирования');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("TemplCont.GetTemplateEditBody")/*'Выберите шаблон для редактирования'*/);
 		}
 	},
 	saveTempl : function (btn) {
@@ -97,7 +97,7 @@ Ext.define('FPAgent.controller.TemplCont', {
 		if (org.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/,FPAgent.lib.Translate.tr("OrdsCont.CitySenderError")/*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 			for (var i = 0; i < jsonArrayOrg.length; i++) {
@@ -107,14 +107,14 @@ Ext.define('FPAgent.controller.TemplCont', {
 				};
 			};
 			if (org.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError")/*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError")/*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 			for (var i = 0; i < jsonArrayDes.length; i++) {
@@ -124,7 +124,7 @@ Ext.define('FPAgent.controller.TemplCont', {
 				};
 			};
 			if (dest.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError")/*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
@@ -139,14 +139,14 @@ Ext.define('FPAgent.controller.TemplCont', {
 					form.reset();
 					me.getTemplForm().up('templwin').close();
 					me.getTemplStStore().reload();
-					Ext.Msg.alert('Шаблон сохранен!', 'Сохранение шаблона заказа прошло успешно ' + action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("TemplCont.TemplateSaveOkHead")/*'Шаблон сохранен!'*/, FPAgent.lib.Translate.tr("TemplCont.TemplateSaveOkBody")/*'Сохранение шаблона заказа прошло успешно '*/ + action.result.msg);
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Ошибка сохранения', 'Шаблон заказа не сохранен! ' + action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("TemplCont.TemplateSaveErrorHead")/*'Ошибка сохранения'*/, FPAgent.lib.Translate.tr("TemplCont.TemplateSaveErrorBody")/*'Шаблон заказа не сохранен! '*/ + action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead")/*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody")/*'Откорректируйте информацию'*/)
 		}
 	}
 });

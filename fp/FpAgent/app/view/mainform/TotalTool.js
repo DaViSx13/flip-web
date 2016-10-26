@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.mainform.TotalTool', {
 	alias : 'widget.totaltool',
 	items : ['->', {
 			xtype : 'label',
-			text : 'Количество манифестов: '
+			text : FPAgent.lib.Translate.tr("TotalTool.label"),//'Количество манифестов: '
 		}
 	]
 });

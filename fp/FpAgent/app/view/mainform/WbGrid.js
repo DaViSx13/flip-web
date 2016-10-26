@@ -5,11 +5,11 @@ Ext.define('FPAgent.view.mainform.WbGrid', {
 	requires : ['FPAgent.view.mainform.TotalWb'],
 	store : 'WbSt',
 	columns : [{
-			text : '№ Накладной',
+			text : FPAgent.lib.Translate.tr("WbGrid.wb_no"),//'№ Накладной',
 			dataIndex : 'wb_no',
 			width : 200
 		}, {
-			text : 'РДД',
+			text : FPAgent.lib.Translate.tr("WbGrid.dtd"),//'РДД',
 			dataIndex : 'dtd',
 			xtype : 'datecolumn',
 			format : 'd.m.Y',
@@ -19,7 +19,7 @@ Ext.define('FPAgent.view.mainform.WbGrid', {
 			dataIndex : 'org',
 			width : 50
 		}, {
-			text : 'Отправитель',
+			text : FPAgent.lib.Translate.tr("WbGrid.s_co"),//'Отправитель',
 			dataIndex : 's_co',
 			flex : 1
 		}, {
@@ -27,23 +27,23 @@ Ext.define('FPAgent.view.mainform.WbGrid', {
 			dataIndex : 'dest',
 			width : 50
 		}, {
-			text : 'Получатель',
+			text : FPAgent.lib.Translate.tr("WbGrid.r_co"),//'Получатель',
 			dataIndex : 'r_co',
 			flex : 1
 		}, {
-			text : 'Мест',
+			text : FPAgent.lib.Translate.tr("WbGrid.shpcs"),//'Мест',
 			xtype : 'numbercolumn',
 			format : '0',
 			dataIndex : 'shpcs',
 			width : 50
 		}, {
-			text : 'Вес',
+			text : FPAgent.lib.Translate.tr("WbGrid.shwt"),//'Вес',
 			xtype : 'numbercolumn',
 			format : '0.00',
 			dataIndex : 'shwt',
 			width : 50
 		}, {
-			text : 'V вес',
+			text : FPAgent.lib.Translate.tr("WbGrid.shvol_wt"),//'V вес',
 			xtype : 'numbercolumn',
 			format : '0.00',
 			dataIndex : 'shvol_wt',

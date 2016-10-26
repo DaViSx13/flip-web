@@ -2,11 +2,11 @@ Ext.define('FPAgent.view.users.UsersTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.userstool',
 	items : [{
-			text : 'Новый пользователь',
+			text : FPAgent.lib.Translate.tr("UsersTool.new"),//'Новый пользователь',
 			iconCls : 'adduser',
 			action : 'new'
 		}, {
-			text : 'Блокировать',
+			text : FPAgent.lib.Translate.tr("UsersTool.active"),//'Блокировать',
 			iconCls : 'redusr',
 			action : 'active'
 		}

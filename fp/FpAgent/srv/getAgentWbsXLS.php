@@ -1,8 +1,7 @@
 <?php
-require_once 'Excel/PHPExcel.php';
+require_once dirname(__FILE__) . '/Excel/PHPExcel.php';
 require_once "secureCheck.php";
 include 'dbConnect.php';
-require_once 'Excel/PHPExcel/Writer/Excel5.php';
 require_once "CellStyle.php";
 
 function setCellStyle($sheet, $cell, $arrstyle){	
@@ -24,7 +23,12 @@ $workbook = new PHPExcel();
 $workbook->setActiveSheetIndex(0);
 
 $worksheet = $workbook->getActiveSheet();
-$worksheet->setTitle('Флиппост');
+$worksheet->setTitle('Флиппост_'.$period);
+$workbook->getProperties()->setCreator("FlipPost")
+							 ->setLastModifiedBy("FlipPost")							 
+							 ->setSubject("Office Document")
+							 ->setDescription("Document for MSOffice XLS.")							 
+							 ->setCategory("Office Document");
 
 // The actual data
 
@@ -98,8 +102,8 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 	//пишем данные
 	if($filter == 'all' || $row['dir'] == $filter ){
 		$startColNo = 0;
-		foreach ($fields as $f => $value) {
-			setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $rowStyle);            
+		
+		foreach ($fields as $f => $value) {		
 			if ($value == 'wb_no') {
 				$worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);	
 			} else {
@@ -109,7 +113,10 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 		$rowNo++;
 	}
 }
-
+$sharedStyle1 = new PHPExcel_Style();
+$lastRow = $rowNo-1;
+$sharedStyle1->applyFromArray($rowStyle);
+$worksheet->setSharedStyle($sharedStyle1, "A3:U{$lastRow}");
 //итоги
 
 $startColNo = array_search('wt', array_values($fields));
@@ -161,10 +168,21 @@ $worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowN
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 //Отдаем на скачивание
-header("Content-Type:application/vnd.ms-excel");
-header("Content-Disposition:attachment;filename=\"отправки Флиппост.xls\"");
+// Redirect output to a client’s web browser (Excel5)
+header('Content-Type: application/vnd.ms-excel');
+header("Content-Disposition:attachment;filename=\"отправки Флиппост {$period}.xls\"");
+header('Cache-Control: max-age=0');
+// If you're serving to IE 9, then the following may be needed
+header('Cache-Control: max-age=1');
 
-$objWriter = new PHPExcel_Writer_Excel5($workbook);
+// If you're serving to IE over SSL, then the following may be needed
+header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header ('Pragma: public'); // HTTP/1.0
+
+$objWriter = PHPExcel_IOFactory::createWriter($workbook, 'Excel5');
 $objWriter->save('php://output');
+exit;
 
 ?>

@@ -64,7 +64,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 	},
 	changeAgent : function (comp, newValue) {
 		var me = this;
-		if (comp.up('mainpanel').activeTab.title == 'Манифесты') {
+		if (comp.up('mainpanel').activeTab.title == FPAgent.lib.Translate.tr("MainPanel.mnfpanel")/*'Манифесты'*/) {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
@@ -87,7 +87,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 					me.loadMnfAll(ye, mo, tab);
 				},
 				failure : function (response) {
-					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 				}
 			});
 			
@@ -142,7 +142,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 		this.loadMnfAll(ye, mo, 2);
 	},
 	gotoWb : function (pan, ntab) {
-		if (ntab.title == 'Накладные') {
+		if (ntab.title == /*'Накладные'*/FPAgent.lib.Translate.tr("MainPanel.wbsgrid")) {
 			//console.log(ntab.title);
 			//document.location.href = "../agent/work.php";
 		}
@@ -200,7 +200,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 	loadMnfStore : function (st, rec, suc) {
 		var tt = this.getTotalTool();
 		
-		tt.down('label').setText('Количество манифестов: ' + st.getCount());
+		tt.down('label').setText(FPAgent.lib.Translate.tr("MnfCont.MnfCount")/*'Количество манифестов: '*/ + st.getCount());
 		
 	},
 	loadWbStore : function (st, rec, suc) {
@@ -213,9 +213,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			sum_shwt += rec[i].data['shwt'];
 			sum_shvol_wt += rec[i].data['shvol_wt'];
 		}
-		tt.down('label[itemId=lab1]').setText('Количество накладных: ' + st.getCount());
-		tt.down('label[itemId=lab2]').setText('Количество мест: ' + sum_shpcs);
-		tt.down('label[itemId=lab3]').setText('Общий вес: ' + Ext.util.Format.round(sum_shwt, 2));
-		tt.down('label[itemId=lab4]').setText('Общий V вес: ' + Ext.util.Format.round(sum_shvol_wt, 2));
+		tt.down('label[itemId=lab1]').setText(FPAgent.lib.Translate.tr("MnfCont.WbCount")/*'Количество накладных: '*/ + st.getCount());
+		tt.down('label[itemId=lab2]').setText(FPAgent.lib.Translate.tr("MnfCont.ShpcsCount")/*'Количество мест: '*/ + sum_shpcs);
+		tt.down('label[itemId=lab3]').setText(FPAgent.lib.Translate.tr("MnfCont.Shwt")/*'Общий вес: '*/ + Ext.util.Format.round(sum_shwt, 2));
+		tt.down('label[itemId=lab4]').setText(FPAgent.lib.Translate.tr("MnfCont.Shvol_wt")/*'Общий V вес: '*/ + Ext.util.Format.round(sum_shvol_wt, 2));
 	}
 });

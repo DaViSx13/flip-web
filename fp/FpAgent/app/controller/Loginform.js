@@ -65,11 +65,11 @@ Ext.define('FPAgent.controller.Loginform', {
 					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
 
 				} else {
-					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 				}
 			},
 			failure : function (response) {
-				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 			}
 		});
 	},
@@ -95,7 +95,7 @@ Ext.define('FPAgent.controller.Loginform', {
 				}
 			},
 			failure : function (response) {
-				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 			}
 		});
 	},
@@ -127,15 +127,15 @@ Ext.define('FPAgent.controller.Loginform', {
 								var text = Ext.decode(response.responseText);
 								if (text.success == true && text.data.length > 0) {
 									Ext.Msg.show({
-										title : 'Внимание!',
-										msg : 'У Вас есть просроченные накладные в количестве ' + text.data.length + ' шт.!<br/>Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"',
+										title : FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/,
+										msg : FPAgent.lib.Translate.tr("WbLate.part1")/*'У Вас есть просроченные накладные в количестве '*/ + text.data.length + FPAgent.lib.Translate.tr("WbLate.part2")/*' шт.!<br/>Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"'*/,
 										buttons : Ext.Msg.OK,
 										icon : Ext.MessageBox.WARNING
 									});
 								}
 							},
 							failure : function (response) {
-								Ext.Msg.alert('Ошибка', 'Сервер недоступен!');
+								Ext.Msg.alert(/*'Ошибка'*/FPAgent.lib.Translate.tr("Error"), FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/);
 							}
 						});
 					};
@@ -150,7 +150,7 @@ Ext.define('FPAgent.controller.Loginform', {
 									}
 								},
 								failure : function (response) {
-									Ext.Msg.alert('Ошибка', 'checkSession - Сервер недоступен!: ' + response.statusText);
+									Ext.Msg.alert(/*'Ошибка'*/FPAgent.lib.Translate.tr("Error"), FPAgent.lib.Translate.tr("ServerdDown")/*'checkSession - Сервер недоступен!*/+ ' - ' + response.statusText);
 								}
 							});
 						},
@@ -159,7 +159,7 @@ Ext.define('FPAgent.controller.Loginform', {
 					});
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Ошибка', action.result.msg);
+					Ext.Msg.alert(/*'Ошибка'*/FPAgent.lib.Translate.tr("Error"), action.result.msg);
 				}
 			});
 		};
@@ -175,11 +175,11 @@ Ext.define('FPAgent.controller.Loginform', {
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('loginformcontainer'));
 				} else {
-					Ext.Msg.alert('Ошибка!', 'Обновите страницу');
+					Ext.Msg.alert(/*'Ошибка!'*/FPAgent.lib.Translate.tr("Error"), FPAgent.lib.Translate.tr("Refresh")/*'Обновите страницу'*/);
 				}
 			},
 			failure : function (response) {
-				Ext.Msg.alert('Сервер недоступен!', response.statusText);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 			}
 		});
 	}

@@ -22,14 +22,14 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 	initComponent : function () {
 		this.columns = [{
 				xtype : 'actioncolumn',
-				text : 'ИС',
+				text : FPAgent.lib.Translate.tr("WbsGrid.exaction"),//'ИС',
 				name : 'exaction',
 				width : 40,
 				dataIndex : 'is_ex',
 				items : [{
 						getClass : function (v, meta, rec) {
 							if (rec.get('is_ex') > 0) {
-								this.items[0].tooltip = 'Посмотреть ИС';
+								this.items[0].tooltip = FPAgent.lib.Translate.tr("WbsGrid.exaction.tooltip");//'Посмотреть ИС';
 								return 'ex-col';
 							}
 						},
@@ -40,21 +40,21 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 					}
 				]
 			}, {
-				text : 'Накладная',
+				text : FPAgent.lib.Translate.tr("WbsGrid.wb_no"),//'Накладная',
 				dataIndex : 'wb_no'
 			}, {
-				text : 'Принято',
+				text : FPAgent.lib.Translate.tr("WbsGrid.d_acc"),//'Принято',
 				dataIndex : 'd_acc',
 				xtype : 'datecolumn',
 				format : 'd.m.Y'
 			}, {
-				text : 'Доставлено',
+				text : FPAgent.lib.Translate.tr("WbsGrid.dod_txt"),//'Доставлено',
 				dataIndex : 'dod_txt'
 			}, {
-				text : 'Получил',
+				text : FPAgent.lib.Translate.tr("WbsGrid.rcpn"),//'Получил',
 				dataIndex : 'rcpn'
 			}, {
-				text : 'Подтв.',
+				text : FPAgent.lib.Translate.tr("WbsGrid.p_d_in"),//'Подтв.',
 				dataIndex : 'p_d_in',
 				xtype : 'datecolumn',
 				format : 'd.m.Y'
@@ -67,82 +67,82 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				width : 50,
 				dataIndex : 'dest'
 			}, {
-				text : 'Услуга',
+				text : FPAgent.lib.Translate.tr("WbsGrid.t_srv"),//'Услуга',
 				width : 45,
 				dataIndex : 't_srv'
 			}, {
-				text : 'Отправитель',
+				text : FPAgent.lib.Translate.tr("WbsGrid.s_co"),//'Отправитель',
 				flex : 1,
 				dataIndex : 's_co'
 			}, {
-				text : 'Получатель',
+				text : FPAgent.lib.Translate.tr("WbsGrid.r_co"),//'Получатель',
 				flex : 1,
 				dataIndex : 'r_co'
 			}, {
-				text : 'Вес',
+				text : FPAgent.lib.Translate.tr("WbsGrid.wt"),//'Вес',
 				width : 45,
 				dataIndex : 'wt',
 				xtype : 'numbercolumn',
 				format : '0.00'
 			}, {
-				text : 'Об.вес',
+				text : FPAgent.lib.Translate.tr("WbsGrid.vol_wt"),//'Об.вес',
 				width : 45,
 				xtype : 'numbercolumn',
 				format : '0.00',
 				dataIndex : 'vol_wt'
 			}, {
-				text : 'Тариф Флип',
+				text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip"),//'Тариф Флип',
 				columns : [{
-						text : 'баз.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip_b"),//'баз.',
 						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_b'
 					}, {
-						text : 'доп.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip_a"),//'доп.',
 						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_a'
 					}, {
-						text : 'Всего',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip_t"),//'Всего',
 						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_t'
 					}, {
-						text : 'прим.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.rem_flip"),//'прим.',
 						dataIndex : 'rem_flip'
 					}
 				]
 			}, {
-				text : 'Тариф Аг',
+				text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag"),//'Тариф Аг',
 				columns : [{
-						text : 'баз.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag_b"),//'баз.',
 						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_b'
 					}, {
-						text : 'доп.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag_a"),//'доп.',
 						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_a'
 					}, {
-						text : 'Всего',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag_t"),//'Всего',
 						width : 45,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_t'
 					}, {
-						text : 'прим.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.rem_ag"),//'прим.',
 						dataIndex : 'rem_ag'
 					}
 				]
 			}, {
 				xtype : 'numbercolumn',
-				text : 'Заявка',
+				text : FPAgent.lib.Translate.tr("WbsGrid.req_tar_a"),//'Заявка',
 				itemId : 'dop',
 				dataIndex : 'req_tar_a',
 				width : 45,

@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.users.UsersWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.userswin',
 	requires : ['FPAgent.view.users.UsersForm'],
-	title : 'Добавить пользователя',
+	title : FPAgent.lib.Translate.tr("UsersWin.title"),//'Добавить пользователя',
 	layout : 'fit',
 	autoShow : true,
 	height : 280,
@@ -16,10 +16,10 @@ Ext.define('FPAgent.view.users.UsersWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
+				text : FPAgent.lib.Translate.tr("UsersWin.button.save"),//'Сохранить',
 				action : 'save'
 			}, {
-				text : 'Отмена',
+				text : FPAgent.lib.Translate.tr("UsersWin.button.cancel"),//'Отмена',
 				scope : this,
 				handler : this.close
 			}
