@@ -12,7 +12,7 @@ Ext.define('FPAgent.view.orders.TemplGrid', {
 			xtype : 'gridcolumn',
 			flex : 1,
 			dataIndex : 'templatename',
-			text : FPAgent.lib.Translate.tr("TemplGrid.templatename"),//'Наименование'
+			text : FPAgent.lib.Translate.tr("TemplGrid.templatename")//'Наименование'
 		}
 	],
 	dockedItems : [{
