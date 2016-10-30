@@ -250,6 +250,9 @@ api.php?dbAct=getTrackInfo&amp;wbno=&lt;wbno&gt;
 <p>Возвращает массив объектов с полями:<br/>
 - id - id<br/>
 - trackinfo - инфомация для отслеживания<br/>
+- atime - время<br/>
+- astatus - статус<br/>
+- aloc - локация<br/>
 
 <p> Пример: <a href="api.php?dbAct=getTrackInfo&wbno=99-0087856" target=_blank>api.php?dbAct=getTrackInfo&amp;wbno=99-0087856</a>
 
@@ -259,19 +262,34 @@ api.php?dbAct=getTrackInfo&amp;wbno=&lt;wbno&gt;
 	"msg" : "ok",
 	"data" : [{
 			"id" : 1,
-			"trackinfo" : "06/08/15: В пути Иваново - Москва"
+			"trackinfo" : "06\/08\/15: В пути Иваново - Москва",
+			"atime" : "06\/08\/15",
+			"astatus" : "В пути ",
+			"aloc" : "Иваново - Москва"
 		}, {
 			"id" : 2,
-			"trackinfo" : "07/08/15: Прибыло в г.Москва"
+			"trackinfo" : "07\/08\/15: Прибыло в г.Москва",
+			"atime" : "07\/08\/15",
+			"astatus" : "Прибыло в г.",
+			"aloc" : "Москва"
 		}, {
 			"id" : 3,
-			"trackinfo" : "07/08/15: В пути Москва - Чебоксары"
+			"trackinfo" : "07\/08\/15: В пути Москва - Чебоксары",
+			"atime" : "07\/08\/15",
+			"astatus" : "В пути ",
+			"aloc" : "Москва - Чебоксары"
 		}, {
 			"id" : 4,
-			"trackinfo" : "10/08/15: Прибыло в г.Чебоксары"
+			"trackinfo" : "10\/08\/15: Прибыло в г.Чебоксары",
+			"atime" : "10\/08\/15",
+			"astatus" : "Прибыло в г.",
+			"aloc" : "Чебоксары"
 		}, {
 			"id" : 5,
-			"trackinfo" : "10/08/15 13:25: Доставлено:  Кудряшова"
+			"trackinfo" : "10\/08\/15 13:25: Доставлено:  Кудряшова",
+			"atime" : "10\/08\/15 13:25",
+			"astatus" : "Доставлено:  Кудряшова",
+			"aloc" : null
 		}
 	]
 }
