@@ -57,6 +57,15 @@
 .outbox {
 	background-image : url(../../resources/images/inbox.png);
 }
+.ru{
+	background-image : url(../../resources/images/ru.png);
+}
+.gb{
+	background-image : url(../../resources/images/gb.png);
+}
+.key{
+	background-image : url(../../resources/images/key.png);
+}
 .allbox {
 	background-image : url(../../resources/images/allbox.png);
 }

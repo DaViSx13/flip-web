@@ -235,6 +235,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	viewWb : function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
+		if(sm.selected.length > 0)
 		if (sm.getSelection()[0].get('wb_no')) {
 			this.getViewWbStStore().load({
 				params : {

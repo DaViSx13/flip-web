@@ -81,7 +81,7 @@
  {
    "stringID": "OrdGrid.packs",
    "ru": "Кол.",
-   "en": "Qty."
+   "en": "Pcs."
  },
  {
    "stringID": "OrdGrid.wt",
@@ -206,12 +206,12 @@
  {
    "stringID": "OrdGrid.desc",
    "ru": "*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)",
-   "en": ""
+   "en": "*default payment by the customer (agent, places an order), in the case of other payment - please indicate this in note (sender / recipient, amount)"
  },
  {
    "stringID": "LoadFileForm.uploadFile.fieldLabel",
    "ru": "Файл формата .xls, .pdf, .doc до 1 Мб.",
-   "en": "File format .xls, .pdf, .doc limit 1 Mb."
+   "en": "File format .xls, .pdf, .doc; limit 1 Mb."
  },
  {
    "stringID": "LoadFileForm.uploadFile.buttonText",
@@ -226,7 +226,7 @@
  {
    "stringID": "LoadOrdersForm.uploadcomments.html",
    "ru": "Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, размером до 1 Мб,<br>количество строк до 1000. Данные в файле должны представлять собой таблицу<br> из 20 столбцов с заголовками и повторять поля формы ввода нового заказа:<br> Город отправителя, Наименование отправителя, Адрес отправителя,<br> Контакт отправителя, Телефон отправителя, Почта отправителя, Описание отправителя,<br> \t Город получателя, Название получателя, Адрес получателя, Контакт получателя,<br> Телефон получателя, Почта получателя, Описание получателя, Количество, Вес,<br> Объемный вес, Дата приезда курьера, Время от, Время до.<br> <a href=\"srv/import/Example_import_AgOrders.xlsx\" target=\"_blank\" download>Пример файл для импорта заказов</a><br>",
-   "en": ""
+   "en": "The uploaded file must be in the format * .xls, * .xlsx, or * .csv, up to 1 MB, <br> number of rows to 1000. The data in the file must be a table <br> of 20 columns with headers and repeating fields form to enter a new order: the sender <br> city, sender's name, sender's address, <br> Contact the sender, the sender's phone, the sender's mail, the sender description, <br> City recipient, recipient name, address of the recipient, the recipient's contact, <br> recipient's phone, address of the recipient, the recipient description, quantity, weight, volume <br> weight arrival Date courier, from time, to time. <br> <a href = \"srv/import /Example_import_AgOrders.xlsx\" target =  \"_blank\" download> Example file to import orders </a> <br>"
  },
  {
    "stringID": "LoadOrdersForm.uploadcomments.title",
@@ -266,7 +266,7 @@
  {
    "stringID": "OrdTool.action.edit",
    "ru": "Редактировать",
-   "en": "Edite"
+   "en": "Edit"
  },
  {
    "stringID": "OrdTool.action.excel",
@@ -386,7 +386,7 @@
  {
    "stringID": "TemplTool.edittpl",
    "ru": "Редактировать",
-   "en": "Edite"
+   "en": "Edit"
  },
  {
    "stringID": "TemplTool.deltpl",
@@ -685,8 +685,8 @@
  },
  {
    "stringID": "LoadWBForm.uploadFile.fieldLabel",
-   "ru": "Файл формата .xls",
-   "en": "File format .xls"
+   "ru": "Файл в формате *.xls, *.xlsx или *.csv",
+   "en": "File format *.xls, *.xlsx, or *.csv"
  },
  {
    "stringID": "LoadWBForm.uploadFile.buttonText",
@@ -696,7 +696,7 @@
  {
    "stringID": "LoadWBForm.uploadcomments.html",
    "ru": "Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, <br> размером до 1 Мб, количество строк до 1000. Данные в файле <br> должны представлять собой таблицу из 3 столбцов, с заголовком :<br> номер накладной, дата в формате ДД.ММ.ГГГГ ЧЧ:ММ,<br> получатель(до 14 символов).<br> <a href=\"srv/import/Example_import_POD.xlsx\" target=\"_blank\" download>Пример файл для импорта ПОД</a><br>",
-   "en": ""
+   "en": "The uploaded file must be in the format *.xls, *.xlsx, or *.csv, <br> up to 1 MB, the number of rows to 1000. The data in the file <br> should be a table of 3 columns, with the headline: <br > invoice number, the date in the format DD.MM.YYYY HH:. MM, <br> the recipient (up to 14 characters) <br><a href=\"srv/import/Example_import_POD.xlsx\" target=\"_blank\" download> Example file to import POD</a> <br>"
  },
  {
    "stringID": "LoadWBForm.uploadcomments.title",
@@ -771,7 +771,12 @@
  {
    "stringID": "NewExForm.exRptd",
    "ru": "Дата отчета о событии",
-   "en": "Report of event date "
+   "en": "Date of event report"
+ },
+ {
+   "stringID": "NewExForm.exRaisedTime",
+   "ru": "Время события",
+   "en": "Event time"
  },
  {
    "stringID": "NewExForm.exCode",
@@ -1061,287 +1066,357 @@
  {
    "stringID": "WbLate.part2",
    "ru": " шт.!<br/>Для просмотра информации по накладным перейдите в закладку \"Накладные\" и нажмите вкладку \"Просрочено\"",
-   "en": ""
+   "en": "pcs.! <br/> To view the information on the invoices go to the tab \"Waybill\" and click \"Expired\" tab"
  },
  {
    "stringID": "MnfCont.MnfCount",
    "ru": "Количество манифестов: ",
-   "en": ""
+   "en": "Count manifest"
  },
  {
    "stringID": "MnfCont.WbCount",
    "ru": "Количество накладных: ",
-   "en": ""
+   "en": "Count waybill"
  },
  {
    "stringID": "MnfCont.ShpcsCount",
    "ru": "Количество мест: ",
-   "en": ""
+   "en": "Number of packages:"
  },
  {
    "stringID": "MnfCont.Shwt",
    "ru": "Общий вес: ",
-   "en": ""
+   "en": "Total weight:"
  },
  {
    "stringID": "MnfCont.Shvol_wt",
    "ru": "Общий V вес: ",
-   "en": ""
+   "en": "Total V weight:"
  },
  {
    "stringID": "OrdsCont.ImportOk",
    "ru": "Импортирование завершено успешно!",
-   "en": ""
+   "en": "Importing completed successfully!"
  },
  {
    "stringID": "OrdsCont.ImportError",
    "ru": "Ошибка импорта!",
-   "en": ""
+   "en": "Import error!"
  },
  {
    "stringID": "OrdsCont.WbSaveError",
    "ru": "Номер накладной не сохранен!",
-   "en": ""
+   "en": "Waybill number is not saved!"
  },
  {
    "stringID": "OrdsCont.WbNumEmptyHead",
    "ru": "Нет номера накладной!",
-   "en": ""
+   "en": "No waybill number!"
  },
  {
    "stringID": "OrdsCont.WbNumEmptyBody",
    "ru": "Откорректируйте информацию",
-   "en": ""
+   "en": "Correct information"
  },
  {
    "stringID": "OrdsCont.OrderAlertBody",
    "ru": "Выберите заказ с введенным номером накладной!",
-   "en": ""
+   "en": "Select the order with entered waybill number!"
  },
  {
    "stringID": "OrdsCont.WbEmpty",
    "ru": "Накладная не введена в систему!",
-   "en": ""
+   "en": "Waybill has not been entered into the system!"
  },
  {
    "stringID": "OrdsCont.AlertExportBody",
    "ru": "Выберите заказ для экспорта",
-   "en": ""
+   "en": "Select an order for export"
  },
  {
    "stringID": "DenyAccess",
    "ru": "Запрещено!",
-   "en": ""
+   "en": "Forbidden!"
  },
  {
    "stringID": "OrdsCont.TemplateEmpty",
    "ru": "У Вас нет шаблонов!",
-   "en": ""
+   "en": "You have no templates!"
  },
  {
    "stringID": "OrdsCont.ErrorOrderEdit",
    "ru": "Редактировать можно только заявленные заказы",
-   "en": ""
+   "en": "You can edit only declared orders"
  },
  {
    "stringID": "OrdsCont.GetOrderEdit",
    "ru": "Выберите заказ для редактирования",
-   "en": ""
+   "en": "Select an order for editing"
  },
  {
    "stringID": "OrdsCont.GetOrderView",
    "ru": "Выберите заказ для просмотра",
-   "en": ""
+   "en": "Select an order to view"
  },
  {
    "stringID": "OrdsCont.CityError",
    "ru": "Ошибка ввода города",
-   "en": ""
+   "en": "Failed entering the city"
  },
  {
    "stringID": "OrdsCont.CitySenderError",
    "ru": "Неверно введен город Отправителя! Выберите город из выпадающего списка.",
-   "en": ""
+   "en": "City Sender incorrectly entered! Select a city from the dropdown list."
  },
  {
    "stringID": "OrdsCont.CityRecipientError",
    "ru": "Неверно введен город Получателя! Выберите город из выпадающего списка.",
-   "en": ""
+   "en": "City Recipient incorrectly entered! Select a city from the dropdown list."
  },
  {
    "stringID": "OrdsCont.OrderSave",
    "ru": "Заказ сохранен!",
-   "en": ""
+   "en": "Order saved!"
  },
  {
    "stringID": "OrdsCont.FileNotSave",
    "ru": "Файл не сохранен!",
-   "en": ""
+   "en": "File is not saved!"
  },
  {
    "stringID": "OrdsCont.OrderNotSave",
    "ru": "Заказ не сохранен!",
-   "en": ""
+   "en": "Order is not saved!"
  },
  {
    "stringID": "OrdsCont.FieldIsEmptyHead",
    "ru": "Не все поля заполнены",
-   "en": ""
+   "en": "Not all fields are specifid"
  },
  {
    "stringID": "OrdsCont.FieldIsEmptyBody",
    "ru": "Откорректируйте информацию",
-   "en": ""
+   "en": "Correct information"
  },
  {
    "stringID": "OrdsCont.OrdersCount",
    "ru": "Количество заказов: ",
-   "en": ""
+   "en": "The number of orders:"
  },
  {
    "stringID": "TemplCont.DeleteOkHead",
    "ru": "Успешное удаление!",
-   "en": ""
+   "en": "Successful removal!"
  },
  {
    "stringID": "TemplCont.DeleteOkBody",
    "ru": "Шаблон удален: ",
-   "en": ""
+   "en": "Template deleted:"
  },
  {
    "stringID": "TemplCont.DeleteErrorBody",
    "ru": "Не удалось удалить шаблон: ",
-   "en": ""
+   "en": "Template is NOT deleted:"
  },
  {
    "stringID": "TemplCont.GetTemplateDeleteBody",
    "ru": "Выберите шаблон для удаления",
-   "en": ""
+   "en": "Select a template to delete"
  },
  {
    "stringID": "TemplCont.GetTemplateEditBody",
    "ru": "Выберите шаблон для редактирования",
-   "en": ""
+   "en": "Select a template for editing"
  },
  {
    "stringID": "TemplCont.TemplateSaveOkHead",
    "ru": "Шаблон сохранен!",
-   "en": ""
+   "en": "The template is saved!"
  },
  {
    "stringID": "TemplCont.TemplateSaveOkBody",
    "ru": "Сохранение шаблона заказа прошло успешно ",
-   "en": ""
+   "en": "Saving order template was successful"
  },
  {
    "stringID": "TemplCont.TemplateSaveErrorHead",
    "ru": "Ошибка сохранения",
-   "en": ""
+   "en": "Error saving"
  },
  {
    "stringID": "TemplCont.TemplateSaveErrorBody",
    "ru": "Шаблон заказа не сохранен! ",
-   "en": ""
+   "en": "Order template is not saved!"
  },
  {
    "stringID": "WbsCont.NotEditTarif",
    "ru": "Для этой накладной нельзя редактировать Доп. тариф",
-   "en": ""
+   "en": "For this invoice can not edit additional tariff"
  },
  {
    "stringID": "WbsCont.Sum",
    "ru": "Всего: ",
-   "en": ""
+   "en": "Total:"
  },
  {
    "stringID": "WbsCont.Wt",
    "ru": "Вес: ",
-   "en": ""
+   "en": "Wt:"
  },
  {
    "stringID": "WbsCont.VolWt",
    "ru": "V вес: ",
-   "en": ""
+   "en": "Vol. Wt.:"
  },
  {
    "stringID": "WbsCont.s_flip_b",
    "ru": "тар флип баз: ",
-   "en": ""
+   "en": "tar flip b:"
  },
  {
    "stringID": "WbsCont.s_flip_a",
    "ru": "тар флип доп: ",
-   "en": ""
+   "en": "tar flip a:"
  },
  {
    "stringID": "WbsCont.s_flip_t",
    "ru": "тар флип всего: ",
-   "en": ""
+   "en": "tar flip t:"
  },
  {
    "stringID": "WbsCont.s_ag_b",
    "ru": "тар аг баз: ",
-   "en": ""
+   "en": "tar ag b:"
  },
  {
    "stringID": "WbsCont.s_ag_a",
    "ru": "тар аг доп: ",
-   "en": ""
+   "en": "tar ag a:"
  },
  {
    "stringID": "WbsCont.s_ag_t",
    "ru": "тар аг всего: ",
-   "en": ""
+   "en": "tar ag t:"
  },
  {
    "stringID": "WbsCont.SavePod",
    "ru": "ПОД сохранено!",
-   "en": ""
+   "en": "POD is saved!"
  },
  {
    "stringID": "WbsCont.NotSavePod",
    "ru": "ПОД не сохранено!",
-   "en": ""
+   "en": "POD is not saved!"
  },
  {
    "stringID": "WbsCont.SaveEx",
    "ru": "Происшествие сохранено!",
-   "en": ""
+   "en": "The incident is saved!"
  },
  {
    "stringID": "WbsCont.NotSaveEx",
    "ru": "Происшествие не сохранено!",
-   "en": ""
+   "en": "The incident was not saved!"
  },
  {
    "stringID": "WbsCont.SaveTarif",
    "ru": "Доп. тариф сохранен!",
-   "en": ""
+   "en": "The additional tariff is saved!"
  },
  {
    "stringID": "WbsCont.NotSaveTarif",
    "ru": "Доп. тариф не сохранен!",
-   "en": ""
+   "en": "The additional tariff is NOT saved!"
  },
  {
    "stringID": "WbsCont.ImportOk",
    "ru": "Импортирование завершено успешно!",
-   "en": ""
+   "en": "Importing completed successfully!"
  },
  {
    "stringID": "WbsCont.ImportError",
    "ru": "Ошибка импорта!",
-   "en": ""
+   "en": "Import failed!"
  },
  {
    "stringID": "WbsCont.GetWb",
    "ru": "Выберите накладную",
-   "en": ""
+   "en": "Select the waybill"
  },
  {
    "stringID": "WbsCont.NotWbPod",
    "ru": "Для этой накладной нельзя внести ПОД",
-   "en": ""
+   "en": "For this invoice can not add POD"
+ },
+ {
+   "stringID": "aMonths.January",
+   "ru": "Январь",
+   "en": "January"
+ },
+ {
+   "stringID": "aMonths.February",
+   "ru": "Февраль",
+   "en": "February"
+ },
+ {
+   "stringID": "aMonths.March",
+   "ru": "Март",
+   "en": "March"
+ },
+ {
+   "stringID": "aMonths.April",
+   "ru": "Апрель",
+   "en": "April"
+ },
+ {
+   "stringID": "aMonths.May",
+   "ru": "Май",
+   "en": "May"
+ },
+ {
+   "stringID": "aMonths.June",
+   "ru": "Июнь",
+   "en": "June"
+ },
+ {
+   "stringID": "aMonths.July",
+   "ru": "Июль",
+   "en": "July"
+ },
+ {
+   "stringID": "aMonths.August",
+   "ru": "Август",
+   "en": "August"
+ },
+ {
+   "stringID": "aMonths.September",
+   "ru": "Сентябрь",
+   "en": "September"
+ },
+ {
+   "stringID": "aMonths.October",
+   "ru": "Октябрь",
+   "en": "October"
+ },
+ {
+   "stringID": "aMonths.November",
+   "ru": "Ноябрь",
+   "en": "November"
+ },
+ {
+   "stringID": "aMonths.December",
+   "ru": "Декабрь",
+   "en": "December"
+ },
+ {
+   "stringID": "LoadOrdersForm.uploadFile.fieldLabel",
+   "ru": "Файл формата .xls; .xlsx; .csv до 1 Мб.",
+   "en": "File format  .xls; .xlsx; .csv; max size 1 Mb."
+ },
+ {
+   "stringID": "LoadOrdersForm.uploadFile.buttonText",
+   "ru": "Выбрать",
+   "en": "Select"
  }
 ]
 

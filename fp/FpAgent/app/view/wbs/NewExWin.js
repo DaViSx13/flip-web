@@ -7,7 +7,7 @@ Ext.define('FPAgent.view.wbs.NewExWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 340,
-	width : 370,
+	width : 380,
 	resizable : false,
 	modal : true,
 	initComponent : function () {

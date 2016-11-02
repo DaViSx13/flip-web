@@ -29,15 +29,18 @@
 			text : 'RU',
 			action : 'langRU',
 			toggleGroup : 'langBtn',
+			iconCls : 'ru',
 			allowDepress : false
 		}, {
 			text : 'EN',
 			action : 'langEN',
 			toggleGroup : 'langBtn',
+			iconCls : 'gb',
 			allowDepress : false
 		}, '->', {
 			text : FPAgent.lib.Translate.tr("Loginform.login"),//'Вход',
 			action : 'login',
+			iconCls : 'key',
 			formBind : true
 		}
 	]

@@ -12,7 +12,7 @@ Ext.define('FPAgent.view.orders.LoadOrdersForm', {
         xtype: 'filefield',
         name: 'uploadFile',
         fieldLabel: FPAgent.lib.Translate.tr("LoadOrdersForm.uploadFile.fieldLabel"),//'Файл формата .xls; .xlsx; .csv до 1 Мб.',
-        labelWidth: 230,
+        labelWidth: 250,
         msgTarget: 'side',
         allowBlank: false,
         anchor: '100%',
