@@ -5,6 +5,10 @@ Ext.define('FPAgent.controller.Loginform', {
 	refs : [{
 			ref : 'AdmTool',
 			selector : 'admtool'
+		},
+		{
+			ref : 'Loginform',
+			selector : 'loginform'
 		}
 	],
 	init : function () {
@@ -73,6 +77,7 @@ Ext.define('FPAgent.controller.Loginform', {
 			}
 		});
 	},
+	
 	onLaunch : function () {
 		var me = this;
 		Ext.Ajax.request({
@@ -97,7 +102,7 @@ Ext.define('FPAgent.controller.Loginform', {
 			failure : function (response) {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 			}
-		});
+		});		
 	},
 	doLogin : function (button) {
 		var me = this;

@@ -30,6 +30,7 @@
 			action : 'langRU',
 			toggleGroup : 'langBtn',
 			iconCls : 'ru',
+			id : 'btnru',
 			allowDepress : false
 		}, {
 			text : 'EN',
