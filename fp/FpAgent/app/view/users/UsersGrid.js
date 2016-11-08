@@ -30,7 +30,7 @@ Ext.define('FPAgent.view.users.UsersGrid', {
 			width : 50,
 			dataIndex : 'partloc'
 		}, {
-			text : 'Город',
+			text : FPAgent.lib.Translate.tr("ComboCity"),//'Город',
 			width : 150,
 			dataIndex : 'rusname'
 		}, {

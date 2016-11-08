@@ -278,3 +278,16 @@ aMonths.November;Ноябрь;November
 aMonths.December;Декабрь;December
 LoadOrdersForm.uploadFile.fieldLabel;"Файл формата .xls; .xlsx; .csv до 1 Мб.";"File format  .xls; .xlsx; .csv; max size 1 Mb."
 LoadOrdersForm.uploadFile.buttonText;Выбрать;Select
+UsersCont.IsBlocked;Блокировать;Blocked
+UsersCont.IsNotBlocked;Разблокировать;Unblocked
+UsersCont.SelectRecord;Выберите запись;Select record
+UsersCont.RecordNotSelect;Запись не выбрана;Record is not selected
+UsersCont.UserEdit;Редактирование пользователя:  ;User Edit: 
+UsersCont.Record blocked;Запись блокирована;Record is blocked
+UsersCont.UnblockedRecord;Разблокируйте запись перед внесением корректировок;Unblocked record before edit record
+UsersCont.SelectRecordForEdit;Выберите запись для редактирования;Select record for edit
+UsersCont.SaveChanges;Сохранить изменения?;Changes are saved?
+UsersCont.Agent;Агент:;Agent:
+UsersCont.Login;Логин:;Login:
+UsersCont.PassNotIdent;Пароли не совпадают;Passwords do not match
+UsersCont.InsertIdentPass;Введите идентичные пароли;Enter identical passwords
