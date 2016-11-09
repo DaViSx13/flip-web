@@ -26,19 +26,29 @@
 		}
 	],
 	buttons : [{
-			text : 'RU',
-			action : 'langRU',
-			toggleGroup : 'langBtn',
-			iconCls : 'ru',
-			id : 'btnru',
-			allowDepress : false
-		}, {
-			text : 'EN',
-			action : 'langEN',
-			toggleGroup : 'langBtn',
-			iconCls : 'gb',
-			allowDepress : false
-		}, '->', {
+				xtype : 'buttongroup',
+				frame : false,
+				items : [		
+				{	
+					enableToggle: true,	
+					text : '<div style="text-align:left;">RU<div>',//'RU',				
+					action : 'langRU',
+					toggleGroup : 'langBtn',
+					iconCls : 'ru',	
+					cls : 'lang-button',						
+					allowDepress : false			
+				},{ 
+					enableToggle: true,
+					text : '<div style="text-align:left;">EN<div>',//'EN',
+					action : 'langEN',
+					toggleGroup : 'langBtn',
+					iconCls : 'gb',
+					cls : 'lang-button',
+					align: 'left',			
+					allowDepress : false
+				}
+				]
+				}, '->', {
 			text : FPAgent.lib.Translate.tr("Loginform.login"),//'Вход',
 			action : 'login',
 			iconCls : 'key',

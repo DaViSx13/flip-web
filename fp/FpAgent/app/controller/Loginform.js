@@ -27,8 +27,21 @@ Ext.define('FPAgent.controller.Loginform', {
 			},
 			'loginform textfield' : {
 				keypress : this.pressEnter
+			},
+			'loginform' : {
+				afterrender : this.showForm
 			}
 		});
+	},
+	showForm : function (p) {		
+		var lang = Ext.util.Cookies.get('myLang');
+		var btnRU = p.down('button[action=langRU]');
+		var btnEN = p.down('button[action=langEN]');
+		if (lang == 'ru'){
+			btnRU.toggle(true, true);
+		} else {
+			btnEN.toggle(true, true);
+		}		
 	},
 	toggleLang : function (btn, pressed) {
 		//console.log(btn.action);
