@@ -66,7 +66,7 @@ function fCalc(){
     }
 
 function fCalcVvol(x ,y ,z){
-	return x*y*z/6000
+	return x*y*z/5000
 }
 
 function  doCalcVvol(){
