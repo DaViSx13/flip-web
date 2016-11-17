@@ -124,21 +124,22 @@ api.php?dbAct=getTarif&amp;org=&lt;orgCityCode&gt;&amp;dest=&lt;destCityCode&gt;
 <p>Возвращает: </br>
 - tarif - стоимость доставки отправления в рублях</br>
 - delivery - срок доставки в днях</br>
+- deliverymin - минимальный срок доставки в днях</br>
 
 <p> Пример: <a href="api.php?dbAct=getTarif&org=MOW&dest=VOZ&weight=2.7" target=_blank>api.php?dbAct=getTarif&amp;org=MOW&amp;dest=VOZ&amp;weight=2.7</a>
 
 <pre>
 {
-	"success" : true,
-	"msg" : "ok",
-	"data" : [{
-			"tarif" : "635.61",
-			"delivery" : 2,
-			"org" : "MOW",
-			"dest" : "VOZ",
-			"weight" : 2.7
-		}
-	]
+	"success": true,
+	"msg": "ok",
+	"data": [{
+		"tarif": "669.00",
+		"delivery": 2,
+		"org": "MOW",
+		"dest": "VOZ",
+		"weight": 2.7,
+		"deliverymin": 1
+	}]
 }
 </pre>
 
