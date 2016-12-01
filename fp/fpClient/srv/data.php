@@ -11,9 +11,9 @@ function isSessionActive(){
 
 class Response
 {
-    
-	public $success = false;
-    public $msg = '';
+  public $data;
+  public $success = false;
+  public $msg = '';
 }
 $response = new Response();
 $iserror = false;
