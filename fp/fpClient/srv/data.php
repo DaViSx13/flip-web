@@ -219,6 +219,11 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWb':
 			$query = "exec wwwGetWb @wb_no='{$params['wb_no']}'";
 			break;
+		case 'GetClientInfo':
+			$ag=$_SESSION['xClientID'];
+
+			$query = "exec [wwwClientGetClientInfo]	@clientID=$ag";
+			break;
     }
 
     if (!isset($query)) {
