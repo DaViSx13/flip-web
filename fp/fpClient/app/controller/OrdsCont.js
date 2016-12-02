@@ -2,7 +2,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt'],
+	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'],
 	refs : [{
 			ref : 'OrdForm',
 			selector : 'ordform'
@@ -134,6 +134,8 @@ Ext.define('FPClient.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+		
+		this.getClientStStore().load();
 	},
 	clkList : function (btn) {
 		btn.toggle(true);
@@ -380,6 +382,24 @@ Ext.define('FPClient.controller.OrdsCont', {
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
 		timeEdit.setReadOnly(true);
 		timeEdit.setValue('19:00');
+		
+		//auto sender begin
+		client = this.getClientStStore().first();
+		//мухлеж
+		client.set('org', client.get('city'));
+		client.set('orgcode', client.get('cityid'));
+		
+		form_ord = edit.down('ordform');
+		form_ord.loadRecord(client);
+		
+		var cb_org = form_ord.down('combocity[name=org]');
+		cb_org.store.load({
+			params : {
+				query : client.get('org')
+			}
+		});
+		cb_org.select(client.get('orgcode'));
+		//auto sender end
 	},
 	openTpl : function (btn) {
 		this.getTemplStStore().load();

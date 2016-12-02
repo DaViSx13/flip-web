@@ -21,6 +21,9 @@ Ext.define('FPClient.model.ClientMod', {
 		}, {
 			name: 'cityid',
 			type: 'int'
+		}, {
+			name: 'city',
+			type: 'string'
 		}
 	]
 });
