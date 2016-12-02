@@ -2,7 +2,7 @@ Ext.define('FPClient.controller.TemplCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.TemplForm', 'orders.TemplWin', 'orders.TemplGrid'],
 	models : ['TemplMod'],
-	stores : ['TemplSt'],
+	stores : ['TemplSt', 'ClientSt'],
 	refs : [{
 			ref : 'TemplForm',
 			selector : 'templform'
@@ -37,6 +37,27 @@ Ext.define('FPClient.controller.TemplCont', {
 		var win = Ext.widget('templwin');
 		win.show();
 		win.down('templform').down('textfield[name=templatename]').focus(false, true);
+		
+		//auto sender begin
+		client = this.getClientStStore().first();
+		//мухлеж
+		client.set('org', client.get('city'));
+		client.set('orgcode', client.get('cityid'));
+		
+		console.log(client);
+		
+		formt = win.down('templform');
+		formt.loadRecord(client);
+		
+		var cb_org = formt.down('combocity[name=org]');
+		cb_org.store.load({
+			params : {
+				query : client.get('org')
+			}
+		});
+		cb_org.select(client.get('orgcode'));
+		//auto sender end
+		
 	},
 	delTempl : function (btn) {
 		var me = this;
