@@ -121,8 +121,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
 			@UserIn=$UserIn,
-			@RordNum=$Rordnum,
-			@clientId = '{$ag}'";			
+			@RordNum=$Rordnum";
 			break;
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
