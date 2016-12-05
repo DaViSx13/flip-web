@@ -177,18 +177,30 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec [wwwClientGetTemplates] @clientID={$ag}";
 			break;
 		case 'SetAgTemplates':
+			$CName=$params['cname'];
 			$ag=$_SESSION['xClientID'];
 			$DName=$params['dname'];
 			$id=$params['id'] ? $params['id'] : 0;
+			$Address=$params['address'];
+			$ContName=$params['contname'];
+			$OrgRems=$params['orgrems'];
 			$DContName=$params['dcontname'];
 			$DAdr=$params['dadr'];
 			$DESTRems=$params['destrems'];			
+			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];			
 
 			$query = "exec [wwwClientSetTemplate]
 			@TemplateName='$params[templatename]',
 			@clientID=$ag,
-			@tplID=$id,
+			@tplid=$id,
+			@ORG=$params[org],
+			@CName='$CName',
+			@Address='$Address',
+			@ContName='$ContName',
+			@ContPhone='$ContPhone',
+			@ContMail='$params[contmail]',
+			@OrgRems='$OrgRems',
 			@DEST=$params[dest],
 			@DName='$DName',
 			@DAdr='$DAdr',

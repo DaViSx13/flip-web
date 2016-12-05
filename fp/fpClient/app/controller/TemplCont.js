@@ -44,7 +44,7 @@ Ext.define('FPClient.controller.TemplCont', {
 		client.set('org', client.get('city'));
 		client.set('orgcode', client.get('cityid'));
 		
-		console.log(client);
+		//console.log(client);
 		
 		formt = win.down('templform');
 		formt.loadRecord(client);
@@ -90,14 +90,15 @@ Ext.define('FPClient.controller.TemplCont', {
 			var form = win.down('templform');
 			var record = sm.getSelection()[0];
 			form.loadRecord(record);
+
 			var cb_org = form.down('combocity[name=org]');
-			/*cb_org.store.load({
+			cb_org.store.load({
 				params : {
 					query : cb_org.getValue()
 				}
 			});
 			cb_org.select(record.data['orgcode']);
-			*/
+			
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
 				params : {
