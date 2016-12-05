@@ -71,7 +71,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'saveagorder':
 			$CName=$params['cname'];
-			$ag=$_SESSION['xClientID'];
+			$ag=$_SESSION['xAgentID'];
 			$DName=$params['dname'];
 			$Amt=isset($params['amt']) ? $params['amt'] : 0;
 			$CurId=isset($params['curid']) ? $params['curid'] : 0;
