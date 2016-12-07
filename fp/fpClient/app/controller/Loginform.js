@@ -1,7 +1,7 @@
 Ext.define('FPClient.controller.Loginform', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.Loginform', 'mainform.MainPanel', 'mainform.Loginformcontainer', 'Viewport'],
-	stores : ['WbsStore'],
+	stores : ['WbsStore', 'ClientSt'],
 	refs : [{
 			ref : 'AdmTool',
 			selector : 'admtool'
@@ -92,7 +92,8 @@ Ext.define('FPClient.controller.Loginform', {
 						aviewport.down('mainpanel').down('label').setText('WEB Администратор');
 						aviewport.down('mainpanel').setActiveTab('users');
 					} else {
-						aviewport.down('mainpanel').down('label').setText(action.result.clientName);						
+						aviewport.down('mainpanel').down('label').setText(action.result.clientName);
+						this.getClientStStore().load();
 						Ext.Ajax.request({
 							url : 'srv/data.php',
 							params : {
