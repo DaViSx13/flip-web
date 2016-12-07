@@ -231,7 +231,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwGetWb @wb_no='{$params['wb_no']}'";
 			break;
 		case 'GetClientInfo':
-			$ag=$_SESSION['xClientID'];
+			$ag=$_SESSION["xClientID"];
 
 			$query = "exec [wwwClientGetClientInfo]	@clientID=$ag";
 			break;
