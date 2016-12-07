@@ -14,7 +14,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			title : 'Отправитель',
 			x : 10,
 			y : 0,
-			hidden: true,
+			//hidden: true,
 			items : [{
 					xtype : 'combocity',
 					name : 'org',
