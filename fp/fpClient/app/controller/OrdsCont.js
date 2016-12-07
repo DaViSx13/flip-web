@@ -419,6 +419,15 @@ Ext.define('FPClient.controller.OrdsCont', {
 			tplform.up('usetemplwin').close();
 			var win = Ext.widget('ordwin');
 			var form = win.down('ordform');
+			
+			var timeEdit = form.down('textfield[name=courtimef]');
+			timeEdit.setReadOnly(true);
+			timeEdit.setValue('10:00');
+			
+			var timeEdit = form.down('textfield[name=courtimet]');
+			timeEdit.setReadOnly(true);
+			timeEdit.setValue('19:00');
+			
 			form.loadRecord(record);
 			var cb_org = form.down('combocity[name=org]');
 			cb_org.store.load({
