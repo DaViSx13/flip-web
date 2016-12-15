@@ -53,10 +53,10 @@ Ext.define('FPAgent.controller.UsersCont', {
 			var but = this.getUsersTool().down('button[action=active]');
 			if (rec[0].get('active') == 1) {
 				but.setIconCls('redusr');
-				but.setText('Блокировать');
+				but.setText(/*'Блокировать'*/FPAgent.lib.Translate.tr("UsersCont.IsBlocked"));
 			} else {
 				but.setIconCls('greusr');
-				but.setText('Разблокировать');
+				but.setText(/*'Разблокировать'*/FPAgent.lib.Translate.tr("UsersCont.IsNotBlocked"));
 			}
 		}
 	},
@@ -83,11 +83,11 @@ Ext.define('FPAgent.controller.UsersCont', {
 					me.getUsersGrid().getSelectionModel().select(rec);
 				},
 				failure : function (response) {
-					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Выберите запись', 'Запись не выбрана')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("UsersCont.SelectRecord")/*'Выберите запись'*/, FPAgent.lib.Translate.tr("UsersCont.RecordNotSelect")/*'Запись не выбрана'*/)
 		}
 	},
 	newUser : function (but) {
@@ -99,16 +99,16 @@ Ext.define('FPAgent.controller.UsersCont', {
 		if (sm.getCount() > 0) {
 			if (rec.get('active') > 0) {
 				var w = Ext.widget('userswin');
-				w.setTitle('Редактирование пользователя:  ' + rec.get('auser'));
+				w.setTitle(FPAgent.lib.Translate.tr("UsersCont.UserEdit")/*'Редактирование пользователя:  '*/ + rec.get('auser'));
 				w.show();
 				var f = this.getUsersForm();
 				f.loadRecord(rec);
 				f.down('textfield[name=agents]').setReadOnly(true);
 			} else {
-				Ext.Msg.alert('Запись блокирована', 'Разблокируйте запись перед внесением корректировок')
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("UsersCont.Record blocked")/*'Запись блокирована'*/, FPAgent.lib.Translate.tr("UsersCont.UnblockedRecord")/*'Разблокируйте запись перед внесением корректировок'*/)
 			}
 		} else {
-			Ext.Msg.alert('Выберите запись', 'Выберите запись для редактирования')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("UsersCont.SelectRecord")/*'Выберите запись'*/, FPAgent.lib.Translate.tr("UsersCont.SelectRecordForEdit")/*'Выберите запись для редактирования'*/)
 		}
 	},
 	saveUsers : function (btn) {
@@ -139,7 +139,7 @@ Ext.define('FPAgent.controller.UsersCont', {
 								}
 							},
 							failure : function (form, action) {
-								Ext.Msg.alert('не сохранено!', action.result.msg);
+								Ext.Msg.alert(FPAgent.lib.Translate.tr("TemplCont.TemplateSaveErrorHead")/*'не сохранено!'*/, action.result.msg);
 							}
 						});
 					}
@@ -150,8 +150,8 @@ Ext.define('FPAgent.controller.UsersCont', {
 				};
 				if (form.getForm().findField('id').getValue() == 0) {
 					Ext.Msg.show({
-						title : 'Сохранить изменения?',
-						msg : '<p>Агент: "<font size="2" color="blue">' + form.getForm().findField('agents').getRawValue() + '</font>".</p>  <p>Логин: "<font size="2" color="blue">' + form.getForm().findField('auser').getValue() + '</font>".</p>  <p>Сохранить?</p>',
+						title : FPAgent.lib.Translate.tr("UsersCont.SaveChanges")/*'Сохранить изменения?'*/,
+						msg : '<p>'+/*Агент:*/FPAgent.lib.Translate.tr("UsersCont.Agent")+' "<font size="2" color="blue">' + form.getForm().findField('agents').getRawValue() + '</font>".</p>  <p>'+/*Логин:*/FPAgent.lib.Translate.tr("UsersCont.Login")+' "<font size="2" color="blue">' + form.getForm().findField('auser').getValue() + '</font>".</p>  <p>Сохранить?</p>',
 						buttons : Ext.Msg.YESNOCANCEL,
 						fn : showResult,
 						icon : Ext.Msg.QUESTION
@@ -160,10 +160,10 @@ Ext.define('FPAgent.controller.UsersCont', {
 					showResult('yes');
 				}
 			} else {
-				Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead")/*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody")/*'Откорректируйте информацию'*/)
 			}
 		} else {
-			Ext.Msg.alert('Пароли не совпадают', 'Введите идентичные пароли')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("UsersCont.PassNotIdent")/*'Пароли не совпадают'*/, FPAgent.lib.Translate.tr("UsersCont.InsertIdentPass")/*'Введите идентичные пароли'*/)
 		}
 	}
 });

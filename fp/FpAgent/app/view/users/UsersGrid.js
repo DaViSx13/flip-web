@@ -4,43 +4,43 @@ Ext.define('FPAgent.view.users.UsersGrid', {
 	requires : ['FPAgent.view.users.UsersTool'],
 	store : 'UsersSt',
 	columns : [{
-			text : 'Логин',
+			text : FPAgent.lib.Translate.tr("UsersGrid.auser"),//'Логин',
 			dataIndex : 'auser',
 			flex : 1
 		}, {
-			text : 'Пользователь',
+			text : FPAgent.lib.Translate.tr("UsersGrid.partname"),//'Пользователь',
 			flex : 1,
 			dataIndex : 'partname'
 		}, {
 			xtype : 'actioncolumn',
-			text : 'Доступ',
+			text : FPAgent.lib.Translate.tr("UsersGrid.isblocked"),//'Доступ',
 			align : 'center',
 			width : 50,
 			getClass : function (v, meta, rec) {
 				if (rec.get('active') > 0) {
-					this.items[0].tooltip = 'Не блокирован';
+					this.items[0].tooltip = FPAgent.lib.Translate.tr("UsersGrid.block_no");//'Не блокирован';
 					return 'gre-usr';
 				} else {
-					this.items[0].tooltip = 'Блокирован';
+					this.items[0].tooltip = FPAgent.lib.Translate.tr("UsersGrid.block_yes");//'Блокирован';
 					return 'red-usr';
 				}
 			}
 		}, {
-			text : 'КОД',
+			text : FPAgent.lib.Translate.tr("UsersGrid.partloc"),//'КОД',
 			width : 50,
 			dataIndex : 'partloc'
 		}, {
-			text : 'Город',
+			text : FPAgent.lib.Translate.tr("ComboCity"),//'Город',
 			width : 150,
 			dataIndex : 'rusname'
 		}, {
 			xtype : 'actioncolumn',
-			text : 'Статус',
+			text : FPAgent.lib.Translate.tr("UsersGrid.status"),//'Статус',
 			align : 'center',
 			width : 50,
 			getClass : function (v, meta, rec) {
 				if (rec.get('dateshtdn') > '') {
-					this.items[0].tooltip = 'Отношения прекращены: ' + rec.get('dateshtdn');
+					this.items[0].tooltip = FPAgent.lib.Translate.tr("UsersGrid.status.tooltip")/*'Отношения прекращены: '*/ + rec.get('dateshtdn');
 					return 'cut';
 				}
 			}

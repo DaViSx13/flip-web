@@ -12,8 +12,12 @@
         <!-- </x-bootstrap> -->
         <script src="app/app.js"></script>
 		<script type="text/javascript" src="vtypes.js"></script>
-        <script type="text/javascript" src="ext/locale/ext-lang-ru.js"></script>
-        <script type="text/javascript" src="ext-lang-ru-add.js"></script>
+        <?php
+		if(!isset($_COOKIE['myLang']) || $_COOKIE['myLang'] == 'ru'){
+		echo '<script type="text/javascript" src="ext/locale/ext-lang-ru.js"></script>';
+        echo '<script type="text/javascript" src="ext-lang-ru-add.js"></script>';
+		}
+		?>
     <!-- </x-compile> -->
 </head>
 <body></body>

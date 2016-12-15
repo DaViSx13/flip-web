@@ -57,6 +57,24 @@
 .outbox {
 	background-image : url(../../resources/images/inbox.png);
 }
+.ru{
+	background-image : url(../../resources/images/ru.png);
+}
+.gb{
+	background-image : url(../../resources/images/gb.png);
+}
+.key{
+	background-image : url(../../resources/images/key.png);
+}
+.lang-button {
+	width : 40px!important;
+	display:block;
+	white-space:nowrap;
+	background-color:transparent;
+	background-repeat:no-repeat;
+	background-position:left;
+	overflow:hidden
+}
 .allbox {
 	background-image : url(../../resources/images/allbox.png);
 }

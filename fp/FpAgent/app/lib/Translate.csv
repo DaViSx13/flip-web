@@ -1,0 +1,293 @@
+stringID;ru;en
+ComboCity;Город;City
+Loginform.user;Пользователь;User
+Loginform.password;Пароль;Password
+Loginform.login;Вход;Login
+Loginform.title;Вход в ФлипПост WEB;Login in FlipPost WEB
+OrdGrid.status;Статус;Status
+OrdGrid.datein;Дата;Date
+OrdGrid.orgcity;Город;City
+OrdGrid.cname;Отправитель;Sender
+OrdGrid.destcity;Город;City
+OrdGrid.dname;Получатель;Recipient
+OrdGrid.packs;Кол.;Pcs.
+OrdGrid.wt;Вес;Wt.
+OrdGrid.volwt;Об. вес;Vol. Wt.
+OrdGrid.wb_no;№ накл.;№ waybill
+OrdGrid.fs.Org;Отправитель;Sender
+OrdGrid.cname;Название клиента;Client name
+OrdGrid.address;Адрес;Address
+OrdGrid.contname;Контактное лицо;Contact
+OrdGrid.contphone;Телефон;Phone
+OrdGrid.orgrems;Примечание;Note
+OrdGrid.fs.dest;Получатель;Recipient
+OrdGrid.dname;Название клиента;Client name
+OrdGrid.dadr;Адрес;Address
+OrdGrid.dcontname;Контактное лицо;Contact
+OrdGrid.dcontphone;Телефон;Phone
+OrdGrid.destrems;Примечание;Note
+OrdGrid.fs.date;Дата приезда курьера;Courier arrival date
+OrdGrid.courdate;Дата;Date
+OrdGrid.courtimef;Время с;Time from
+OrdGrid.courtimet;Время до;Time to
+OrdGrid.fs.cargo;Информация о грузе; Cargo info
+OrdGrid.type;Тип груза;Cargo type
+OrdGrid.packs;Число мест;Place count
+OrdGrid.wt;Вес;Wt.
+OrdGrid.volwt;Объемный вес;Vol. Wt.
+OrdGrid.desc;*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма);*default payment by the customer (agent, places an order), in the case of other payment - please indicate this in note (sender / recipient, amount)
+LoadFileForm.uploadFile.fieldLabel;Файл формата .xls, .pdf, .doc до 1 Мб.;"File format .xls, .pdf, .doc; limit 1 Mb."
+LoadFileForm.uploadFile.buttonText;Выбрать;Select
+LoadFileForm.button.delete;Удалить;Delete
+LoadOrdersForm.uploadcomments.html;"Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, размером до 1 Мб,<br>количество строк до 1000. Данные в файле должны представлять собой таблицу<br> из 20 столбцов с заголовками и повторять поля формы ввода нового заказа:<br> Город отправителя, Наименование отправителя, Адрес отправителя,<br> Контакт отправителя, Телефон отправителя, Почта отправителя, Описание отправителя,<br> 	 Город получателя, Название получателя, Адрес получателя, Контакт получателя,<br> Телефон получателя, Почта получателя, Описание получателя, Количество, Вес,<br> Объемный вес, Дата приезда курьера, Время от, Время до.<br> <a href=""srv/import/Example_import_AgOrders.xlsx"" target=""_blank"" download>Пример файл для импорта заказов</a><br>";"The uploaded file must be in the format * .xls, * .xlsx, or * .csv, up to 1 MB, <br> number of rows to 1000. The data in the file must be a table <br> of 20 columns with headers and repeating fields form to enter a new order: the sender <br> city, sender's name, sender's address, <br> Contact the sender, the sender's phone, the sender's mail, the sender description, <br> City recipient, recipient name, address of the recipient, the recipient's contact, <br> recipient's phone, address of the recipient, the recipient description, quantity, weight, volume <br> weight arrival Date courier, from time, to time. <br> <a href = ""srv/import /Example_import_AgOrders.xlsx"" target =  ""_blank"" download> Example file to import orders </a> <br>"
+LoadOrdersForm.uploadcomments.title;Правила загрузки файла;File download rules
+LoadOrdersForm.title;Импорт информации о заказах;Imports order information
+LoadOrdersForm.button.imp;Импортировать;Import
+LoadOrdersForm.button.cancel;Отмена;Cancel
+OrdTool.action.new;Новый;New
+OrdTool.action.newtpl;Из шаблона;From template
+OrdTool.action.view;Просмотр;Browsing
+OrdTool.action.edit;Редактировать;Edit
+OrdTool.action.excel;Экспорт в Excel;Exports to Excel
+OrdTool.action.import;Импорт из Excel;Imports from Excel
+OrdTool.action.wbno;№ накладной;№ waybill
+OrdTool.action.wbview;Просмотр накладной;Browsing waybill
+OrdTotal.label;Количество заказов: ;The number of orders
+OrdWin.title;Новый заказ;New order
+OrdWin.button.save;Сохранить;Save
+OrdWin.button.cancel;Отмена;Cancel
+TemplForm.templatename;Название шаблона;Template title
+TemplForm.fs.org;Отправитель;Sender
+TemplForm.cname;Название клиента;Client name
+TemplForm.address;Адрес;Address
+TemplForm.contname;Контактное лицо;The contact person
+TemplForm.contphone;Телефон;Phone
+TemplForm.orgrems;Примечание;Comment
+TemplForm.fs.dest;Получатель;Recipient
+TemplForm.dname;Название клиента;Client name
+TemplForm.dadr;Адрес;Address
+TemplForm.dcontname;Контактное лицо;The contact person
+TemplForm.dcontphone;Телефон;Phone
+TemplForm.destrems;Примечание;Comment
+TemplGrid.templatename;Наименование;Name
+TemplTool.newtpl;Новый;New
+TemplTool.edittpl;Редактировать;Edit
+TemplTool.deltpl;Удалить;Delete
+TemplWin.title;Новый шаблон;New template 
+TemplWin.button.save;Сохранить;Save
+TemplWin.button.cancel;Отмена;Cancel
+UseTemplWin.title;Выберите шаблон;Select template 
+UseTemplWin.button.set;Выбрать;Select
+UseTemplWin.button.cancel;Отмена;Cancel
+ViewWbWin.title;Просмотр накладной;Browsing waybill
+ViewWbWin.button.close;Закрыть;Close
+WbNoWin.title;Введите № накладной;Enter the waybill №
+WbNoWin.button.save;Сохранить;Save
+WbNoWin.button.cancel;Отмена;Cancel
+AdmTool.list;Список;List
+AdmTool.templ;Шаблоны;Templates
+AdmTool.tariffs;Тарифы;Tariffs
+AdmTool.help;Помощь;Help
+AdmTool.logout;Выход;Exit
+ComboAgent.fieldLabel;Выберите Агента;Select agent
+Loginformcontainer.title;ФлипПост WEB - список изменений;FlipPost WEB - list of changes
+MainPanel.wbsgrid;Накладные;Waybills
+MainPanel.mnfpanel;Манифесты;Manifests
+MainPanel.ordspanel;Заказы;Orders
+MainPanel.usersgrid;Пользователи;Users
+MnfGrid.mnfrefno;Манифест;Manifest
+MnfGrid.shpd;Отправлено;Sent
+MnfGrid.dtarr;РДП;CAD
+MnfGrid.darr;Доставлено;Delivered
+MnfGrid.bpcs;Мест;Places
+MnfGrid.bwt;Вес;Wt.
+MnfGrid.bvwt;V вес;V wt
+MnfGrid.descr;Перевозчик;Carrier
+MnfTool.out;Входящие;Inbox
+MnfTool.in;Исходящие;Outbox
+MnfTool.all;Все;All
+TotalTool.label;Количество манифестов: ;Amount manifests:
+WbGrid.wb_no;№ Накладной;№ waybill
+WbGrid.dtd;РДД;CAD
+WbGrid.s_co;Отправитель;Sender
+WbGrid.r_co;Получатель;Recipient
+WbGrid.shpcs;Мест;Places
+WbGrid.shwt;Вес;Wt.
+WbGrid.shvol_wt;V вес;V wt
+UsersForm.auser;Пользователь;User
+UsersForm.passfirst;Новый пароль;New password
+UsersForm.passsecond;Повторно пароль;Password again
+UsersForm.agents;Выберите Агента;Select agent
+UsersGrid.auser;Логин;Login
+UsersGrid.partname;Пользователь;User
+UsersGrid.isblocked;Доступ;Access
+UsersGrid.block_no;Не блокирован;Not blocked
+UsersGrid.block_yes;Блокирован;Blocked
+UsersGrid.partloc;КОД;COD
+UsersGrid.status;Статус;Status
+UsersGrid.status.tooltip;Отношения прекращены: ;Relationship terminated:
+UsersTool.new;Новый пользователь;New user
+UsersTool.active;Блокировать;Block
+UsersWin.title;Добавить пользователя;Add user
+UsersWin.button.save;Сохранить;Save
+UsersWin.button.cancel;Отмена;Cancel
+LoadWBForm.uploadFile.fieldLabel;Файл в формате *.xls, *.xlsx или *.csv;File format *.xls, *.xlsx, or *.csv
+LoadWBForm.uploadFile.buttonText;Выбрать;Select
+LoadWBForm.uploadcomments.html;"Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, <br> размером до 1 Мб, количество строк до 1000. Данные в файле <br> должны представлять собой таблицу из 3 столбцов, с заголовком :<br> номер накладной, дата в формате ДД.ММ.ГГГГ ЧЧ:ММ,<br> получатель(до 14 символов).<br> <a href=""srv/import/Example_import_POD.xlsx"" target=""_blank"" download>Пример файл для импорта ПОД</a><br>";"The uploaded file must be in the format *.xls, *.xlsx, or *.csv, <br> up to 1 MB, the number of rows to 1000. The data in the file <br> should be a table of 3 columns, with the headline: <br > invoice number, the date in the format DD.MM.YYYY HH:. MM, <br> the recipient (up to 14 characters) <br><a href=""srv/import/Example_import_POD.xlsx"" target=""_blank"" download> Example file to import POD</a> <br>"
+LoadWBForm.uploadcomments.title;Правила загрузки файла;File download rules
+LoadWBWin.title;Импорт информации о доставке;Import shipping information
+LoadWBWin.imp;Импортировать;Import
+LoadWBWin.cancel;Отмена;Cancel
+NewDopForm.wb_no;Накладная;Waybill
+NewDopForm.dtd_txt;РДД;CAD
+NewDopForm.tar_a_ag;Доп. тариф;A tariff
+NewDopForm.rem_ag;Примечание;Comment
+NewDopWin.title;Заявка на доп. тариф;An application for A tariff
+NewDopWin.save;Сохранить;Save
+NewDopWin.cancel;Отмена;Cancel
+NewExForm.wb_no;Накладная;Waybill
+NewExForm.exLoc;Код места происшествия;Event place code
+NewExForm.exRaised;Дата события;Event date
+NewExForm.exRptd;Дата отчета о событии;Date of event report
+NewExForm.exRaisedTime;Время события;Event time
+NewExForm.exCode;Код ИС;Code EX
+NewExForm.exContent;Содержание происшествия;Event content
+NewExWin.title;Новое исключение;New exception
+NewExWin.save;Сохранить;Save
+NewExWin.cancel;Отмена;Cancel
+NewPodForm.wb_no;Накладная;Waybill
+NewPodForm.dtd_txt;РДД;CAD
+NewPodForm.p_d_in;Дата;Date
+NewPodForm.tdd;Время;Time
+NewPodForm.rcpn;Получатель;Recipient
+NewPodWin.title;Подтверждение о доставке накладной;Confirmation of delivery waybill
+NewPodWin.save;Сохранить;Save
+NewPodWin.cancel;Отмена;Cancel
+ViewExGrid.wbno;№ Накладной;№ waybill
+ViewExGrid.excode;Код;Code
+ViewExGrid.loc;Трек;Track
+ViewExGrid.exdesc;Описание;Comment
+ViewExGrid.raised_txt;Дата события;Event date
+ViewExWin.title;Просмотр исключений;Exceptions viewing
+WbsGrid.exaction;ИС;EX
+WbsGrid.exaction.tooltip;Посмотреть ИС;EX viewing
+WbsGrid.wb_no;Накладная;Waybill
+WbsGrid.d_acc;Принято;Accepted
+WbsGrid.dod_txt;Доставлено;Added
+WbsGrid.rcpn;Получил;Received
+WbsGrid.p_d_in;Подтв.;Confirm
+WbsGrid.t_srv;Услуга;Service
+WbsGrid.s_co;Отправитель;Sender
+WbsGrid.r_co;Получатель;Recipient
+WbsGrid.wt;Вес;Wt.
+WbsGrid.vol_wt;Об.вес;Vol. Wt.
+WbsGrid.tar_flip;Тариф Флип;Tariff Flip
+WbsGrid.tar_flip_b;баз.;base
+WbsGrid.tar_flip_a;доп.;addit.
+WbsGrid.tar_flip_t;Всего;Total
+WbsGrid.rem_flip;прим.;desc
+WbsGrid.tar_ag;Тариф Аг;Tariff Ag
+WbsGrid.tar_ag_b;баз.;base
+WbsGrid.tar_ag_a;доп.;addit.
+WbsGrid.tar_ag_t;Всего;Total
+WbsGrid.rem_ag;прим.;desc
+WbsGrid.req_tar_a;Заявка;Request
+WbsTool.out;Входящие;Inbox
+WbsTool.in;Исходящие;Outbox
+WbsTool.all;Все;All
+WbsTool.overdue;Просрочено;Overdue
+WbsTool.pod;Внести ПОД;Enter POD
+WbsTool.ex;Новая ИС;New EX
+WbsTool.excel;Экспорт в Excel;Exports to Excel
+WbsTool.import;Импорт ПОД;Import POD
+WbsTool.filteredit;№ накладной;№ waybill
+WbsTool.filter;Фильтр;Filter
+Refresh;Обновите страницу;Refresh
+Error;Ошибка!;Error!
+ServerdDown;Сервер недоступен!;Server is not available!
+Alert;Внимание!;Alert!
+WbLate.part1;У Вас есть просроченные накладные в количестве ;You have overdue waybills in the amount of 
+WbLate.part2;" шт.!<br/>Для просмотра информации по накладным перейдите в закладку ""Накладные"" и нажмите вкладку ""Просрочено""";"pcs.! <br/> To view the information on the invoices go to the tab ""Waybill"" and click ""Expired"" tab"
+MnfCont.MnfCount;Количество манифестов: ;Count manifest
+MnfCont.WbCount;Количество накладных: ;Count waybill
+MnfCont.ShpcsCount;Количество мест: ;Number of packages:
+MnfCont.Shwt;Общий вес: ;Total weight:
+MnfCont.Shvol_wt;Общий V вес: ;Total V weight:
+OrdsCont.ImportOk;Импортирование завершено успешно!;Importing completed successfully!
+OrdsCont.ImportError;Ошибка импорта!;Import error!
+OrdsCont.WbSaveError;Номер накладной не сохранен!;Waybill number is not saved!
+OrdsCont.WbNumEmptyHead;Нет номера накладной!;No waybill number!
+OrdsCont.WbNumEmptyBody;Откорректируйте информацию;Correct information
+OrdsCont.OrderAlertBody;Выберите заказ с введенным номером накладной!;Select the order with entered waybill number!
+OrdsCont.WbEmpty;Накладная не введена в систему!;Waybill has not been entered into the system!
+OrdsCont.AlertExportBody;Выберите заказ для экспорта;Select an order for export
+DenyAccess;Запрещено!;Forbidden!
+OrdsCont.TemplateEmpty;У Вас нет шаблонов!;You have no templates!
+OrdsCont.ErrorOrderEdit;Редактировать можно только заявленные заказы;You can edit only declared orders
+OrdsCont.GetOrderEdit;Выберите заказ для редактирования;Select an order for editing
+OrdsCont.GetOrderView;Выберите заказ для просмотра;Select an order to view
+OrdsCont.CityError;Ошибка ввода города;Failed entering the city
+OrdsCont.CitySenderError;Неверно введен город Отправителя! Выберите город из выпадающего списка.;City Sender incorrectly entered! Select a city from the dropdown list.
+OrdsCont.CityRecipientError;Неверно введен город Получателя! Выберите город из выпадающего списка.;City Recipient incorrectly entered! Select a city from the dropdown list.
+OrdsCont.OrderSave;Заказ сохранен!;Order saved!
+OrdsCont.FileNotSave;Файл не сохранен!;File is not saved!
+OrdsCont.OrderNotSave;Заказ не сохранен!;Order is not saved!
+OrdsCont.FieldIsEmptyHead;Не все поля заполнены;Not all fields are specifid
+OrdsCont.FieldIsEmptyBody;Откорректируйте информацию;Correct information
+OrdsCont.OrdersCount;Количество заказов: ;The number of orders:
+TemplCont.DeleteOkHead;Успешное удаление!;Successful removal!
+TemplCont.DeleteOkBody;Шаблон удален: ;Template deleted:
+TemplCont.DeleteErrorBody;Не удалось удалить шаблон: ;Template is NOT deleted:
+TemplCont.GetTemplateDeleteBody;Выберите шаблон для удаления;Select a template to delete
+TemplCont.GetTemplateEditBody;Выберите шаблон для редактирования;Select a template for editing
+TemplCont.TemplateSaveOkHead;Шаблон сохранен!;The template is saved!
+TemplCont.TemplateSaveOkBody;Сохранение шаблона заказа прошло успешно ;Saving order template was successful
+TemplCont.TemplateSaveErrorHead;Ошибка сохранения;Error saving
+TemplCont.TemplateSaveErrorBody;Шаблон заказа не сохранен! ;Order template is not saved!
+WbsCont.NotEditTarif;Для этой накладной нельзя редактировать Доп. тариф;For this invoice can not edit additional tariff
+WbsCont.Sum;Всего: ;Total:
+WbsCont.Wt;Вес: ;Wt:
+WbsCont.VolWt;V вес: ;Vol. Wt.:
+WbsCont.s_flip_b;тар флип баз: ;tar flip b:
+WbsCont.s_flip_a;тар флип доп: ;tar flip a:
+WbsCont.s_flip_t;тар флип всего: ;tar flip t:
+WbsCont.s_ag_b;тар аг баз: ;tar ag b:
+WbsCont.s_ag_a;тар аг доп: ;tar ag a:
+WbsCont.s_ag_t;тар аг всего: ;tar ag t:
+WbsCont.SavePod;ПОД сохранено!;POD is saved!
+WbsCont.NotSavePod;ПОД не сохранено!;POD is not saved!
+WbsCont.SaveEx;Происшествие сохранено!;The incident is saved!
+WbsCont.NotSaveEx;Происшествие не сохранено!;The incident was not saved!
+WbsCont.SaveTarif;Доп. тариф сохранен!;The additional tariff is saved!
+WbsCont.NotSaveTarif;Доп. тариф не сохранен!;The additional tariff is NOT saved!
+WbsCont.ImportOk;Импортирование завершено успешно!;Importing completed successfully!
+WbsCont.ImportError;Ошибка импорта!;Import failed!
+WbsCont.GetWb;Выберите накладную;Select the waybill
+WbsCont.NotWbPod;Для этой накладной нельзя внести ПОД;For this invoice can not add POD
+aMonths.January;Январь;January
+aMonths.February;Февраль;February
+aMonths.March;Март;March
+aMonths.April;Апрель;April
+aMonths.May;Май;May
+aMonths.June;Июнь;June
+aMonths.July;Июль;July
+aMonths.August;Август;August
+aMonths.September;Сентябрь;September
+aMonths.October;Октябрь;October
+aMonths.November;Ноябрь;November
+aMonths.December;Декабрь;December
+LoadOrdersForm.uploadFile.fieldLabel;"Файл формата .xls; .xlsx; .csv до 1 Мб.";"File format  .xls; .xlsx; .csv; max size 1 Mb."
+LoadOrdersForm.uploadFile.buttonText;Выбрать;Select
+UsersCont.IsBlocked;Блокировать;Blocked
+UsersCont.IsNotBlocked;Разблокировать;Unblocked
+UsersCont.SelectRecord;Выберите запись;Select record
+UsersCont.RecordNotSelect;Запись не выбрана;Record is not selected
+UsersCont.UserEdit;Редактирование пользователя:  ;User Edit: 
+UsersCont.Record blocked;Запись блокирована;Record is blocked
+UsersCont.UnblockedRecord;Разблокируйте запись перед внесением корректировок;Unblocked record before edit record
+UsersCont.SelectRecordForEdit;Выберите запись для редактирования;Select record for edit
+UsersCont.SaveChanges;Сохранить изменения?;Changes are saved?
+UsersCont.Agent;Агент:;Agent:
+UsersCont.Login;Логин:;Login:
+UsersCont.PassNotIdent;Пароли не совпадают;Passwords do not match
+UsersCont.InsertIdentPass;Введите идентичные пароли;Enter identical passwords

@@ -10,7 +10,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 			xtype : 'textfield',
 			width : 500,
 			name : 'templatename',
-			fieldLabel : 'Название шаблона',
+			fieldLabel : FPAgent.lib.Translate.tr("TemplForm.templatename"),//'Название шаблона',
 			maxLength : 500,
 			labelWidth : 150,
 			x : 60,
@@ -21,7 +21,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 			id : 'fs1',
 			height : 390,
 			width : 360,
-			title : 'Отправитель',
+			title : FPAgent.lib.Translate.tr("TemplForm.fs.org"),//'Отправитель',
 			x : 10,
 			y : 40,
 			items : [{
@@ -36,7 +36,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'cname',
-					fieldLabel : 'Название клиента',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.cname"),//'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
 					allowBlank : false
@@ -45,14 +45,14 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					width : 337,
 					name : 'address',
 					maxLength : 70,
-					fieldLabel : 'Адрес',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.address"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 329,
 					name : 'contname',
-					fieldLabel : 'Контактное лицо',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.contname"),//'Контактное лицо',
 					maxLength : 50,
 					labelAlign : 'top',
 					anchor : '100%',
@@ -68,7 +68,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					xtype : 'textfield',
 					width : 84,
 					name : 'contphone',
-					fieldLabel : 'Телефон',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.contphone"),//'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
 					allowBlank : false
@@ -77,7 +77,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					name : 'orgrems',
 					height : 75,
 					maxLength : 1000,
-					fieldLabel : 'Примечание',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.orgrems"),//'Примечание',
 					labelAlign : 'top',
 					anchor : '100%'
 				}
@@ -86,7 +86,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 			xtype : 'fieldset',
 			height : 390,
 			width : 360,
-			title : 'Получатель',
+			title : FPAgent.lib.Translate.tr("TemplForm.fs.dest"),//'Получатель',
 			x : 390,
 			y : 40,
 			items : [{
@@ -97,7 +97,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'dname',
-					fieldLabel : 'Название клиента',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.dname"),//'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
 					allowBlank : false
@@ -106,7 +106,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					width : 337,
 					name : 'dadr',
 					maxLength : 70,
-					fieldLabel : 'Адрес',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.dadr"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
@@ -114,7 +114,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					width : 329,
 					name : 'dcontname',
 					maxLength : 50,
-					fieldLabel : 'Контактное лицо',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.dcontname"),//'Контактное лицо',
 					labelAlign : 'top',
 					anchor : '100%',
 					allowBlank : false
@@ -129,7 +129,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					xtype : 'textfield',
 					width : 84,
 					name : 'dcontphone',
-					fieldLabel : 'Телефон',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.dcontphone"),//'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
 					allowBlank : false
@@ -138,7 +138,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					name : 'destrems',
 					height : 75,
 					maxLength : 1000,
-					fieldLabel : 'Примечание',
+					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.destrems"),//'Примечание',
 					labelAlign : 'top',
 					anchor : '100%'
 				}

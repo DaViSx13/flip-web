@@ -158,10 +158,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					
 					me.loadOrdGr();
 					win.close();
-					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.ImportOk")/*'Импортирование завершено успешно!'*/, action.result.msg);
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.ImportError")/*'Ошибка импорта!'*/, action.result.msg);
 				}
 			});
 		}
@@ -213,11 +213,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					me.loadOrdGr();
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Номер накладной не сохранен!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.WbSaveError")/*'Номер накладной не сохранен!'*/, action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Нет номера накладной!', 'Откорректируйте информацию')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.WbNumEmptyHead")/*'Нет номера накладной!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbNumEmptyBody")/*'Откорректируйте информацию'*/)
 		}
 	},
 	editWbno : function (btn) {
@@ -235,6 +235,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	viewWb : function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
+		if(sm.selected.length > 0)
 		if (sm.getSelection()[0].get('wb_no')) {
 			this.getViewWbStStore().load({
 				params : {
@@ -242,7 +243,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				}
 			});
 		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.OrderAlertBody")/*'Выберите заказ с введенным номером накладной!'*/);
 		}
 	},
 	dblclickWbsGr : function (gr, rec) {
@@ -254,13 +255,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				}
 			});
 		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.OrderAlertBody")/*'Выберите заказ с введенным номером накладной!'*/);
 		}
 	},
 	loadViewWbSt : function (st, rec, suc) {
 		if (suc) {
 			if (rec[0].data.wbstatus == 0) {
-				Ext.Msg.alert('Внимание!', 'Накладная не введена в систему!');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbEmpty")/*'Накладная не введена в систему!'*/);
 			} else {
 				var win = Ext.widget('viewwbwin');
 				var form = win.down('viewwbform');
@@ -346,7 +347,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				win.show();
 			}
 		} else {
-			Ext.Msg.alert('Ошибка!', 'Ошибка связи с сервером!');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Error")/*'Ошибка!'*/, FPAgent.lib.Translate.tr("ServerdDown")/*'Ошибка связи с сервером!'*/);
 		}
 	},
 	exportExcel : function (btn) {
@@ -354,7 +355,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		if (sm.getCount() > 0) {
 			window.location.href = 'srv/getOrderXLS.php?ordnum=' + sm.getSelection()[0].get('rordnum');
 		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите заказ для экспорта');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.AlertExportBody")/*'Выберите заказ для экспорта'*/);
 		}
 	},
 	changeAgent : function (comp, newValue) {
@@ -373,7 +374,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					me.loadOrds(ye, mo);
 				},
 				failure : function (response) {
-					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 				}
 			});
 		}
@@ -422,7 +423,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			win.show();
 			win.down('usetemplform').down('combobox[name=tplname]').focus(false, true);
 		} else {
-			Ext.Msg.alert('Запрещено!', 'У Вас нет шаблонов!');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.TemplateEmpty")/*'У Вас нет шаблонов!'*/);
 		}
 	},
 	setTpl : function (btn) {
@@ -485,13 +486,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					win.down('button[action=save]').setVisible(true);
 				}
 			} else {
-				Ext.Msg.alert('Запрещено!', 'Редактировать можно только заявленные заказы');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.ErrorOrderEdit")/*'Редактировать можно только заявленные заказы'*/);
 			}
 		} else {
 			if (btn.action == 'edit') {
-				Ext.Msg.alert('Внимание!', 'Выберите заказ для редактирования');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit")/*'Выберите заказ для редактирования'*/);
 			} else {
-				Ext.Msg.alert('Внимание!', 'Выберите заказ для просмотра');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderView")/*'Выберите заказ для просмотра'*/);
 			}
 		}
 	},
@@ -505,7 +506,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		if (org.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError")/*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 			for (var i = 0; i < jsonArrayOrg.length; i++) {
@@ -515,14 +516,14 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				};
 			};
 			if (org.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError")/*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError")/*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 			for (var i = 0; i < jsonArrayDes.length; i++) {
@@ -532,7 +533,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				};
 			};
 			if (dest.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError")/*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
@@ -556,13 +557,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 									form.reset();
 									me.getOrdForm().up('ordwin').close();
 									me.loadOrdGr();
-									Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave")/*'Заказ сохранен!'*/, action.result.msg);
 								},
 								failure : function (form, action) {
 									form.reset();
 									me.getOrdForm().up('ordwin').close();
 									me.loadOrdGr();
-									Ext.Msg.alert('Файл не сохранен!', action.result.msg);
+									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FileNotSave")/*'Файл не сохранен!'*/, action.result.msg);
 								}
 							});
 						}
@@ -570,15 +571,15 @@ Ext.define('FPAgent.controller.OrdsCont', {
 						form.reset();
 						me.getOrdForm().up('ordwin').close();
 						me.loadOrdGr();
-						Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+						Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave")/*'Заказ сохранен!'*/, action.result.msg);
 					}
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderNotSave")/*'Заказ не сохранен!'*/, action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead")/*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody")/*'Откорректируйте информацию'*/)
 		}
 	},
 	monthChange : function (comp, newz, oldz) {
@@ -649,6 +650,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
-		tt.down('label').setText('Количество заказов: ' + st.getCount());
+		tt.down('label').setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount")/*'Количество заказов: '*/ + st.getCount());
 	}
 });

@@ -12,6 +12,7 @@ Ext.Loader.addClassPathMappings({
   "Ext.ux.grid.TransformGrid": [],
   "Ext.ux.ajax.DataSimlet": [],
   "FPAgent.view.wbs.NewExForm": [],
+  "FPAgent.view.orders.LoadOrdersWin": [],
   "FPAgent.view.orders.TemplGrid": [],
   "FPAgent.view.wbs.WbsGrid": [],
   "FPAgent.view.wbs.ViewExGrid": [],
@@ -53,6 +54,7 @@ Ext.Loader.addClassPathMappings({
   "FPAgent.view.orders.OrdsPanel": [],
   "FPAgent.view.mainform.MainPanel": [],
   "FPAgent.model.TypeMod": [],
+  "FPAgent.lib.Translate": [],
   "FPAgent.view.wbs.WbsTotal": [],
   "Ext.ux.event.Recorder": [],
   "FPAgent.view.mainform.TotalWb": [],
@@ -66,6 +68,7 @@ Ext.Loader.addClassPathMappings({
   "FPAgent.view.users.UsersTool": [],
   "Ext.ux.grid.filter.BooleanFilter": [],
   "FPAgent.store.TemplSt": [],
+  "FPAgent.view.orders.LoadOrdersForm": [],
   "FPAgent.view.orders.WbNoWin": [],
   "FPAgent.controller.TemplCont": [],
   "FPAgent.model.WbsMod": [],
@@ -76,12 +79,14 @@ Ext.Loader.addClassPathMappings({
   "FPAgent.view.wbs.LoadWBWin": [],
   "FPAgent.model.WbMod": [],
   "FPAgent.view.wbs.WbsTool": [],
+  "FPAgent.model.LocaleString": [],
   "FPAgent.view.orders.UseTemplForm": [],
   "Ext.ux.form.SearchField": [],
   "Ext.ux.LiveSearchGridPanel": [],
   "FPAgent.view.wbs.NewPodWin": [],
   "Ext.ux.grid.filter.DateFilter": [],
   "Ext.ux.TreePicker": [],
+  "FPAgent.store.LocaleStrings": [],
   "FPAgent.view.orders.TemplWin": [],
   "FPAgent.view.mainform.TotalTool": [],
   "Ext.ux.data.PagingMemoryProxy": [
@@ -169,6 +174,9 @@ Ext.Loader.addClassPathMappings({
   "FPAgent.view.wbs.NewExForm": [
     "widget.newexform"
   ],
+  "FPAgent.view.orders.LoadOrdersWin": [
+    "widget.loadorderswin"
+  ],
   "FPAgent.view.orders.TemplGrid": [
     "widget.templgrid"
   ],
@@ -251,6 +259,7 @@ Ext.Loader.addClassPathMappings({
     "widget.mainpanel"
   ],
   "FPAgent.model.TypeMod": [],
+  "FPAgent.lib.Translate": [],
   "FPAgent.view.wbs.WbsTotal": [
     "widget.wbstotal"
   ],
@@ -276,6 +285,9 @@ Ext.Loader.addClassPathMappings({
     "gridfilter.boolean"
   ],
   "FPAgent.store.TemplSt": [],
+  "FPAgent.view.orders.LoadOrdersForm": [
+    "widget.loadordersform"
+  ],
   "FPAgent.view.orders.WbNoWin": [
     "widget.wbnowin"
   ],
@@ -298,6 +310,7 @@ Ext.Loader.addClassPathMappings({
   "FPAgent.view.wbs.WbsTool": [
     "widget.wbstool"
   ],
+  "FPAgent.model.LocaleString": [],
   "FPAgent.view.orders.UseTemplForm": [
     "widget.usetemplform"
   ],
@@ -314,6 +327,7 @@ Ext.Loader.addClassPathMappings({
   "Ext.ux.TreePicker": [
     "widget.treepicker"
   ],
+  "FPAgent.store.LocaleStrings": [],
   "FPAgent.view.orders.TemplWin": [
     "widget.templwin"
   ],

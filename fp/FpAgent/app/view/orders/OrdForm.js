@@ -11,7 +11,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 			id : 'fs1',
 			height : 390,
 			width : 360,
-			title : 'Отправитель',
+			title : FPAgent.lib.Translate.tr("OrdGrid.fs.Org"),//'Отправитель',
 			x : 10,
 			y : 0,
 			items : [{
@@ -26,7 +26,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'cname',
-					fieldLabel : 'Название клиента',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.cname"),//'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
 					allowBlank : false
@@ -35,14 +35,14 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					width : 337,
 					name : 'address',
 					maxLength : 70,
-					fieldLabel : 'Адрес',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.address"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 329,
 					name : 'contname',
-					fieldLabel : 'Контактное лицо',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.contname"),//'Контактное лицо',
 					maxLength : 50,
 					labelAlign : 'top',
 					anchor : '100%',
@@ -58,7 +58,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 84,
 					name : 'contphone',
-					fieldLabel : 'Телефон',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.contphone"),//'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
 					allowBlank : false
@@ -67,7 +67,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					name : 'orgrems',
 					height : 75,
 					maxLength : 1000,
-					fieldLabel : 'Примечание',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.orgrems"),//'Примечание',
 					labelAlign : 'top',
 					anchor : '100%'
 				}
@@ -76,7 +76,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 			xtype : 'fieldset',
 			height : 390,
 			width : 360,
-			title : 'Получатель',
+			title : FPAgent.lib.Translate.tr("OrdGrid.fs.dest"),//'Получатель',
 			x : 390,
 			y : 0,
 			items : [{
@@ -87,7 +87,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'dname',
-					fieldLabel : 'Название клиента',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.dname"),//'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
 					allowBlank : false
@@ -96,7 +96,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					width : 337,
 					name : 'dadr',
 					maxLength : 70,
-					fieldLabel : 'Адрес',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.dadr"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
@@ -104,7 +104,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					width : 329,
 					name : 'dcontname',
 					maxLength : 50,
-					fieldLabel : 'Контактное лицо',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.dcontname"),//'Контактное лицо',
 					labelAlign : 'top',
 					anchor : '100%',
 					allowBlank : false
@@ -119,7 +119,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 84,
 					name : 'dcontphone',
-					fieldLabel : 'Телефон',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.dcontphone"),//'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
 					allowBlank : false
@@ -128,7 +128,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					name : 'destrems',
 					height : 75,
 					maxLength : 1000,
-					fieldLabel : 'Примечание',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.destrems"),//'Примечание',
 					labelAlign : 'top',
 					anchor : '100%'
 				}
@@ -137,7 +137,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 			xtype : 'fieldset',
 			height : 120,
 			width : 360,
-			title : 'Дата приезда курьера',
+			title : FPAgent.lib.Translate.tr("OrdGrid.fs.date"),//'Дата приезда курьера',
 			x : 10,
 			y : 390,
 			defaults : {
@@ -147,18 +147,18 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 			items : [{
 					xtype : 'datefield',
 					name : 'courdate',
-					fieldLabel : 'Дата',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.courdate"),//'Дата',
 					startDay : 1,
 					format : 'd.m.Y'
 				}, {
 					xtype : 'textfield',
 					name : 'courtimef',
-					fieldLabel : 'Время с',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.courtimef"),//'Время с',
 					vtype: 'time'
 				}, {
 					xtype : 'textfield',
 					name : 'courtimet',
-					fieldLabel : 'Время до',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.courtimet"),//'Время до',
 					vtype: 'time'
 				}
 			]
@@ -166,7 +166,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 			xtype : 'fieldset',
 			height : 150,
 			width : 360,
-			title : 'Информация о грузе',
+			title : FPAgent.lib.Translate.tr("OrdGrid.fs.cargo"),//'Информация о грузе',
 			x : 390,
 			y : 390,
 			defaults : {
@@ -181,31 +181,31 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					allowBlank : false,
 					forceSelection : true,
 					editable : false,
-					fieldLabel : 'Тип груза',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.type"),//'Тип груза',
 					store : 'TypeSt',
 					queryMode : 'local'
 				}, {
 					xtype : 'numberfield',
 					name : 'packs',
 					minValue : 0,
-					fieldLabel : 'Число мест',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.packs"),//'Число мест',
 					allowBlank : false
 				}, {
 					xtype : 'numberfield',
 					name : 'wt',
 					minValue : 0,
-					fieldLabel : 'Вес',
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.wt"),//'Вес',
 					allowBlank : false
 				}, {
 					xtype : 'numberfield',
 					name : 'volwt',
 					minValue : 0,
-					fieldLabel : 'Объемный вес'
+					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.volwt")//'Объемный вес'
 				}
 			]
 		}, {
 			xtype : 'label',
-			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
+			text : FPAgent.lib.Translate.tr("OrdGrid.desc"),//'*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
 			y : 510,
 			width : 360

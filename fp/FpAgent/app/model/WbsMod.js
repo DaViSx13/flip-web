@@ -41,9 +41,11 @@ Ext.define('FPAgent.model.WbsMod', {
 			type : 'string'
 		}, {
 			name : 'wt',
+			useNull: true,
 			type : 'float'
 		}, {
 			name : 'vol_wt',
+			useNull: true,
 			type : 'float'
 		}, {
 			name : 't_srv'
@@ -51,20 +53,29 @@ Ext.define('FPAgent.model.WbsMod', {
 			name : 'dir'
 		}, {
 			name : 'tar_flip_b',
+			useNull: true,
 			type : 'float'
 		}, {
 			name : 'tar_flip_a',
+			useNull: true,
 			type : 'float'
 		}, {
 			name : 'tar_flip_t',
+			useNull: true,
 			type : 'float'
 		}, {
 			name : 'tar_flip_id'
 		}, {
+			name : 'tar_ag_a',
+			useNull: true,
+			type : 'float'
+		}, {
 			name : 'tar_ag_b',
+			useNull: true,
 			type : 'float'
 		}, {
 			name : 'tar_ag_t',
+			useNull: true,
 			type : 'float'
 		}, {
 			name : 'tar_ag_id'

@@ -12,56 +12,56 @@ Ext.define('FPAgent.view.orders.OrdGrid', {
 			xtype : 'gridcolumn',
 			width : 150,
 			dataIndex : 'status',
-			text : 'Статус'
+			text : FPAgent.lib.Translate.tr("OrdGrid.status")//'Статус'
 		}, {
 			xtype : 'datecolumn',
 			format : 'd.m.Y',
 			width : 70,
 			dataIndex : 'datein',
-			text : 'Дата'
+			text : FPAgent.lib.Translate.tr("OrdGrid.datein")//'Дата'
 		}, {
 			xtype : 'gridcolumn',
 			width : 114,
 			dataIndex : 'orgcity',
-			text : 'Город'
+			text : FPAgent.lib.Translate.tr("OrdGrid.orgcity")//'Город'
 		}, {
 			xtype : 'gridcolumn',
 			flex : 1,
 			dataIndex : 'cname',
-			text : 'Отправитель'
+			text : FPAgent.lib.Translate.tr("OrdGrid.cname")//'Отправитель'
 		}, {
 			xtype : 'gridcolumn',
 			width : 114,
 			dataIndex : 'destcity',
-			text : 'Город'
+			text : FPAgent.lib.Translate.tr("OrdGrid.destcity")//'Город'
 		}, {
 			xtype : 'gridcolumn',
 			flex : 1,
 			dataIndex : 'dname',
-			text : 'Получатель'
+			text : FPAgent.lib.Translate.tr("OrdGrid.dname")//'Получатель'
 		}, {
 			xtype : 'numbercolumn',
 			format : '0',
 			width : 41,
 			dataIndex : 'packs',
-			text : 'Кол.'
+			text : FPAgent.lib.Translate.tr("OrdGrid.packs")//'Кол.'
 		}, {
 			xtype : 'numbercolumn',
 			format : '0.00',
 			width : 51,
 			dataIndex : 'wt',
-			text : 'Вес'
+			text : FPAgent.lib.Translate.tr("OrdGrid.wt")//'Вес'
 		}, {
 			xtype : 'numbercolumn',
 			format : '0.00',
 			width : 51,
 			dataIndex : 'volwt',
-			text : 'Об. вес'
+			text : FPAgent.lib.Translate.tr("OrdGrid.volwt")//'Об. вес'
 		}, {
 			xtype : 'gridcolumn',
 			width : 70,
 			dataIndex : 'wb_no',
-			text : '№ накл.'
+			text : FPAgent.lib.Translate.tr("OrdGrid.wb_no")//'№ накл.'
 		}
 	],
 	dockedItems : [{

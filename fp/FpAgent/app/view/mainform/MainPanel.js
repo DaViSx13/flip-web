@@ -6,20 +6,20 @@ Ext.define('FPAgent.view.mainform.MainPanel', {
 	margins : '5 5 5 5',
 	items : [{
 			xtype : 'wbsgrid',
-			title : 'Накладные'
+			title : FPAgent.lib.Translate.tr("MainPanel.wbsgrid")//'Накладные'
 		}, {
 			xtype : 'ordspanel',
 			border : false,
 			style : {
 				borderStyle : 'none'
 			},
-			title : 'Заказы'
+			title : FPAgent.lib.Translate.tr("MainPanel.ordspanel")//'Заказы'
 		}, {
 			xtype : 'mnfpanel',
-			title : 'Манифесты'
+			title : FPAgent.lib.Translate.tr("MainPanel.mnfpanel")//'Манифесты'
 		}, {
 			xtype : 'usersgrid',
-			title : 'Пользователи',
+			title : FPAgent.lib.Translate.tr("MainPanel.usersgrid"),//'Пользователи',
 			itemId : 'users',
 			hidden : true
 		}

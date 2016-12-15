@@ -32,7 +32,7 @@ Ext.define('FPAgent.view.mainform.Loginformcontainer', {
 			items: [
 			{
 					xtype : 'panel',
-					title : 'ФлипПост WEB - список изменений',
+					title : FPAgent.lib.Translate.tr("Loginformcontainer.title"),//'ФлипПост WEB - список изменений',
 					width : 350,
 					height : 240,
 					//autoScroll : true,

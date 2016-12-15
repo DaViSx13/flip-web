@@ -3,17 +3,17 @@ Ext.define('FPAgent.view.mainform.MnfTool', {
 	alias : 'widget.mnftool',
 	requires : ['FPAgent.view.mainform.ComboMonth', 'FPAgent.view.mainform.NumYear', 'FPAgent.view.mainform.ComboAgent'],
 	items : [{
-			text : 'Входящие',
+			text : FPAgent.lib.Translate.tr("MnfTool.out"),//'Входящие',
 			enableToggle : true,
 			iconCls : 'outbox',
 			action : 'out'
 		}, '-', {
-			text : 'Исходящие',
+			text : FPAgent.lib.Translate.tr("MnfTool.in"),//'Исходящие',
 			iconCls : 'inbox',
 			action : 'in',
 			enableToggle : true
 		}, '-', {
-			text : 'Все',
+			text : FPAgent.lib.Translate.tr("MnfTool.all"),//'Все',
 			enableToggle : true,
 			iconCls : 'allbox',
 			action : 'all'

@@ -7,14 +7,14 @@ Ext.define('FPAgent.view.users.UsersForm', {
 	bodyPadding : 5,
 	items : [{
 			xtype : 'textfield',
-			fieldLabel : 'Пользователь',
+			fieldLabel : FPAgent.lib.Translate.tr("UsersForm.auser"),//'Пользователь',
 			maskRe : /\w/,
 			labelAlign : 'top',
 			width : 250,
 			name : 'auser'
 		}, {
 			xtype : 'textfield',
-			fieldLabel : 'Новый пароль',
+			fieldLabel : FPAgent.lib.Translate.tr("UsersForm.passfirst"),//'Новый пароль',
 			labelAlign : 'top',
 			width : 250,
 			inputType : 'password',
@@ -23,7 +23,7 @@ Ext.define('FPAgent.view.users.UsersForm', {
 			name : 'passfirst'
 		}, {
 			xtype : 'textfield',
-			fieldLabel : 'Повторно пароль',
+			fieldLabel : FPAgent.lib.Translate.tr("UsersForm.passsecond"),//'Повторно пароль',
 			labelAlign : 'top',
 			width : 250,
 			inputType : 'password',
@@ -37,7 +37,7 @@ Ext.define('FPAgent.view.users.UsersForm', {
 			name : 'agents',
 			displayField : 'displayname',
 			valueField : 'partcode',
-			fieldLabel : 'Выберите Агента',
+			fieldLabel : FPAgent.lib.Translate.tr("UsersForm.agents"),//'Выберите Агента',
 			forceSelection : true,
 			queryMode : 'local',
 			allowBlank : false,

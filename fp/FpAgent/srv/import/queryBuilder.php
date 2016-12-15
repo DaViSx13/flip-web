@@ -47,7 +47,16 @@ class queryBuilder {
 		$table = '';
 		$lastrow = '';
 		$isTable = 0;
-		for ($i = 1; $i <= $sheet->getHighestRow()-1; $i++) {				
+		for ($i = 1; $i <= $sheet->getHighestRow()-1; $i++) {
+			$isEmptyCount = 0;
+			for ($j = 1; $j < $nTpl; $j++){																	/*Проверка на пустую строку, ели есть то считаем что файл закончился*/
+				$value = $sheet->getCellByColumnAndRow($tpl[$j][2], $i+1)->getValue();
+				if( is_string($value) ) $value = trim($value);				 
+					if(is_null($value) || strlen($value)==0){
+						$isEmptyCount = $isEmptyCount+1;
+					}
+			}
+			if($isEmptyCount != $nTpl-1){
 			for ($j = 1; $j < $nTpl; $j++) {
 					if($isTable <= $nTpl){ 																			/* Формируем строку создания временной таблицы согласно шаблона*/
 						$table = $table.$tpl[$j][0].' ';
@@ -116,6 +125,13 @@ class queryBuilder {
 					$this->builded = false;
 				}				
 			} /* end for */			
+			} else {
+				if ($i == 1){
+					$this->error = 'Файл не содержит данных или имеет пустые строки!';
+					$this->builded = false;
+				}
+				break;
+			}
 			$this->value[$i] = "exec ".$tpl[0][0]." ".$this->value[$i]." @result = @procResult OUTPUT;".$this->query;
 			$this->value[$i] = stripslashes($this->value[$i]);
 			$all_query = $all_query . $this->value[$i];			

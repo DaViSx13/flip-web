@@ -120,7 +120,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 	},
 	changeAgent : function (comp, newValue) {
 		var me = this;
-		if (comp.up('mainpanel').activeTab.title == 'Накладные') {
+		if (comp.up('mainpanel').activeTab.title == FPAgent.lib.Translate.tr("MainPanel.wbsgrid")/*'Накладные'*/) {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
@@ -132,7 +132,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 					me.viewTotal();
 				},
 				failure : function (response) {
-					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
 				}
 			});
 		}
@@ -157,7 +157,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 			formdop.down('textfield[name=tar_a_ag]').setValue(d_req_tar_a);
 			formdop.down('textfield[name=rem_ag]').setValue(d_req_rem);
 		} else {
-			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя редактировать Доп. тариф');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess") /*'Запрещено!'*/, FPAgent.lib.Translate.tr("WbsCont.NotEditTarif")/*'Для этой накладной нельзя редактировать Доп. тариф'*/);
 		}
 	},
 	showDop : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
@@ -199,15 +199,15 @@ Ext.define('FPAgent.controller.WbsCont', {
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
-					twt.down('label[itemId=lab1]').setText('Всего: ' + text.data[0].s_wb);
-					twt.down('label[itemId=lab2]').setText('Вес: ' + text.data[0].s_wt);
-					twt.down('label[itemId=lab3]').setText('V вес: ' + text.data[0].s_vol_wt);
-					twt.down('label[itemId=lab4]').setText('тар флип баз: ' + text.data[0].s_flip_b);
-					twt.down('label[itemId=lab5]').setText('тар флип доп: ' + text.data[0].s_flip_a);
-					twt.down('label[itemId=lab6]').setText('тар флип всего: ' + text.data[0].s_flip_t);
-					twt.down('label[itemId=lab7]').setText('тар аг баз: ' + text.data[0].s_ag_b);
-					twt.down('label[itemId=lab8]').setText('тар аг доп: ' + text.data[0].s_ag_a);
-					twt.down('label[itemId=lab9]').setText('тар аг всего: ' + text.data[0].s_ag_t);
+					twt.down('label[itemId=lab1]').setText(FPAgent.lib.Translate.tr("WbsCont.Sum")/*'Всего: '*/ + text.data[0].s_wb);
+					twt.down('label[itemId=lab2]').setText(FPAgent.lib.Translate.tr("WbsCont.Wt")/*'Вес: '*/ + text.data[0].s_wt);
+					twt.down('label[itemId=lab3]').setText(FPAgent.lib.Translate.tr("WbsCont.VolWt")/*'V вес: '*/ + text.data[0].s_vol_wt);
+					twt.down('label[itemId=lab4]').setText(FPAgent.lib.Translate.tr("WbsCont.s_flip_b")/*'тар флип баз: '*/ + text.data[0].s_flip_b);
+					twt.down('label[itemId=lab5]').setText(FPAgent.lib.Translate.tr("WbsCont.s_flip_a")/*'тар флип доп: '*/ + text.data[0].s_flip_a);
+					twt.down('label[itemId=lab6]').setText(FPAgent.lib.Translate.tr("WbsCont.s_flip_t")/*'тар флип всего: '*/ + text.data[0].s_flip_t);
+					twt.down('label[itemId=lab7]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_b")/*'тар аг баз: '*/ + text.data[0].s_ag_b);
+					twt.down('label[itemId=lab8]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_a")/*'тар аг доп: '*/ + text.data[0].s_ag_a);
+					twt.down('label[itemId=lab9]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_t")/*'тар аг всего: '*/ + text.data[0].s_ag_t);
 				}
 			});
 		} else {
@@ -235,7 +235,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 				submitEmptyText : false,
 				success : function (form, action) {
 					if (action.result.success == true) {
-						Ext.Msg.alert('ПОД сохранено!', action.result.msg);
+						Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.SavePod")/*'ПОД сохранено!'*/, action.result.msg);
 						var rec_pod = me.getWbsStoreStore().findRecord('wb_no', form_pod.getValues()['wb_no']);
 						rec_pod.set('dod_txt', form_pod.getValues()['p_d_in'] + ' ' + form_pod.getValues()['tdd']);
 						rec_pod.set('rcpn', form_pod.getValues()['rcpn']);
@@ -246,11 +246,11 @@ Ext.define('FPAgent.controller.WbsCont', {
 					}
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('ПОД не сохранено!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.NotSavePod")/*'ПОД не сохранено!'*/, action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead")/*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody")/*'Откорректируйте информацию'*/)
 		}
 	},
 	saveEx : function (btn) {
@@ -266,7 +266,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 				submitEmptyText : false,
 				success : function (form, action) {
 					if (action.result.success == true) {
-						Ext.Msg.alert('Происшествие сохранено!', action.result.msg);
+						Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.SaveEx")/*'Происшествие сохранено!'*/, action.result.msg);
 						var rec_ex = me.getWbsStoreStore().findRecord('wb_no', form_ex.getValues()['wb_no']);
 						rec_ex.set('is_ex', 1);
 						form.reset();
@@ -274,11 +274,11 @@ Ext.define('FPAgent.controller.WbsCont', {
 					}
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Происшествие не сохранено!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.NotSaveEx")/*'Происшествие не сохранено!'*/, action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead")/*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody")/*'Откорректируйте информацию'*/)
 		}
 	},
 	saveDop : function (btn) {
@@ -294,7 +294,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 				submitEmptyText : false,
 				success : function (form, action) {
 					if (action.result.success == true) {
-						Ext.Msg.alert('Доп. тариф сохранен!', action.result.msg);
+						Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.SaveTarif")/*'Доп. тариф сохранен!'*/, action.result.msg);
 						var rec_dop = me.getWbsStoreStore().findRecord('wb_no', form_dop.getValues()['wb_no']);
 						rec_dop.set('req_tar_a', form_dop.getValues()['tar_a_ag']);
 						rec_dop.set('req_rem', form_dop.getValues()['rem_ag']);
@@ -303,11 +303,11 @@ Ext.define('FPAgent.controller.WbsCont', {
 					}
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Доп. тариф не сохранен!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.NotSaveTarif")/*'Доп. тариф не сохранен!'*/, action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead")/*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody")/*'Откорректируйте информацию'*/)
 		}
 	},
 	insertNewDop : function (d_wb_no, d_dtd_txt, d_tar_ag_id, d_req_tar_a) {
@@ -352,10 +352,10 @@ Ext.define('FPAgent.controller.WbsCont', {
 					me.loadWbs();
 					me.viewTotal();
 					win.close();
-					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.ImportOk")/*'Импортирование завершено успешно!'*/, action.result.msg);
 				},
 				failure : function (form, action) {
-					Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.ImportError")/*'Ошибка импорта!'*/, action.result.msg);
 				}
 			});
 		}
@@ -369,7 +369,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 				}
 			});
 		} else {
-			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("WbsCont.GetWb")/*'Выберите накладную'*/);
 		}
 	},
 	viewEx : function (column, action, grid, rowIndex, colIndex, record, node) {
@@ -385,7 +385,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 			formpod.down('textfield[name=wb_no]').setValue(p_wb_no);
 			formpod.down('textfield[name=dtd_txt]').setValue(p_dtd_txt);
 		} else {
-			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя внести ПОД');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("WbsCont.NotWbPod")/*'Для этой накладной нельзя внести ПОД'*/);
 		}
 	},
 	insertNewEx : function (e_wb_no) {
@@ -394,7 +394,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 			var formex = newex.down('newexform');
 			formex.down('textfield[name=wb_no]').setValue(e_wb_no);
 		} else {
-			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("WbsCont.GetWb")/*'Выберите накладную'*/);
 		}
 	},
 	/*beforeprefetchWbsStore*/beforeloadWbsStore: function (store, operation) {

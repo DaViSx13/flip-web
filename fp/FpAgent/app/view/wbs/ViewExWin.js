@@ -3,7 +3,7 @@ Ext.define('FPAgent.view.wbs.ViewExWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.viewexwin',
 	requires : ['FPAgent.view.wbs.ViewExGrid', 'FPAgent.view.wbs.ViewExForm'],
-	title : 'Просмотр исключений',
+	title : FPAgent.lib.Translate.tr("ViewExWin.title"),//'Просмотр исключений',
 	layout : 'border',
 	autoShow : true,
 	height : 300,

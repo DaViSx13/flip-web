@@ -5,22 +5,22 @@ Ext.define('FPAgent.view.wbs.WbsTool', {
 	items : [{
 			xtype : 'buttongroup',
 			items : [{
-					text : 'Входящие',
+					text : FPAgent.lib.Translate.tr("WbsTool.out"),//'Входящие',
 					enableToggle : true,
 					iconCls : 'outbox',
 					action : 'out'
 				}, {
-					text : 'Исходящие',
+					text : FPAgent.lib.Translate.tr("WbsTool.in"),//'Исходящие',
 					action : 'in',
 					iconCls : 'inbox',
 					enableToggle : true
 				}, {
-					text : 'Все',
+					text : FPAgent.lib.Translate.tr("WbsTool.all"),//'Все',
 					iconCls : 'allbox',
 					enableToggle : true,
 					action : 'all'
 				}, {
-					text : 'Просрочено',
+					text : FPAgent.lib.Translate.tr("WbsTool.overdue"),//'Просрочено',
 					iconCls : 'overduebox',
 					enableToggle : true,
 					action : 'overdue'
@@ -29,19 +29,19 @@ Ext.define('FPAgent.view.wbs.WbsTool', {
 		}, {
 			xtype : 'buttongroup',
 			items : [{
-					text : 'Внести ПОД',
+					text : FPAgent.lib.Translate.tr("WbsTool.pod"),//'Внести ПОД',
 					iconCls : 'newpod',
 					action : 'pod'
 				}, {
-					text : 'Новая ИС',
+					text : FPAgent.lib.Translate.tr("WbsTool.ex"),//'Новая ИС',
 					iconCls : 'newex',
 					action : 'ex'
 				}, {
-					text : 'Экспорт в Excel',
+					text : FPAgent.lib.Translate.tr("WbsTool.excel"),//'Экспорт в Excel',
 					iconCls : 'excel',
 					action : 'excel'
 				}, {
-					text : 'Импорт ПОД',
+					text : FPAgent.lib.Translate.tr("WbsTool.import"),//'Импорт ПОД',
 					iconCls : 'import',
 					action : 'import'
 				}
@@ -49,10 +49,10 @@ Ext.define('FPAgent.view.wbs.WbsTool', {
 		}, '-', {
 			xtype : 'textfield',
 			width : 120,
-			emptyText : '№ накладной',
+			emptyText : FPAgent.lib.Translate.tr("WbsTool.filteredit"),//'№ накладной',
 			name : 'filteredit'
 		}, ' ', {
-			text : 'Фильтр',
+			text : FPAgent.lib.Translate.tr("WbsTool.filter"),//'Фильтр',
 			iconCls : 'filter',
 			action : 'filter'
 		}, '->', '-', {
