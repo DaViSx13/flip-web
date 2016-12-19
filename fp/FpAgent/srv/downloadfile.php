@@ -10,14 +10,14 @@ $file = ("tmpfolder/".$_GET['fn']."");
 	//mssql_select_db($udatabase);
 	$query = "exec wwwSelectAgFiles @RealFileName='{$_GET['fn']}' ";
 	$query = iconv("UTF-8", "windows-1251", $query);
-	include "dbConnect.php";
-	$result = mssql_query($query);
-	if (mssql_num_rows($result) > 0)
+	require 'db.php';//include "dbConnect.php";
+	$ar = DB::query($query);//$result = mssql_query($query);
+	if (/*mssql_num_rows($result)*/count($ar) > 0)
 		{
-			while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) 			
-			{	
-				$rName = $row["AutorFileName"];
-			}
+			//while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) 			
+			//{	
+				$rName = $ar[0]["AutorFileName"];
+			//}
 		}
 		//mssql_close($db);
 header ("Content-Type: application/octet-stream");

@@ -52,10 +52,10 @@ class DBInsert
 	/*вставляет данные в таблицу*/
 	function insertDB()
 	{
-		include "dbConnect.php";//$db = $this->connDB();
+		require 'db.php';//include "dbConnect.php";//$db = $this->connDB();
 		$query = " exec wwwInsertAgFiles  @ROrdNum={$this->orderNum}, @AutorFileName='{$this->fname}',@RealFileName='{$this->fnewname}',@FileType='{$this->ftype}',@FileSize='{$this->fsize}',@FilePlase='{$this->place}',@InsUsr='{$this->userID}'"; //@InsUsr='{$_SESSION[xUser]}'
 	    $query = iconv("UTF-8", "windows-1251", $query);
-		$result = mssql_query($query);// true good? false bad		
+		$result = DB::query($query);//$result = mssql_query($query);// true good? false bad		
 		return $result ;
 	}
 
@@ -98,17 +98,21 @@ class DBInsert
 	/*выбирает данные из таблицы */	
 	function prints()
 	{
-		include "dbConnect.php";//$db = $this->connDB();
+		require 'db.php';//include "dbConnect.php";//$db = $this->connDB();
 		$inputvals = array();
 		
 		$query = "exec wwwSelectAgFiles   @ROrdNum='{$this->orderNum}'";
 		
 		$query = iconv("UTF-8", "windows-1251", $query);
-		$result = mssql_query($query);
+		//$result = mssql_query($query);
+		$result = DB::query($query);
 		/* проверяем вернулась ли хотя бы 1 строка*/
-		if (mssql_num_rows($result) > 0)
+		if (count($result) > 0)
 		{
 			$i = 0;
+			while (list($key, $val) = each($result)) {
+				echo "$key => $val\n";
+				}
 			/* вытаскиваем одну за другой строки, помещаем в $row mssql_fetch_assoc($result)  -  строка в виде ассоциативного массива,  mssql_fetch_num - порядковые номера колонок , mssql_fetch_array($result) и то и то			*/
 			while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) 			
 			{	

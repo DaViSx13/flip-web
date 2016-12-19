@@ -242,8 +242,9 @@ if (!isset($_REQUEST['dbAct'])) {
 				throw new Exception('Сеанс завершен. Обновите страницу.');
 				};
 				
-            include "dbConnect.php";
-			$result = mssql_query($query);
+            //include "dbConnect.php";
+			require 'db.php';
+			/*$result = mssql_query($query);
             if ($result) {
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
@@ -261,8 +262,9 @@ if (!isset($_REQUEST['dbAct'])) {
                 }
 
                 //$response->dvs = 'превед';
-                unset($response->fields);
-
+                unset($response->fields);*/
+				$ar = DB::query($query);
+				$response->data = $ar;
 				//paging
 				if($paging){
 
@@ -305,12 +307,13 @@ if (!isset($_REQUEST['dbAct'])) {
                 //mssql_free_result($result);
                 $response->success = true;
                 
-            } else {
+            /*} else {
                 $errormsg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
 				$iserror = true;
-            }
+            }*/
         }
-        catch (exception $e) {
+        catch (Exception $e) {
+			$response->success = false;			
             $response->msg = $e->getMessage();
         }
     }
@@ -330,10 +333,10 @@ function my_json_encode($arr)
 
 }
 
-if ($iserror){
+/*if ($iserror){
 $response->success = false;
 $response->msg = $errormsg;
-}
+}*/
 /*
 if (extension_loaded('mbstring')) {
     echo my_json_encode($response);
@@ -341,5 +344,8 @@ if (extension_loaded('mbstring')) {
     echo json_encode($response);
 }
 */
-echo json_encode($response);
+//echo '<code>';
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
+//echo '</code>';
+//echo json_encode($response);
 ?>
