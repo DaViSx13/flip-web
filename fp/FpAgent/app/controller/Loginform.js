@@ -37,10 +37,10 @@ Ext.define('FPAgent.controller.Loginform', {
 		var lang = Ext.util.Cookies.get('myLang');
 		var btnRU = p.down('button[action=langRU]');
 		var btnEN = p.down('button[action=langEN]');
-		if (lang == 'ru'){
-			btnRU.toggle(true, true);
-		} else {
+		if (lang == 'en'){
 			btnEN.toggle(true, true);
+		} else {
+			btnRU.toggle(true, true);
 		}		
 	},
 	toggleLang : function (btn, pressed) {
