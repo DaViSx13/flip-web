@@ -538,6 +538,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			};
 		}
 		if (form_ord.getForm().isValid()) {
+			btn.disable();
 			form_ord.submit({
 				url : 'srv/data.php',
 				params : {
@@ -576,6 +577,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderNotSave")/*'Заказ не сохранен!'*/, action.result.msg);
+					btn.enable();
 				}
 			});
 		} else {
