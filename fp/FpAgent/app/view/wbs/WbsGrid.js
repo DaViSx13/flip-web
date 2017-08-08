@@ -94,19 +94,25 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip"),//'Тариф Флип',
 				columns : [{
 						text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip_b"),//'баз.',
-						width : 45,
+						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_b'
 					}, {
 						text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip_a"),//'доп.',
-						width : 45,
+						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_a'
 					}, {
+						text : 'ТР',//FPAgent.lib.Translate.tr("WbsGrid.tar_flip_a"),//'доп.',
+						width : 55,
+						xtype : 'numbercolumn',
+						format : '0.00',
+						dataIndex : 'tar_flip_tr'
+					}, {
 						text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip_t"),//'Всего',
-						width : 45,
+						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_flip_t'
@@ -119,19 +125,25 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag"),//'Тариф Аг',
 				columns : [{
 						text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag_b"),//'баз.',
-						width : 45,
+						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_b'
 					}, {
 						text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag_a"),//'доп.',
-						width : 45,
+						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_a'
 					}, {
+						text : 'ТР',//FPAgent.lib.Translate.tr("WbsGrid.tar_ag_a"),//'доп.',
+						width : 55,
+						xtype : 'numbercolumn',
+						format : '0.00',
+						dataIndex : 'tar_ag_tr'
+					}, {
 						text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag_t"),//'Всего',
-						width : 45,
+						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_t'

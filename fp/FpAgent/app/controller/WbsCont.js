@@ -204,10 +204,12 @@ Ext.define('FPAgent.controller.WbsCont', {
 					twt.down('label[itemId=lab3]').setText(FPAgent.lib.Translate.tr("WbsCont.VolWt")/*'V вес: '*/ + text.data[0].s_vol_wt);
 					twt.down('label[itemId=lab4]').setText(FPAgent.lib.Translate.tr("WbsCont.s_flip_b")/*'тар флип баз: '*/ + text.data[0].s_flip_b);
 					twt.down('label[itemId=lab5]').setText(FPAgent.lib.Translate.tr("WbsCont.s_flip_a")/*'тар флип доп: '*/ + text.data[0].s_flip_a);
-					twt.down('label[itemId=lab6]').setText(FPAgent.lib.Translate.tr("WbsCont.s_flip_t")/*'тар флип всего: '*/ + text.data[0].s_flip_t);
-					twt.down('label[itemId=lab7]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_b")/*'тар аг баз: '*/ + text.data[0].s_ag_b);
-					twt.down('label[itemId=lab8]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_a")/*'тар аг доп: '*/ + text.data[0].s_ag_a);
-					twt.down('label[itemId=lab9]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_t")/*'тар аг всего: '*/ + text.data[0].s_ag_t);
+					twt.down('label[itemId=lab6]').setText('тар флип ТР: ' + text.data[0].s_flip_tr);
+					twt.down('label[itemId=lab7]').setText(FPAgent.lib.Translate.tr("WbsCont.s_flip_t")/*'тар флип всего: '*/ + text.data[0].s_flip_t);
+					twt.down('label[itemId=lab8]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_b")/*'тар аг баз: '*/ + text.data[0].s_ag_b);
+					twt.down('label[itemId=lab9]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_a")/*'тар аг доп: '*/ + text.data[0].s_ag_a);
+					twt.down('label[itemId=lab10]').setText('тар аг ТР: ' + text.data[0].s_ag_tr);
+					twt.down('label[itemId=lab11]').setText(FPAgent.lib.Translate.tr("WbsCont.s_ag_t")/*'тар аг всего: '*/ + text.data[0].s_ag_t);
 				}
 			});
 		} else {
@@ -220,6 +222,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			twt.down('label[itemId=lab7]').setText('');
 			twt.down('label[itemId=lab8]').setText('');
 			twt.down('label[itemId=lab9]').setText('');
+			twt.down('label[itemId=lab10]').setText('');
+			twt.down('label[itemId=lab11]').setText('');
 		}		
 	},
 	savePod : function (btn) {
