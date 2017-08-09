@@ -105,7 +105,7 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 						format : '0.00',
 						dataIndex : 'tar_flip_a'
 					}, {
-						text : 'ТР',//FPAgent.lib.Translate.tr("WbsGrid.tar_flip_a"),//'доп.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_flip_tr"),//'ТР',
 						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
@@ -136,7 +136,7 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 						format : '0.00',
 						dataIndex : 'tar_ag_a'
 					}, {
-						text : 'ТР',//FPAgent.lib.Translate.tr("WbsGrid.tar_ag_a"),//'доп.',
+						text : FPAgent.lib.Translate.tr("WbsGrid.tar_ag_tr"),//'ТР',
 						width : 55,
 						xtype : 'numbercolumn',
 						format : '0.00',
