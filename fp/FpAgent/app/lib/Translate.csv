@@ -30,7 +30,7 @@ OrdGrid.fs.date;Дата приезда курьера;Courier arrival date
 OrdGrid.courdate;Дата;Date
 OrdGrid.courtimef;Время с;Time from
 OrdGrid.courtimet;Время до;Time to
-OrdGrid.fs.cargo;Информация о грузе; Cargo info
+OrdGrid.fs.cargo;Информация о грузе;Cargo info
 OrdGrid.type;Тип груза;Cargo type
 OrdGrid.packs;Число мест;Place count
 OrdGrid.wt;Вес;Wt.
@@ -52,7 +52,7 @@ OrdTool.action.excel;Экспорт в Excel;Exports to Excel
 OrdTool.action.import;Импорт из Excel;Imports from Excel
 OrdTool.action.wbno;№ накладной;№ waybill
 OrdTool.action.wbview;Просмотр накладной;Browsing waybill
-OrdTotal.label;Количество заказов: ;The number of orders
+OrdTotal.label;Количество заказов:;The number of orders
 OrdWin.title;Новый заказ;New order
 OrdWin.button.save;Сохранить;Save
 OrdWin.button.cancel;Отмена;Cancel
@@ -73,10 +73,10 @@ TemplGrid.templatename;Наименование;Name
 TemplTool.newtpl;Новый;New
 TemplTool.edittpl;Редактировать;Edit
 TemplTool.deltpl;Удалить;Delete
-TemplWin.title;Новый шаблон;New template 
+TemplWin.title;Новый шаблон;New template
 TemplWin.button.save;Сохранить;Save
 TemplWin.button.cancel;Отмена;Cancel
-UseTemplWin.title;Выберите шаблон;Select template 
+UseTemplWin.title;Выберите шаблон;Select template
 UseTemplWin.button.set;Выбрать;Select
 UseTemplWin.button.cancel;Отмена;Cancel
 ViewWbWin.title;Просмотр накладной;Browsing waybill
@@ -106,7 +106,7 @@ MnfGrid.descr;Перевозчик;Carrier
 MnfTool.out;Входящие;Inbox
 MnfTool.in;Исходящие;Outbox
 MnfTool.all;Все;All
-TotalTool.label;Количество манифестов: ;Amount manifests:
+TotalTool.label;Количество манифестов:;Amount manifests:
 WbGrid.wb_no;№ Накладной;№ waybill
 WbGrid.dtd;РДД;CAD
 WbGrid.s_co;Отправитель;Sender
@@ -125,7 +125,7 @@ UsersGrid.block_no;Не блокирован;Not blocked
 UsersGrid.block_yes;Блокирован;Blocked
 UsersGrid.partloc;КОД;COD
 UsersGrid.status;Статус;Status
-UsersGrid.status.tooltip;Отношения прекращены: ;Relationship terminated:
+UsersGrid.status.tooltip;Отношения прекращены:;Relationship terminated:
 UsersTool.new;Новый пользователь;New user
 UsersTool.active;Блокировать;Block
 UsersWin.title;Добавить пользователя;Add user
@@ -184,11 +184,13 @@ WbsGrid.vol_wt;Об.вес;Vol. Wt.
 WbsGrid.tar_flip;Тариф Флип;Tariff Flip
 WbsGrid.tar_flip_b;баз.;base
 WbsGrid.tar_flip_a;доп.;addit.
+WbsGrid.tar_flip_tr;ТР;TR
 WbsGrid.tar_flip_t;Всего;Total
 WbsGrid.rem_flip;прим.;desc
 WbsGrid.tar_ag;Тариф Аг;Tariff Ag
 WbsGrid.tar_ag_b;баз.;base
 WbsGrid.tar_ag_a;доп.;addit.
+WbsGrid.tar_ag_tr;ТР;TR
 WbsGrid.tar_ag_t;Всего;Total
 WbsGrid.rem_ag;прим.;desc
 WbsGrid.req_tar_a;Заявка;Request
@@ -206,13 +208,13 @@ Refresh;Обновите страницу;Refresh
 Error;Ошибка!;Error!
 ServerdDown;Сервер недоступен!;Server is not available!
 Alert;Внимание!;Alert!
-WbLate.part1;У Вас есть просроченные накладные в количестве ;You have overdue waybills in the amount of 
-WbLate.part2;" шт.!<br/>Для просмотра информации по накладным перейдите в закладку ""Накладные"" и нажмите вкладку ""Просрочено""";"pcs.! <br/> To view the information on the invoices go to the tab ""Waybill"" and click ""Expired"" tab"
-MnfCont.MnfCount;Количество манифестов: ;Count manifest
-MnfCont.WbCount;Количество накладных: ;Count waybill
-MnfCont.ShpcsCount;Количество мест: ;Number of packages:
-MnfCont.Shwt;Общий вес: ;Total weight:
-MnfCont.Shvol_wt;Общий V вес: ;Total V weight:
+WbLate.part1;У Вас есть просроченные накладные в количестве;You have overdue waybills in the amount of
+WbLate.part2;"шт.!<br/>Для просмотра информации по накладным перейдите в закладку ""Накладные"" и нажмите вкладку ""Просрочено";"pcs.! <br/> To view the information on the invoices go to the tab ""Waybill"" and click ""Expired"" tab"
+MnfCont.MnfCount;Количество манифестов:;Count manifest
+MnfCont.WbCount;Количество накладных:;Count waybill
+MnfCont.ShpcsCount;Количество мест:;Number of packages:
+MnfCont.Shwt;Общий вес:;Total weight:
+MnfCont.Shvol_wt;Общий V вес:;Total V weight:
 OrdsCont.ImportOk;Импортирование завершено успешно!;Importing completed successfully!
 OrdsCont.ImportError;Ошибка импорта!;Import error!
 OrdsCont.WbSaveError;Номер накладной не сохранен!;Waybill number is not saved!
@@ -234,26 +236,28 @@ OrdsCont.FileNotSave;Файл не сохранен!;File is not saved!
 OrdsCont.OrderNotSave;Заказ не сохранен!;Order is not saved!
 OrdsCont.FieldIsEmptyHead;Не все поля заполнены;Not all fields are specifid
 OrdsCont.FieldIsEmptyBody;Откорректируйте информацию;Correct information
-OrdsCont.OrdersCount;Количество заказов: ;The number of orders:
+OrdsCont.OrdersCount;Количество заказов:;The number of orders:
 TemplCont.DeleteOkHead;Успешное удаление!;Successful removal!
-TemplCont.DeleteOkBody;Шаблон удален: ;Template deleted:
-TemplCont.DeleteErrorBody;Не удалось удалить шаблон: ;Template is NOT deleted:
+TemplCont.DeleteOkBody;Шаблон удален:;Template deleted:
+TemplCont.DeleteErrorBody;Не удалось удалить шаблон:;Template is NOT deleted:
 TemplCont.GetTemplateDeleteBody;Выберите шаблон для удаления;Select a template to delete
 TemplCont.GetTemplateEditBody;Выберите шаблон для редактирования;Select a template for editing
 TemplCont.TemplateSaveOkHead;Шаблон сохранен!;The template is saved!
-TemplCont.TemplateSaveOkBody;Сохранение шаблона заказа прошло успешно ;Saving order template was successful
+TemplCont.TemplateSaveOkBody;Сохранение шаблона заказа прошло успешно;Saving order template was successful
 TemplCont.TemplateSaveErrorHead;Ошибка сохранения;Error saving
-TemplCont.TemplateSaveErrorBody;Шаблон заказа не сохранен! ;Order template is not saved!
+TemplCont.TemplateSaveErrorBody;Шаблон заказа не сохранен!;Order template is not saved!
 WbsCont.NotEditTarif;Для этой накладной нельзя редактировать Доп. тариф;For this invoice can not edit additional tariff
-WbsCont.Sum;Всего: ;Total:
-WbsCont.Wt;Вес: ;Wt:
-WbsCont.VolWt;V вес: ;Vol. Wt.:
-WbsCont.s_flip_b;тар флип баз: ;tar flip b:
-WbsCont.s_flip_a;тар флип доп: ;tar flip a:
-WbsCont.s_flip_t;тар флип всего: ;tar flip t:
-WbsCont.s_ag_b;тар аг баз: ;tar ag b:
-WbsCont.s_ag_a;тар аг доп: ;tar ag a:
-WbsCont.s_ag_t;тар аг всего: ;tar ag t:
+WbsCont.Sum;Всего:;Total:
+WbsCont.Wt;Вес:;Wt:
+WbsCont.VolWt;V вес:;Vol. Wt.:
+WbsCont.s_flip_b;тар флип баз:;tar flip b:
+WbsCont.s_flip_a;тар флип доп:;tar flip a:
+WbsCont.s_flip_tr;тар флип ТР:;tar flip TR:
+WbsCont.s_flip_t;тар флип всего:;tar flip t:
+WbsCont.s_ag_b;тар аг баз:;tar ag b:
+WbsCont.s_ag_a;тар аг доп:;tar ag a:
+WbsCont.s_ag_tr;тар аг ТР:;tar ag TR:
+WbsCont.s_ag_t;тар аг всего:;tar ag t:
 WbsCont.SavePod;ПОД сохранено!;POD is saved!
 WbsCont.NotSavePod;ПОД не сохранено!;POD is not saved!
 WbsCont.SaveEx;Происшествие сохранено!;The incident is saved!
@@ -282,7 +286,7 @@ UsersCont.IsBlocked;Блокировать;Blocked
 UsersCont.IsNotBlocked;Разблокировать;Unblocked
 UsersCont.SelectRecord;Выберите запись;Select record
 UsersCont.RecordNotSelect;Запись не выбрана;Record is not selected
-UsersCont.UserEdit;Редактирование пользователя:  ;User Edit: 
+UsersCont.UserEdit;Редактирование пользователя:;User Edit:
 UsersCont.Record blocked;Запись блокирована;Record is blocked
 UsersCont.UnblockedRecord;Разблокируйте запись перед внесением корректировок;Unblocked record before edit record
 UsersCont.SelectRecordForEdit;Выберите запись для редактирования;Select record for edit

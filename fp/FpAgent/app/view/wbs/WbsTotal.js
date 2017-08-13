@@ -37,6 +37,14 @@ Ext.define('FPAgent.view.wbs.WbsTotal', {
 			xtype : 'label',
 			text : '',
 			itemId : 'lab9'
+		}, '-', {
+			xtype : 'label',
+			text : '',
+			itemId : 'lab10'
+		}, '-', {
+			xtype : 'label',
+			text : '',
+			itemId : 'lab11'
 		}
 	]
 });

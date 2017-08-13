@@ -60,6 +60,10 @@ Ext.define('FPAgent.model.WbsMod', {
 			useNull: true,
 			type : 'float'
 		}, {
+			name : 'tar_flip_tr',
+			useNull: true,
+			type : 'float'
+		}, {
 			name : 'tar_flip_t',
 			useNull: true,
 			type : 'float'
@@ -67,6 +71,10 @@ Ext.define('FPAgent.model.WbsMod', {
 			name : 'tar_flip_id'
 		}, {
 			name : 'tar_ag_a',
+			useNull: true,
+			type : 'float'
+		}, {
+			name : 'tar_ag_tr',
 			useNull: true,
 			type : 'float'
 		}, {
