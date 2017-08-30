@@ -3,7 +3,7 @@
 session_name("AGENTSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
-error_reporting(0);
+error_reporting(-1);
 
 function isSessionActive(){
 	return isset($_SESSION['xUser']);
