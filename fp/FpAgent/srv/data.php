@@ -5,6 +5,10 @@ session_start();
 header("Content-type: text/plain; charset=utf-8");
 error_reporting(-1);
 
+function quoteString($str){
+	return str_ireplace("'", "''", $str);
+}
+
 function doLog($arr){
 	$logFile = '_reqLog.txt';
 	//$str = implode("||", $arr) . PHP_EOL;
@@ -45,6 +49,7 @@ if (!isset($_REQUEST['dbAct'])) {
 	$params = $_REQUEST;
 	foreach ($params as &$value) {
 		if( is_string($value) ) $value = trim($value);
+		if( is_string($value) ) $value = quoteString($value);
 	};
 
     $response->msg = 'ok';
