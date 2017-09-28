@@ -5,6 +5,15 @@ session_start();
 header("Content-type: text/plain; charset=utf-8");
 error_reporting(-1);
 
+function doLog($arr){
+	$logFile = '_reqLog.txt';
+	//$str = implode("||", $arr) . PHP_EOL;
+	//$str =  print_r($arr, true) . PHP_EOL;
+	$str =  urldecode(http_build_query($arr, '', '||')) . PHP_EOL;
+	$str = "time=" . date("Ymd H:i:s") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $str;
+	file_put_contents($logFile, $str, FILE_APPEND);
+}
+
 function isSessionActive(){
 	return isset($_SESSION['xUser']);
 }
@@ -37,7 +46,7 @@ if (!isset($_REQUEST['dbAct'])) {
 	foreach ($params as &$value) {
 		if( is_string($value) ) $value = trim($value);
 	};
-	
+
     $response->msg = 'ok';
     switch ($dbAct) {
         case 'dbTest':
@@ -153,6 +162,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwNewEx @wb_no='{$params['wb_no']}', @raised='{$exRaised}', @rptd='{$exRptd}', @loc='{$params['exLoc']}', @exCode = '{$params['exCode']}', @Content = '$exContent' , @user='{$_SESSION['xUser']}' ";
 			break;	
 		case 'SetPOD':
+			doLog($params);
 			$rcpn = $params['rcpn'];
 			$d = explode('.', $params['p_d_in']);
 			$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
