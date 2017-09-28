@@ -15,32 +15,6 @@ $errMsg = '';
 $wbno_orig = $_REQUEST['wbno'];
 $wbno = $wbno_orig;
 
-//ОСТРОЖНО!!! АЛЕМ-ТАТ!!!
-//ЕСЛИ формат накладной в запросе ХХХХХХХХ-012, ТО предоставить в ответ информацию по 72ХХХХХХХХ
-//$alemtat_IP = '192.168.56.1';
-$alemtat_IP = '89.218.14.162'; // mail.alemtat.kz
-
-$is_alemtat = false;
-
-if ($alemtat_IP === $_SERVER["REMOTE_ADDR"] 
-	//&& strpos($wbno_orig, '-012') !== false
-	&& preg_match('/(.+)(\-01[2-9])$/', $wbno_orig, $matches) === 1
-	)
-	{//echo 'yes';
-	 $is_alemtat = true;
-	//	preg_match проверяет номер накладной на соответсвие формату ХХХХХХХХ-012 до -019
-	//  и разбивает на части 		
-	 $base = $matches[1]; //ХХХХХХХХ
-	 $suff = $matches[2]; //-012
-	 //формируем новый номер 7 + последняя цифра суффикса + база
-	 $wbno = "7" . substr($suff, -1) . $base;
-	}
-else
-	{//echo 'no';
-	$is_alemtat = false;
-	};
-//ОСТРОЖНО!!! АЛЕМ-ТАТ!!!
-
 //кульминация
 
 if (!isset($_REQUEST['dbAct'])) {
@@ -110,13 +84,6 @@ if (!isset($_REQUEST['dbAct'])) {
                     }
 
 					$row = array_change_key_case($row);
-					
-					//ОСТРОЖНО!!! АЛЕМ-ТАТ!!!
-					//подменить номер накладной обратно
-					if ($is_alemtat == true )
-						if ( array_key_exists("wbno", $row) )
-							$row["wbno"] = $wbno_orig;
-					//ОСТРОЖНО!!! АЛЕМ-ТАТ!!!
 					
                     $response->data[] = $row;
                 }
