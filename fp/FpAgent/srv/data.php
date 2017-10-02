@@ -334,7 +334,7 @@ if (!isset($_REQUEST['dbAct'])) {
                     }
 
                     //sorting
-                    if(isset($params['sort'])){
+                    if( isset($params['sort']) && is_array($response->data) ){
                       $sortParams = json_decode(stripslashes($params['sort']), true);
                       $sortKey = strtolower($sortParams[0]['property']);
                       $sortDir = strtolower($sortParams[0]['direction']);
