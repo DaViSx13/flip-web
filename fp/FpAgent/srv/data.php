@@ -319,7 +319,7 @@ if (!isset($_REQUEST['dbAct'])) {
 				if($paging){
 
                     //filtering
-                    if(isset($params['filter'])){
+                    if( isset($params['filter']) && is_array($response->data) ){
                       $filterParams = json_decode(stripslashes($params['filter']), true);
                       $filterKey = strtolower($filterParams[0]['property']);
                       $filterValue = strtolower($filterParams[0]['value']);
