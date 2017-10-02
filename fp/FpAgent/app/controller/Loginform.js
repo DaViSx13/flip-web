@@ -143,7 +143,7 @@ Ext.define('FPAgent.controller.Loginform', {
 							},
 							success : function (response) {
 								var text = Ext.decode(response.responseText);
-								if (text.success == true && text.data.length > 0) {
+								if (text.success == true && text.data && text.data.length > 0) {
 									Ext.Msg.show({
 										title : FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/,
 										msg : FPAgent.lib.Translate.tr("WbLate.part1")/*'У Вас есть просроченные накладные в количестве '*/ + text.data.length + FPAgent.lib.Translate.tr("WbLate.part2")/*' шт.!<br/>Для просмотра информации по накладным перейдите в закладку "Накладные" и нажмите вкладку "Просрочено"'*/,

@@ -9,13 +9,42 @@ function quoteString($str){
 	return str_ireplace("'", "''", $str);
 }
 
+function array_unshift_assoc(&$arr, $key, $val) 
+{ 
+    $arr = array_reverse($arr, true); 
+    $arr[$key] = $val; 
+    $arr = array_reverse($arr, true); 
+    return count($arr); 
+} 
+
+function arrayToString($arr){
+	return urldecode(http_build_query($arr, '', '||'));
+}
+
+function logErrorToFile($msg){
+	$logFile = date("Ymd") . ".log";
+	$str = "time=" . strftime("%F %T") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $msg . PHP_EOL;
+	file_put_contents($logFile, $str, FILE_APPEND);
+}
+
 function doLog($arr){
 	$logFile = '_reqLog.txt';
-	//$str = implode("||", $arr) . PHP_EOL;
-	//$str =  print_r($arr, true) . PHP_EOL;
-	$str =  urldecode(http_build_query($arr, '', '||')) . PHP_EOL;
-	$str = "time=" . date("Ymd H:i:s") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $str;
+	$str =  arrayToString($arr) . PHP_EOL;
+	$str = "time=" . strftime("%F %T") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $str;
 	file_put_contents($logFile, $str, FILE_APPEND);
+}
+
+function logRequestToDB($p){
+	$arr = $p;
+	
+	array_unshift_assoc($arr, "sessionID", session_id());
+	array_unshift_assoc($arr, "user", $_SESSION['xUser']);
+	array_unshift_assoc($arr, "time", strftime("%F %T"));
+	
+	$str =  arrayToString($arr);
+	$query = "exec wwwLogRequest @request='{$str}'";
+	$query = iconv("UTF-8", "windows-1251", $query);
+	mssql_query($query);
 }
 
 function isSessionActive(){
@@ -24,15 +53,17 @@ function isSessionActive(){
 
 class Response
 {
-    
 	public $success = false;
     public $msg = '';
 	public $data = null;
 }
+
 $response = new Response();
 $iserror = false;
 $errormsg = ''; 
 $paging = false;
+$params = $_REQUEST;
+$needLogRequest = false;
 
 include "errorhandler.php";
 
@@ -46,7 +77,6 @@ if (!isset($_REQUEST['dbAct'])) {
     //если нужен paging установить $paging = true
     //можно задать сообщение, которое вернуть при успехе $response->msg = 'успех'
 
-	$params = $_REQUEST;
 	foreach ($params as &$value) {
 		if( is_string($value) ) $value = trim($value);
 		if( is_string($value) ) $value = quoteString($value);
@@ -85,6 +115,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwEditAgOrders @id={$id}, @agent={$agent}";
 			break;
 		case 'saveagorder':
+			$needLogRequest = true;
+			
 			$CName=$params['cname'];
 			$ag=$_SESSION['xAgentID'];
 			$DName=$params['dname'];
@@ -167,7 +199,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwNewEx @wb_no='{$params['wb_no']}', @raised='{$exRaised}', @rptd='{$exRptd}', @loc='{$params['exLoc']}', @exCode = '{$params['exCode']}', @Content = '$exContent' , @user='{$_SESSION['xUser']}' ";
 			break;	
 		case 'SetPOD':
-			doLog($params);
+			$needLogRequest = true;
+			
 			$rcpn = $params['rcpn'];
 			$d = explode('.', $params['p_d_in']);
 			$p_d_in = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) ); 
@@ -258,6 +291,10 @@ if (!isset($_REQUEST['dbAct'])) {
 				};
 				
             include "dbConnect.php";
+			if($needLogRequest){
+				logRequestToDB($params);
+			};
+			
 			$result = mssql_query($query);
             if ($result) {
 
@@ -308,12 +345,14 @@ if (!isset($_REQUEST['dbAct'])) {
                     }
 
                     //paging
-		  			$page = $params['page'];
-        			$start = $params['start'];
-        			$limit = $params['limit'];
-					$response->total = count($response->data);
-					if ($response->data){
-						$response->data = array_slice($response->data, $start, $limit);
+					if(array_key_exists('page', $params)){
+						$page = $params['page'];
+						$start = $params['start'];
+						$limit = $params['limit'];
+						$response->total = count($response->data);
+						if ($response->data){
+							$response->data = array_slice($response->data, $start, $limit);
+						}
 					}
 				}
 				
@@ -346,9 +385,12 @@ function my_json_encode($arr)
 }
 
 if ($iserror){
-$response->success = false;
-$response->msg = $errormsg;
+	$response->success = false;
+	$response->msg = $errormsg;
+
+	logErrorToFile($errormsg . "||" . arrayToString($params));
 }
+
 /*
 if (extension_loaded('mbstring')) {
     echo my_json_encode($response);
