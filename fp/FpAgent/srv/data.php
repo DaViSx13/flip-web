@@ -1,4 +1,6 @@
 <?php
+include "errorhandler.php";
+
 //завязка
 session_name("AGENTSESSIONID");
 session_start();
@@ -20,12 +22,6 @@ function array_unshift_assoc(&$arr, $key, $val)
 
 function arrayToString($arr){
 	return urldecode(http_build_query($arr, '', '||'));
-}
-
-function logErrorToFile($msg){
-	$logFile = date("Ymd") . ".log";
-	$str = "time=" . strftime("%F %T") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $msg . PHP_EOL;
-	file_put_contents($logFile, $str, FILE_APPEND);
 }
 
 function doLog($arr){
@@ -66,7 +62,6 @@ $paging = false;
 $params = $_REQUEST;
 $needLogRequest = false;
 
-include "errorhandler.php";
 
 //кульминация
 
