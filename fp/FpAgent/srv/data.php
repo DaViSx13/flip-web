@@ -3,7 +3,8 @@
 session_name("AGENTSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
-error_reporting(-1);
+//error_reporting(-1);
+error_reporting(E_ALL & ~E_NOTICE);
 
 function quoteString($str){
 	return str_ireplace("'", "''", $str);
@@ -285,6 +286,25 @@ if (!isset($_REQUEST['dbAct'])) {
         $query = iconv("UTF-8", "windows-1251", $query);
         $query = stripslashes($query);
 
+$qry = <<<EOD
+-- user={$_SESSION['xUser']} dbAct={$params['dbAct']} 
+BEGIN TRY
+
+{$query};
+
+END TRY
+BEGIN CATCH
+	DECLARE @ErrorMessage NVARCHAR(4000);	
+	SELECT @ErrorMessage = 'SQLERROR1: '+ ERROR_MESSAGE()
+	RAISERROR (@ErrorMessage, -- Message text.
+               16, -- Severity.
+               1 -- State.
+               );
+END CATCH
+EOD;
+
+//$qry = $query;
+		
         try {
 			if (!isSessionActive()){
 				throw new Exception('Сеанс завершен. Обновите страницу.');
@@ -295,7 +315,7 @@ if (!isset($_REQUEST['dbAct'])) {
 				logRequestToDB($params);
 			};
 			
-			$result = mssql_query($query);
+			$result = mssql_query($qry);
             if ($result) {
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
@@ -387,8 +407,9 @@ function my_json_encode($arr)
 if ($iserror){
 	$response->success = false;
 	$response->msg = $errormsg;
+	//$response->msg = $errormsg . " ====>" . mssql_get_last_message() . "<==== ";
 
-	logErrorToFile($errormsg . "||" . arrayToString($params));
+	logErrorToFile($errormsg . " ====>" . iconv("windows-1251", "UTF-8", mssql_get_last_message()) . "<==== " . "||" . arrayToString($params). "||query=" . iconv("windows-1251", "UTF-8", $query) );
 }
 
 /*
