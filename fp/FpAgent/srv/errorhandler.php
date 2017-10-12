@@ -8,7 +8,7 @@
  * @return boolean
  */
 function logErrorToFile($msg){
-	$logFile = date("Ymd") . ".log";
+	$logFile = date("Ymd") . ".txt";
 	$str = "time=" . strftime("%F %T") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $msg . PHP_EOL;
 	file_put_contents($logFile, $str, FILE_APPEND);
 }

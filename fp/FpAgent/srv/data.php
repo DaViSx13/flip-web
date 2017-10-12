@@ -6,7 +6,8 @@ session_name("AGENTSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 //error_reporting(-1);
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL /*& ~E_NOTICE*/);
+ini_set('display_errors', '0');
 
 function quoteString($str){
 	return str_ireplace("'", "''", $str);
@@ -61,6 +62,7 @@ $errormsg = '';
 $paging = false;
 $params = $_REQUEST;
 $needLogRequest = false;
+$switchDefault = false;
 
 
 //кульминация
@@ -273,11 +275,17 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWb':
 			$query = "exec wwwGetWb @wb_no='{$params['wb_no']}'";
 			break;
+		default:
+			$switchDefault = true;
+			break;
     }
 
-    if (!isset($query)) {
+    if (!isset($query) || strlen($query) == 0) {
         $response->msg = 'не правильный запрос';
-    } else {
+		if ($switchDefault === true) {
+			$response->msg = $response->msg . ' !!switchDefault!!';
+		}
+	} else {
         $query = iconv("UTF-8", "windows-1251", $query);
         $query = stripslashes($query);
 
@@ -290,7 +298,7 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	DECLARE @ErrorMessage NVARCHAR(4000);	
-	SELECT @ErrorMessage = 'SQLERROR1: '+ ERROR_MESSAGE()
+	SELECT @ErrorMessage = 'E1: '+ ERROR_MESSAGE()
 	RAISERROR (@ErrorMessage, -- Message text.
                16, -- Severity.
                1 -- State.
@@ -311,7 +319,7 @@ EOD;
 			};
 			
 			$result = mssql_query($qry);
-            if ($result) {
+            if ( is_resource($result) === TRUE ) {
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
@@ -402,6 +410,12 @@ function my_json_encode($arr)
 if ($iserror){
 	$response->success = false;
 	$response->msg = $errormsg;
+	/*
+	$sqlerrormsg = iconv("windows-1251", "UTF-8", mssql_get_last_message());
+	if (isset($sqlerrormsg)) {
+		$response->msg = $sqlerrormsg .  ' ============================================================= ' . $response->msg;
+	}
+	*/
 	//$response->msg = $errormsg . " ====>" . mssql_get_last_message() . "<==== ";
 
 	logErrorToFile($errormsg . " ====>" . iconv("windows-1251", "UTF-8", mssql_get_last_message()) . "<==== " . "||" . arrayToString($params). "||query=" . iconv("windows-1251", "UTF-8", $query) );
