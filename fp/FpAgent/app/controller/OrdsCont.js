@@ -60,6 +60,26 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 	],
 	init : function () {
+		
+		//////////////////////
+		//на onload каждого store вешаем проверку сессии
+		//кажется вешается только на созданные store, поэтому в другом контроллере тоже сделаем
+		//console.log('ЗАКАЗЫ');
+		Ext.data.StoreManager.each(
+			function(item){
+				//console.log(item.storeId);
+				//item.on('focus', this.myfunc, this);
+				item.on('load', 
+					function(store, records, success){
+						//console.log(store.storeId + ' loaded');
+						//console.log(success);
+						if(!success){FPAgent.lib.Miscutils.checkSession();}						
+					},
+					this);
+			}
+			);
+		
+		///////////////
 		this.control({
 			'ordspanel' : {
 				activate : this.loadOrdGr
