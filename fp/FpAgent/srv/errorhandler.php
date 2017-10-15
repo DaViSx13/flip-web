@@ -9,7 +9,14 @@
  */
 function logErrorToFile($msg){
 	$logFile = date("Ymd") . ".txt";
-	$str = "time=" . strftime("%F %T") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $msg . PHP_EOL;
+	//$str = "time=" . strftime("%F %T") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $msg . PHP_EOL;
+	$str = "time=" . strftime("%F %T") 
+	. "||" . "user=" . $_SESSION['xUser'] 
+	. "||" . "sessionID=" . session_id() 
+	. "||" . "REMOTE_ADDR=" . $_SERVER['REMOTE_ADDR']
+	. "||" . "HTTP_USER_AGENT=" . $_SERVER['HTTP_USER_AGENT']
+	. "||" . $msg 
+	. PHP_EOL;
 	file_put_contents($logFile, $str, FILE_APPEND);
 }
 ///////////////////////////////////////////// 
