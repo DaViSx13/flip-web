@@ -10,7 +10,8 @@ $response = new Response();
 if ( !empty( $_POST['user'] )) {
     include_once "dbConnect.php";
    // echo '2';
-    $query = "exec wwwCheckUser @user='".$_POST['user']."', @password='".$_POST['password']."', @ip='$_SERVER[REMOTE_ADDR]' ";
+    $user = trim($_POST['user']);
+    $query = "exec wwwCheckUser @user='{$user}', @password='{$_POST['password']}', @ip='{$_SERVER[REMOTE_ADDR]}' ";
     $result=mssql_query($query);
     
     if( mssql_num_rows($result)==0 ) {
@@ -25,9 +26,9 @@ if ( !empty( $_POST['user'] )) {
 		   $response->msg='Доступ блокирован...';
 		   }
                 else {
-		   session_name("AGENTSESSIONID");
+					session_name("AGENTSESSIONID");
                    session_start();
-				   $_SESSION['xUser'] = $_POST['user'];
+				   $_SESSION['xUser'] = $user;
                    $_SESSION['xAgentID'] = $row['agentid'];
                    $_SESSION['xAgentName'] = iconv("windows-1251", "UTF-8", "{$row['partname']} ({$row['partloc']})");
 				   $_SESSION['xAgentPlanNo'] = $row['planno'];
