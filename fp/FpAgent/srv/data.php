@@ -70,7 +70,12 @@ $switchDefault = false;
 if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'совсем не правильный запрос';
 } else {
-    $dbAct = $_REQUEST['dbAct'];
+	try {
+		if (!isSessionActive()){
+			throw new Exception('Сеанс завершен. Обновите страницу.');
+			};
+
+				$dbAct = $_REQUEST['dbAct'];
     //в case нужно сформировать строку sql запроса $query
     //если нужен paging установить $paging = true
     //можно задать сообщение, которое вернуть при успехе $response->msg = 'успех'
@@ -171,7 +176,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$dirWbs = $params['dir'];
 			$newPeriodWbs = $params['newPeriod'];
-	$query = "exec wwwGetAgentWbs @period='{$newPeriodWbs}', @agentID={$ag}, @dir='{$dirWbs}'";
+			$query = "exec wwwGetAgentWbs @period='{$newPeriodWbs}', @agentID={$ag}, @dir='{$dirWbs}'";
             $paging = true;
 			break;
 		case 'GetExCodes':
@@ -308,10 +313,6 @@ EOD;
 
 //$qry = $query;
 		
-        try {
-			if (!isSessionActive()){
-				throw new Exception('Сеанс завершен. Обновите страницу.');
-				};
 				
             include "dbConnect.php";
 			if($needLogRequest){
@@ -386,11 +387,12 @@ EOD;
                 $errormsg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
 				$iserror = true;
             }
-        }
+        
+    }
+	}
         catch (exception $e) {
             $response->msg = $e->getMessage();
         }
-    }
 }
 
 //финал
