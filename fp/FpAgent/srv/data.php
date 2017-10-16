@@ -41,7 +41,7 @@ function logRequestToDB($p){
 	
 	$str =  arrayToString($arr);
 	$query = "exec wwwLogRequest @request='{$str}'";
-	$query = iconv("UTF-8", "windows-1251", $query);
+	$query = iconv("UTF-8", "windows-1251//IGNORE", $query);
 	mssql_query($query);
 }
 
@@ -291,7 +291,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$response->msg = $response->msg . ' !!switchDefault!!';
 		}
 	} else {
-        $query = iconv("UTF-8", "windows-1251", $query);
+        $query = iconv("UTF-8", "windows-1251//IGNORE", $query);
         $query = stripslashes($query);
 
 $qry = <<<EOD
