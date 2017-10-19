@@ -9,6 +9,23 @@ header("Content-type: text/plain; charset=utf-8");
 error_reporting(E_ALL /*& ~E_NOTICE*/);
 ini_set('display_errors', '0');
 
+function utf8_to_win1251($str){
+	//ищем способ конвертации без ошибок
+	//для примера левых символов
+	//$str = "‎89104260898";
+	//$str = "Санкт-Петербург, Малый пр., В.О., дом ¹57";	
+	
+	//IGNORE на PHP5.5 все равно выдает NOTICE и возвращает пустую строку
+	//return iconv("UTF-8", "windows-1251//IGNORE", $str);
+	
+	//TRANSLIT работает без ошибок, левые символы заменяет на ?
+	//return iconv("UTF-8", "windows-1251//TRANSLIT", $str);
+	
+	//без ini_set работает как TRANSLIT, с ним так, как должен работать IGNORE
+	ini_set('mbstring.substitute_character', "none");
+	return mb_convert_encoding($str, "windows-1251", "utf-8");
+}
+
 function quoteString($str){
 	return str_ireplace("'", "''", $str);
 }
@@ -41,7 +58,7 @@ function logRequestToDB($p){
 	
 	$str =  arrayToString($arr);
 	$query = "exec wwwLogRequest @request='{$str}'";
-	$query = iconv("UTF-8", "windows-1251//IGNORE", $query);
+	$query = utf8_to_win1251($query);
 	mssql_query($query);
 }
 
@@ -291,7 +308,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$response->msg = $response->msg . ' !!switchDefault!!';
 		}
 	} else {
-        $query = iconv("UTF-8", "windows-1251//IGNORE", $query);
+        $query = utf8_to_win1251($query);
         $query = stripslashes($query);
 
 $qry = <<<EOD
