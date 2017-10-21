@@ -34,7 +34,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'address',
-					maxLength : 70,
+					maxLength : 200,
 					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.address"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
@@ -95,7 +95,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'dadr',
-					maxLength : 70,
+					maxLength : 200,
 					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.dadr"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
