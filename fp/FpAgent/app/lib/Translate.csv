@@ -295,3 +295,5 @@ UsersCont.Agent;Агент:;Agent:
 UsersCont.Login;Логин:;Login:
 UsersCont.PassNotIdent;Пароли не совпадают;Passwords do not match
 UsersCont.InsertIdentPass;Введите идентичные пароли;Enter identical passwords
+WbsGrid.ag_cash;оплата;cash
+WbsGrid.flip_cash;оплата;cash

@@ -100,6 +100,10 @@ Ext.define('FPAgent.model.WbsMod', {
 			name : 'req_tar_a'
 		}, {
 			name : 'req_rem'
+		}, {
+			name : 'flip_cash'
+		}, {
+			name : 'ag_cash'
 		}
 	]
 });
