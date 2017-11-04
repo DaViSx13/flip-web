@@ -1,4 +1,8 @@
 <?php
+include "errorhandler.php";
+error_reporting(E_ALL /*& ~E_NOTICE*/);
+ini_set('display_errors', '0');
+
 require_once 'Excel/PHPExcel.php';
 include 'dbConnect.php';
 require_once 'Excel/PHPExcel/Writer/Excel5.php';
@@ -199,7 +203,7 @@ $worksheet->setCellValueByColumnAndRow(2, 7, 'Контакт');
 $worksheet->setCellValueByColumnAndRow(3, 7, iconv("windows-1251", "UTF-8", $row['dcontname']));
 
 $worksheet->setCellValueByColumnAndRow(2, 8, 'Телефон');
-$worksheet->setCellValueExplicitByColumnAndRow(3, 8, $row['dcontphone'], PHPExcel_Cell_DataType::TYPE_STRING);
+$worksheet->setCellValueExplicitByColumnAndRow(3, 8, iconv("windows-1251", "UTF-8", $row['dcontphone']), PHPExcel_Cell_DataType::TYPE_STRING);
 
 $worksheet->setCellValueByColumnAndRow(2, 9, 'E-Mail');
 $worksheet->setCellValueByColumnAndRow(3, 9, $row['dcontmail']);
