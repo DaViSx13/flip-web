@@ -44,7 +44,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'address',
-					maxLength : 70,
+					maxLength : 200,
 					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.address"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
@@ -105,7 +105,7 @@ Ext.define('FPAgent.view.orders.TemplForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'dadr',
-					maxLength : 70,
+					maxLength : 200,
 					fieldLabel : FPAgent.lib.Translate.tr("TemplForm.dadr"),//'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
