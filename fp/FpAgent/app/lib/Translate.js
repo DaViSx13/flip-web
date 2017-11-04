@@ -1502,6 +1502,16 @@
         "stringID":  "UsersCont.InsertIdentPass",
         "ru":  "Введите идентичные пароли",
         "en":  "Enter identical passwords"
+    },
+    {
+        "stringID":  "WbsGrid.ag_cash",
+        "ru":  "оплата",
+        "en":  "cash"
+    },
+    {
+        "stringID":  "WbsGrid.flip_cash",
+        "ru":  "оплата",
+        "en":  "cash"
     }
 ]
 

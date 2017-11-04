@@ -117,6 +117,12 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 						format : '0.00',
 						dataIndex : 'tar_flip_t'
 					}, {
+						text : FPAgent.lib.Translate.tr("WbsGrid.flip_cash"),//'Оплата',
+						width : 55,
+						xtype : 'numbercolumn',
+						format : '0.00',
+						dataIndex : 'flip_cash'
+					}, {
 						text : FPAgent.lib.Translate.tr("WbsGrid.rem_flip"),//'прим.',
 						dataIndex : 'rem_flip'
 					}
@@ -147,6 +153,12 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 						xtype : 'numbercolumn',
 						format : '0.00',
 						dataIndex : 'tar_ag_t'
+					}, {
+						text : FPAgent.lib.Translate.tr("WbsGrid.ag_cash"),//'Оплата',
+						width : 55,
+						xtype : 'numbercolumn',
+						format : '0.00',
+						dataIndex : 'ag_cash'
 					}, {
 						text : FPAgent.lib.Translate.tr("WbsGrid.rem_ag"),//'прим.',
 						dataIndex : 'rem_ag'
