@@ -470,6 +470,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					query : cb_org.getValue()
 				}
 			});
+			if (record.data['orgcode'] != 0)
 			cb_org.select(record.data['orgcode']);
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
@@ -477,6 +478,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					query : cb_des.getValue()
 				}
 			});
+			if (record.data['destcode'] != 0)
 			cb_des.select(record.data['destcode']);
 			this.getLoadFileForm().down('filefield[name=uploadFile]').setVisible(true);
 		}
