@@ -95,11 +95,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 		this.getWbsStoreStore().on({
 			scope : this,
 			load : this.loadWbsStore
-		});
-		/*this.getWbsStoreStore().on({
-			scope : this,
-			beforeprefetch : this.beforeprefetchWbsStore
-		});*/
+		});		
 		this.getWbsStoreStore().on({
 			scope : this,
 			beforeload : this.beforeloadWbsStore
@@ -108,13 +104,13 @@ Ext.define('FPAgent.controller.WbsCont', {
 			scope : this,
 			load : this.loadViewExStore
 		});
-	},
+	},	 
 	loadWbsStore : function () {		
 		this.getWbsTool().down('button[action=all]').setDisabled(false);
 		this.getWbsTool().down('button[action=in]').setDisabled(false);
 		this.getWbsTool().down('button[action=out]').setDisabled(false);
-		this.getWbsTool().down('button[action=overdue]').setDisabled(false);		
-	},
+		this.getWbsTool().down('button[action=overdue]').setDisabled(false);
+	},	
 	loadViewExStore : function () {
 		this.getViewExGrid().getSelectionModel().select(0);
 	},
@@ -128,8 +124,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
-					me.loadWbs();
 					me.viewTotal();
+					me.loadWbs();					
 				},
 				failure : function (response) {
 					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
@@ -361,9 +357,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 					act : 'importPod'
 				},
 				success : function (form, action) {
-					
-					me.loadWbs();
 					me.viewTotal();
+					me.loadWbs();					
 					win.close();
 					Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.ImportOk")/*'Импортирование завершено успешно!'*/, action.result.msg);
 				},
@@ -410,7 +405,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("WbsCont.GetWb")/*'Выберите накладную'*/);
 		}
 	},
-	/*beforeprefetchWbsStore*/beforeloadWbsStore: function (store, operation) {
+	beforeloadWbsStore: function (store, operation) {
 		var proxy = store.getProxy();
 		proxy.setExtraParam('newPeriod', this.getPeriod());
 		switch (true) {
@@ -427,11 +422,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 			proxy.setExtraParam('dir', 'ove');
 			break;
 		}		
-	},
-	/*beforeloadWbsStore : function (store, operation) {
-		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
-		console.log('beforeload');
-	},*/
+	},	
 	loadWbsGrid : function (comp) {
 		var aTol = this.getWbsTool();
 		this.allWbs(aTol.down('button[action=all]'));
@@ -439,8 +430,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);
 		}
 		this.getAdmTool().down('button[action=list]').setVisible(false);
-		this.getAdmTool().down('button[action=templ]').setVisible(false);
-	},
+		this.getAdmTool().down('button[action=templ]').setVisible(false);			
+	},		
 	allWbs : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('wbstool');
@@ -451,8 +442,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 		aTol.down('button[action=in]').setDisabled(true);
 		aTol.down('button[action=overdue]').setDisabled(true);
 		btn.setDisabled(true);
-		this.loadWbs();
 		this.viewTotal();
+		this.loadWbs();		
 	},
 	outWbs : function (btn) {		
 		btn.toggle(true);
@@ -464,8 +455,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 		aTol.down('button[action=in]').setDisabled(true);
 		aTol.down('button[action=overdue]').setDisabled(true);		
 		btn.setDisabled(true);
-		this.loadWbs();
-		this.viewTotal();		
+		this.viewTotal();
+		this.loadWbs();				
 	},
 	inWbs : function (btn) {
 		btn.toggle(true);
@@ -477,8 +468,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 		aTol.down('button[action=out]').setDisabled(true);
 		aTol.down('button[action=overdue]').setDisabled(true);
 		btn.setDisabled(true);
-		this.loadWbs();
 		this.viewTotal();
+		this.loadWbs();		
 	},
 	overdueWbs : function (btn) {
 		btn.toggle(true);
@@ -490,8 +481,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 		aTol.down('button[action=out]').setDisabled(true);
 		aTol.down('button[action=in]').setDisabled(true);
 		btn.setDisabled(true);
-		this.loadWbs();
 		this.viewTotal();
+		this.loadWbs();		
 	},
 	newPod : function (btn) {
 		var sm = btn.up('wbsgrid').getSelectionModel();
@@ -506,11 +497,11 @@ Ext.define('FPAgent.controller.WbsCont', {
 		}
 	},
 	monthChange : function (comp, newz, oldz) {
-		this.loadWbs();
 		this.viewTotal();
+		this.loadWbs();		
 	},
 	yearChange : function (comp, newz, oldz) {
-		this.loadWbs();
 		this.viewTotal();
+		this.loadWbs();		
 	}
 });
