@@ -51,12 +51,14 @@ $fields['баз.'] = 'tar_flip_b';
 $fields['доп.'] = 'tar_flip_a';
 $fields['ТР'] = 'tar_flip_tr';
 $fields['Всего'] = 'tar_flip_t';
+$fields['Оплата'] = 'flip_cash';
 $fields['прим.'] = 'rem_flip';
 
 $fields[' баз.'] = 'tar_ag_b';
 $fields[' доп.'] = 'tar_ag_a';
 $fields[' ТР'] = 'tar_ag_tr';
 $fields[' Всего'] = 'tar_ag_t';
+$fields[' Оплата'] = 'ag_cash';
 $fields[' прим.'] = 'rem_ag';
 
 $rowNo = 1;
@@ -76,20 +78,22 @@ function cellsToMergeByColsRow($start = -1, $end = -1, $row = -1){
 
 $startColNo = array_search('tar_flip_b', array_values($fields));
 $worksheet->setCellValueByColumnAndRow($startColNo, $rowNo, 'тариф Флип');
-$worksheet->mergeCells(cellsToMergeByColsRow($startColNo,$startColNo+4,$rowNo));
+$worksheet->mergeCells(cellsToMergeByColsRow($startColNo,$startColNo+5,$rowNo));
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+1).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+2).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+3).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+4).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+5).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_ag_b', array_values($fields));
 $worksheet->setCellValueByColumnAndRow($startColNo, $rowNo, 'тариф Аг');
-$worksheet->mergeCells(cellsToMergeByColsRow($startColNo,$startColNo+4,$rowNo));
+$worksheet->mergeCells(cellsToMergeByColsRow($startColNo,$startColNo+5,$rowNo));
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+1).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+2).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+3).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+4).$rowNo, $titleStyle);
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+5).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $rowNo++;
@@ -120,7 +124,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 $sharedStyle1 = new PHPExcel_Style();
 $lastRow = $rowNo-1;
 $sharedStyle1->applyFromArray($rowStyle);
-$worksheet->setSharedStyle($sharedStyle1, "A3:W{$lastRow}");
+$worksheet->setSharedStyle($sharedStyle1, "A3:Y{$lastRow}");
 //итоги
 
 $startColNo = array_search('wt', array_values($fields));
@@ -159,6 +163,12 @@ $cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
 $worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
+$startColNo = array_search('flip_cash', array_values($fields));
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
+
 $startColNo = array_search('tar_ag_b', array_values($fields));
 $cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
 $cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
@@ -178,6 +188,12 @@ $worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowN
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
 $startColNo = array_search('tar_ag_t', array_values($fields));
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
+
+$startColNo = array_search('ag_cash', array_values($fields));
 $cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
 $cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
 $worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
