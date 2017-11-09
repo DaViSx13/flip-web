@@ -1512,6 +1512,16 @@
         "stringID":  "WbsGrid.flip_cash",
         "ru":  "оплата",
         "en":  "cash"
+    },
+    {
+        "stringID":  "WbsCont.s_ag_cash",
+        "ru":  "тар аг оплата:",
+        "en":  "tar ag cash:"
+    },
+    {
+        "stringID":  "WbsCont.s_flip_cash",
+        "ru":  "тар флип оплата:",
+        "en":  "tar flip cash:"
     }
 ]
 
