@@ -16,7 +16,27 @@ $filter = $_REQUEST['filter'];
 $period = $_REQUEST['newPeriod'];
 
 $query = "exec wwwGetAgentWbs @period='{$period}', @agentID={$ag}, @dir='{$filter}'";
-$result=mssql_query($query);
+
+
+$qry = <<<EOD
+
+BEGIN TRY
+
+{$query};
+
+END TRY
+BEGIN CATCH
+	DECLARE @ErrorMessage NVARCHAR(4000);	
+	SELECT @ErrorMessage = 'E1: '+ ERROR_MESSAGE()
+	RAISERROR (@ErrorMessage, -- Message text.
+               16, -- Severity.
+               1 -- State.
+               );
+END CATCH
+EOD;
+
+
+$result=mssql_query($qry);
 
 // Creating a workbook
 $workbook = new PHPExcel();
@@ -126,12 +146,13 @@ $lastRow = $rowNo-1;
 $sharedStyle1->applyFromArray($rowStyle);
 $worksheet->setSharedStyle($sharedStyle1, "A3:Y{$lastRow}");
 //итоги
-
+if ($lastRow > 3) {
 $startColNo = array_search('wt', array_values($fields));
 $cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
-$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($lastRow);
 $worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
+
 
 $startColNo = array_search('vol_wt', array_values($fields));
 $cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
@@ -198,7 +219,7 @@ $cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
 $cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($rowNo-1);
 $worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
-
+}
 //Отдаем на скачивание
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/vnd.ms-excel');
@@ -213,6 +234,7 @@ header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
 header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 header ('Pragma: public'); // HTTP/1.0
 
+//PHPExcel_Calculation::getInstance($workbook)->cyclicFormulaCount = 1;
 $objWriter = PHPExcel_IOFactory::createWriter($workbook, 'Excel5');
 $objWriter->save('php://output');
 exit;

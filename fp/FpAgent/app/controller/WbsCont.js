@@ -341,6 +341,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 		case this.getWbsTool().down('button[action=out]').pressed:
 			var t_dir = 'out';
 			break;
+		case this.getWbsTool().down('button[action=overdue]').pressed:
+			var t_dir = 'ove';
+			break;		
 		}
 		window.location.href = 'srv/getAgentWbsXLS.php?newPeriod=' + this.getPeriod() + '&filter=' + t_dir;
 	},
