@@ -28,7 +28,7 @@
 .wbtemplate {
 	background-image : url(../../resources/images/wbtemplate.jpg);	
 	background-repeat: no-repeat;
-	background-size: contain;	
+	background-size: auto 540px;	
 }
 .wbview {
 	background-image : url(../../resources/images/wbview.png);	

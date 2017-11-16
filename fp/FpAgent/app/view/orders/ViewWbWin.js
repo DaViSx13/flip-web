@@ -21,6 +21,15 @@ Ext.define('FPAgent.view.orders.ViewWbWin', {
 				text : FPAgent.lib.Translate.tr("ViewWbWin.button.close"),//'Закрыть',
 				scope : this,
 				handler : this.close
+			},
+			{
+				text : 'Печать',
+				scope : this,
+				handler : function (){
+					this.maximize();
+					print();
+					this.close();
+				}
 			}
 		];
 		this.callParent(arguments);
