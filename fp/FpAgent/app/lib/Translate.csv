@@ -81,6 +81,7 @@ UseTemplWin.button.set;Выбрать;Select
 UseTemplWin.button.cancel;Отмена;Cancel
 ViewWbWin.title;Просмотр накладной;Browsing waybill
 ViewWbWin.button.close;Закрыть;Close
+ViewWbWin.button.print;Печать;Print
 WbNoWin.title;Введите № накладной;Enter the waybill №
 WbNoWin.button.save;Сохранить;Save
 WbNoWin.button.cancel;Отмена;Cancel

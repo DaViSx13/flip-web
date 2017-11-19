@@ -434,6 +434,11 @@
         "en":  "Close"
     },
     {
+        "stringID":  "ViewWbWin.button.print",
+        "ru":  "Печать",
+        "en":  "Print"
+    },
+    {
         "stringID":  "WbNoWin.title",
         "ru":  "Введите № накладной",
         "en":  "Enter the waybill №"
