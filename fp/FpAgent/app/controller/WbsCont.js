@@ -387,7 +387,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 		this.getWbsStoreStore().load();
 	},
 	insertNewPod : function (p_wb_no, p_dtd_txt, p_dir, p_d_in_txt) {
-		if (p_wb_no && p_dtd_txt && p_dir == 'out' && !p_d_in_txt) {
+		if (p_wb_no && p_dtd_txt && (p_dir == 'out' || p_dir == 'ove') && !p_d_in_txt) {
 			var newpod = Ext.widget('newpodwin').show();
 			var formpod = newpod.down('newpodform');
 			formpod.down('textfield[name=wb_no]').setValue(p_wb_no);
