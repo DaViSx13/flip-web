@@ -268,7 +268,7 @@ WbsCont.NotSaveTarif;Доп. тариф не сохранен!;The additional tariff is NOT saved!
 WbsCont.ImportOk;Импортирование завершено успешно!;Importing completed successfully!
 WbsCont.ImportError;Ошибка импорта!;Import failed!
 WbsCont.GetWb;Выберите накладную;Select the waybill
-WbsCont.NotWbPod;Для этой накладной нельзя внести ПОД;For this invoice can not add POD
+WbsCont.NotWbPod;Для этой накладной нельзя внести ПОД, т.к. она не является для вас входящей или еще не сформирован манифест.;For this invoice can not add POD
 aMonths.January;Январь;January
 aMonths.February;Февраль;February
 aMonths.March;Март;March
