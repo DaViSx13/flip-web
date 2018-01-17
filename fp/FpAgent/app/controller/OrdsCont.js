@@ -57,6 +57,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'LoadOrdersWin',
 			selector : 'loadorderswin'
+		}, {
+			ref : 'ViewWbForm',
+			selector : 'viewwbform'
 		}
 	],
 	init : function () {
@@ -98,6 +101,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'ordwin button[action=save]' : {
 				click : this.saveOrder
+			},
+			'viewwbwin button[action=printWB]' : {
+				click : this.printWB
 			},
 			'ordtool combomonth' : {
 				change : this.monthChange
@@ -518,6 +524,16 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		}
 	},
+	printWB : function (btn) {
+		//window.location.href = 'http://localhost:8080/jasperserver/flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports&reportUnit=%2Freports%2F112233&standAlone=true';//'srv/downloadTariffs.php';
+	
+	var record = this.getViewWbStStore().findRecord('wb_no', this.getViewWbForm().down('displayfield[name=wb_no]').value);
+	//console.log(Ext.encode(record.getData()));
+	
+	//console.log('srv/report.php?rec='+Ext.encode(record.getData()));
+	window.open('srv/report.php?wbno='+this.getViewWbForm().down('displayfield[name=wb_no]').value);
+	},
+	
 	saveOrder : function (btn) {
 		var me = this;
 		var win = btn.up('ordwin');

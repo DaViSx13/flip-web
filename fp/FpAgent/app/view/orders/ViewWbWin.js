@@ -19,12 +19,14 @@ Ext.define('FPAgent.view.orders.ViewWbWin', {
 		];
 		this.buttons = [{
 				text: FPAgent.lib.Translate.tr("ViewWbWin.button.print"), //'Печать',
-				scope: this,
-				handler: function () {
-					this.maximize();
-					print();
-					this.close();
-				}
+				action : 'printWB'
+				//scope: this,
+				//handler: function () {
+					//this.maximize();
+					//print();
+					//this.close();
+				//	window.location.href = 'srv/downloadTariffs.php';
+				//}
 			}, {
 				text: FPAgent.lib.Translate.tr("ViewWbWin.button.close"), //'Закрыть',
 				scope: this,
