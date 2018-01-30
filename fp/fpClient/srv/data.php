@@ -90,6 +90,7 @@ if (!isset($_REQUEST['dbAct'])) {
 	$params = $_REQUEST;
 	foreach ($params as &$value) {
 		if( is_string($value) ) $value = trim($value);
+		if( is_string($value) ) $value = quoteString($value);
 	};
 	
     $response->msg = 'ok';
@@ -295,7 +296,7 @@ if (!isset($_REQUEST['dbAct'])) {
     if (!isset($query)) {
         $response->msg = 'не правильный запрос';
     } else {
-        $query = iconv("UTF-8", "windows-1251", $query);
+        $query = utf8_to_win1251($query);
         $query = stripslashes($query);
 
         try {
