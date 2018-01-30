@@ -134,6 +134,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+		this.getClientStStore().load();
 	},
 	clkList : function (btn) {
 		btn.toggle(true);
