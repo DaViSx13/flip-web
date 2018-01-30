@@ -1,9 +1,66 @@
 <?php
+include "errorhandler.php";
+
 //завязка
 session_name("CLIENTSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 //error_reporting(0);
+error_reporting(E_ALL /*& ~E_NOTICE*/);
+ini_set('display_errors', '0');
+
+function utf8_to_win1251($str){
+	//ищем способ конвертации без ошибок
+	//для примера левых символов
+	//$str = "‎89104260898";
+	//$str = "Санкт-Петербург, Малый пр., В.О., дом ¹57";	
+	
+	//IGNORE на PHP5.5 все равно выдает NOTICE и возвращает пустую строку
+	//return iconv("UTF-8", "windows-1251//IGNORE", $str);
+	
+	//TRANSLIT работает без ошибок, левые символы заменяет на ?
+	//return iconv("UTF-8", "windows-1251//TRANSLIT", $str);
+	
+	//без ini_set работает как TRANSLIT, с ним так, как должен работать IGNORE
+	ini_set('mbstring.substitute_character', "none");
+	return mb_convert_encoding($str, "windows-1251", "utf-8");
+}
+
+function quoteString($str){
+	return str_ireplace("'", "''", $str);
+}
+
+function array_unshift_assoc(&$arr, $key, $val) 
+{ 
+    $arr = array_reverse($arr, true); 
+    $arr[$key] = $val; 
+    $arr = array_reverse($arr, true); 
+    return count($arr); 
+} 
+
+function arrayToString($arr){
+	return urldecode(http_build_query($arr, '', '||'));
+}
+
+function doLog($arr){
+	$logFile = '_reqLog.txt';
+	$str =  arrayToString($arr) . PHP_EOL;
+	$str = "time=" . strftime("%F %T") . "||" . "user=" . $_SESSION['xUser'] . "||" . "sessionID=" . session_id() . "||" . $str;
+	file_put_contents($logFile, $str, FILE_APPEND);
+}
+
+function logRequestToDB($p){
+	$arr = $p;
+	
+	array_unshift_assoc($arr, "sessionID", session_id());
+	array_unshift_assoc($arr, "user", $_SESSION['xUser']);
+	array_unshift_assoc($arr, "time", strftime("%F %T"));
+	
+	$str =  arrayToString($arr);
+	$query = "exec wwwLogRequest @request='{$str}'";
+	$query = utf8_to_win1251($query);
+	mssql_query($query);
+}
 
 function isSessionActive(){
 	return isset($_SESSION['xUser']);
@@ -19,8 +76,6 @@ $response = new Response();
 $iserror = false;
 $errormsg = ''; 
 $paging = false;
-
-include "errorhandler.php";
 
 //кульминация
 
