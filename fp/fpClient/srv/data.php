@@ -330,7 +330,7 @@ if (!isset($_REQUEST['dbAct'])) {
 
                     //filtering
                     if(isset($params['filter'])){
-                      $filterParams = json_decode(stripslashes($params['filter']), true);
+                      $filterParams = json_decode($params['filter'], true);
                       $filterKey = strtolower($filterParams[0]['property']);
                       $filterValue = strtolower($filterParams[0]['value']);
 
