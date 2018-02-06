@@ -361,13 +361,13 @@ EOD;
 
                     //filtering
                     if( isset($params['filter']) && is_array($response->data) ){
-                      $filterParams = json_decode(stripslashes($params['filter']), true);
+					  $filterParams = json_decode($params['filter'], true);
                       $filterKey = strtolower($filterParams[0]['property']);
                       $filterValue = strtolower($filterParams[0]['value']);
 
                       $response->filterKey = $filterKey;
                       $response->filterValue = $filterValue;
-
+					  
                       include 'filterer.php';
                       $filterer = new Filterer();
                       $response->data = $filterer->filter($response->data, $filterKey, $filterValue);
