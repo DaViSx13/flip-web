@@ -1,6 +1,6 @@
 Ext.define('FPClient.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'],
+	views : ['mainform.WebWbGrid', 'orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.WbWin'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'],
 	refs : [{
@@ -34,6 +34,9 @@ Ext.define('FPClient.controller.OrdsCont', {
 			ref : 'WbNoWin',
 			selector : 'wbnowin'
 		}, {
+			ref : 'WbWin',
+			selector : 'wbwin'
+		},{
 			ref : 'WbNoForm',
 			selector : 'wbnoform'
 		}, {
@@ -42,6 +45,9 @@ Ext.define('FPClient.controller.OrdsCont', {
 		}, {
 			ref : 'WbsGrid',
 			selector : 'wbsgrid'
+		},{
+			ref : 'WebWbGrid',
+			selector : 'webwbgrid'
 		}, {
 			ref : 'OrdGrid',
 			selector : 'ordgrid'
@@ -63,6 +69,9 @@ Ext.define('FPClient.controller.OrdsCont', {
 			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
+			},
+			'ordgrid button[action=wbnew]' : {
+				click : this.openWbWin
 			},
 			'ordgrid button[action=newtpl]' : {
 				click : this.openTpl
@@ -389,6 +398,39 @@ Ext.define('FPClient.controller.OrdsCont', {
 		client.set('orgcode', client.get('cityid'));
 		
 		form_ord = edit.down('ordform');
+		form_ord.loadRecord(client);
+		
+		var cb_org = form_ord.down('combocity[name=org]');
+		cb_org.store.load({
+			params : {
+				query : client.get('org')
+			}
+		});
+		cb_org.select(client.get('orgcode'));
+		//auto sender end
+	},
+	openWbWin : function (btn) {
+		var edit = Ext.widget('wbwin');
+		edit.show();
+		//var form_lf = edit.down('loadfileform');
+		//form_lf.down('filefield[name=uploadFile]').setVisible(true);
+		edit.down('ordform').down('combocity[name=dest]').focus(false, true);
+		
+		/*var timeEdit = edit.down('wbform').down('textfield[name=courtimef]');
+		timeEdit.setReadOnly(true);
+		timeEdit.setValue('10:00');
+		
+		var timeEdit = edit.down('wbform').down('textfield[name=courtimet]');
+		timeEdit.setReadOnly(true);
+		timeEdit.setValue('19:00');*/
+		
+		//auto sender begin
+		client = this.getClientStStore().first();
+		//мухлеж
+		client.set('org', client.get('city'));
+		client.set('orgcode', client.get('cityid'));
+		
+		form_ord = edit.down('wbform');
 		form_ord.loadRecord(client);
 		
 		var cb_org = form_ord.down('combocity[name=org]');

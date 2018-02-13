@@ -32,6 +32,10 @@ Ext.define('FPClient.view.orders.OrdTool', {
 			text : 'Просмотр накладной',
 			iconCls : 'wbview',
 			action : 'wbview'
+		},{
+			text : 'Ввод веб накладной',
+			//iconCls : 'wbview',
+			action : 'wbnew'
 		}, '->', '-', {
 			xtype : 'numyear'
 		}, '-', {

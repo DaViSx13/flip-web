@@ -15,9 +15,9 @@ Ext.define('FPClient.view.mainform.MainPanel', {
 			xtype : 'wbsgrid',
 			title : 'Накладные'
 		}, {
-			xtype : 'mnfpanel',
-			title : 'Манифесты',
-			hidden : true
+			xtype : 'webwbgrid',
+			title : 'Веб накладные',
+			hidden : false
 		}, {
 			xtype : 'usersgrid',
 			title : 'Пользователи',
