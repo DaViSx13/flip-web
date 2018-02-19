@@ -179,6 +179,60 @@ if (!isset($_REQUEST['dbAct'])) {
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum";
 			break;
+		case 'SetWebWB':
+			$id=$params['id'];
+			$wb_no=$params['wb_no'];			
+			$ord_no=$params['ord_no'];
+			$org=$params['org'];
+			$s_city=$params['s_city'];
+			$s_name=$params['s_name'];
+			$s_tel=$params['s_tel'];
+			$s_co=$params['s_co'];
+			$s_adr=$params['s_adr'];
+			$s_ref=$params['s_ref'];
+			$s_mail=$params['s_mail'];
+			$dest=$params['dest'];
+			$r_city=$params['r_city'];
+			$r_name=$params['r_name'];
+			$r_tel=$params['r_tel'];
+			$r_co=$params['r_co'];
+			$r_adr=$params['r_adr'];
+			$r_ref=$params['r_ref'];
+			$r_mail=$params['r_mail'];
+			$t_pac=$params['t_pac'];
+			
+			$vol_wt=$params['vol_wt'] ? $params['vol_wt'] : 0;	
+			$wt=$params['wt'] ? $params['wt'] : 0;
+			$pcs=$params['pcs'] ? $params['pcs'] : 0;
+			$UserIn= $_SESSION['xUser'];
+			$ag=$_SESSION['xAgentID'];	
+				
+			$query = "exec wwwSetWb
+			 @ID = $id
+			,@Wb_No = '$wb_no'
+			,@Ord_No = $ord_no
+			,@ORG = '$org'
+			,@S_City = '$s_city'
+			,@S_Name = '$s_name'
+			,@S_Tel = ''
+			,@S_Co = ''
+			,@S_Adr = ''
+			,@S_Ref = ''
+			,@S_Mail = ''
+			,@DEST = ''
+			,@R_City = ''
+			,@R_Name = ''
+			,@R_Tel = ''
+			,@R_Co = ''
+			,@R_Adr = ''
+			,@R_Ref = ''
+			,@R_Mail = ''
+			,@User_IN = ''			
+			,@WT = 
+			,@VOL_WT =
+			,@PCS =
+			,@T_PAC = ''";
+			break;	
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
