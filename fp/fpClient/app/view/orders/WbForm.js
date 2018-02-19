@@ -135,36 +135,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 					anchor : '100%'
 				}
 			]
-		}, /*{
-			xtype : 'fieldset',
-			height : 120,
-			width : 360,
-			title : 'Дата приезда курьера',
-			x : 10,
-			y : 390,
-			defaults : {
-				anchor : '100%'
-			},
-			layout : 'anchor',
-			items : [{
-					xtype : 'datefield',
-					name : 'courdate',
-					fieldLabel : 'Дата',
-					startDay : 1,
-					format : 'd.m.Y'
-				}, {
-					xtype : 'textfield',
-					name : 'courtimef',
-					fieldLabel : 'Время с',
-					vtype: 'time'
-				}, {
-					xtype : 'textfield',
-					name : 'courtimet',
-					fieldLabel : 'Время до',
-					vtype: 'time'
-				}
-			]
-		},*//* {
+		},  {
 			xtype : 'fieldset',
 			height : 150,
 			width : 360,
@@ -180,7 +151,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 					name : 'type',
 					displayField : 'Name',
 					valueField : 'lowName',
-					allowBlank : false,
+					allowBlank : true,
 					forceSelection : true,
 					editable : false,
 					fieldLabel : 'Тип груза',
@@ -191,13 +162,13 @@ Ext.define('FPClient.view.orders.WbForm', {
 					name : 'packs',
 					minValue : 0,
 					fieldLabel : 'Число мест',
-					allowBlank : false
+					allowBlank : true
 				}, {
 					xtype : 'numberfield',
 					name : 'wt',
 					minValue : 0,
 					fieldLabel : 'Вес',
-					allowBlank : false
+					allowBlank : true
 				}, {
 					xtype : 'numberfield',
 					name : 'volwt',
@@ -205,7 +176,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 					fieldLabel : 'Объемный вес'
 				}
 			]
-		}, {
+		}/*, {
 			xtype : 'label',
 			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
