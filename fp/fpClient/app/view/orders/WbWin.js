@@ -6,13 +6,13 @@ Ext.define('FPClient.view.orders.WbWin', {
 	title : 'Новая веб накладная',
 	layout : 'vbox',
 	autoShow : true,
-	height : 500,
+	height : 650,
 	width : 770,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
 		this.items = [{
-				xtype : 'ordform'
+				xtype : 'wbform'
 				
 			}/*,{
 			xtype : 'loadfileform'

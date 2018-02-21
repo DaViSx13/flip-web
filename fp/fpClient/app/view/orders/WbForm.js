@@ -1,5 +1,5 @@
 Ext.define('FPClient.view.orders.WbForm', {
-	alias : 'widget.ordform',
+	alias : 'widget.wbform',
 	extend : 'Ext.form.Panel',
 	requires : ['FPClient.view.orders.ComboCity'],
 	layout : {
@@ -7,27 +7,34 @@ Ext.define('FPClient.view.orders.WbForm', {
 	},
 	bodyPadding : 10,
 	items : [{
-			xtype : 'fieldset',
-			id : 'fs1',
-			height : 390,
-			width : 360,
-			title : 'Отправитель',
-			x : 10,
-			y : 0,
-			//hidden: true,
-			items : [{
+				xtype : 'textfield',
+				name : 'id',
+				hidden : true
+			},{
+				xtype : 'textfield',
+				name : 'wb_no',
+				hidden : true
+			},{
+				xtype : 'textfield',
+				name : 'ord_no',
+				hidden : true
+			}, {
+				xtype : 'fieldset',
+				id : 'fs1',
+				height : 390,
+				width : 360,
+				title : 'Отправитель',
+				x : 10,
+				y : 0,			
+				items : [{
 					xtype : 'combocity',
 					name : 'org',
 					store : 'CityStOrg',
 					allowBlank : true
 				}, {
 					xtype : 'textfield',
-					name : 'rordnum',
-					hidden : true
-				}, {
-					xtype : 'textfield',
 					width : 337,
-					name : 'cname',
+					name : 's_co',
 					fieldLabel : 'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
@@ -35,7 +42,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 				}, {
 					xtype : 'textfield',
 					width : 337,
-					name : 'address',
+					name : 's_adr',
 					maxLength : 70,
 					fieldLabel : 'Адрес',
 					labelAlign : 'top',
@@ -43,7 +50,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 				}, {
 					xtype : 'textfield',
 					width : 329,
-					name : 'contname',
+					name : 's_name',
 					fieldLabel : 'Контактное лицо',
 					maxLength : 50,
 					labelAlign : 'top',
@@ -51,7 +58,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 					_allowBlank : false
 				}, {
 					xtype : 'textfield',
-					name : 'contmail',
+					name : 's_mail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
 					anchor : '100%',
@@ -59,14 +66,14 @@ Ext.define('FPClient.view.orders.WbForm', {
 				}, {
 					xtype : 'textfield',
 					width : 84,
-					name : 'contphone',
+					name : 's_tel',
 					fieldLabel : 'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
 					_allowBlank : false
 				}, {
 					xtype : 'textareafield',
-					name : 'orgrems',
+					name : 's_ref',
 					height : 75,
 					maxLength : 1000,
 					fieldLabel : 'Примечание',
@@ -88,7 +95,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 				}, {
 					xtype : 'textfield',
 					width : 337,
-					name : 'dname',
+					name : 'r_co',
 					fieldLabel : 'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
@@ -96,7 +103,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 				}, {
 					xtype : 'textfield',
 					width : 337,
-					name : 'dadr',
+					name : 'r_adr',
 					maxLength : 70,
 					fieldLabel : 'Адрес',
 					labelAlign : 'top',
@@ -104,7 +111,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 				}, {
 					xtype : 'textfield',
 					width : 329,
-					name : 'dcontname',
+					name : 'r_name',
 					maxLength : 50,
 					fieldLabel : 'Контактное лицо',
 					labelAlign : 'top',
@@ -112,7 +119,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 					allowBlank : false
 				}, {
 					xtype : 'textfield',
-					name : 'dcontmail',
+					name : 'r_mail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
 					anchor : '100%',
@@ -120,14 +127,14 @@ Ext.define('FPClient.view.orders.WbForm', {
 				}, {
 					xtype : 'textfield',
 					width : 84,
-					name : 'dcontphone',
+					name : 'r_tel',
 					fieldLabel : 'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
 					allowBlank : false
 				}, {
 					xtype : 'textareafield',
-					name : 'destrems',
+					name : 'r_ref',
 					height : 75,
 					maxLength : 1000,
 					fieldLabel : 'Примечание',
@@ -148,7 +155,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 			layout : 'anchor',
 			items : [{
 					xtype : 'combobox',
-					name : 'type',
+					name : 't_pac',
 					displayField : 'Name',
 					valueField : 'lowName',
 					allowBlank : true,
@@ -159,7 +166,7 @@ Ext.define('FPClient.view.orders.WbForm', {
 					queryMode : 'local'
 				}, {
 					xtype : 'numberfield',
-					name : 'packs',
+					name : 'pcs',
 					minValue : 0,
 					fieldLabel : 'Число мест',
 					allowBlank : true
@@ -171,29 +178,11 @@ Ext.define('FPClient.view.orders.WbForm', {
 					allowBlank : true
 				}, {
 					xtype : 'numberfield',
-					name : 'volwt',
+					name : 'vol_wt',
 					minValue : 0,
 					fieldLabel : 'Объемный вес'
 				}
 			]
-		}/*, {
-			xtype : 'label',
-			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
-			x : 10,
-			y : 510,
-			width : 360
-		}*//*,{
-		x : 10,
-		y : 560,
-        xtype: 'filefield',
-        name: 'lf',
-        fieldLabel: 'Файл',
-        labelWidth: 50,
-        msgTarget: 'side',
-        
-        //anchor: '100%',
-		width : 700,
-        buttonText: 'Выберите файл'
-    }*/
+		}
 	]
 });

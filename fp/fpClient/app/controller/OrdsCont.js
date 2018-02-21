@@ -1,9 +1,12 @@
 Ext.define('FPClient.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.WebWbGrid', 'orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.WbWin'],
+	views : ['mainform.WebWbGrid', 'orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.WbWin', 'orders.WbForm'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'],
 	refs : [{
+			ref : 'WbForm',
+			selector : 'wbform'
+		}, {
 			ref : 'OrdForm',
 			selector : 'ordform'
 		}, {
@@ -84,6 +87,9 @@ Ext.define('FPClient.controller.OrdsCont', {
 			},
 			'ordwin button[action=save]' : {
 				click : this.saveOrder
+			},
+			'wbwin button[action=save]' : {
+				click : this.saveWebWb
 			},
 			'ordtool combomonth' : {
 				change : this.monthChange
@@ -398,7 +404,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		client.set('orgcode', client.get('cityid'));
 		
 		form_ord = edit.down('ordform');
-		form_ord.loadRecord(client);
+		//form_ord.loadRecord(client);
 		
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
@@ -414,7 +420,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		edit.show();
 		//var form_lf = edit.down('loadfileform');
 		//form_lf.down('filefield[name=uploadFile]').setVisible(true);
-		edit.down('ordform').down('combocity[name=dest]').focus(false, true);
+		edit.down('wbform').down('combocity[name=dest]').focus(false, true);
 		
 		/*var timeEdit = edit.down('wbform').down('textfield[name=courtimef]');
 		timeEdit.setReadOnly(true);
@@ -425,21 +431,21 @@ Ext.define('FPClient.controller.OrdsCont', {
 		timeEdit.setValue('19:00');*/
 		
 		//auto sender begin
-		client = this.getClientStStore().first();
+		//client = this.getClientStStore().first();
 		//мухлеж
-		client.set('org', client.get('city'));
-		client.set('orgcode', client.get('cityid'));
+		//client.set('org', client.get('city'));
+		//client.set('orgcode', client.get('cityid'));
 		
-		form_ord = edit.down('wbform');
-		form_ord.loadRecord(client);
+		//form_ord = edit.down('wbform');
+		//form_ord.loadRecord(client);
 		
-		var cb_org = form_ord.down('combocity[name=org]');
+		/*var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
 			params : {
 				query : client.get('org')
 			}
 		});
-		cb_org.select(client.get('orgcode'));
+		cb_org.select(client.get('orgcode'));*/
 		//auto sender end
 	},
 	openTpl : function (btn) {
@@ -602,6 +608,70 @@ Ext.define('FPClient.controller.OrdsCont', {
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+		}
+	},
+	saveWebWb : function (btn) {
+		var me = this;
+		var win = btn.up('wbwin');
+		var form_ord = win.down('wbform');
+		/*var form_lf = win.down('loadfileform');
+		var org = form_ord.down('combocity[name=org]');
+		var dest = form_ord.down('combocity[name=dest]');*/
+		/*if (org.value == null) {
+			var jsonArrayOrg = this.getCityStOrgStore().data.items;
+			if (jsonArrayOrg.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			};
+			for (var i = 0; i < jsonArrayOrg.length; i++) {
+				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+					org.setValue(jsonArrayOrg[i].data.code);
+					break;
+				};
+			};
+			if (org.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			};
+		}*/
+	/*	if (dest.value == null) {
+			var jsonArrayDes = this.getCityStDesStore().data.items;
+			if (jsonArrayDes.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			};
+			for (var i = 0; i < jsonArrayDes.length; i++) {
+				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+					dest.setValue(jsonArrayDes[i].data.code);
+					break;
+				};
+			};
+			if (dest.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			};
+		}*/
+		if (form_ord.getForm().isValid()) {
+			form_ord.submit({
+				url : 'srv/data.php',
+				params : {
+					dbAct : 'SetWebWB'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					
+						form.reset();
+						me.getWbForm().up('wbwin').close();
+						//me.loadOrdGr();
+						Ext.Msg.alert('Веб накладная сохранена!', action.result.msg);
+					
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Веб накладная не сохранена!', action.result.msg);
 				}
 			});
 		} else {

@@ -179,12 +179,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum";
 			break;
-		case 'SetWebWB':
-			$id=$params['id'];
+		case 'SetWebWB':			
+			$id=$params['id'] ? $params['id'] : 0;
 			$wb_no=$params['wb_no'];			
-			$ord_no=$params['ord_no'];
+			$ord_no=$params['ord_no'] ? $params['ord_no'] : 0;
 			$org=$params['org'];
-			$s_city=$params['s_city'];
+			$s_city=$params['org'];//$params['s_city'];
 			$s_name=$params['s_name'];
 			$s_tel=$params['s_tel'];
 			$s_co=$params['s_co'];
@@ -192,7 +192,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$s_ref=$params['s_ref'];
 			$s_mail=$params['s_mail'];
 			$dest=$params['dest'];
-			$r_city=$params['r_city'];
+			$r_city=$params['dest'];//$params['r_city'];
 			$r_name=$params['r_name'];
 			$r_tel=$params['r_tel'];
 			$r_co=$params['r_co'];
@@ -207,31 +207,31 @@ if (!isset($_REQUEST['dbAct'])) {
 			$UserIn= $_SESSION['xUser'];
 			$ag=$_SESSION['xAgentID'];	
 				
-			$query = "exec wwwSetWb
+			$query = "exec wwwClientSetWb
 			 @ID = $id
 			,@Wb_No = '$wb_no'
 			,@Ord_No = $ord_no
 			,@ORG = '$org'
 			,@S_City = '$s_city'
 			,@S_Name = '$s_name'
-			,@S_Tel = ''
-			,@S_Co = ''
-			,@S_Adr = ''
-			,@S_Ref = ''
-			,@S_Mail = ''
-			,@DEST = ''
-			,@R_City = ''
-			,@R_Name = ''
-			,@R_Tel = ''
-			,@R_Co = ''
-			,@R_Adr = ''
-			,@R_Ref = ''
-			,@R_Mail = ''
-			,@User_IN = ''			
-			,@WT = 
-			,@VOL_WT =
-			,@PCS =
-			,@T_PAC = ''";
+			,@S_Tel = '$s_tel'
+			,@S_Co = '$s_co'
+			,@S_Adr = '$s_adr'
+			,@S_Ref = '$s_ref'
+			,@S_Mail = '$s_mail'
+			,@DEST = '$dest'
+			,@R_City = '$r_city'
+			,@R_Name = '$r_name'
+			,@R_Tel = '$r_tel'
+			,@R_Co = '$r_co'
+			,@R_Adr = '$r_adr'
+			,@R_Ref = '$r_ref'
+			,@R_Mail = '$r_mail'
+			,@User_IN = '$UserIn'			
+			,@WT = $wt
+			,@VOL_WT = $vol_wt
+			,@PCS = $pcs
+			,@T_PAC = $t_pac";
 			break;	
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
