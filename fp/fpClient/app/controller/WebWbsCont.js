@@ -1,6 +1,6 @@
 Ext.define('FPClient.controller.WebWbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['webwbs.WebWbsGrid', 'mainform.MainPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'webwbs.WebWbsTool', 'orders.WbWin', 'orders.WbForm'],
+	views : ['webwbs.WebWbsGrid', 'mainform.MainPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'webwbs.WebWbsTool', 'webwbs.WbWin', 'webwbs.WbForm'],
 	models : ['WebWbMod'],
 	stores : ['WebWbSt'],
 	refs : [ 
@@ -34,9 +34,20 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			},
 			'webwbsgrid > tableview' : {
 				itemdblclick : this.dblclickWebWbsGr
+			},
+			'wbwin button[action=save]' : {
+				click : this.saveWebWb
+			},
+			'ordgrid button[action=wbnew]' : {
+				click : this.openWbWin
 			}
 		});
-	},	
+	},
+	openWbWin : function (btn) {
+		var edit = Ext.widget('wbwin');
+		edit.show();		
+		edit.down('wbform').down('combocity[name=dest]').focus(false, true);		
+	},
 	dblclickWebWbsGr : function (me, rec) {
 		var sm = this.getWebWbsGrid().getSelectionModel();
 		if (sm.getCount() > 0) {
@@ -74,6 +85,33 @@ Ext.define('FPClient.controller.WebWbsCont', {
 		var ye = aTol.down('numyear').value;
 		this.loadWebWbs(ye, mo);
 		
+	},
+	saveWebWb : function (btn) {
+		var me = this;
+		var win = btn.up('wbwin');
+		var form_ord = win.down('wbform');		
+		if (form_ord.getForm().isValid()) {
+			form_ord.submit({
+				url : 'srv/data.php',
+				params : {
+					dbAct : 'SetWebWB'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					
+						form.reset();
+						me.getWbForm().up('wbwin').close();
+						//me.loadOrdGr();
+						Ext.Msg.alert('Веб накладная сохранена!', action.result.msg);
+					
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Веб накладная не сохранена!', action.result.msg);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
+		}
 	},
 	loadWebWbs : function (y, m) {
 		this.getWebWbStStore().load({

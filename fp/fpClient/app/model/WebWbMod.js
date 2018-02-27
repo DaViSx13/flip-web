@@ -51,9 +51,9 @@ Ext.define('FPClient.model.WebWbMod', {
 		},/* {
 			name : 'r_cnt',
 			type : 'string'
+		},*/ {
+			name : 'r_ref'
 		}, {
-			name : 'r_zip'
-		}, */{
 			name : 'r_city',
 			type : 'string'
 		},/* {

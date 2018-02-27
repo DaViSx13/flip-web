@@ -204,8 +204,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			$r_adr=$params['r_adr'];
 			$r_ref=$params['r_ref'];
 			$r_mail=$params['r_mail'];
-			$t_pac=$params['t_pac'];
 			
+			$t_pac=isset($params['t_pac']) ? $params['t_pac'] : 0;
 			$vol_wt=$params['vol_wt'] ? $params['vol_wt'] : 0;	
 			$wt=$params['wt'] ? $params['wt'] : 0;
 			$pcs=$params['pcs'] ? $params['pcs'] : 0;

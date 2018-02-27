@@ -1,8 +1,8 @@
-Ext.define('FPClient.view.orders.WbWin', {
+Ext.define('FPClient.view.webwbs.WbWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.wbwin',
-	requires : ['FPClient.view.orders.WbForm'],
+	requires : ['FPClient.view.webwbs.WbForm'],
 	title : 'Новая веб накладная',
 	layout : 'vbox',
 	autoShow : true,
