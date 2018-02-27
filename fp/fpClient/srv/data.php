@@ -104,6 +104,11 @@ if (!isset($_REQUEST['dbAct'])) {
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
             $query = "exec [wwwClientGetAgOrders] @period='$params[newPeriod]', @clientID={$ag}";
             break;
+		case 'GetWebWbs':
+            $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
+            $query = "exec [wwwClientGetWebWbs] @period='$params[newPeriod]', @clientID={$ag}";
+            break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];

@@ -1,8 +1,8 @@
 Ext.define('FPClient.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.WebWbGrid', 'orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.WbWin', 'orders.WbForm'],
-	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.WbWin', 'orders.WbForm'],
+	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'WebWbMod'],
+	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt', 'WebWbSt'],
 	refs : [{
 			ref : 'WbForm',
 			selector : 'wbform'
@@ -48,9 +48,6 @@ Ext.define('FPClient.controller.OrdsCont', {
 		}, {
 			ref : 'WbsGrid',
 			selector : 'wbsgrid'
-		},{
-			ref : 'WebWbGrid',
-			selector : 'webwbgrid'
 		}, {
 			ref : 'OrdGrid',
 			selector : 'ordgrid'
