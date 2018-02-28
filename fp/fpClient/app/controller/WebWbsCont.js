@@ -101,7 +101,7 @@ Ext.define('FPClient.controller.WebWbsCont', {
 					
 						form.reset();
 						me.getWbForm().up('wbwin').close();
-						//me.loadOrdGr();
+						me.loadWebWbGr();
 						Ext.Msg.alert('Веб накладная сохранена!', action.result.msg);
 					
 				},
