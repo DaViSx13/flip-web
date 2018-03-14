@@ -1,7 +1,7 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 02/26/2018 14:44:49 ******/
+/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 03/14/2018 13:09:10 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwClientGetWebWbs]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[wwwClientGetWebWbs]
 GO
@@ -9,7 +9,7 @@ GO
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 02/26/2018 14:44:49 ******/
+/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 03/14/2018 13:09:10 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -37,16 +37,16 @@ set @eDate = DATEADD(m,1,@bDate)
 SELECT [id]
       ,[wb_no]
       ,[ord_no]
-      ,[org]
-      ,[s_city]
+      ,s_city_id  
+      ,[s_city] as org
       ,[s_name]
       ,[s_tel]
       ,[s_co]
       ,[s_adr]
       ,[s_ref]
       ,[s_mail]
-      ,[dest]
-      ,[r_city]
+      ,r_city_id
+      ,[r_city] as dest
       ,[r_name]
       ,[r_tel]
       ,[r_co]
@@ -58,11 +58,12 @@ SELECT [id]
       ,[wt]
       ,[vol_wt]
       ,[pcs]
-      ,[t_pac]    
+      ,[t_pac] as type   
   FROM wwwClientWB
   where [Date_IN] >= @bDate and [Date_IN] < @eDate
   and (@agID = -1 or ([User_IN]=@aUser))
   order by id desc
+
 
 GO
 GRANT EXECUTE ON [dbo].[wwwClientGetWebWbs] TO [pod] AS [dbo]

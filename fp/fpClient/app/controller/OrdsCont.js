@@ -634,15 +634,16 @@ Ext.define('FPClient.controller.OrdsCont', {
 				query : cb_org.getValue()
 			}
 		});
-		cb_org.select(rec[0].data['orgcode']);
+		cb_org.select(rec[0].data['orgcode']);		
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params : {
 				query : cb_des.getValue()
 			}
-		});
+		});		
 		cb_des.select(rec[0].data['destcode']);
 		form_ord.down('combocity[name=org]').focus(false, true);
+		//console.log(rec[0]);
 	},
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();

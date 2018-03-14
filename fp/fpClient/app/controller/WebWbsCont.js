@@ -1,8 +1,8 @@
 Ext.define('FPClient.controller.WebWbsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['webwbs.WebWbsGrid', 'mainform.MainPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'webwbs.WebWbsTool', 'webwbs.WbWin', 'webwbs.WbForm'],
-	models : ['WebWbMod'],
-	stores : ['WebWbSt'],
+	models : ['WebWbMod', 'CityMod'],
+	stores : ['WebWbSt', 'CityStOrg', 'CityStDes', 'TypeSt'],
 	refs : [ 
 		{
 			ref : 'WebWbsGrid',
@@ -19,6 +19,12 @@ Ext.define('FPClient.controller.WebWbsCont', {
 		}, {
 			ref : 'WbForm',
 			selector : 'wbform'
+		}, {
+			ref : 'ComboCity',
+			selector : 'combocity[name=org]'
+		}, {
+			ref : 'ComboCity',
+			selector : 'combocity[name=dest]'
 		}
 	],
 	init : function () {
@@ -54,14 +60,35 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			//if (rec.get('active') > 0) {
 				var w = Ext.widget('wbwin');
 				w.setTitle('Редактирование:  ' + rec.get('wb_no'));
-				w.show();
-				var f = this.getWbForm();
+				
+				
 				/*
 				f.down('#changepass').show();
 				f.down('textfield[name=passfirst]').disable();
 				f.down('textfield[name=passsecond]').disable();*/
 
+				var f = this.getWbForm();
 				f.loadRecord(rec);
+				
+				var cb_org = f.down('combocity[name=org]');
+				cb_org.store.load({
+					params : {
+						query : cb_org.getValue()
+					}
+				});
+				
+				cb_org.select(rec.data['s_city_id']);
+				var cb_dest = f.down('combocity[name=dest]');
+				cb_dest.store.load({
+					params : {
+						query : cb_dest.getValue()
+					}
+				});
+				
+				cb_dest.select(rec.data['r_city_id']);
+				//console.log(rec);
+				w.show();
+				
 				//f.down('textfield[name=agents]').setReadOnly(true);
 			/*} else {
 				Ext.Msg.alert('Запись блокирована', 'Разблокируйте запись перед внесением корректировок')
@@ -89,7 +116,43 @@ Ext.define('FPClient.controller.WebWbsCont', {
 	saveWebWb : function (btn) {
 		var me = this;
 		var win = btn.up('wbwin');
-		var form_ord = win.down('wbform');		
+		var form_ord = win.down('wbform');	
+		var org = form_ord.down('combocity[name=org]');
+		var dest = form_ord.down('combocity[name=dest]');
+		if (org.value == null) {
+			var jsonArrayOrg = this.getCityStOrgStore().data.items;
+			if (jsonArrayOrg.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			};
+			for (var i = 0; i < jsonArrayOrg.length; i++) {
+				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+					org.setValue(jsonArrayOrg[i].data.code);
+					break;
+				};
+			};
+			if (org.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			};
+		}
+		if (dest.value == null) {
+			var jsonArrayDes = this.getCityStDesStore().data.items;
+			if (jsonArrayDes.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			};
+			for (var i = 0; i < jsonArrayDes.length; i++) {
+				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+					dest.setValue(jsonArrayDes[i].data.code);
+					break;
+				};
+			};
+			if (dest.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			};
+		}
 		if (form_ord.getForm().isValid()) {
 			form_ord.submit({
 				url : 'srv/data.php',
@@ -101,7 +164,7 @@ Ext.define('FPClient.controller.WebWbsCont', {
 					
 						form.reset();
 						me.getWbForm().up('wbwin').close();
-						//me.loadOrdGr();
+						me.loadWebWbGr();
 						Ext.Msg.alert('Веб накладная сохранена!', action.result.msg);
 					
 				},

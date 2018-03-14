@@ -25,12 +25,13 @@ Ext.define('FPClient.model.WebWbMod', {
 		}, {
 			name : 's_adr',
 			type : 'string'
-		},/* {
-			name : 's_cnt',
-			type : 'string'
 		}, {
-			name : 's_zip'
-		},*/ {
+			name : 's_city_id',
+			type : 'int'
+		}, {
+			name : 'r_city_id',
+			type : 'int'
+		}, {
 			name : 's_ref',
 			type : 'string'
 		}, {
@@ -78,8 +79,8 @@ Ext.define('FPClient.model.WebWbMod', {
 			name : 'pers',
 			type : 'string'
 		},*/ {
-			name : 't_pak',
-			type : 'string'
+			name : 'type',//'t_pak',
+			type : 'int'
 		},/* {
 			name : 'rcpn',
 			type : 'string'

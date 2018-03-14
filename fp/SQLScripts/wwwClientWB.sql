@@ -1,7 +1,15 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  Table [dbo].[wwwClientWB]    Script Date: 02/19/2018 14:16:37 ******/
+/****** Object:  Table [dbo].[wwwClientWB]    Script Date: 03/14/2018 13:01:02 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwClientWB]') AND type in (N'U'))
+DROP TABLE [dbo].[wwwClientWB]
+GO
+
+USE [ALERT_F]
+GO
+
+/****** Object:  Table [dbo].[wwwClientWB]    Script Date: 03/14/2018 13:01:02 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -16,6 +24,7 @@ CREATE TABLE [dbo].[wwwClientWB](
 	[Wb_No] [varchar](50) NOT NULL,
 	[Ord_No] [int] NOT NULL,
 	[ORG] [varchar](5) NOT NULL,
+	[S_City_ID] [int] NULL,
 	[S_City] [varchar](200) NOT NULL,
 	[S_Name] [varchar](20) NOT NULL,
 	[S_Tel] [varchar](50) NOT NULL,
@@ -24,6 +33,7 @@ CREATE TABLE [dbo].[wwwClientWB](
 	[S_Ref] [varchar](300) NULL,
 	[S_Mail] [varchar](200) NULL,
 	[DEST] [varchar](5) NOT NULL,
+	[R_City_ID] [int] NULL,
 	[R_City] [varchar](200) NOT NULL,
 	[R_Name] [varchar](20) NOT NULL,
 	[R_Tel] [varchar](50) NOT NULL,
@@ -36,7 +46,8 @@ CREATE TABLE [dbo].[wwwClientWB](
 	[WT] [float] NOT NULL,
 	[VOL_WT] [float] NULL,
 	[PCS] [int] NULL,
-	[T_PAC] [varchar](3) NULL,
+	[T_PAC] [int] NULL	
+	
  CONSTRAINT [PK_wwwClientWB] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

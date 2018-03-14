@@ -30,7 +30,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 					xtype : 'combocity',
 					name : 'org',
 					store : 'CityStOrg',
-					allowBlank : true
+					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 337,
@@ -38,7 +38,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 					fieldLabel : 'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 337,
@@ -46,7 +46,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 					maxLength : 70,
 					fieldLabel : 'Адрес',
 					labelAlign : 'top',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 329,
@@ -55,7 +55,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 					maxLength : 50,
 					labelAlign : 'top',
 					anchor : '100%',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					name : 's_mail',
@@ -70,7 +70,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 					fieldLabel : 'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'textareafield',
 					name : 's_ref',
@@ -91,7 +91,8 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 			items : [{
 					xtype : 'combocity',
 					name : 'dest',
-					store : 'CityStDes'
+					store : 'CityStDes',
+					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					width : 337,
@@ -155,10 +156,10 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 			layout : 'anchor',
 			items : [{
 					xtype : 'combobox',
-					name : 't_pac',
+					name : 'type',
 					displayField : 'Name',
 					valueField : 'lowName',
-					allowBlank : true,
+					allowBlank : false,
 					forceSelection : true,
 					editable : false,
 					fieldLabel : 'Тип груза',

@@ -1,7 +1,7 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwClientSetWb]    Script Date: 02/21/2018 12:32:58 ******/
+/****** Object:  StoredProcedure [dbo].[wwwClientSetWb]    Script Date: 03/14/2018 13:08:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwClientSetWb]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[wwwClientSetWb]
 GO
@@ -9,7 +9,7 @@ GO
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwClientSetWb]    Script Date: 02/21/2018 12:32:58 ******/
+/****** Object:  StoredProcedure [dbo].[wwwClientSetWb]    Script Date: 03/14/2018 13:08:03 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -21,16 +21,16 @@ CREATE procedure [dbo].[wwwClientSetWb]
 	@ID int,
 	@Wb_No varchar(50),
 	@Ord_No int,
-	@ORG varchar(5),
-	@S_City varchar(200),
+	--@ORG varchar(5),
+	@S_City_ID int,
 	@S_Name varchar(20),
 	@S_Tel varchar(50),
 	@S_Co varchar(40),
 	@S_Adr varchar(200),
 	@S_Ref varchar(300),
 	@S_Mail varchar(200),
-	@DEST varchar(5),
-	@R_City varchar(200),
+	--@DEST varchar(5),
+	@R_City_ID int,
 	@R_Name varchar(20),
 	@R_Tel varchar(50),
 	@R_Co varchar(40),
@@ -44,12 +44,25 @@ CREATE procedure [dbo].[wwwClientSetWb]
 	@PCS int,
 	@T_PAC int
 AS
+declare @ORG varchar(5), @S_City varchar(200), @DEST varchar(5), @R_City varchar(200)
 BEGIN TRY
 BEGIN TRAN
 if @S_Mail='' set @S_Mail=null
 if @R_Mail='' set @R_Mail=null
-if @T_PAC = 0 set @T_PAC=null else set @T_PAC=null
-if @Wb_No = '' set @Wb_No = 'test'
+--if @T_PAC = 0 set @T_PAC=null else set @T_PAC=null
+--if @Wb_No = '' set @Wb_No = 'test'
+
+select @ORG = c.Code, @S_City = c.RusName from N_City c where c.id=@S_City_ID
+select @DEST = c.Code, @R_City = c.RusName from N_City c where c.id=@R_City_ID
+
+/*if @clientID is not null and @clientID <> '' 
+  begin
+  select 
+      @CACC = CACC
+    , @UserIn = aUser
+    , @Payr = agentID
+  from wwwClientUser where userID = @clientID*/
+
 
 
 if @ID >0
@@ -65,6 +78,7 @@ if not exists(select 1 from wwwClientWB where ID = @ID /*and Status > 0*/)
 UPDATE [ALERT_F].[dbo].[wwwClientWB]
    SET [Wb_No] = @Wb_No
       ,[Ord_No] = @Ord_No
+      ,S_City_ID = @S_City_ID
       ,[ORG] = @ORG
       ,[S_City] = @S_City
       ,[S_Name] = @S_Name
@@ -73,6 +87,7 @@ UPDATE [ALERT_F].[dbo].[wwwClientWB]
       ,[S_Adr] = @S_Adr
       ,[S_Ref] = @S_Ref
       ,[S_Mail] = @S_Mail
+      ,R_City_ID=@R_CIty_ID
       ,[DEST] = @DEST
       ,[R_City] = @R_City
       ,[R_Name] = @R_Name
@@ -96,6 +111,7 @@ begin
 INSERT INTO [ALERT_F].[dbo].[wwwClientWB]
            ([Wb_No]
            ,[Ord_No]
+           ,S_City_ID
            ,[ORG]
            ,[S_City]
            ,[S_Name]
@@ -104,6 +120,7 @@ INSERT INTO [ALERT_F].[dbo].[wwwClientWB]
            ,[S_Adr]
            ,[S_Ref]
            ,[S_Mail]
+           ,R_City_ID
            ,[DEST]
            ,[R_City]
            ,[R_Name]
@@ -119,8 +136,9 @@ INSERT INTO [ALERT_F].[dbo].[wwwClientWB]
            ,[PCS]
            ,[T_PAC])
      VALUES
-           (@Wb_No
+           (''
            ,@Ord_No
+           ,@S_City_ID
            ,@ORG
            ,@S_City
            ,@S_Name
@@ -129,6 +147,7 @@ INSERT INTO [ALERT_F].[dbo].[wwwClientWB]
            ,@S_Adr
            ,@S_Ref
            ,@S_Mail
+           ,@R_City_ID
            ,@DEST
            ,@R_City
            ,@R_Name
@@ -159,6 +178,7 @@ BEGIN CATCH
            1);
             
 END CATCH
+
 
 GO
 GRANT EXECUTE ON [dbo].[wwwClientSetWb] TO [pod] AS [dbo]
