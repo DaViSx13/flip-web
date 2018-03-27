@@ -150,7 +150,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			$courtimet=$params['courtimet'];
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];
-
+			$webwb=$params['webwb'] ? $params['webwb'] : 0;
+			
 			if($courdate){
 				$d = explode('.', $courdate);
 				$courdate = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) );
@@ -182,7 +183,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
 			@UserIn=$UserIn,
-			@RordNum=$Rordnum";
+			@RordNum=$Rordnum,
+			@webwb=$webwb";
 			break;
 		case 'SetWebWB':			
 			$id=$params['id'] ? $params['id'] : 0;

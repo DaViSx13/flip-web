@@ -148,7 +148,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 			height : 150,
 			width : 360,
 			title : 'Информация о грузе',
-			x : 390,
+			x : 10,
 			y : 390,
 			defaults : {
 				anchor : '100%'

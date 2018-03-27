@@ -137,7 +137,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 120,
+			height : 90,
 			width : 360,
 			title : 'Дата приезда курьера',
 			x : 10,
@@ -153,18 +153,36 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					startDay : 1,
 					format : 'd.m.Y'
 				}, {
+					xtype : 'fieldset',
+					layout: 'hbox',
+					border: 0,
+					padding:  '1 1 1 1',					
+					items : [
+					
+					{
 					xtype : 'textfield',
 					name : 'courtimef',
 					fieldLabel : 'Время с',
+					labelWidth:  60,
+					width : 150,
 					vtype: 'time'
 				}, {
 					xtype : 'textfield',
 					name : 'courtimet',
+					labelWidth:  60,
+					padding:  '0 0 0 30',
 					fieldLabel : 'Время до',
+					width : 150,
 					vtype: 'time'
 				}
+					
+					
+					]
+				}
 			]
-		}, {
+		}, 
+		
+		{
 			xtype : 'fieldset',
 			height : 150,
 			width : 360,
@@ -211,18 +229,15 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			x : 10,
 			y : 510,
 			width : 360
-		}/*,{
-		x : 10,
-		y : 560,
-        xtype: 'filefield',
-        name: 'lf',
-        fieldLabel: 'Файл',
-        labelWidth: 50,
-        msgTarget: 'side',
-        
-        //anchor: '100%',
-		width : 700,
-        buttonText: 'Выберите файл'
-    }*/
+		}, {
+			xtype : 'checkboxfield',
+			boxLabel : 'Оформить веб накладную',
+			name : 'webwb',
+			inputValue: 1,
+			uncheckedValue: 0,
+			x : 10,
+			y : 486//,
+			//width : 360
+		}
 	]
 });

@@ -14,9 +14,23 @@ Ext.define('FPClient.model.OrdsMod', {
 		}, {
 			name : 'cname'
 		}, {
+			name : 's_adr',
+			type : 'string'
+		}, {
+			name : 's_name',
+			type : 'string'
+		}, {
+			name : 's_mail',
+			type : 'string'
+		}, {
+			name : 's_tel',
+			type : 'string'
+		}, {
 			name : 'destcity'
 		}, {
 			name : 'dname'
+		}, {
+			name : 'type'
 		}, {
 			name : 'packs',
 			type : 'int'
@@ -29,6 +43,9 @@ Ext.define('FPClient.model.OrdsMod', {
 		}, {
 			name : 'wb_no',
 			type : 'string'
+		}, {
+			name : 'org',
+			type : 'int'
 		}
 	]
 });

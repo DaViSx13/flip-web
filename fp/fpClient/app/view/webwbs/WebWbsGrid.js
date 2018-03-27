@@ -7,11 +7,11 @@ Ext.define('FPClient.view.webwbs.WebWbsGrid', {
 	columns : [{
 			text : '№ Накладной',
 			dataIndex : 'wb_no',
-			width : 200
+			width : 80
 		}, {
 			text : 'ORG',
 			dataIndex : 'org',
-			width : 50
+			width : 150
 		}, {
 			text : 'Отправитель',
 			dataIndex : 's_co',
@@ -19,34 +19,37 @@ Ext.define('FPClient.view.webwbs.WebWbsGrid', {
 		}, {
 			text : 'DEST',
 			dataIndex : 'dest',
-			width : 50
+			width : 150
 		}, {
 			text : 'Получатель',
 			dataIndex : 'r_co',
 			flex : 1
-		}/*, {
-			text : 'Мест',
+		}, {
+			text : 'Заказ',
 			xtype : 'numbercolumn',
 			format : '0',
-			dataIndex : 'shpcs',
+			dataIndex : 'ord_no',
 			width : 50
 		}, {
 			text : 'Вес',
 			xtype : 'numbercolumn',
 			format : '0.00',
-			dataIndex : 'shwt',
+			dataIndex : 'wt',
 			width : 50
 		}, {
 			text : 'V вес',
 			xtype : 'numbercolumn',
 			format : '0.00',
-			dataIndex : 'shvol_wt',
+			dataIndex : 'vol_wt',
 			width : 50
-		}*/
+		}
 	],
 	dockedItems : [{
 			xtype : 'webwbstool',
 			dock : 'top'
+		}, {
+			xtype : 'webwbstotal',
+			dock : 'bottom'
 		}
 	]
 });

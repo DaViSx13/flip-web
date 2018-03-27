@@ -1,6 +1,6 @@
 Ext.define('FPClient.controller.WebWbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['webwbs.WebWbsGrid', 'mainform.MainPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'webwbs.WebWbsTool', 'webwbs.WbWin', 'webwbs.WbForm'],
+	views : ['webwbs.WebWbsGrid', 'mainform.MainPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'webwbs.WebWbsTool', 'webwbs.WbWin', 'webwbs.WbForm', 'webwbs.WebWbsTotal'],
 	models : ['WebWbMod', 'CityMod'],
 	stores : ['WebWbSt', 'CityStOrg', 'CityStDes', 'TypeSt'],
 	refs : [ 
@@ -25,6 +25,9 @@ Ext.define('FPClient.controller.WebWbsCont', {
 		}, {
 			ref : 'ComboCity',
 			selector : 'combocity[name=dest]'
+		}, {
+			ref : 'WebWbsTotal',
+			selector : 'webwbstotal'
 		}
 	],
 	init : function () {
@@ -46,20 +49,59 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			},
 			'ordgrid button[action=wbnew]' : {
 				click : this.openWbWin
+			},
+			'webwbstool button[action=printwb]' : {
+				click : this.printWB
 			}
 		});
 	},
 	openWbWin : function (btn) {
-		var edit = Ext.widget('wbwin');
-		edit.show();		
-		edit.down('wbform').down('combocity[name=dest]').focus(false, true);		
+		
+				
+		
+		
+		var sm = btn.up('ordgrid').getSelectionModel();
+		if (sm.getCount() > 0) {
+			var edit = Ext.widget('wbwin');
+			edit.show();
+			var form = edit.down('wbform');
+			//form.down('textfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
+			form.down('textfield[name=ord_no]').setValue(sm.getSelection()[0].get('rordnum'));
+			
+			 
+				var cb_org = form.down('combocity[name=org]');
+				cb_org.setValue(sm.getSelection()[0].get('orgcity'));
+				cb_org.store.load({
+					params : {
+						query : cb_org.getValue()
+					}
+				});
+				cb_org.select(sm.getSelection()[0].get('org'));
+				
+			form.down('textfield[name=s_co]').setValue(sm.getSelection()[0].get('cname'));
+			form.down('textfield[name=s_adr]').setValue(sm.getSelection()[0].get('s_adr'));
+			form.down('textfield[name=s_name]').setValue(sm.getSelection()[0].get('s_name'));
+			form.down('textfield[name=s_mail]').setValue(sm.getSelection()[0].get('s_mail'));
+			form.down('textfield[name=s_tel]').setValue(sm.getSelection()[0].get('s_tel'));
+			form.down('combobox[name=type]').setValue(sm.getSelection()[0].get('type'));
+			form.down('textfield[name=pcs]').setValue(sm.getSelection()[0].get('packs'));
+			form.down('textfield[name=wt]').setValue(sm.getSelection()[0].get('wt'));
+			form.down('textfield[name=vol_wt]').setValue(sm.getSelection()[0].get('volwt'));
+			
+			
+			form.down('combocity[name=dest]').focus(false, true);
+			//console.log(sm.getSelection()[0]);
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите заказ');
+		}
+	
 	},
 	dblclickWebWbsGr : function (me, rec) {
 		var sm = this.getWebWbsGrid().getSelectionModel();
 		if (sm.getCount() > 0) {
 			//if (rec.get('active') > 0) {
 				var w = Ext.widget('wbwin');
-				w.setTitle('Редактирование:  ' + rec.get('wb_no'));
+				w.setTitle('Редактирование веб накладной №:  ' + rec.get('wb_no'));
 				
 				
 				/*
@@ -111,7 +153,9 @@ Ext.define('FPClient.controller.WebWbsCont', {
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadWebWbs(ye, mo);
-		
+		//var st = this.getWebWbStStore();
+		//var tt = this.getWebWbsTotal();
+		//tt.down('label').setText('Количество накладных: ' + st.getCount());
 	},
 	saveWebWb : function (btn) {
 		var me = this;
@@ -176,12 +220,40 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
 		}
 	},
+	printWB : function (btn) {
+		
+	//var record = this.getViewWbStStore().findRecord('wb_no', this.getViewWbForm().down('displayfield[name=wb_no]').value);
+	var sm = this.getWebWbsGrid().getSelectionModel();
+		if (sm.getCount() > 0) {
+			//console.log(sm.getSelection()[0].get('wb_no'));
+	window.open('srv/report.php?wbno='+sm.getSelection()[0].get('wb_no'));
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите запись в таблице');
+		}
+	},
 	loadWebWbs : function (y, m) {
+		var me = this;
+		
 		this.getWebWbStStore().load({
 			params : {
 				newPeriod : y + m
+			},
+			callback: function(records, operation, success) {        
+				var tt = me.getWebWbsTotal();
+				var sumwt = 0;
+				var sumvolwt = 0;				
+				
+				records.forEach(function(record) {
+                // do some operations
+				sumwt = sumwt + record.get('wt');
+				sumvolwt =  sumvolwt + record.get('vol_wt');
+				});
+				tt.down('label').setText('Количество накладных: ' + records.length + ' Сумма весов: '+ sumwt+' Сумма объемных весов: '+sumvolwt);
 			}
 		});
+		
+				//console.log(records[0].get('wt'));
+				//console.log(sum);
 	},
 	monthChange : function (comp, newz, oldz) {
 		var aTol = comp.up('webwbstool');
