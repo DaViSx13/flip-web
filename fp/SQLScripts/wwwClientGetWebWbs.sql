@@ -1,20 +1,17 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 03/14/2018 13:09:10 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwClientGetWebWbs]') AND type in (N'P', N'PC'))
+/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 28.03.2018 19:32:00 ******/
 DROP PROCEDURE [dbo].[wwwClientGetWebWbs]
 GO
 
-USE [ALERT_F]
-GO
-
-/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 03/14/2018 13:09:10 ******/
+/****** Object:  StoredProcedure [dbo].[wwwClientGetWebWbs]    Script Date: 28.03.2018 19:32:00 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 CREATE procedure [dbo].[wwwClientGetWebWbs]
 @period varchar(10), @clientID int
@@ -65,8 +62,7 @@ SELECT [id]
   order by id desc
 
 
+
 GO
 GRANT EXECUTE ON [dbo].[wwwClientGetWebWbs] TO [pod] AS [dbo]
 GO
-
-
