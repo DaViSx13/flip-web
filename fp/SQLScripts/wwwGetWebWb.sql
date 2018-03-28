@@ -88,5 +88,5 @@ SELECT [Wb_No]	--  1
 	select 0 as wbstatus
 
 GO
-GRANT EXECUTE ON [dbo].[wwwClientGetWebWbs] TO [pod] AS [dbo]
+GRANT EXECUTE ON [dbo].[wwwGetWebWb] TO [pod] AS [dbo]
 GO

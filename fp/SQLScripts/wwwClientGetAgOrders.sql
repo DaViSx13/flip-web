@@ -85,7 +85,7 @@ SELECT [ROrdNum]--
   order by ROrdNum desc
 
 GO
-GRANT EXECUTE ON [dbo].[wwwClientGetWebWbs] TO [pod] AS [dbo]
+GRANT EXECUTE ON [dbo].[wwwClientGetAgOrders] TO [pod] AS [dbo]
 GO
 
 

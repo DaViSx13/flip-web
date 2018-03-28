@@ -72,7 +72,7 @@ if not exists(select 1 from wwwClientWB where ID = @ID /*and Status > 0*/)
                );
 
 
-UPDATE [ALERT_F].[dbo].[wwwClientWB]
+UPDATE wwwClientWB
    SET [Wb_No] = @Wb_No
       ,[Ord_No] = @Ord_No
       ,S_City_ID = @S_City_ID
@@ -105,7 +105,7 @@ select ID=@ID
 end
 else
 begin
-INSERT INTO [ALERT_F].[dbo].[wwwClientWB]
+INSERT INTO wwwClientWB
            ([Wb_No]
            ,[Ord_No]
            ,S_City_ID
@@ -177,5 +177,5 @@ BEGIN CATCH
 END CATCH
 
 GO
-GRANT EXECUTE ON [dbo].[wwwClientGetWebWbs] TO [pod] AS [dbo]
+GRANT EXECUTE ON [dbo].[wwwClientSetWb] TO [pod] AS [dbo]
 GO

@@ -220,7 +220,7 @@ BEGIN CATCH
 END CATCH
 
 GO
-GRANT EXECUTE ON [dbo].[wwwClientGetWebWbs] TO [pod] AS [dbo]
+GRANT EXECUTE ON [dbo].[wwwSaveAgOrders] TO [pod] AS [dbo]
 GO
 
 
