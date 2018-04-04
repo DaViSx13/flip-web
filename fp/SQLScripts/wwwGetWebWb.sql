@@ -79,6 +79,7 @@ SELECT [Wb_No]	--  1
       ,'' as HolidayDel  -- 33      
       ,'' as INS  -- 34      
       ,@count as wbstatus  -- 35
+      ,'Номер заказа: ' + convert(varchar(50),m.Ord_No) as fp_ref
   FROM wwwClientWB m
   --left join Klient Kl1 on SCode=Kl1.CACC 
   --left join Klient Kl2 on RCode=Kl2.CACC 

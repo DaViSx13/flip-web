@@ -1,18 +1,24 @@
 USE [ALERT_F]
 GO
 
+/****** Object:  StoredProcedure [dbo].[wwwGetWb]    Script Date: 04/04/2018 08:44:20 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwGetWb]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[wwwGetWb]
 GO
 
+USE [ALERT_F]
+GO
+
+/****** Object:  StoredProcedure [dbo].[wwwGetWb]    Script Date: 04/04/2018 08:44:20 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
+
 CREATE PROCEDURE [dbo].[wwwGetWb]   -- отображает информацию по накладной
-@wb_no [varchar](11)
+@wb_no [varchar](50)
 
 AS
 declare @count int
@@ -79,6 +85,7 @@ SELECT [Wb_No]	--  1
        END as HolidayDel  -- 33      
       ,INS  -- 34      
       ,@count as wbstatus  -- 35
+      ,'' as fp_ref
   FROM [Main] m
   left join Klient Kl1 on SCode=Kl1.CACC 
   left join Klient Kl2 on RCode=Kl2.CACC 
@@ -86,8 +93,9 @@ SELECT [Wb_No]	--  1
  END
  ELSE
 	select 0 as wbstatus
-GO
 
+GO
 GRANT EXECUTE ON [dbo].[wwwGetWb] TO [pod] AS [dbo]
 GO
+
 
