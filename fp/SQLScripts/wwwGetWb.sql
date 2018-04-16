@@ -63,6 +63,7 @@ SELECT [Wb_No]	--  1
       ,[R_Cnt]  -- 17
       ,[R_Zip]  -- 18
       ,isnull(KL2.C_City,' л-т удален') as R_City -- 19
+      ,'' as [R_Ref]     
       ,[MetPaym]  -- 20
       ,[Payr]  -- 21      
       ,[T_SRV]  -- 22

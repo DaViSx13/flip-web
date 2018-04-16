@@ -59,6 +59,7 @@ SELECT [Wb_No]	--  1
       ,'' as R_Cnt -- 17
       ,'' as R_Zip  -- 18
       ,(select city + ', ' + country + case when [state] is null then '' else ', ' + [state] end from  VCity where VCity.cityId=m.R_City_ID) as R_City -- 19
+      ,[R_Ref]
       ,'' as MetPaym  -- 20
       ,'' as Payr  -- 21      
       ,'' as [T_SRV]  -- 22
