@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel'],
+	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TokenWin'],
 	models : ['MnfMod', 'WbMod'],
 	stores : ['MnfSt', 'aMonths', 'WbSt'],
 	refs : [{
@@ -51,6 +51,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			},
 			'admtool button[action=tariffs]' : {
 				click : this.downloadTariffs
+			},
+			'admtool button[action=token]' : {
+				click : this.loadTokenWin
 			}
 		});
 		this.getMnfStStore().on({
@@ -92,6 +95,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			});
 			
 		}
+	},
+	loadTokenWin : function (btn) {		
+		var newloadwin = Ext.widget('tokenwin').show();		
 	},
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({

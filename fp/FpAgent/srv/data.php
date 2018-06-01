@@ -1,7 +1,7 @@
 <?php
 include "errorhandler.php";
 
-//завязка
+//завязка_
 session_name("AGENTSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
@@ -199,6 +199,11 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetExCodes':
 			  
 			$query = "exec wwwGetExCodes";
+			break;
+		case 'SetToken':
+			$token = openssl_random_pseudo_bytes(16);
+			$token = bin2hex($token);			
+			$query = "exec wwwSetToken @token='{$token}'";
 			break;
 		case 'GetWbEx':
 			  
