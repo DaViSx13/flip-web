@@ -3,11 +3,11 @@ Ext.define('FPAgent.view.mainform.TokenWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.tokenwin',
 	requires : ['FPAgent.view.mainform.TokenForm'],
-	title : FPAgent.lib.Translate.tr("LoadWBWin.title"),//'Импорт информации о доставке',
+	title : FPAgent.lib.Translate.tr("Ключ для АПИ"),
 	layout : 'fit',
 	autoShow : true,
-	height : 270,
-	width : 500,
+	height : 100,
+	width : 510,
 	closable : false,
 	resizable : false,
 	modal : true,
@@ -17,10 +17,10 @@ Ext.define('FPAgent.view.mainform.TokenWin', {
 			}
 		];
 		this.buttons = [{
-				text : FPAgent.lib.Translate.tr("LoadWBWin.imp"),//'Импортировать',
+				text : FPAgent.lib.Translate.tr("Новый ключ"),
 				action : 'imp'
 			}, {
-				text : FPAgent.lib.Translate.tr("LoadWBWin.cancel"),//'Отмена',
+				text : FPAgent.lib.Translate.tr("Отмена"),
 				scope : this,
 				handler : this.close
 			}
