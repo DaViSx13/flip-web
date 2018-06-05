@@ -7,7 +7,7 @@ Ext.define('FPAgent.view.mainform.TokenWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 100,
-	width : 510,
+	width : 180,
 	closable : false,
 	resizable : false,
 	modal : true,
@@ -18,9 +18,9 @@ Ext.define('FPAgent.view.mainform.TokenWin', {
 		];
 		this.buttons = [{
 				text : FPAgent.lib.Translate.tr("Новый ключ"),
-				action : 'imp'
+				action : 'settoken'
 			}, {
-				text : FPAgent.lib.Translate.tr("Отмена"),
+				text : FPAgent.lib.Translate.tr("Закрыть"),
 				scope : this,
 				handler : this.close
 			}

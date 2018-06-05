@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TokenWin'],
+	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TokenWin', 'mainform.TokenForm'],
 	models : ['MnfMod', 'WbMod'],
 	stores : ['MnfSt', 'aMonths', 'WbSt'],
 	refs : [{
@@ -15,6 +15,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 		}, {
 			ref : 'MnfTool',
 			selector : 'mnftool'
+		}, {
+			ref : 'TokenForm',
+			selector : 'tokenform'
 		}
 	],
 	init : function () {
@@ -54,6 +57,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			},
 			'admtool button[action=token]' : {
 				click : this.loadTokenWin
+			},
+			'tokenwin button[action=settoken]' : {
+				click : this.setToken
 			}
 		});
 		this.getMnfStStore().on({
@@ -67,7 +73,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 	},
 	changeAgent : function (comp, newValue) {
 		var me = this;
-		if (comp.up('mainpanel').activeTab.title == FPAgent.lib.Translate.tr("MainPanel.mnfpanel")/*'Манифесты'*/) {
+		if (comp.up('mainpanel').activeTab.title == FPAgent.lib.Translate.tr("MainPanel.mnfpanel")/*'Манифесты'*/
+		)
+		{
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
@@ -90,41 +98,82 @@ Ext.define('FPAgent.controller.MnfCont', {
 					me.loadMnfAll(ye, mo, tab);
 				},
 				failure : function (response) {
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/
+					, response.statusText);
 				}
 			});
-			
+
 		}
 	},
-	loadTokenWin : function (btn) {		
-		var newloadwin = Ext.widget('tokenwin').show();		
+	loadTokenWin : function (btn) {
+		var win = Ext.widget('tokenwin').show();
+		Ext.Ajax.request({
+			url : 'srv/data.php',
+			params : {
+				dbAct : 'GetToken'
+			},
+			success : function (response) {
+				var text = Ext.decode(response.responseText);
+				var form = win.down('tokenform');
+				if (text.data[0].atoken != null) {
+					form.down('textfield[name=atoken]').setValue(text.data[0].atoken);
+				}
+			},
+			failure : function (response) {
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown"), response.statusText);
+			}
+		});
+
+	},
+	setToken : function (btn) {
+		var form = this.getTokenForm();
+		Ext.Msg.confirm("Перевыпуск ключа", "Внимание! АПИ будет работать только с новым ключем!", function (btnText) {
+			if (btnText === "yes") {
+				Ext.Ajax.request({
+					url : 'srv/data.php',
+					params : {
+						dbAct : 'SetToken'
+					},
+					success : function (response) {
+						var text = Ext.decode(response.responseText);
+						if (text.data[0].atoken != null) {
+							form.down('textfield[name=atoken]').setValue(text.data[0].atoken);
+						}
+					},
+					failure : function (response) {
+						Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown"), response.statusText);
+					}
+				});
+
+			}
+		}, this);
+
 	},
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({
 			params : {
-				//proc : 'GetMnf',
 				period : y + m,
 				is_Ready : tab
 			}
 		});
 	},
 	showHelp : function (btn) {
-	//получаем ид активного таба
+		//получаем ид активного таба
 		var tab = btn.up('mainpanel').getActiveTab();
 		var actIndex = tab.getId();
-	//тут смотрим и сопоставляем название таба с названием раздела хелпа	
-		var part = (actIndex.indexOf('wbsgrid')>-1)?'naklad':((actIndex.indexOf('ordspanel')>-1)?'zakaz':((actIndex.indexOf('mnfpane')>-1)?'manif':''));
-	//если не подходит ни 1 из разделов, то ссыль просто на хелп в целом	
-		var parthelp = (part!='')?('?'+part+'.html'):'';
-		window.open('help/index.html'+parthelp);
+		//тут смотрим и сопоставляем название таба с названием раздела хелпа
+		var part = (actIndex.indexOf('wbsgrid') > -1) ? 'naklad' : ((actIndex.indexOf('ordspanel') > -1) ? 'zakaz' : ((actIndex.indexOf('mnfpane') > -1) ? 'manif' : ''));
+		//если не подходит ни 1 из разделов, то ссыль просто на хелп в целом
+		var parthelp = (part != '') ? ('?' + part + '.html') : '';
+		window.open('help/index.html' + parthelp);
 	},
 	downloadTariffs : function (btn) {
 		window.location.href = 'srv/downloadTariffs.php';
 	},
 	loadMnf : function (ThePanel) {
 		this.openOutmnf(ThePanel.down('button[action=out]'));
-		if (this.getAdmTool().down('label').text == 'WEB Администратор'){
-		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);		
+		if (this.getAdmTool().down('label').text == 'WEB Администратор') {
+			this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);
 		}
 		this.getAdmTool().down('button[action=list]').setVisible(false);
 		this.getAdmTool().down('button[action=templ]').setVisible(false);
@@ -148,11 +197,12 @@ Ext.define('FPAgent.controller.MnfCont', {
 		this.loadMnfAll(ye, mo, 2);
 	},
 	gotoWb : function (pan, ntab) {
-		if (ntab.title == /*'Накладные'*/FPAgent.lib.Translate.tr("MainPanel.wbsgrid")) {
+		if (ntab.title == /*'Накладные'*/
+			FPAgent.lib.Translate.tr("MainPanel.wbsgrid")) {
 			//console.log(ntab.title);
 			//document.location.href = "../agent/work.php";
 		}
-		
+
 	},
 	openAllmnf : function (btn) {
 		btn.toggle(true);
@@ -205,9 +255,10 @@ Ext.define('FPAgent.controller.MnfCont', {
 	},
 	loadMnfStore : function (st, rec, suc) {
 		var tt = this.getTotalTool();
-		
-		tt.down('label').setText(FPAgent.lib.Translate.tr("MnfCont.MnfCount")/*'Количество манифестов: '*/ + st.getCount());
-		
+
+		tt.down('label').setText(FPAgent.lib.Translate.tr("MnfCont.MnfCount")/*'Количество манифестов: '*/
+			 + st.getCount());
+
 	},
 	loadWbStore : function (st, rec, suc) {
 		var tt = this.getTotalWb();
@@ -219,9 +270,13 @@ Ext.define('FPAgent.controller.MnfCont', {
 			sum_shwt += rec[i].data['shwt'];
 			sum_shvol_wt += rec[i].data['shvol_wt'];
 		}
-		tt.down('label[itemId=lab1]').setText(FPAgent.lib.Translate.tr("MnfCont.WbCount")/*'Количество накладных: '*/ + st.getCount());
-		tt.down('label[itemId=lab2]').setText(FPAgent.lib.Translate.tr("MnfCont.ShpcsCount")/*'Количество мест: '*/ + sum_shpcs);
-		tt.down('label[itemId=lab3]').setText(FPAgent.lib.Translate.tr("MnfCont.Shwt")/*'Общий вес: '*/ + Ext.util.Format.round(sum_shwt, 2));
-		tt.down('label[itemId=lab4]').setText(FPAgent.lib.Translate.tr("MnfCont.Shvol_wt")/*'Общий V вес: '*/ + Ext.util.Format.round(sum_shvol_wt, 2));
+		tt.down('label[itemId=lab1]').setText(FPAgent.lib.Translate.tr("MnfCont.WbCount")/*'Количество накладных: '*/
+			 + st.getCount());
+		tt.down('label[itemId=lab2]').setText(FPAgent.lib.Translate.tr("MnfCont.ShpcsCount")/*'Количество мест: '*/
+			 + sum_shpcs);
+		tt.down('label[itemId=lab3]').setText(FPAgent.lib.Translate.tr("MnfCont.Shwt")/*'Общий вес: '*/
+			 + Ext.util.Format.round(sum_shwt, 2));
+		tt.down('label[itemId=lab4]').setText(FPAgent.lib.Translate.tr("MnfCont.Shvol_wt")/*'Общий V вес: '*/
+			 + Ext.util.Format.round(sum_shvol_wt, 2));
 	}
 });

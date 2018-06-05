@@ -201,9 +201,14 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwGetExCodes";
 			break;
 		case 'SetToken':
+		    $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			$token = openssl_random_pseudo_bytes(16);
 			$token = bin2hex($token);			
-			$query = "exec wwwSetToken @token='{$token}'";
+			$query = "exec wwwSetToken @token='{$token}', @ag={$ag}";
+			break;
+		case 'GetToken':
+			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];			
+			$query = "exec wwwGetToken @ag={$ag}";
 			break;
 		case 'GetWbEx':
 			  

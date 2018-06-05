@@ -1,7 +1,7 @@
 Ext.define('FPAgent.view.mainform.TokenForm', {
 	alias : 'widget.tokenform',
 	extend : 'Ext.form.Panel',
-	width : 490,
+	width : 180,
 	height : 70,
 	layout : {
 		type : 'vbox'
@@ -9,14 +9,13 @@ Ext.define('FPAgent.view.mainform.TokenForm', {
 	bodyPadding : 5,
 	items : [
 	{
-        xtype: 'field',
-        name: 'uploadFile',
-        //fieldLabel: FPAgent.lib.Translate.tr("Ключ для АПИ"),//'Файл формата .xls; .xlsx; .csv до 1 Мб.',
-        //labelWidth: 230,
+        xtype: 'textfield',
+        name: 'atoken',     
         msgTarget: 'side',
-        allowBlank: false,
+        readOnly: true,
         anchor: '100%',
-		width : 480
+		selectOnFocus: true,		
+		width : 155
     }	
 	]
 });
