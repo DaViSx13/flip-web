@@ -1,7 +1,7 @@
 <?php
-Flight::route('GET /orders/@DateStart',['postController','getOrders']);
+Flight::route('GET /orders/@First/@Last',['postController','getOrders']);
 
-//Flight::route('GET /post/@post_id',['viewController','viewPost']);
+Flight::route('POST /orders/create',['postController','createOrder']);
 
 //Flight::route('GET /create',['viewController','createPost']);
 

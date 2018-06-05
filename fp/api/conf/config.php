@@ -2,8 +2,8 @@
 $config = [
     "db" => [
         "host" => "ROCKET",
-        "username" => "sa",
-        "password" => "1",
+        "username" => "pod",
+        "password" => "",
         "databasename" => "alert_f"
       ],
     "web" => [

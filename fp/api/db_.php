@@ -608,6 +608,7 @@ class SQLSRV_DataBase {
 		else {
 			//$this->has_rows = true;
 			$this->num_rows = mssql_num_rows( $result );
+			if ($this->num_rows > 0) {  
 			for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
 				}
@@ -623,8 +624,9 @@ class SQLSRV_DataBase {
                 }
                 
                 unset($response->fields);				
-
-			return json_encode($response->data);
+			
+			return /*json_encode(*/$response->data/*)*/;
+			} else {return null;}
 		}
 
 		
