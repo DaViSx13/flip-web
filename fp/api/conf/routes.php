@@ -1,9 +1,9 @@
 <?php
-Flight::route('GET /orders/@First/@Last',['postController','getOrders']);
+Flight::route('GET /orders/@First/@Last',['orderController','getOrders']);
 
-Flight::route('POST /orders/create',['postController','createOrder']);
+Flight::route('POST /orders/create',['orderController','createOrder']);
 
-//Flight::route('GET /create',['viewController','createPost']);
+Flight::route('GET /lists/city',['listController','getCity']);
 
 //Flight::route('POST /create',['postController','createPost']);
 

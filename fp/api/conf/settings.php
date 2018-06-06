@@ -6,15 +6,15 @@ Flight::path("controller/");
 
 Flight::register('db','SQLSRV_DataBase',[$config['db']['username'], $config['db']['password'], $config['db']['databasename'], $config['db']['host']]);
 
-//Flight::register("util","util");
+Flight::register("lists","listController");
 
 //Flight::register("auth","authController");
 
-Flight::register("posts","postController");
+Flight::register("orders","orderController");
 
 
 
-Flight::map('error', function(Exception $ex){
+/*Flight::map('error', function(Exception $ex){
 	class ErResp
 {
 	public $status = 'error';
@@ -25,7 +25,7 @@ $erresp = new ErResp();
     // Handle error
 	$erresp->message = $ex->getTraceAsString();
     echo Flight::json($erresp);// $ex->getTraceAsString();
-});
+});*/
 
 //Flight::register("users","userController");
 
