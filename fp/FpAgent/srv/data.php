@@ -202,7 +202,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'SetToken':
 		    $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
-			$token = openssl_random_pseudo_bytes(16);
+			$token = openssl_random_pseudo_bytes(32);
 			$token = bin2hex($token);			
 			$query = "exec wwwSetToken @token='{$token}', @ag={$ag}";
 			break;
