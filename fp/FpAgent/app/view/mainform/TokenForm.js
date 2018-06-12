@@ -1,7 +1,7 @@
 Ext.define('FPAgent.view.mainform.TokenForm', {
 	alias : 'widget.tokenform',
 	extend : 'Ext.form.Panel',
-	width : 180,
+	width : 200,
 	height : 70,
 	layout : {
 		type : 'vbox'
@@ -15,7 +15,7 @@ Ext.define('FPAgent.view.mainform.TokenForm', {
         readOnly: true,
         anchor: '100%',
 		selectOnFocus: true,		
-		width : 155
+		width : 227
     }	
 	]
 });

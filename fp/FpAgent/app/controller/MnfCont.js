@@ -60,6 +60,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			},
 			'tokenwin button[action=settoken]' : {
 				click : this.setToken
+			},
+			'tokenwin button[action=help]' : {
+				click : this.showAPIHelp
 			}
 		});
 		this.getMnfStStore().on({
@@ -156,6 +159,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 				is_Ready : tab
 			}
 		});
+	},
+	showAPIHelp : function (btn) {	
+		window.open('help/index.html?api.html');
 	},
 	showHelp : function (btn) {
 		//получаем ид активного таба

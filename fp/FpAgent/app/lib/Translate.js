@@ -1527,6 +1527,16 @@
         "stringID":  "WbsCont.s_flip_cash",
         "ru":  "тар флип оплата:",
         "en":  "tar flip cash:"
+    },
+    {
+        "stringID":  "AdmTool.token",
+        "ru":  "Ключ",
+        "en":  "Token"
+    },
+    {
+        "stringID":  "TokenWin.token_form_name",
+        "ru":  "Ключ для АПИ",
+        "en":  "Token for API"
     }
 ]
 

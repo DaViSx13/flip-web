@@ -90,6 +90,7 @@ AdmTool.templ;Шаблоны;Templates
 AdmTool.tariffs;Тарифы;Tariffs
 AdmTool.help;Помощь;Help
 AdmTool.logout;Выход;Exit
+AdmTool.token;Ключ;Token
 ComboAgent.fieldLabel;Выберите Агента;Select agent
 Loginformcontainer.title;ФлипПост WEB - список изменений;FlipPost WEB - list of changes
 MainPanel.wbsgrid;Накладные;Waybills
@@ -300,3 +301,4 @@ WbsGrid.ag_cash;оплата;cash
 WbsGrid.flip_cash;оплата;cash
 WbsCont.s_ag_cash;тар аг оплата:;tar ag cash:
 WbsCont.s_flip_cash;тар флип оплата:;tar flip cash:
+TokenWin.token_form_name;Ключ для АПИ;Token for API

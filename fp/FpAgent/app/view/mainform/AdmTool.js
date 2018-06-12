@@ -34,8 +34,8 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
 		},' ',		
 		'->',
 		{
-			//tooltip : FPAgent.lib.Translate.tr("AdmTool.tariffs"),//'Тарифы',
-			text : FPAgent.lib.Translate.tr("Ключ"),//'Тарифы',
+			tooltip : FPAgent.lib.Translate.tr("AdmTool.token"),
+			text : FPAgent.lib.Translate.tr("AdmTool.token"),
 			iconCls : 'key',
 			action : 'token',
 			xtype : 'button'
