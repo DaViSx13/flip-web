@@ -1,3 +1,4 @@
+
 <?php
 /**
 * User Controller
@@ -13,15 +14,15 @@ class Response
 	public $data = null;
 }
 
-class listController{
+class cityController{
 
     /**
     * Get User with Id
     * @param Int Id of User
     * @return User
     */
-    public static function getCity(){
-    $token = Flight::request()->query->token;
+    public static function getCities(){
+    //$token = Flight::request()->query->token;
     $sql = "exec wwwGetCity";//"exec wwwGetAgOrders @First='$First', @Last='$Last', @token='$token'";
     $result = Flight::db()->query($sql);
 	$response = new Response();
@@ -35,14 +36,16 @@ class listController{
      * @param  String $email Email
      * @return Object Return userobject or false
      */
-    public static function getUserWithEmail($email){
-      $sql = "SELECT * FROM user WHERE email = '$email'";
+    public static function serchCities($city, $state, $country){
+		
+      $sql = "exec wwwAPIgetCities @country='$country', @state = '$state', @city = '$city'";
+	  $sql = iconv("UTF-8", "windows-1251", $sql);
+      $sql = stripslashes($sql);
       $result = Flight::db()->query($sql);
-      if($result != false){
-        return new user($result->fetch_assoc());
-      }else {
-        return false;
-      }
+      $response = new Response();
+	$response->data = $result;
+	$response->status = 'success';
+    echo Flight::json($response);
     }
 
     /**

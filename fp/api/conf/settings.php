@@ -6,15 +6,15 @@ Flight::path("controller/");
 
 Flight::register('db','SQLSRV_DataBase',[$config['db']['username'], $config['db']['password'], $config['db']['databasename'], $config['db']['host']]);
 
-Flight::register("lists","listController");
+Flight::register("cities","cityController");
 
-//Flight::register("auth","authController");
+Flight::register("types","typeController");
 
 Flight::register("orders","orderController");
 
 
 
-/*Flight::map('error', function(Exception $ex){
+Flight::map('error', function(Exception $ex){
 	class ErResp
 {
 	public $status = 'error';
@@ -23,14 +23,20 @@ Flight::register("orders","orderController");
 }
 $erresp = new ErResp();
     // Handle error
-	$erresp->message = $ex->getTraceAsString();
-    echo Flight::json($erresp);// $ex->getTraceAsString();
-});*/
+	$erresp->message = $ex->getMessage();
+    echo Flight::json($erresp);
+});
 
 //Flight::register("users","userController");
 
 //Flight::set("flight.base_url",$config['web']['base_url']);
 
-//Flight::map('link',function($url){
- // echo Flight::get('flight.base_url').$url;
-//});
+Flight::map('checkToken',function($token){
+  $sql = "exec wwwCheckToken @token = '$token'";
+      $result = Flight::db()->query($sql);
+      //if($result != false){
+        return $result;
+     // }else {
+     //   return false;
+     // }
+});

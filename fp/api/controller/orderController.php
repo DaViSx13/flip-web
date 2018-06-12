@@ -14,48 +14,87 @@ class Response
 }
 
 
-class orderController{
-
-  /**
-  * Get all Posts from Database in Array
-  * @return Array Array with all Posts
-  */
-   public static function getOrders($First, $Last){
-    $token = Flight::request()->query->token;
-    $sql = "exec wwwGetAgOrders @First='$First', @Last='$Last', @token='$token'";
-    $result = Flight::db()->query($sql);
+class orderController{ 
+   public static function getOrders($First, $Last){    
+	$token = $_SERVER["HTTP_TOKEN"];
+	
+	$token = Flight::checkToken($token);
 	$response = new Response();
-	$response->data = $result;
-	$response->status = 'success';
+	if(isset($token)){		
+		$token = current($token);
+		$ag = $token['agentid'];		
+		$sql = "exec wwwGetAgOrders @agentID=$ag, @First='$First', @Last='$Last'";		
+		$result = Flight::db()->query($sql);
+		$response->data = $result;
+		$response->status = 'success';
+	} else {
+		$response->data = NULL;
+		$response->status = 'fail';
+	}	
+   echo Flight::json($response);
+  }
+  
+  public static function getOrder($ID){    
+	$token = $_SERVER["HTTP_TOKEN"];
+	
+	$token = Flight::checkToken($token);
+	$response = new Response();
+	if(isset($token)){		
+		$token = current($token);
+		$ag = $token['agentid'];		
+		$sql = "exec wwwEditAgOrders @id=$ID, @agent=$ag";		
+		$result = Flight::db()->query($sql);
+		$response->data = $result;
+		$response->status = 'success';
+	} else {
+		$response->data = NULL;
+		$response->status = 'fail';
+	}	
    echo Flight::json($response);
   }
   
   public static function createOrder(){
-    $token = Flight::request()->query->token;
-	$cname = Flight::request()->query->cname;
-	$rordnum = Flight::request()->query->rordnum;
+    $token = $_SERVER["HTTP_TOKEN"];	
+	$token = Flight::checkToken($token);
+	$response = new Response();
+	
+	$cname = Flight::request()->data->cname;	
+	$address = Flight::request()->data->address;
+	$org = Flight::request()->data->org;
+	$contname = Flight::request()->data->contname;
+	$contphone = Flight::request()->data->contphone;
+	
+	$contmail = Flight::request()->data->contmail;
+	$orgrems = Flight::request()->data->orgrems;
+	
+	$dest = Flight::request()->data->dest;	
+	$dname = Flight::request()->data->dname;
+	$dadr = Flight::request()->data->dadr;
+	$dcontname = Flight::request()->data->dcontname;
+	$dcontphone	= Flight::request()->data->dcontphone;
+	
+	$dcontmail = Flight::request()->data->dcontmail;
+	$destrems = Flight::request()->data->destrems;
+	
+	$type = Flight::request()->data->type;
+	$packs = Flight::request()->data->packs;
+	$wt = Flight::request()->data->wt;
+	
+	$volwt = Flight::request()->data->volwt;
+	$courdate = Flight::request()->data->courdate;
+	$courtimef = Flight::request()->data->courtimef;
+	$courtimet = Flight::request()->data->courtimet;
+	
+	$ag = Flight::request()->data->ag;
+	
+	$rordnum = Flight::request()->data->rordnum;
 	$rordnum = $rordnum ? $rordnum : 0;
-	$address = Flight::request()->query->address;
-	$org = Flight::request()->query->org;
-	$contname = Flight::request()->query->contname;
-	$contphone = Flight::request()->query->contphone;
-	$contmail = Flight::request()->query->contmail;
-	$orgrems = Flight::request()->query->orgrems;
-	$dest = Flight::request()->query->dest;
-	$dname = Flight::request()->query->dname;
-	$dadr = Flight::request()->query->dadr;
-	$dcontname = Flight::request()->query->dcontname;
-	$dcontphone	= Flight::request()->query->dcontphone;
-	$dcontmail = Flight::request()->query->dcontmail;
-	$destrems = Flight::request()->query->destrems;
-	$type = Flight::request()->query->type;
-	$packs = Flight::request()->query->packs;
-	$wt = Flight::request()->query->wt;
-	$volwt = Flight::request()->query->volwt;
-	$courdate = Flight::request()->query->courdate;
-	$courtimef = Flight::request()->query->courtimef;
-	$courtimet = Flight::request()->query->courtimet;
-	$ag = Flight::request()->query->ag;
+	
+	
+	if (isset($cname,$address,$org,$token)){
+	$token = current($token);
+	$userin = $token['auser'];	
+	
 	$sql = "exec wwwSaveAgOrders
 			@ORG='$org',
 			@CName='$cname',
@@ -78,11 +117,15 @@ class orderController{
 			@CourDate='$courdate',
 			@CourTimeF='$courtimef',
 			@CourTimeT='$courtimet',
-			@Payr=$ag,//--&&
+			@Payr=$ag,
 			@UserIn=$userin,
 			@RordNum=$rordnum";
-    $result = Flight::db()->query($sql);  
-    return $result;
+			
+	
+		echo $sql;
+	}
+    //$result = Flight::db()->query($sql);  
+    //return $result;
   }
 
   /**

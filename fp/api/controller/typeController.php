@@ -6,20 +6,27 @@
 * @author coeci
 *
 */
-
-class userController{
+class Response
+{
+	public $status = 'fail';    
+	public $data = null;
+}
+class typeController{
 
     /**
     * Get User with Id
     * @param Int Id of User
     * @return User
     */
-    public static function getUserWithId($id){
-      $sql = "SELECT * FROM user WHERE id = '$id'";
+    public static function getTypes(){
+      $sql = "SELECT 'Документ' as Name, 1 as Code union select 'Не документ' as Name, 0 as Code";
+	  $sql = iconv("UTF-8", "windows-1251", $sql);
+      $sql = stripslashes($sql);
       $result = Flight::db()->query($sql);
-      if($result != false){
-        return new user($result->fetch_assoc());
-      }
+	$response = new Response();
+	$response->data = $result;
+	$response->status = 'success';
+   echo Flight::json($response);
     }
 
     /**
@@ -27,11 +34,11 @@ class userController{
      * @param  String $email Email
      * @return Object Return userobject or false
      */
-    public static function getUserWithEmail($email){
-      $sql = "SELECT * FROM user WHERE email = '$email'";
+    public static function checkToken($token){
+      $sql = "exec checkToken @token = '$token'";
       $result = Flight::db()->query($sql);
       if($result != false){
-        return new user($result->fetch_assoc());
+        return $result;
       }else {
         return false;
       }

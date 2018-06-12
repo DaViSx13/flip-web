@@ -1,15 +1,15 @@
 <?php
 Flight::route('GET /orders/@First/@Last',['orderController','getOrders']);
 
-Flight::route('POST /orders/create',['orderController','createOrder']);
+Flight::route('POST /order/create',['orderController','createOrder']);
 
-Flight::route('GET /lists/city',['listController','getCity']);
+Flight::route('GET /cities',['cityController','getCities']);
 
-//Flight::route('POST /create',['postController','createPost']);
+Flight::route('GET /order/@ID',['orderController','getOrder']);
 
-//Flight::route('GET /profile',['viewController','author']);
+Flight::route('GET /cities(/@city(/@state(/@country)))',['cityController','serchCities']);
 
-//Flight::route('GET /author/@user_id',['viewController','author']);
+Flight::route('GET /types',['typeController','getTypes']);
 
 //Flight::route('GET /login',['viewController','login']);
 
