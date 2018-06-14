@@ -81,6 +81,9 @@ $fields[' Всего'] = 'tar_ag_t';
 $fields[' Оплата'] = 'ag_cash';
 $fields[' прим.'] = 'rem_ag';
 
+$fields[' Прим. отпр.'] = 's_ref';
+$fields[' Описание. отпр.'] = 'descr';
+
 $rowNo = 1;
 $startColNo = 1;
 
@@ -144,7 +147,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 $sharedStyle1 = new PHPExcel_Style();
 $lastRow = $rowNo-1;
 $sharedStyle1->applyFromArray($rowStyle);
-$worksheet->setSharedStyle($sharedStyle1, "A3:Y{$lastRow}");
+$worksheet->setSharedStyle($sharedStyle1, "A3:AA{$lastRow}");
 //итоги
 if ($lastRow > 3) {
 $startColNo = array_search('wt', array_values($fields));
