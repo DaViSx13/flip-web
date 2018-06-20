@@ -32,7 +32,7 @@ $erresp = new ErResp();
 //Flight::set("flight.base_url",$config['web']['base_url']);
 
 Flight::map('checkToken',function($token){
-  $sql = "exec wwwCheckToken @token = '$token'";
+  $sql = "exec wwwAPIcheckToken @token = '$token'";
       $result = Flight::db()->query($sql);
       //if($result != false){
         return $result;
