@@ -31,7 +31,7 @@ SELECT [AgOrders].[rordnum] as 'OrderNumber'
       ,[contname] as 'SenderContactName'
       ,[contphone] as 'SenderContactPhone'
 
-      ,SenderContacEMail= case ltrim([contmail]) when '' then null else [contmail] end
+      ,SenderContactEMail= case ltrim([contmail]) when '' then null else [contmail] end
       ,[orgrems] as 'SenderDescription'
 
    --   ,[paytype]
@@ -50,7 +50,7 @@ SELECT [AgOrders].[rordnum] as 'OrderNumber'
       ,[dcontname] as 'DestinationContactName'
       ,[dcontphone] as 'DestinationContactPhone'
 
-      ,DestinationContacEMail=case ltrim([dcontmail]) when '' then null else [dcontmail] end
+      ,DestinationContactEMail=case ltrim([dcontmail]) when '' then null else [dcontmail] end
       ,[destrems] as 'DestinationDescription'
     --  ,[datein]=convert(varchar,[DateIn],104)
 	  ,CourierArrivalDate=convert(varchar,courdate,104)
