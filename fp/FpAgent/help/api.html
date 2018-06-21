@@ -1,5 +1,6 @@
-﻿<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+<!-- saved from url=(0029)http://www.helpandmanual.com/ -->
 <head>
    <title>АПИ</title>
    <meta name="generator" content="Help &amp; Manual" />
@@ -110,25 +111,25 @@
       text-align:left;padding:5px;
       }
      </style>
-   <script type="text/javascript" src="jquery.js"></script>
-   <script type="text/javascript" src="helpman_settings.js"></script>
-   <script type="text/javascript" src="helpman_topicinit.js"></script>
-
-   <script type="text/javascript">
-     HMSyncTOC("index.html", "api.html");
-   </script>
-   <script type="text/javascript" src="highlight.js"></script>
-   <script type="text/javascript">
-     $(document).ready(function(){highlight();});
-   </script>
-</head>
-<body>
+<script type="text/javascript" src="helpman_topicinit.js"></script>
+<!-- Redirect browser to frame page if page is not in the content frame. -->
+<script type="text/javascript">
+<!--
+if (location.search.lastIndexOf("toc=0")<=0) {
+  if (parent.frames.length==0) { parent.location.href="index.html?api.html"; }
+  else { parent.quicksync('a7'); }
+}
+//-->
+</script>
+<script type="text/javascript" src="highlight.js"></script></head>
+<body onload="highlight();">
+<div id="hmpopupDiv" style="visibility:hidden; position:absolute; z-index:1000; "></div>
 
 
 <table class="tblhdr">
   <tr >
     <td >
-      <h1 class="p_Heading1"><span class="f_Heading1">АПИ</span></h1>
+      <p class="p_Heading1"><span class="f_Heading1">АПИ</span></p>
 
     </td>
     <td style="text-align:right">
@@ -150,46 +151,44 @@
 <p>АПИ возвращает данные в формате <a href="https://labs.omniti.com/labs/jsend" target="_blank" class="weblink" title="JSend">JSend</a></p>
 <p>Для работы с АПИ необходимо сгенерировать ключ(token):</p>
 <p>&nbsp;</p>
-<p>Для этого на верхней панели нажимаем кнопку &quot;Ключ&quot;</p>
-<p>В открывшемся окне нажимаем кнопку &quot;Новый&quot; и получаем ключ для работы с АПИ, который нужно отправлять при вызове любого запроса АПИ в виде поля заголовка &quot;TOKEN&quot;.</p>
+<p>Для этого на верхней панели нажимаем кнопку "Ключ"</p>
+<p>В открывшемся окне нажимаем кнопку "Новый" и получаем ключ для работы с АПИ, который нужно отправлять при вызове любого запроса АПИ в виде поля заголовка "TOKEN".</p>
 <p>&nbsp;</p>
-<p><img src="api.png" width="1165" height="552" alt="API" style="border:none" /></p>
+<p><img src="api.png" width="1165" height="552" border="0" alt="API"></p>
 <p>&nbsp;</p>
-<p>Доступные запросы:</p>
+<p><span style="color: #0000ff;">Доступные запросы:</span></p>
 <p>&nbsp;</p>
-<p>web.flippost.com/api/cities - возвращает все города доступные для заказа.</p>
-<p>web.flippost.com/api/cities/&lt;Город&gt; - ищет город по неполному имени города</p>
-<p>web.flippost.com/api/cities/&lt;Город&gt;/&lt;Область&gt; - ищет город по неполному имени города и области</p>
-<p>web.flippost.com/api/cities/&lt;Город&gt;/&lt;Область&gt;/&lt;Страна&gt; - ищет город по неполному имени города, области и страны</p>
-<p>web.flippost.com/api/types - возвращает справочник типов.</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>web.flippost.com/api/orders/&lt;Дата начала периода ГГГГММДД&gt;/&lt;Дата конца периода ГГГГММДД&gt; - возвращает все заказы за указанный промежуток времени.</p>
+<p><span style="font-weight: bold; color: #800080;">GET</span><span style="font-weight: bold;"> web.flippost.com/api/cities</span> - возвращает все города доступные для заказа.</p>
+<p><span style="font-weight: bold; color: #800080;">GET</span><span style="font-weight: bold;"> web.flippost.com/api/cities/&lt;Город&gt;</span> - ищет город по неполному имени города</p>
+<p><span style="font-weight: bold; color: #800080;">GET</span><span style="font-weight: bold;"> web.flippost.com/api/cities/&lt;Город&gt;/&lt;Область&gt;</span> - ищет город по неполному имени города и области</p>
+<p><span style="font-weight: bold; color: #800080;">GET</span><span style="font-weight: bold;"> web.flippost.com/api/cities/&lt;Город&gt;/&lt;Область&gt;/&lt;Страна&gt;</span> - ищет город по неполному имени города, области и страны</p>
+<p><span style="font-weight: bold; color: #800080;">GET</span><span style="font-weight: bold;"> web.flippost.com/api/types</span> - возвращает справочник типов.</p>
+<p><span style="font-weight: bold; color: #800080;">GET</span><span style="font-weight: bold;"> web.flippost.com/api/orders/&lt;Дата начала периода ГГГГММДД&gt;/&lt;Дата конца периода ГГГГММДД&gt;</span> - возвращает все заказы за указанный промежуток времени.</p>
 <p>&nbsp;</p>
 <p>{</p>
-<p> &nbsp; &nbsp;&quot;status&quot;: &quot;success&quot;,</p>
-<p> &nbsp; &nbsp;&quot;data&quot;: [</p>
+<p> &nbsp; &nbsp;"status": "success",</p>
+<p> &nbsp; &nbsp;"data": [</p>
 <p> &nbsp; &nbsp; &nbsp; &nbsp;{</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;ordernumber&quot;: 240981,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;orgcitycode&quot;: 32401,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;orgcity&quot;: &quot;Химки&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendername&quot;: &quot;ООО Инстар Лоджистик&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;senderaddress&quot;: &quot;Химки мкрн Подрезково ул.центральная 2/5&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendercontactname&quot;: &quot;Владислав Вдовин, Роман Ермаков&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendercontactphone&quot;: &quot;4956170741 доб.2(Владислав), 2300570 доб.151 (Рома&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendercontacemail&quot;: null,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;cargotype&quot;: 0,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;numberofpackages&quot;: 1,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;weight&quot;: &quot;1.00&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;volumeweight&quot;: &quot;0.00&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destcitycode&quot;: 31503,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destcity&quot;: &quot;Астана&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationname&quot;: &quot;Акционерное общество Локомотив Курастрыру Зауыты&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationaddress&quot;: &quot;Индустриальный парк, ул.184 строение 8&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationcontactname&quot;: &quot;Датбаев Олжас&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationcontactphone&quot;: &quot;+77075070694, 7172932161&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationcontacemail&quot;: null,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;status&quot;: &quot;отменен&quot; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"ordernumber": 240981,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"orgcitycode": 32401,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"orgcity": "Химки",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendername": "ООО Инстар Лоджистик",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"senderaddress": "Химки мкрн Подрезково ул.центральная 2/5",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendercontactname": "Владислав Вдовин, Роман Ермаков",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendercontactphone": "4956170741 доб.2(Владислав), 2300570 доб.151 (Рома",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendercontacemail": null,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"cargotype": 0,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"numberofpackages": 1,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"weight": "1.00",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"volumeweight": "0.00",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destcitycode": 31503,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destcity": "Астана",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationname": "Акционерное общество Локомотив Курастрыру Зауыты",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationaddress": "Индустриальный парк, ул.184 строение 8",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationcontactname": "Датбаев Олжас",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationcontactphone": "+77075070694, 7172932161",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationcontacemail": null,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"status": "отменен" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>
 <p> &nbsp; &nbsp; &nbsp; &nbsp;},</p>
 <p> &nbsp; &nbsp; &nbsp; &nbsp;{...........</p>
 <p> &nbsp; &nbsp; &nbsp; &nbsp;}</p>
@@ -198,70 +197,75 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>web.flippost.com/api/order/&lt;Номер заказа&gt; - возвращает заказ по его номеру</p>
+<p><span style="font-weight: bold; color: #800080;">GET</span><span style="font-weight: bold;"> web.flippost.com/api/orders/&lt;Номер заказа&gt;</span> - возвращает заказ по его номеру</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>{</p>
-<p> &nbsp; &nbsp;&quot;status&quot;: &quot;success&quot;,</p>
-<p> &nbsp; &nbsp;&quot;data&quot;: [</p>
+<p> &nbsp; &nbsp;"status": "success",</p>
+<p> &nbsp; &nbsp;"data": [</p>
 <p> &nbsp; &nbsp; &nbsp; &nbsp;{</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;ordernumber&quot;: 240981,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;orgcitycode&quot;: 32401,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;orgcity&quot;: &quot;Химки&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendername&quot;: &quot;ООО Инстар Лоджистик&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;senderaddress&quot;: &quot;Химки мкрн Подрезково ул.центральная 2/5&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendercontactname&quot;: &quot;Владислав Вдовин, Роман Ермаков&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendercontactphone&quot;: &quot;4956170741 доб.2(Владислав), 2300570 доб.151 (Рома&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;sendercontactemail&quot;: null,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;senderdescription&quot;: &quot;Обзательно сообщить номер заявки, по которой планируется отгрузка № 41&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;cargotype&quot;: 0,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;numberofpackages&quot;: 1,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;weight&quot;: &quot;1.00&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;volumeweight&quot;: &quot;0.00&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destcitycode&quot;: 31503,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destcity&quot;: &quot;Астана&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationname&quot;: &quot;Акционерное общество Локомотив Курастрыру Зауыты&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationaddress&quot;: &quot;Индустриальный парк, ул.184 строение 8&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationcontactname&quot;: &quot;Датбаев Олжас&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationcontactphone&quot;: &quot;+77075070694, 7172932161&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationcontacemail&quot;: null,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;destinationdescription&quot;: &quot;оплата 3-ей стороной по л/с 21405845&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;courierarrivaldate&quot;: &quot;29.01.2018&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;courierarrivaltimefirst&quot;: &quot;10:00&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;courierarrivaltimelast&quot;: &quot;19:00&quot;,</p>
-<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;status&quot;: &quot;отменен&quot;</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"ordernumber": 240981,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"orgcitycode": 32401,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"orgcity": "Химки",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendername": "ООО Инстар Лоджистик",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"senderaddress": "Химки мкрн Подрезково ул.центральная 2/5",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendercontactname": "Владислав Вдовин, Роман Ермаков",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendercontactphone": "4956170741 доб.2(Владислав), 2300570 доб.151 (Рома",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"sendercontactemail": null,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"senderdescription": "Обзательно сообщить номер заявки, по которой планируется отгрузка № 41",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"cargotype": 0,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"numberofpackages": 1,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"weight": "1.00",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"volumeweight": "0.00",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destcitycode": 31503,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destcity": "Астана",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationname": "Акционерное общество Локомотив Курастрыру Зауыты",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationaddress": "Индустриальный парк, ул.184 строение 8",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationcontactname": "Датбаев Олжас",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationcontactphone": "+77075070694, 7172932161",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationcontacemail": null,</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"destinationdescription": "оплата 3-ей стороной по л/с 21405845",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"courierarrivaldate": "29.01.2018",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"courierarrivaltimefirst": "10:00",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"courierarrivaltimelast": "19:00",</p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"status": "отменен"</p>
 <p> &nbsp; &nbsp; &nbsp; &nbsp;}</p>
 <p> &nbsp; &nbsp;]</p>
 <p>}</p>
 <p>&nbsp;</p>
+<p><span style="font-weight: bold; color: #800080;">POST</span><span style="font-weight: bold;"> web.flippost.com/api/orders - </span>создание заказа</p>
+<p><span style="font-weight: bold; color: #800080;">POST</span><span style="font-weight: bold;"> web.flippost.com/api/orders/&lt;Номер заказа&gt; - </span>изменение заказа</p>
 <p>&nbsp;</p>
-<p>ordernumber - Номер заказа.</p>
-<p>orgcitycode - Код города пункта отправления.</p>
-<p>orgcity - Название города пункта отправления.</p>
-<p>sendername - Название отправителя.</p>
-<p>senderaddress - Адрес отправителя.</p>
-<p>sendercontactname - Ф.И.О. контакта отправителя.</p>
-<p>sendercontactphone - Телефон контакта отправителя.</p>
-<p>sendercontacemail - Электронная почта контакта отправителя.</p>
-<p>senderdescription - Дополнительная информация по отправлению.</p>
-<p>cargotype - Тип груза (0 - Не документ, 1 - Документ).</p>
-<p>numberofpackages - Количество упаковок в отправлении.</p>
-<p>weight - Вес отправления.</p>
-<p>volumeweight - Объемный вес отправления.</p>
-<p>destcitycode - Код города пункта назначения.</p>
-<p>destcity - Название города пункта назначения.</p>
-<p>destinationname - Название получателя.</p>
-<p>destinationaddress - Адрес получателя.</p>
-<p>destinationcontactname - Ф.И.О. контакта получателя.</p>
-<p>destinationcontactphone - Телефон контакта получателя.</p>
-<p>destinationcontacemail - Электронная почта контакта получателя.</p>
-<p>destinationdescription - Дополнительная информация по получению.</p>
-<p>courierarrivaldate - Дата приезда курьера.</p>
-<p>courierarrivaltimefirst - Начало периода приезда курьера.</p>
-<p>courierarrivaltimelast - Конец периода приезда курьера.</p>
-<p>status - Текущий статус заказа.</p>
+<p><span style="color: #0000ff;">Поля для записи и чтения.</span></p>
+<p><span style="font-weight: bold;">sendername</span> - Название отправителя. Строка не более 50 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">orgcitycode</span> - Код города пункта отправления из справочника городов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">senderaddress</span> - Адрес отправителя. Строка не более 200 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">sendercontactname</span> - Ф.И.О. контакта отправителя. Строка не более 50 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">sendercontactphone</span> - Телефон контакта отправителя. Строка не более 50 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">sendercontacemail</span> - Электронная почта контакта отправителя. Строка не более 50 символов.</p>
+<p><span style="font-weight: bold;">senderdescription</span> - Дополнительная информация по отправлению. Строка не более 1000 символов.</p>
+<p><span style="font-weight: bold;">cargotype</span> - Тип груза (0 - Не документ, 1 - Документ). Целое положительное число. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">numberofpackages</span> - Количество упаковок в отправлении. Целое положительное число. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">weight</span> - Вес отправления. Положительное число с дробной частью отделенной точкой. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">volumeweight</span> - Объемный вес отправления. Положительное число с дробной частью отделенной точкой. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">destcitycode</span> - Код города пункта назначения из справочника городов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">destcity</span> - Название города пункта назначения. Строка не более 50 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">destinationname</span> - Название получателя. Строка не более 50 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">destinationaddress</span> - Адрес получателя. Строка не более 200 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">destinationcontactname</span> - Ф.И.О. контакта получателя. Строка не более 50 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">destinationcontactphone</span> - Телефон контакта получателя. Строка не более 50 символов. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">destinationcontacemail</span> - Электронная почта контакта получателя. Строка не более 50 символов.</p>
+<p><span style="font-weight: bold;">destinationdescription</span> - Дополнительная информация по получению. Строка не более 1000 символов.</p>
+<p><span style="font-weight: bold;">courierarrivaldate</span> - Дата приезда курьера в виде &lt;YYYYMMDD&gt;. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">courierarrivaltimefirst</span> - Начало периода приезда курьера в виде &lt;HH:MM&gt;. <span style="color: #ff0000;">Обязательное поле.</span></p>
+<p><span style="font-weight: bold;">courierarrivaltimelast</span> - Конец периода приезда курьера в виде &lt;HH:MM&gt;. <span style="color: #ff0000;">Обязательное поле.</span></p>
 <p>&nbsp;</p>
-<p>Все запросы используют для проверки авторизации ключ в HTTP заголовке &quot;TOKEN&quot;</p>
+<p><span style="color: #0000ff;">Поля только для чтения.</span></p>
+<p><span style="font-weight: bold;">ordernumber</span> - Номер заказа.</p>
+<p><span style="font-weight: bold;">orgcity</span> - Название города пункта отправления.</p>
+<p><span style="font-weight: bold;">status</span> - Текущий статус заказа.</p>
+<p>&nbsp;</p>
+<p>Все запросы используют для проверки авторизации ключ в HTTP заголовке "<span style="font-weight: bold;">TOKEN</span>"</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
