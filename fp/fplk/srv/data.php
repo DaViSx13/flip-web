@@ -2,7 +2,7 @@
 include "errorhandler.php";
 
 //завязка
-session_name("CLIENTSESSIONID");
+session_name("LKSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 //error_reporting(0);
@@ -102,7 +102,7 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getAgOrders':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec [wwwClientGetAgOrders] @period='$params[newPeriod]', @clientID={$ag}";
+            $query = "exec wwwLKgetOrders @period='$params[newPeriod]', @clientID={$ag}";
             break;
 		case 'GetWebWbs':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
@@ -127,12 +127,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'editagorder':
 			$id =  $params['id'];
-			$agent = $_SESSION['xAgentID'];
-			$query = "exec wwwEditAgOrders @id={$id}, @agent={$agent}";
+			$agent = $_SESSION['xClientID'];
+			$query = "exec wwwLKgetOrder @id={$id}, @agent={$agent}";
 			break;
 		case 'saveagorder':
 			$CName=$params['cname'];
-			$ag=$_SESSION['xAgentID'];
+			$ag=$_SESSION['xClientID'];
 			$DName=$params['dname'];
 			$Amt=isset($params['amt']) ? $params['amt'] : 0;
 			$CurId=isset($params['curid']) ? $params['curid'] : 0;
@@ -159,7 +159,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			
 			if (!isset($params['org'])) $params['org'] = -1; //магия
 			
-			$query = "exec wwwSaveAgOrders
+			$query = "exec wwwLKsetOrder
 			@ORG=$params[org],
 			@CName='$CName',
 			@Address='$Address',
@@ -184,6 +184,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@Payr=$ag,
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum,
+			@clientID=$ag,
 			@webwb=$webwb";
 			break;
 		case 'SetWebWB':			
@@ -242,7 +243,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec [wwwClientGetWbs] @period='$params[newPeriod]', @clientID={$ag}, @dir='$params[dir]'";
+			$query = "exec wwwLKgetWbs @period='$params[newPeriod]', @clientID={$ag}, @dir='$params[dir]'";
             $paging = true;
 			break;
 		case 'GetExCodes':
@@ -290,7 +291,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'getAgTemplates':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec [wwwClientGetTemplates] @clientID={$ag}";
+			$query = "exec wwwLKgetTemplates @clientID={$ag}";
 			break;
 		case 'SetAgTemplates':
 			$CName=$params['cname'];
@@ -306,7 +307,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];			
 
-			$query = "exec [wwwClientSetTemplate]
+			$query = "exec wwwLKsetTemplate
 			@TemplateName='$params[templatename]',
 			@clientID=$ag,
 			@tplid=$id,
@@ -327,7 +328,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'DelAgTemplates':
 			$id = $params['id'];			
-			$query = "exec [wwwClientDelTemplate] @tplID = {$id}";
+			$query = "exec wwwLKdelTemplate @tplID = {$id}";
 			break;
 		case 'getUsers':			  
 			$query = "exec wwwClientGetUsers";

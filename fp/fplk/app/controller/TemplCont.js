@@ -37,10 +37,12 @@ Ext.define('FPClient.controller.TemplCont', {
 		var win = Ext.widget('templwin');
 		win.show();
 		win.down('templform').down('textfield[name=templatename]').focus(false, true);
-		
+		//console.log(this.getClientStStore().getCount());
+		if (this.getClientStStore().getCount() > 0){
 		//auto sender begin
 		client = this.getClientStStore().first();
 		//мухлеж
+		
 		client.set('org', client.get('city'));
 		client.set('orgcode', client.get('cityid'));
 		
@@ -57,7 +59,7 @@ Ext.define('FPClient.controller.TemplCont', {
 		});
 		cb_org.select(client.get('orgcode'));
 		//auto sender end
-		
+		}
 	},
 	delTempl : function (btn) {
 		var me = this;

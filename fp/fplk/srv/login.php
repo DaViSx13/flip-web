@@ -12,7 +12,7 @@ $password = $_POST['password'];
 if ( !empty( $_POST['user'] )) {
     include_once "dbConnect.php";
    // echo '2';
-    $query = "exec wwwClientCheckUser @user='{$user}', @password='{$password}', @ip='$_SERVER[REMOTE_ADDR]' ";
+    $query = "exec wwwLKcheckUser @user='{$user}', @password='{$password}', @ip='$_SERVER[REMOTE_ADDR]' ";
     $result=mssql_query($query);
     
     if( mssql_num_rows($result)==0 ) {
@@ -27,16 +27,16 @@ if ( !empty( $_POST['user'] )) {
 		   $response->msg='Доступ блокирован...';
 		   }
                 else {
-                   session_name("CLIENTSESSIONID");
+                   session_name("LKSESSIONID");
 		   session_start();
 				   $_SESSION['xUser'] = $_POST['user'];
-                   $_SESSION['xAgentID'] = $row['agentID'];
-                   $_SESSION['xAgentName'] = iconv("windows-1251", "UTF-8", "{$row['agentName']} ({$row['agentLOC']})");
+                   //$_SESSION['xAgentID'] = $row['agentID'];
+                   //$_SESSION['xAgentName'] = iconv("windows-1251", "UTF-8", "{$row['agentName']} ({$row['agentLOC']})");
                    $_SESSION['xClientID'] = iconv("windows-1251", "UTF-8", "{$row['clientID']}");
                    $_SESSION['xClientName'] = iconv("windows-1251", "UTF-8", "{$row['clientName']} ({$row['clientLOC']})");
                    $response->success = true;
-				   $response->msg = $_SESSION['xAgentID']; 
-				   $response->username = $_SESSION['xAgentName'];
+				   //$response->msg = $_SESSION['xAgentID']; 
+				   //$response->username = $_SESSION['xAgentName'];
 
 				   $response->clientID = $_SESSION['xClientID']; 
 				   $response->clientName = $_SESSION['xClientName']; 

@@ -7,14 +7,14 @@ class Response
 	public $username = '';
 }
 $response = new Response();
-session_name("CLIENTSESSIONID");
+session_name("LKSESSIONID");
 session_start();
-if ( !empty( $_SESSION['xUser'] ) && !empty( $_SESSION['xAgentID'] )) {
+if ( !empty( $_SESSION['xUser'] ) /*&& !empty( $_SESSION['xAgentID'] )*/) {
     
 	$_SESSION['AdmAgentID']=null;
 	$response->success = true;
-	$response->msg = $_SESSION['xAgentID'];
-    $response->username =$_SESSION['xAgentName'];               
+	//$response->msg = $_SESSION['xAgentID'];
+   // $response->username =$_SESSION['xAgentName'];               
     
 	$response->clientID = $_SESSION['xClientID']; 
     $response->clientName = $_SESSION['xClientName']; 

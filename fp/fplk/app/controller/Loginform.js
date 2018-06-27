@@ -94,7 +94,7 @@ Ext.define('FPClient.controller.Loginform', {
 					} else {
 						aviewport.down('mainpanel').down('label').setText(action.result.clientName);
 						this.getClientStStore().load();
-						Ext.Ajax.request({
+						/*Ext.Ajax.request({
 							url : 'srv/data.php',
 							params : {
 								dbAct : 'GetAgentWbs',
@@ -115,7 +115,7 @@ Ext.define('FPClient.controller.Loginform', {
 							failure : function (response) {
 								Ext.Msg.alert('Ошибка', 'Сервер недоступен!');
 							}
-						});
+						});*/
 					};
 					Ext.TaskManager.start({
 						run : function () {
