@@ -55,7 +55,7 @@ Ext.define('FPClient.controller.UsersCont', {
 	loadUsers : function (ThePanel, newCard) {
 		if (newCard.xtype == 'usersgrid') {
 			this.getUsersStStore().load();
-			this.getAgentsListStStore().load();
+			//this.getAgentsListStStore().load();
 			this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(false);
 			this.getAdmTool().down('button[action=list]').setVisible(false);
 			this.getAdmTool().down('button[action=templ]').setVisible(false);

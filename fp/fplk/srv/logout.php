@@ -6,7 +6,7 @@ class Response
 }
 $response = new Response();
   
-  session_name("CLIENTSESSIONID");
+  session_name("LKSESSIONID");
   session_start();
   //session_destroy();
   //session_unset();

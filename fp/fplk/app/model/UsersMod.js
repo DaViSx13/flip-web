@@ -7,34 +7,19 @@ Ext.define('FPClient.model.UsersMod', {
 			name : 'auser',
 			type : 'string'
 		}, {
-			name : 'agents',
-			type : 'string'
-		}, {
-			name : 'partname',
-			type : 'string'
-		}, {
 			name : 'active',
 			type : 'int'
 		}, {
-			name : 'partloc',
-			type : 'string'
+			name : 'clientid',
+			type : 'int'
 		}, {
+			name : 'c_name',
+			type : 'string'
+		},{
 			name : 'rusname',
 			type : 'string'
-		}, {
-			name : 'dateshtdn',
-			type : 'string'
-		}, {
-			name : 'c_co',
-			type : 'string'
-		}, {
-			name : 'c_city',
-			type : 'string'
-		}, {
+		},  {
 			name : 'loc',
-			type : 'string'
-		}, {
-			name : 'cacc',
 			type : 'string'
 		}
 	]

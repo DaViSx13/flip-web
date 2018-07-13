@@ -21,9 +21,9 @@ Ext.define('FPClient.view.users.UsersGrid', {
 			text : 'Логин',
 			width : 200,
 			dataIndex : 'auser'
-		}, {
-			text : 'Клиент',
-			columns : [{
+		},// {
+			/*text : 'Клиент',
+			columns : [*/{
 					text : 'LOC',
 					width : 50,
 					dataIndex : 'loc'
@@ -34,10 +34,10 @@ Ext.define('FPClient.view.users.UsersGrid', {
 				}, {
 					text : 'Компания',
 					width : 300,
-					dataIndex : 'c_co'
+					dataIndex : 'c_name'
 				}
-			]
-		}, {
+			//]
+		/*}, {
 			text : 'Агент',
 			columns : [{
 					text : 'LOC',
@@ -49,7 +49,7 @@ Ext.define('FPClient.view.users.UsersGrid', {
 					dataIndex : 'partname'
 				}
 			]
-		}
+		}*/
 
 	],
 	dockedItems : [{

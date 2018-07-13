@@ -13,8 +13,8 @@ if ( !empty( $_SESSION['xUser'] ) /*&& !empty( $_SESSION['xAgentID'] )*/) {
     
 	$_SESSION['AdmAgentID']=null;
 	$response->success = true;
-	//$response->msg = $_SESSION['xAgentID'];
-   // $response->username =$_SESSION['xAgentName'];               
+	$response->msg = $_SESSION['xClientID']; 
+    $response->username =$_SESSION['xClientName'];               
     
 	$response->clientID = $_SESSION['xClientID']; 
     $response->clientName = $_SESSION['xClientName']; 

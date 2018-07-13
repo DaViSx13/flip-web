@@ -1,5 +1,5 @@
 <?php
-session_name("CLIENTSESSIONID");
+session_name("LKSESSIONID");
 session_start();
 if (!isset($_SESSION['xUser']))
     {

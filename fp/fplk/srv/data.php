@@ -279,9 +279,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec [wwwClientGetWbsTotal] @period='{$params['period']}',  @clientID={$ag} ";
 			break;
-		case 'GetAgents':
-			$query = "exec wwwGetAgents";
-			break;
+		/*case 'GetAgents':
+			$query = "exec wwwLKgetClients";
+			break;*/
 		case 'SetWbno':
 			$paging = false;
 			$rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
@@ -331,7 +331,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwLKdelTemplate @tplID = {$id}";
 			break;
 		case 'getUsers':			  
-			$query = "exec wwwClientGetUsers";
+			$query = "exec wwwLKgetUsers";
 			break;
 		case 'setUsers':
 			$pass = '';
@@ -341,9 +341,9 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'setActive':			
 			$query = "exec [wwwClientSetUserActive] @id={$params['id']}, @active={$params['active']}"; 
 			break;
-		case 'GetAgentsList':
-			$query = "exec wwwGetAgentsList";
-			break;
+		/*case 'GetAgentsList':
+			$query = "exec wwwLKgetClientsList";
+			break;*/
 		case 'GetWb':
 			$query = "exec wwwGetWb @wb_no='{$params['wb_no']}'";
 			break;

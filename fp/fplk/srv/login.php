@@ -29,14 +29,12 @@ if ( !empty( $_POST['user'] )) {
                 else {
                    session_name("LKSESSIONID");
 		   session_start();
-				   $_SESSION['xUser'] = $_POST['user'];
-                   //$_SESSION['xAgentID'] = $row['agentID'];
-                   //$_SESSION['xAgentName'] = iconv("windows-1251", "UTF-8", "{$row['agentName']} ({$row['agentLOC']})");
+				   $_SESSION['xUser'] = $_POST['user'];                   
                    $_SESSION['xClientID'] = iconv("windows-1251", "UTF-8", "{$row['clientID']}");
                    $_SESSION['xClientName'] = iconv("windows-1251", "UTF-8", "{$row['clientName']} ({$row['clientLOC']})");
                    $response->success = true;
-				   //$response->msg = $_SESSION['xAgentID']; 
-				   //$response->username = $_SESSION['xAgentName'];
+				   $response->msg = $_SESSION['xClientID']; 
+				   $response->username = $_SESSION['xClientName'];
 
 				   $response->clientID = $_SESSION['xClientID']; 
 				   $response->clientName = $_SESSION['xClientName']; 

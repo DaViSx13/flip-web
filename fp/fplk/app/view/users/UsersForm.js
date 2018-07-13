@@ -43,7 +43,7 @@ Ext.define('FPClient.view.users.UsersForm', {
 			allowBlank : false,
 			width : 250,
 			name : 'cacc'
-		}, {
+		}, /*{
 			xtype : 'combobox',
 			labelAlign : 'top',
 			width : 250,
@@ -55,7 +55,7 @@ Ext.define('FPClient.view.users.UsersForm', {
 			queryMode : 'local',
 			allowBlank : false,
 			store : 'AgentsListSt'
-		}, {
+		},*/ {
 			xtype : 'textfield',
 			hidden : true,
 			name : 'id'

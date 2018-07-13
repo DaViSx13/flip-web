@@ -27,7 +27,7 @@ Ext.define('FPClient.controller.Loginform', {
 		}
 	},
 	loadAdmPan : function () {
-		var me = this;
+		/*var me = this;
 		Ext.Ajax.request({
 			url : 'srv/data.php',
 			params : {
@@ -46,7 +46,7 @@ Ext.define('FPClient.controller.Loginform', {
 			failure : function (response) {
 				Ext.Msg.alert('Сервер недоступен!', response.statusText);
 			}
-		});
+		});*/
 	},
 	onLaunch : function () {
 		var me = this;
