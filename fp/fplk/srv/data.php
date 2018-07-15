@@ -107,7 +107,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWebWbs':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec [wwwClientGetWebWbs] @period='$params[newPeriod]', @clientID={$ag}";
+            $query = "exec wwwLKgetWebWbs @period='$params[newPeriod]', @clientID={$ag}";
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
@@ -213,7 +213,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$wt=$params['wt'] ? $params['wt'] : 0;
 			$pcs=$params['pcs'] ? $params['pcs'] : 0;
 			$UserIn= $_SESSION['xUser'];
-			$ag=$_SESSION['xAgentID'];
+			//$ag=$_SESSION['xAgentID'];
 			//$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 				
 			$query = "exec wwwClientSetWb
@@ -336,10 +336,10 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'setUsers':
 			$pass = '';
 			if (isset($params['passfirst'])) {$pass = $params['passfirst'];};
-			$query = "exec [wwwClientSetUser] @id={$params['id']}, @auser='{$params['auser']}', @pass='{$pass}', @agentID={$params['agents']}, @cacc='{$params['cacc']}'"; 
+			$query = "exec wwwLKsetUser @id={$params['id']}, @auser='{$params['auser']}', @pass='{$pass}', @cacc='{$params['clientid']}'"; 
 			break;
 		case 'setActive':			
-			$query = "exec [wwwClientSetUserActive] @id={$params['id']}, @active={$params['active']}"; 
+			$query = "exec [wwwLKsetUserActive] @id={$params['id']}, @active={$params['active']}"; 
 			break;
 		/*case 'GetAgentsList':
 			$query = "exec wwwLKgetClientsList";

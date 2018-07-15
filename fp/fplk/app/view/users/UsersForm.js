@@ -42,7 +42,7 @@ Ext.define('FPClient.view.users.UsersForm', {
 			labelAlign : 'top',
 			allowBlank : false,
 			width : 250,
-			name : 'cacc'
+			name : 'clientid'
 		}, /*{
 			xtype : 'combobox',
 			labelAlign : 'top',

@@ -170,7 +170,7 @@ Ext.define('FPClient.controller.UsersCont', {
 				if (form.getForm().findField('id').getValue() == 0) {
 					Ext.Msg.show({
 						title : 'Сохранить изменения?',
-						msg : '<p>Агент: "<font size="2" color="blue">' + form.getForm().findField('agents').getRawValue() + '</font>".</p>  <p>Логин: "<font size="2" color="blue">' + form.getForm().findField('auser').getValue() + '</font>".</p>  <p>Сохранить?</p>',
+						msg : '<p>Агент: "<font size="2" color="blue">' + form.getForm().findField('cacc').getRawValue() + '</font>".</p>  <p>Логин: "<font size="2" color="blue">' + form.getForm().findField('auser').getValue() + '</font>".</p>  <p>Сохранить?</p>',
 						buttons : Ext.Msg.YESNOCANCEL,
 						fn : showResult,
 						icon : Ext.Msg.QUESTION
