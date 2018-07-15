@@ -1,8 +1,8 @@
-Ext.define('FPClient.view.mainform.WebWbGrid', {
+Ext.define('fplk.view.mainform.WebWbGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.webwbgrid',
 	autoScroll : true,
-	//requires : ['FPClient.view.mainform.TotalWb'],
+	//requires : ['fplk.view.mainform.TotalWb'],
 	//store : 'WebWbSt',
 	columns : [{
 			text : '№ Накладной',

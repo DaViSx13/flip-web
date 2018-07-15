@@ -1,3 +1,3 @@
-Ext.define('FPClient.controller.Main', {
+Ext.define('fplk.controller.Main', {
     extend: 'Ext.app.Controller'
 });

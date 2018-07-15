@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.orders.ComboCity', {
+Ext.define('fplk.view.orders.ComboCity', {
 	extend : 'Ext.form.ComboBox',
 	alias : 'widget.combocity',
 	width : 337,

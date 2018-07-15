@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.orders.TemplForm', {
+Ext.define('fplk.view.orders.TemplForm', {
 	alias : 'widget.templform',
 	extend : 'Ext.form.Panel',
-	requires : ['FPClient.view.orders.ComboCity'],
+	requires : ['fplk.view.orders.ComboCity'],
 	layout : {
 		type : 'absolute'
 	},

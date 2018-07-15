@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.orders.OrdTotal', {
+Ext.define('fplk.view.orders.OrdTotal', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.ordtotal',
 	items : ['->', {

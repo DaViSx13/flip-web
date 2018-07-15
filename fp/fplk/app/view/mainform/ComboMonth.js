@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.mainform.ComboMonth', {
+Ext.define('fplk.view.mainform.ComboMonth', {
 	extend : 'Ext.form.ComboBox',
 	alias : 'widget.combomonth',
 	hideLabel : true,

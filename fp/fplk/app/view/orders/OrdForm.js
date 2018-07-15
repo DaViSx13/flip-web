@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.orders.OrdForm', {
+Ext.define('fplk.view.orders.OrdForm', {
 	alias : 'widget.ordform',
 	extend : 'Ext.form.Panel',
-	requires : ['FPClient.view.orders.ComboCity'],
+	requires : ['fplk.view.orders.ComboCity'],
 	layout : {
 		type : 'absolute'
 	},

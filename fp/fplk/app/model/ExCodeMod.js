@@ -1,4 +1,4 @@
-Ext.define('FPClient.model.ExCodeMod', {
+Ext.define('fplk.model.ExCodeMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'excode',

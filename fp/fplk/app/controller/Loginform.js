@@ -1,4 +1,4 @@
-Ext.define('FPClient.controller.Loginform', {
+Ext.define('fplk.controller.Loginform', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.Loginform', 'mainform.MainPanel', 'mainform.Loginformcontainer', 'Viewport'],
 	stores : ['WbsStore', 'ClientSt'],

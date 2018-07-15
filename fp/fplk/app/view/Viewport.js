@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.Viewport', {
+Ext.define('fplk.view.Viewport', {
 	extend : 'Ext.container.Viewport',
 	layout : 'fit',
 	alias : 'widget.fpmnfviewport',

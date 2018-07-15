@@ -1,6 +1,6 @@
-Ext.define('FPClient.store.WbSt', {
+Ext.define('fplk.store.WbSt', {
 	extend : 'Ext.data.Store',
-	model : 'FPClient.model.WbMod',
+	model : 'fplk.model.WbMod',
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',

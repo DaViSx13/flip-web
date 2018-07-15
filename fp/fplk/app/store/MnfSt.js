@@ -1,6 +1,6 @@
-Ext.define('FPClient.store.MnfSt', {
+Ext.define('fplk.store.MnfSt', {
 	extend : 'Ext.data.Store',
-	model : 'FPClient.model.MnfMod',
+	model : 'fplk.model.MnfMod',
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',

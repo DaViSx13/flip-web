@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.orders.TemplGrid', {
+Ext.define('fplk.view.orders.TemplGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.templgrid',
-	requires : ['FPClient.view.orders.TemplTool'],
+	requires : ['fplk.view.orders.TemplTool'],
 	store : 'TemplSt',
 	columns : [ {
 			xtype : 'numbercolumn',

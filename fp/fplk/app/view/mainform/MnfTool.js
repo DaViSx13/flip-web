@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.mainform.MnfTool', {
+Ext.define('fplk.view.mainform.MnfTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.mnftool',
-	requires : ['FPClient.view.mainform.ComboMonth', 'FPClient.view.mainform.NumYear', 'FPClient.view.mainform.ComboAgent'],
+	requires : ['fplk.view.mainform.ComboMonth', 'fplk.view.mainform.NumYear', 'fplk.view.mainform.ComboAgent'],
 	items : [{
 			text : 'Входящие',
 			enableToggle : true,

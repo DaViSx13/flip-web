@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.webwbs.WbForm', {
+Ext.define('fplk.view.webwbs.WbForm', {
 	alias : 'widget.wbform',
 	extend : 'Ext.form.Panel',
-	requires : ['FPClient.view.orders.ComboCity'],
+	requires : ['fplk.view.orders.ComboCity'],
 	layout : {
 		type : 'absolute'
 	},

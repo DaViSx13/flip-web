@@ -1,6 +1,6 @@
-Ext.define('FPClient.store.aMonths', {
+Ext.define('fplk.store.aMonths', {
     extend: 'Ext.data.Store',
-    model: 'FPClient.model.aMonth',
+    model: 'fplk.model.aMonth',
     data: [
         { Name: 'Январь',   lowName: '01' },
 		{ Name: 'Февраль', 	lowName: '02' },

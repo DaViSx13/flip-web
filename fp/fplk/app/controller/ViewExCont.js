@@ -1,4 +1,4 @@
-Ext.define('FPClient.controller.ViewExCont', {
+Ext.define('fplk.controller.ViewExCont', {
 	extend : 'Ext.app.Controller',
 	views : ['wbs.ViewExWin', 'wbs.ViewExForm', 'wbs.ViewExGrid'],
 	refs : [{

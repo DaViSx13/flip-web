@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.orders.UseTemplForm', {
+Ext.define('fplk.view.orders.UseTemplForm', {
 	alias : 'widget.usetemplform',
 	extend : 'Ext.form.Panel',
 	//width : 758,

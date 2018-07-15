@@ -35,24 +35,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     ".sencha/app/development.properties": {
@@ -61,24 +61,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     ".sencha/app/native.properties": {
@@ -87,24 +87,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     ".sencha/app/package.properties": {
@@ -113,24 +113,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     ".sencha/app/production.properties": {
@@ -139,24 +139,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     ".sencha/app/sencha.cfg": {
@@ -165,24 +165,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     ".sencha/app/testing.properties": {
@@ -191,24 +191,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     "sass/config.rb": {
@@ -217,24 +217,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     },
     "index.html": {
@@ -243,24 +243,24 @@
       "parameters": {
         "appControllers": "",
         "appModels": "",
-        "appName": "FPClient",
+        "appName": "fplk",
         "appStores": "",
         "appViews": "",
         "controllerFileName": "Main",
         "controllerName": "Main",
-        "controllerNamespace": "FPClient.controller",
+        "controllerNamespace": "fplk.controller",
         "frameworkName": "ext",
         "frameworkPath": "ext",
         "library": "all",
-        "modelNamespace": "FPClient.model",
-        "name": "FPClient",
+        "modelNamespace": "fplk.model",
+        "name": "fplk",
         "packagesRelPath": "ext/packages",
         "senchadir": ".sencha",
         "themeName": "default",
         "uniqueId": "f7c32468-2743-4629-ae9f-207a2612f86f",
         "viewFileName": "Main",
         "viewName": "Main",
-        "viewNamespace": "FPClient.view"
+        "viewNamespace": "fplk.view"
       }
     }
   }

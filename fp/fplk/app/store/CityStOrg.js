@@ -1,4 +1,4 @@
-Ext.define('FPClient.store.CityStOrg', {
+Ext.define('fplk.store.CityStOrg', {
 	extend : 'Ext.data.Store',
-	model : 'FPClient.model.CityMod'
+	model : 'fplk.model.CityMod'
 });

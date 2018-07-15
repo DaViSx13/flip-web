@@ -1,4 +1,4 @@
-Ext.define('FPClient.controller.WebWbsCont', {
+Ext.define('fplk.controller.WebWbsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['webwbs.WebWbsGrid', 'mainform.MainPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'webwbs.WebWbsTool', 'webwbs.WbWin', 'webwbs.WbForm', 'webwbs.WebWbsTotal'],
 	models : ['WebWbMod', 'CityMod'],

@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.webwbs.WebWbsTool', {
+Ext.define('fplk.view.webwbs.WebWbsTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.webwbstool',
-	requires : ['FPClient.view.mainform.ComboMonth', 'FPClient.view.mainform.NumYear'/*, 'FPClient.view.mainform.ComboAgent'*/],
+	requires : ['fplk.view.mainform.ComboMonth', 'fplk.view.mainform.NumYear'/*, 'fplk.view.mainform.ComboAgent'*/],
 	items : [
 		{
 			text : 'Печать веб накладной',			

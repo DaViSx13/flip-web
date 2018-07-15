@@ -1,4 +1,4 @@
-Ext.define('FPClient.model.TypeMod', {
+Ext.define('fplk.model.TypeMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'Name'

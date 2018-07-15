@@ -1,6 +1,6 @@
-Ext.define('FPClient.store.ExCodeStore', {
+Ext.define('fplk.store.ExCodeStore', {
 	extend : 'Ext.data.Store',
-	model : 'FPClient.model.ExCodeMod',
+	model : 'fplk.model.ExCodeMod',
 	proxy : {
 		type : 'ajax',
 		url : 'srv/data.php',

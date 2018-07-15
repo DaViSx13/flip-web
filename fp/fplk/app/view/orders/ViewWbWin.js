@@ -1,8 +1,8 @@
-Ext.define('FPClient.view.orders.ViewWbWin', {
+Ext.define('fplk.view.orders.ViewWbWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.viewwbwin',
-	requires : ['FPClient.view.orders.ViewWbForm'],
+	requires : ['fplk.view.orders.ViewWbForm'],
 	title : 'Просмотр накладной',
 	layout : 'fit',
 	autoShow : true,

@@ -1,4 +1,4 @@
-Ext.define('FPClient.model.WbsMod', {
+Ext.define('fplk.model.WbsMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'wb_no',

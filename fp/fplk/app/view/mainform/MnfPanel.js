@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.mainform.MnfPanel', {
+Ext.define('fplk.view.mainform.MnfPanel', {
 	extend : 'Ext.panel.Panel',
 	alias : 'widget.mnfpanel',
-	requires : ['FPClient.view.mainform.MnfGrid', 'FPClient.view.mainform.WbGrid'],
+	requires : ['fplk.view.mainform.MnfGrid', 'fplk.view.mainform.WbGrid'],
 	layout : 'border',
 	closable : false,
 	items : [{

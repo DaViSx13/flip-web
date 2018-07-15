@@ -1,4 +1,4 @@
-Ext.define('FPClient.controller.WbsCont', {
+Ext.define('fplk.controller.WbsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin'],
 	models : ['WbsMod', 'ExCodeMod', 'ViewExMod'],

@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.orders.LoadFileForm', {
+Ext.define('fplk.view.orders.LoadFileForm', {
 	alias : 'widget.loadfileform',
 	extend : 'Ext.form.Panel',
 	width : 758,

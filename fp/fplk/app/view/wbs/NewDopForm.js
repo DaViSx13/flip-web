@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.wbs.NewDopForm', {
+Ext.define('fplk.view.wbs.NewDopForm', {
 	alias : 'widget.newdopform',
 	extend : 'Ext.form.Panel',
 	layout : {

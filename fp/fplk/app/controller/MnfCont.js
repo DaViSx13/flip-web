@@ -1,4 +1,4 @@
-Ext.define('FPClient.controller.MnfCont', {
+Ext.define('fplk.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel'],
 	models : ['MnfMod', 'WbMod'],

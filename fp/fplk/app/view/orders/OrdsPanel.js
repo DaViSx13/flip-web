@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.orders.OrdsPanel', {
+Ext.define('fplk.view.orders.OrdsPanel', {
 	extend : 'Ext.panel.Panel',
 	alias : 'widget.ordspanel',
-	requires : ['FPClient.view.orders.OrdGrid', 'FPClient.view.orders.TemplGrid'],
+	requires : ['fplk.view.orders.OrdGrid', 'fplk.view.orders.TemplGrid'],
 	layout : 'fit',
 	closable : false,
 	items : [{

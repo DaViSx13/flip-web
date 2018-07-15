@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.mainform.TotalWb', {
+Ext.define('fplk.view.mainform.TotalWb', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.totalwb',
 	items : ['->', {

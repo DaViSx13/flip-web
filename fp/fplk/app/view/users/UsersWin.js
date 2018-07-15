@@ -1,8 +1,8 @@
-Ext.define('FPClient.view.users.UsersWin', {
+Ext.define('fplk.view.users.UsersWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.userswin',
-	requires : ['FPClient.view.users.UsersForm'],
+	requires : ['fplk.view.users.UsersForm'],
 	title : 'Добавить пользователя',
 	layout : 'fit',
 	autoShow : true,

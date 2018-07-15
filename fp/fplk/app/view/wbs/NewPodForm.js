@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.wbs.NewPodForm', {
+Ext.define('fplk.view.wbs.NewPodForm', {
 	alias : 'widget.newpodform',
 	extend : 'Ext.form.Panel',
 	layout : {

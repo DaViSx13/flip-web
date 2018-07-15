@@ -1,4 +1,4 @@
-Ext.define('FPClient.model.ViewExMod', {
+Ext.define('fplk.model.ViewExMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'wbno',

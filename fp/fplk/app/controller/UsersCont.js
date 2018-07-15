@@ -1,4 +1,4 @@
-Ext.define('FPClient.controller.UsersCont', {
+Ext.define('fplk.controller.UsersCont', {
 	extend : 'Ext.app.Controller',
 	views : ['users.UsersGrid', 'users.UsersWin', 'users.UsersForm', 'users.UsersTool', 'mainform.MainPanel'],
 	models : ['UsersMod', 'AgentsMod'],
@@ -170,7 +170,7 @@ Ext.define('FPClient.controller.UsersCont', {
 				if (form.getForm().findField('id').getValue() == 0) {
 					Ext.Msg.show({
 						title : 'Сохранить изменения?',
-						msg : '<p>Агент: "<font size="2" color="blue">' + form.getForm().findField('cacc').getRawValue() + '</font>".</p>  <p>Логин: "<font size="2" color="blue">' + form.getForm().findField('auser').getValue() + '</font>".</p>  <p>Сохранить?</p>',
+						msg : '<p>Агент: "<font size="2" color="blue">' + form.getForm().findField('clientid').getRawValue() + '</font>".</p>  <p>Логин: "<font size="2" color="blue">' + form.getForm().findField('auser').getValue() + '</font>".</p>  <p>Сохранить?</p>',
 						buttons : Ext.Msg.YESNOCANCEL,
 						fn : showResult,
 						icon : Ext.Msg.QUESTION

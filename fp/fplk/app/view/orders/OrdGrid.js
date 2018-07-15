@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.orders.OrdGrid', {
+Ext.define('fplk.view.orders.OrdGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.ordgrid',
-	requires : ['FPClient.view.orders.OrdTool', 'FPClient.view.orders.OrdTotal'],
+	requires : ['fplk.view.orders.OrdTool', 'fplk.view.orders.OrdTotal'],
 	store : 'OrdsSt',
 	columns : [{
 			xtype : 'gridcolumn',

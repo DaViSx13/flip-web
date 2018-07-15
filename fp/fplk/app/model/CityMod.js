@@ -1,4 +1,4 @@
-Ext.define('FPClient.model.CityMod', {
+Ext.define('fplk.model.CityMod', {
 	extend : 'Ext.data.Model',
 	fields : [{
 			name : 'code',

@@ -1,6 +1,6 @@
-Ext.define('FPClient.store.TypeSt', {
+Ext.define('fplk.store.TypeSt', {
 	extend : 'Ext.data.Store',
-	model : 'FPClient.model.TypeMod',
+	model : 'fplk.model.TypeMod',
 	data : [{
 			Name : 'Документ',
 			lowName : 1

@@ -1,7 +1,7 @@
-Ext.define('FPClient.view.mainform.MainPanel', {
+Ext.define('fplk.view.mainform.MainPanel', {
 	extend : 'Ext.tab.Panel',
 	alias : 'widget.mainpanel',
-	requires : ['FPClient.view.mainform.AdmTool'],
+	requires : ['fplk.view.mainform.AdmTool'],
 	activeTab : 0,
 	margins : '5 5 5 5',
 	items : [{

@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.mainform.ComboAgent', {
+Ext.define('fplk.view.mainform.ComboAgent', {
 	extend : 'Ext.form.ComboBox',
 	alias : 'widget.comboagent',
 	name : 'agents',

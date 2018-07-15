@@ -1,4 +1,4 @@
-Ext.define('FPClient.store.AgentsSt', {
+Ext.define('fplk.store.AgentsSt', {
 	extend : 'Ext.data.Store',
-	model : 'FPClient.model.AgentsMod'
+	model : 'fplk.model.AgentsMod'
 });

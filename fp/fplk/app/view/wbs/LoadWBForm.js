@@ -1,4 +1,4 @@
-Ext.define('FPClient.view.wbs.LoadWBForm', {
+Ext.define('fplk.view.wbs.LoadWBForm', {
 	alias : 'widget.loadwbform',
 	extend : 'Ext.form.Panel',
 	width : 500,

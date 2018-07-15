@@ -1,8 +1,8 @@
-Ext.define('FPClient.view.wbs.NewPodWin', {
+Ext.define('fplk.view.wbs.NewPodWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.newpodwin',
-	requires : ['FPClient.view.wbs.NewPodForm'],
+	requires : ['fplk.view.wbs.NewPodForm'],
 	title : 'Подтверждение о доставке накладной',
 	layout : 'fit',
 	autoShow : true,

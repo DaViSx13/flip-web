@@ -1,8 +1,8 @@
-Ext.define('FPClient.view.wbs.ViewExWin', {
+Ext.define('fplk.view.wbs.ViewExWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
 	alias : 'widget.viewexwin',
-	requires : ['FPClient.view.wbs.ViewExGrid', 'FPClient.view.wbs.ViewExForm'],
+	requires : ['fplk.view.wbs.ViewExGrid', 'fplk.view.wbs.ViewExForm'],
 	title : 'Просмотр исключений',
 	layout : 'border',
 	autoShow : true,
