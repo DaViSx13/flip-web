@@ -28,7 +28,7 @@ if ISNULL(ltrim(rtrim(@period)), '') = '' set @period = left(CONVERT(varchar(50)
 
 declare @bDate date, @eDate date, @CACC varchar(50)
 
-select @CACC = CACC from wwwLKUser where userID = @clientID -- 54
+select @CACC = clientID from wwwLKUser where userID = @clientID -- 54
 set @bDate = @period --'20100201'
 set @eDate = dateadd(d, -1, DATEADD(m,1,@bDate))
 

@@ -1,20 +1,17 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwLKgetOrders]    Script Date: 06/26/2018 13:07:34 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwLKgetOrders]') AND type in (N'P', N'PC'))
+/****** Object:  StoredProcedure [dbo].[wwwLKgetOrders]    Script Date: 19.07.2018 12:35:22 ******/
 DROP PROCEDURE [dbo].[wwwLKgetOrders]
 GO
 
-USE [ALERT_F]
-GO
-
-/****** Object:  StoredProcedure [dbo].[wwwLKgetOrders]    Script Date: 06/26/2018 13:07:34 ******/
+/****** Object:  StoredProcedure [dbo].[wwwLKgetOrders]    Script Date: 19.07.2018 12:35:22 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 CREATE procedure [dbo].[wwwLKgetOrders]
@@ -29,7 +26,7 @@ if ISNULL(ltrim(rtrim(@period)), '') = '' set @period = left(CONVERT(varchar(50)
 declare @bDate date, @eDate date, @agID int
 declare @CACC varchar(50), @aUser varchar(50)
 
-select @CACC = CACC, @aUser = aUser from wwwLKUser where userID = @clientID
+select @CACC = clientID, @aUser = aUser from wwwLKUser where clientID = @clientID
 
 --set @agID = @agentID -- 54
 set @bDate = @period+'01'
@@ -55,6 +52,7 @@ SELECT [ROrdNum]
       ,[DName]
   
       ,[datein]
+	  ,CourDate
 	  ,[status]= 
 	case
 	when Wb_no is null then
@@ -83,7 +81,9 @@ SELECT [ROrdNum]
   order by ROrdNum desc
 
 
+
 GO
+
 
 grant execute on [wwwLKgetOrders] to [pod]
 go

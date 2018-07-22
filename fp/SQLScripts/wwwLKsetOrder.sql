@@ -59,7 +59,7 @@ declare @CACC varchar(50), @Ord_No int, @S_City_Code varchar(5), @R_City_Code va
 if @clientID is not null and @clientID <> '' 
   begin
   select 
-      @CACC = CACC
+      @CACC = clientID
     , @UserIn = aUser
     --, @Payr = agentID
   from wwwLKUser where userID = @clientID
@@ -186,7 +186,7 @@ select @Ord_No=SCOPE_IDENTITY()
 
 if @webwb = 1
 begin
-exec wwwLKSetWb
+exec wwwClientSetWb
 			 @ID = null
 			,@Wb_No = null
 			,@Ord_No = @Ord_No		
