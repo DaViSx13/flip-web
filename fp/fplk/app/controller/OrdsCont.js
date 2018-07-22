@@ -69,10 +69,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
-			},
-			/*'ordgrid button[action=wbnew]' : {
-				click : this.openWbWin
-			},*/
+			},			
 			'ordgrid button[action=newtpl]' : {
 				click : this.openTpl
 			},
@@ -84,10 +81,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'ordwin button[action=save]' : {
 				click : this.saveOrder
-			},
-			/*'wbwin button[action=save]' : {
-				click : this.saveWebWb
-			},*/
+			},			
 			'ordtool combomonth' : {
 				change : this.monthChange
 			},
@@ -378,6 +372,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, mo);
+		this.getTemplStStore().load();
 	},
 	openOrdWin : function (btn) {
 		var edit = Ext.widget('ordwin');
@@ -387,11 +382,11 @@ Ext.define('fplk.controller.OrdsCont', {
 		edit.down('ordform').down('combocity[name=dest]').focus(false, true);
 		
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimef]');
-		timeEdit.setReadOnly(true);
+		//timeEdit.setReadOnly(true);
 		timeEdit.setValue('10:00');
 		
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
-		timeEdit.setReadOnly(true);
+		//timeEdit.setReadOnly(true);
 		timeEdit.setValue('19:00');
 		
 		//auto sender begin
@@ -413,7 +408,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		//auto sender end
 	},
 	openTpl : function (btn) {
-		this.getTemplStStore().load();
+		
 		if (this.getTemplStStore().getCount() > 0) {
 			var win = Ext.widget('usetemplwin');
 			win.show();
@@ -432,11 +427,11 @@ Ext.define('fplk.controller.OrdsCont', {
 			var form = win.down('ordform');
 			
 			var timeEdit = form.down('textfield[name=courtimef]');
-			timeEdit.setReadOnly(true);
+			
 			timeEdit.setValue('10:00');
 			
 			var timeEdit = form.down('textfield[name=courtimet]');
-			timeEdit.setReadOnly(true);
+			
 			timeEdit.setValue('19:00');
 			
 			form.loadRecord(record);
@@ -446,14 +441,18 @@ Ext.define('fplk.controller.OrdsCont', {
 					query : cb_org.getValue()
 				}
 			});
-			cb_org.select(record.data['orgcode']);
+			if (record.data['orgcode']>0){
+				cb_org.select(record.data['orgcode']);
+			}
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
 				params : {
 					query : cb_des.getValue()
 				}
 			});
-			cb_des.select(record.data['destcode']);
+			if (record.data['destcode']>0){
+				cb_des.select(record.data['destcode']);
+			}
 			this.getLoadFileForm().down('filefield[name=uploadFile]').setVisible(true);
 		}
 	},
@@ -499,23 +498,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		/*if (org.value == null) {
-			var jsonArrayOrg = this.getCityStOrgStore().data.items;
-			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-					org.setValue(jsonArrayOrg[i].data.code);
-					break;
-				};
-			};
-			if (org.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}*/
+		
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {
@@ -643,7 +626,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		});		
 		cb_des.select(rec[0].data['destcode']);
 		form_ord.down('combocity[name=org]').focus(false, true);
-		//console.log(rec[0]);
+		
 	},
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();

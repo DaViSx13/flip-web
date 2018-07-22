@@ -305,20 +305,22 @@ if (!isset($_REQUEST['dbAct'])) {
 			$DAdr=$params['dadr'];
 			$DESTRems=$params['destrems'];			
 			$ContPhone=$params['contphone'];
-			$DContPhone=$params['dcontphone'];			
-
+			$DContPhone=$params['dcontphone'];
+			$org = isset($params['org']) ? $params['org'] : 0;			
+			$dest = isset($params['dest']) ? $params['dest'] : 0;
+			
 			$query = "exec wwwLKsetTemplate
 			@TemplateName='$params[templatename]',
 			@clientID=$ag,
 			@tplid=$id,
-			@ORG=$params[org],
+			@ORG=$org,
 			@CName='$CName',
 			@Address='$Address',
 			@ContName='$ContName',
 			@ContPhone='$ContPhone',
 			@ContMail='$params[contmail]',
 			@OrgRems='$OrgRems',
-			@DEST=$params[dest],
+			@DEST=$dest,
 			@DName='$DName',
 			@DAdr='$DAdr',
 			@DContName='$DContName',

@@ -18,7 +18,13 @@ Ext.define('fplk.view.orders.OrdGrid', {
 			format : 'd.m.Y',
 			width : 70,
 			dataIndex : 'datein',
-			text : 'Дата'
+			text : 'Дата ввода'
+		}, {
+			xtype : 'datecolumn',
+			format : 'd.m.Y',
+			width : 80,
+			dataIndex : 'courdate',
+			text : 'Дата приезда'
 		}, {
 			xtype : 'gridcolumn',
 			width : 114,

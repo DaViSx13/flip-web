@@ -36,6 +36,10 @@ Ext.define('fplk.view.orders.OrdTool', {
 			text : 'Ввод веб накладной',
 			iconCls : 'webwb',
 			action : 'wbnew'
+		}, {
+			text : 'Из шаблона',
+			iconCls : 'wbnewtpl',
+			action : 'wbnewtpl'
 		}, '->', '-', {
 			xtype : 'numyear'
 		}, '-', {

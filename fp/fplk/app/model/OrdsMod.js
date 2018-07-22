@@ -10,6 +10,10 @@ Ext.define('fplk.model.OrdsMod', {
 			type : 'date',
 			dateFormat : 'Y-m-d H:i:s'
 		}, {
+			name : 'courdate',
+			type : 'date',
+			dateFormat : 'Y-m-d H:i:s'
+		}, {
 			name : 'orgcity'
 		}, {
 			name : 'cname'

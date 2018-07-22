@@ -36,17 +36,13 @@ Ext.define('fplk.controller.TemplCont', {
 	clkNew : function (btn) {
 		var win = Ext.widget('templwin');
 		win.show();
-		win.down('templform').down('textfield[name=templatename]').focus(false, true);
-		//console.log(this.getClientStStore().getCount());
+		win.down('templform').down('textfield[name=templatename]').focus(false, true);		
 		if (this.getClientStStore().getCount() > 0){
 		//auto sender begin
 		client = this.getClientStStore().first();
-		//мухлеж
-		
+		//мухлеж		
 		client.set('org', client.get('city'));
-		client.set('orgcode', client.get('cityid'));
-		
-		//console.log(client);
+		client.set('orgcode', client.get('cityid'));	
 		
 		formt = win.down('templform');
 		formt.loadRecord(client);
@@ -99,15 +95,18 @@ Ext.define('fplk.controller.TemplCont', {
 					query : cb_org.getValue()
 				}
 			});
+			if (record.data['orgcode']>0){
 			cb_org.select(record.data['orgcode']);
-			
+			}
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
 				params : {
 					query : cb_des.getValue()
 				}
 			});
+			if (record.data['destcode']>0){
 			cb_des.select(record.data['destcode']);
+			}
 			form.down('textfield[name=templatename]').focus(false, true);
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите шаблон для редактирования');
@@ -116,43 +115,9 @@ Ext.define('fplk.controller.TemplCont', {
 	saveTempl : function (btn) {
 		var me = this;
 		var win = btn.up('templwin');
-		var form_ord = win.down('templform');
-		//var org = form_ord.down('combocity[name=org]');
+		var form_ord = win.down('templform');		
 		var dest = form_ord.down('combocity[name=dest]');
-		/*if (org.value == null) {
-			var jsonArrayOrg = this.getCityStOrgStore().data.items;
-			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-					org.setValue(jsonArrayOrg[i].data.code);
-					break;
-				};
-			};
-			if (org.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}*/
-		if (dest.value == null) {
-			var jsonArrayDes = this.getCityStDesStore().data.items;
-			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
-					dest.setValue(jsonArrayDes[i].data.code);
-					break;
-				};
-			};
-			if (dest.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}
+		
 		if (form_ord.getForm().isValid()) {
 			form_ord.submit({
 				url : 'srv/data.php',

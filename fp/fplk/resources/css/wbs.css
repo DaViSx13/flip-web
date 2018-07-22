@@ -102,6 +102,9 @@
 .greusr {
 	background-image : url(../../resources/images/usergreen.png);
 }
+.wbnewtpl {
+	background-image : url(../../resources/images/wbnewtpl.png);
+}
 .x-action-col-cell img.cut{
 	background-image : url(../../resources/images/cut.png);
 	height : 16px;
