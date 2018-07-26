@@ -54,8 +54,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					name : 'contmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
-					anchor : '100%',
-					vtype : 'email'
+					anchor : '100%'
 				}, {
 					xtype : 'textfield',
 					width : 84,
@@ -115,8 +114,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					name : 'dcontmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
-					anchor : '100%',
-					vtype : 'email'
+					anchor : '100%'
 				}, {
 					xtype : 'textfield',
 					width : 84,
@@ -213,8 +211,10 @@ Ext.define('fplk.view.orders.OrdForm', {
 				}, {
 					xtype : 'numberfield',
 					name : 'wt',
-					minValue : 0,
+					minValue : 0.1,
+					value : 0.1,
 					fieldLabel : 'Вес',
+					step : 0.1,
 					allowBlank : false
 				}, {
 					xtype : 'numberfield',

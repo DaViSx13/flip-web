@@ -61,8 +61,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					name : 's_mail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
-					anchor : '100%',
-					vtype : 'email'
+					anchor : '100%'
 				}, {
 					xtype : 'textfield',
 					width : 84,
@@ -123,8 +122,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					name : 'r_mail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
-					anchor : '100%',
-					vtype : 'email'
+					anchor : '100%'					
 				}, {
 					xtype : 'textfield',
 					width : 84,
@@ -138,7 +136,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					name : 'r_ref',
 					height : 75,
 					maxLength : 1000,
-					fieldLabel : 'Примечание',
+					fieldLabel : 'Специальные инструкции',
 					labelAlign : 'top',
 					anchor : '100%'
 				}
@@ -174,7 +172,8 @@ Ext.define('fplk.view.webwbs.WbForm', {
 				}, {
 					xtype : 'numberfield',
 					name : 'wt',
-					minValue : 0,
+					minValue : 0.1,
+					step : 0.1,
 					fieldLabel : 'Вес',
 					allowBlank : true
 				}, {

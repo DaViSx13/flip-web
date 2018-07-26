@@ -63,8 +63,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					name : 'contmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
-					anchor : '100%',
-					vtype : 'email'
+					anchor : '100%'
 				}, {
 					xtype : 'textfield',
 					width : 84,
@@ -125,8 +124,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					name : 'dcontmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
-					anchor : '100%',
-					vtype : 'email'
+					anchor : '100%'
 				}, {
 					xtype : 'textfield',
 					width : 84,

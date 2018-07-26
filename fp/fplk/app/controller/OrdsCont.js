@@ -377,8 +377,8 @@ Ext.define('fplk.controller.OrdsCont', {
 	openOrdWin : function (btn) {
 		var edit = Ext.widget('ordwin');
 		edit.show();
-		var form_lf = edit.down('loadfileform');
-		form_lf.down('filefield[name=uploadFile]').setVisible(true);
+		//var form_lf = edit.down('loadfileform');
+		//form_lf.down('filefield[name=uploadFile]').setVisible(true);
 		edit.down('ordform').down('combocity[name=dest]').focus(false, true);
 		
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimef]');
@@ -388,7 +388,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
 		//timeEdit.setReadOnly(true);
 		timeEdit.setValue('19:00');
-		
+		if (this.getClientStStore().getCount() > 0){
 		//auto sender begin
 		client = this.getClientStStore().first();
 		//мухлеж
@@ -406,6 +406,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		});
 		cb_org.select(client.get('orgcode'));
 		//auto sender end
+		}
 	},
 	openTpl : function (btn) {
 		
@@ -453,7 +454,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			if (record.data['destcode']>0){
 				cb_des.select(record.data['destcode']);
 			}
-			this.getLoadFileForm().down('filefield[name=uploadFile]').setVisible(true);
+			//this.getLoadFileForm().down('filefield[name=uploadFile]').setVisible(true);
 		}
 	},
 	dblclickOrdGr : function (gr, rec) {
@@ -495,7 +496,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var me = this;
 		var win = btn.up('ordwin');
 		var form_ord = win.down('ordform');
-		var form_lf = win.down('loadfileform');
+		//var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
 		
@@ -524,7 +525,7 @@ Ext.define('fplk.controller.OrdsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
+					/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
 						if (form_lf.getForm().isValid()) {
 							form_lf.submit({
 								url : 'srv/upload.php',
@@ -546,12 +547,12 @@ Ext.define('fplk.controller.OrdsCont', {
 								}
 							});
 						}
-					} else {
+					} else {*/
 						form.reset();
 						me.getOrdForm().up('ordwin').close();
 						me.loadOrdGr();
-						Ext.Msg.alert('Заказ сохранен!', action.result.msg);
-					}
+						Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
+					//}
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
@@ -595,7 +596,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var edi = this.getOrdWin();
 		var form_ord = edi.down('ordform');
 		var form_lf = edi.down('loadfileform');
-		if (rec[0].data.autorfilename) {
+		/*if (rec[0].data.autorfilename) {
 			form_lf.down('filefield[name=uploadFile]').setVisible(false);
 			form_lf.down('label[name=urlf]').setVisible(true);
 			if (rec[0].data.fileowner == 1 && rec[0].data.status == 'заявлен') {
@@ -608,7 +609,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			}
 			form_lf.down('label[name=urlf]').setVisible(false);
 			form_lf.down('button[action=delete]').hide();
-		}
+		}*/
 		form_ord.loadRecord(rec[0]);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
 		var cb_org = form_ord.down('combocity[name=org]');
