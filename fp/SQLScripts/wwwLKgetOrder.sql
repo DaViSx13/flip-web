@@ -1,23 +1,16 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwLKgetOrder]    Script Date: 06/27/2018 12:48:59 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwLKgetOrder]') AND type in (N'P', N'PC'))
+/****** Object:  StoredProcedure [dbo].[wwwLKgetOrder]    Script Date: 26.07.2018 9:23:54 ******/
 DROP PROCEDURE [dbo].[wwwLKgetOrder]
 GO
 
-USE [ALERT_F]
-GO
-
-/****** Object:  StoredProcedure [dbo].[wwwLKgetOrder]    Script Date: 06/27/2018 12:48:59 ******/
+/****** Object:  StoredProcedure [dbo].[wwwLKgetOrder]    Script Date: 26.07.2018 9:23:54 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-
 
 CREATE procedure [dbo].[wwwLKgetOrder]
 @id int,
@@ -60,10 +53,10 @@ SELECT r.[rordnum]
 	  ,courdate=convert(varchar,courdate,104)
 	  ,courtimef=left(convert(varchar,courtimef,108),5)
 	  ,courtimet=left(convert(varchar,courtimet,108),5)
-	  , f.FilePlase
-	  , f.RealFileName
-	  , f.AutorFileName
-	  , fileowner = case when pcacc = @agent then 1 else 0 end
+	 -- , f.FilePlase
+	 -- , f.RealFileName
+	 -- , f.AutorFileName
+	 -- , fileowner = case when pcacc = @agent then 1 else 0 end
 	  , [status]= case--
         when r.NeedDel = 1 then 'отменен'
         when (select COUNT(1) from MnfBdy where Wb_no = r.Wb_no) <> 0 then 'на комплектовке'
@@ -75,9 +68,8 @@ SELECT r.[rordnum]
         when r.Status = 3  then 'отказ клиента'
         end
   FROM RegOrders r
-  left join AgFiles f on r.ROrdNum =f.ROrdNum
+  --left join AgFiles f on r.ROrdNum =f.ROrdNum
   where r.[ROrdNum]=@id
-
 
 GO
 
