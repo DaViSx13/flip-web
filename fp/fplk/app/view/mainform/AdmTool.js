@@ -34,8 +34,8 @@ Ext.define('fplk.view.mainform.AdmTool', {
 		},' ',
 		'->',
 		{
-			tooltip : FPAgent.lib.Translate.tr("Тарифы"),
-			text : FPAgent.lib.Translate.tr("Тарифы"),
+			tooltip : "Тарифы",
+			text : "Тарифы",
 			iconCls : 'tariffs',
 			action : 'tariffs',
 			xtype : 'button'
