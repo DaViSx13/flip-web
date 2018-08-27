@@ -105,6 +105,9 @@
 .wbnewtpl {
 	background-image : url(../../resources/images/wbnewtpl.png);
 }
+.tariffs {
+	background-image : url(../../resources/images/excel_.png);
+}
 .x-action-col-cell img.cut{
 	background-image : url(../../resources/images/cut.png);
 	height : 16px;
