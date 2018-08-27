@@ -46,6 +46,9 @@ Ext.define('fplk.controller.MnfCont', {
 			'admtool comboagent' : {
 				select : this.changeAgent
 			},
+			'admtool button[action=tariffs]' : {
+				click : this.downloadTariffs
+			},
 			'admtool button[action=help]' : {
 				click : this.showHelp
 			}
@@ -89,6 +92,9 @@ Ext.define('fplk.controller.MnfCont', {
 			});
 			
 		}
+	},
+	downloadTariffs : function (btn) {
+		window.location.href = 'srv/downloadTariffs.php';
 	},
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({

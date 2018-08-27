@@ -32,7 +32,14 @@ Ext.define('fplk.view.mainform.AdmTool', {
 			enableToggle : true,
 			xtype : 'button'
 		},' ',
-		'->', {
+		'->',
+		{
+			tooltip : FPAgent.lib.Translate.tr("Тарифы"),
+			text : FPAgent.lib.Translate.tr("Тарифы"),
+			iconCls : 'tariffs',
+			action : 'tariffs',
+			xtype : 'button'
+		},' ', {
 			xtype : 'label',
 			text : 'UserName'
 		},
