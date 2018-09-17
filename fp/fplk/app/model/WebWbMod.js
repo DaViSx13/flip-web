@@ -95,19 +95,18 @@ Ext.define('fplk.model.WebWbMod', {
 		},*/ {
 			name : 'pcs',
 			type : 'int'
-		}/*, {
-			name : 'holidaydel',
+		}, {
+			name : 'descr',
 			type : 'string'
 		}, {
-			name : 'timing',
-			dateFormat : 'Y-m-d H:i:s',
-			type : 'date'
-		}, {
-			name : 't_del',
-			type : 'string'
-		}, {
-			name : 'ins',
+			name : 'inssum',			
 			type : 'float'
-		}*/
+		}, {
+			name : 'payr',
+			type : 'int'
+		}, {
+			name : 'metpaym',
+			type : 'string'
+		}
 	]
 });

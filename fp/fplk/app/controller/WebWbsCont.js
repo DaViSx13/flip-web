@@ -64,7 +64,7 @@ Ext.define('fplk.controller.WebWbsCont', {
 			},
 			'usewebwbtplwin button[action=setwb]' : {
 				click : this.setWBTpl
-			},
+			}
 		});
 	},
 	openWbWin : function (btn) {		
@@ -94,7 +94,8 @@ Ext.define('fplk.controller.WebWbsCont', {
 			form.down('textfield[name=pcs]').setValue(sm.getSelection()[0].get('packs'));
 			form.down('textfield[name=wt]').setValue(sm.getSelection()[0].get('wt'));
 			form.down('textfield[name=vol_wt]').setValue(sm.getSelection()[0].get('volwt'));
-			
+			//form.down('radiofield[name=payr]').setRawValue(1);
+			//form.down('radiofield[name=metpaym]').setRawValue(1);
 			
 			form.down('combocity[name=dest]').focus(false, true);
 			
@@ -167,8 +168,8 @@ Ext.define('fplk.controller.WebWbsCont', {
 				form.down('textfield[name=r_mail]').setValue(record.data['dcontmail']);
 				form.down('textfield[name=r_tel]').setValue(record.data['dcontphone']);
 				form.down('textfield[name=r_ref]').setValue(record.data['destrems']);
-			
-			
+				//form.down('radiofield[name=payr]').setRawValue(1);
+				//form.down('radiofield[name=metpaym]').setRawValue(1);
 			
 		}
 	},
@@ -323,5 +324,5 @@ Ext.define('fplk.controller.WebWbsCont', {
 		var aTol = comp.up('webwbstool');
 		var mo = aTol.down('combomonth').value;
 		this.loadWebWbs(newz, mo);
-	},
+	}
 	});
