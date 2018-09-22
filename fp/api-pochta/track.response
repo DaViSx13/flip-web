@@ -1,0 +1,1024 @@
+{
+	"OperationHistoryData": {
+		"historyRecord": [{
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "800834",
+						"Description": "Москва-ДТИ"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"Payment": 0,
+					"Value": 0,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 0,
+						"Name": "Без отметки"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					},
+					"Mass": 9040
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 28,
+						"Name": "Присвоение идентификатора"
+					},
+					"OperAttr": {
+						"Id": 0
+					},
+					"OperDate": "2018-09-04T20:27:56.279+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "125212",
+						"Description": "Москва 212"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"Payment": 0,
+					"Value": 0,
+					"MassRate": 66700,
+					"InsrRate": 0,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					},
+					"Mass": 9040
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 1,
+						"Name": "Прием"
+					},
+					"OperAttr": {
+						"Id": 2,
+						"Name": "Партионный"
+					},
+					"OperDate": "2018-09-05T11:40:36.000+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "111950",
+						"Description": "Москва МСП-3 Цех-1 МПКО-Север"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					},
+					"Mass": 9040
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 3,
+						"Name": "Прибыло в сортировочный центр"
+					},
+					"OperDate": "2018-09-05T17:05:50.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"OperationAddress": {
+						"Index": "111950",
+						"Description": "Москва МСП-3 Цех-1 МПКО-Север"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 0,
+						"Name": "Сортировка"
+					},
+					"OperDate": "2018-09-05T17:05:51.000+03:00"
+				},
+				"UserParameters": {
+					"Sndr": "",
+					"Rcpn": ""
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "111950",
+						"Description": "Москва МСП-3 Цех-1 МПКО-Север"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					},
+					"Mass": 9040
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 4,
+						"Name": "Покинуло сортировочный центр"
+					},
+					"OperDate": "2018-09-06T04:52:28.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "140960",
+						"Description": "Московский АСЦ"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					},
+					"Mass": 9040
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 3,
+						"Name": "Прибыло в сортировочный центр"
+					},
+					"OperDate": "2018-09-06T09:12:11.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "140983",
+						"Description": "Московский АСЦ Цех Посылок"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"Value": 0,
+					"MassRate": 66700,
+					"InsrRate": 0,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"Internum": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 0,
+						"Name": "Без отметки"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					}
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 0,
+						"Name": "Сортировка"
+					},
+					"OperDate": "2018-09-06T10:54:39.000+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "140960",
+						"Description": "Московский АСЦ"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					}
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 4,
+						"Name": "Покинуло сортировочный центр"
+					},
+					"OperDate": "2018-09-08T13:33:49.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "295960",
+						"Description": "Симферополь ЦОПП"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					}
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 3,
+						"Name": "Прибыло в сортировочный центр"
+					},
+					"OperDate": "2018-09-10T11:33:33.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "295960",
+						"Description": "Симферополь ЦОПП"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					}
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 4,
+						"Name": "Покинуло сортировочный центр"
+					},
+					"OperDate": "2018-09-11T04:29:42.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "299960",
+						"Description": "Севастополь ЦОПП"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					}
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 3,
+						"Name": "Прибыло в сортировочный центр"
+					},
+					"OperDate": "2018-09-11T04:34:05.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"DestinationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"OperationAddress": {
+						"Index": "299960",
+						"Description": "Севастополь ЦОПП"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"MassRate": 66700,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"PostMark": {
+						"Id": 2048,
+						"Name": "Нестандартная"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					}
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 4,
+						"Name": "Покинуло сортировочный центр"
+					},
+					"OperDate": "2018-09-12T07:33:57.001+03:00"
+				},
+				"UserParameters": {
+					"SendCtg": {
+						"Id": 5,
+						"Name": "Корпоративный клиент"
+					},
+					"Sndr": "ООО \"ФЛИППОСТ\"",
+					"Rcpn": "Набиев Теймур Сардар оглы"
+				}
+			}, {
+				"AddressParameters": {
+					"OperationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					},
+					"Mass": 9040
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 8,
+						"Name": "Обработка"
+					},
+					"OperAttr": {
+						"Id": 2,
+						"Name": "Прибыло в место вручения"
+					},
+					"OperDate": "2018-09-12T10:19:12.000+03:00"
+				},
+				"UserParameters": {
+					"Sndr": "",
+					"Rcpn": ""
+				}
+			}, {
+				"AddressParameters": {
+					"OperationAddress": {
+						"Index": "299804",
+						"Description": "Кача"
+					},
+					"MailDirect": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryFrom": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					},
+					"CountryOper": {
+						"Id": 643,
+						"Code2A": "RU",
+						"Code3A": "RUS",
+						"NameRU": "Российская Федерация",
+						"NameEN": "Russian Federation"
+					}
+				},
+				"FinanceParameters": {
+					"Rate": 0,
+					"CustomDuty": 0
+				},
+				"ItemParameters": {
+					"Barcode": "80083427002938",
+					"ValidRuType": false,
+					"ValidEnType": false,
+					"ComplexItemName": "Посылка обыкновенная",
+					"MailRank": {
+						"Id": 0,
+						"Name": "Без разряда"
+					},
+					"MailType": {
+						"Id": 4,
+						"Name": "Посылка"
+					},
+					"MailCtg": {
+						"Id": 3,
+						"Name": "Обыкновенное"
+					},
+					"Mass": 9040
+				},
+				"OperationParameters": {
+					"OperType": {
+						"Id": 2,
+						"Name": "Вручение"
+					},
+					"OperAttr": {
+						"Id": 1,
+						"Name": "Вручение адресату"
+					},
+					"OperDate": "2018-09-13T15:13:37.000+03:00"
+				},
+				"UserParameters": {
+					"Sndr": "",
+					"Rcpn": ""
+				}
+			}
+		]
+	}
+}
