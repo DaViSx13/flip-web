@@ -1,4 +1,5 @@
 <?php
+header("Content-type: text/plain; charset=utf-8");
 include "errorhandler.php";
 define('EOL', "\r\n");
 
