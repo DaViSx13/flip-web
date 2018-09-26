@@ -1,5 +1,11 @@
 <?php
-header("Content-type: text/plain; charset=utf-8");
+/*
+с uft-8 в deplhi какая-то непонятная проблема при запуске планировщиком.
+отвечам в windows-1251
+*/
+
+//header("Content-type: text/plain; charset=utf-8");
+header("Content-type: text/plain; charset=windows-1251");
 include "errorhandler.php";
 define('EOL', "\r\n");
 
@@ -16,6 +22,7 @@ print "zzzzzzzzzzzzzzzzzzzzzz\n";
 //$wbno = '5555504216';
 
 $result_str = '';
+//$result_str = 'Привет' . EOL;
 $result_info = '';
 $result_track = '';
 $barcode = $tracknumber;
@@ -48,7 +55,7 @@ if( !empty($wbno) and empty($tracknumber) ){
 	$result_str = 'ОШИБКА=не заданы параметры';
 }
 
-print $result_str;
+print utf8_to_win1251($result_str);
 
 //functions
 
@@ -232,6 +239,22 @@ function curl_get($url, array $get = NULL, array $options = array())
 	
 } 
 
+function utf8_to_win1251($str){
+	//ищем способ конвертации без ошибок
+	//для примера левых символов
+	//$str = "‎89104260898";
+	//$str = "Санкт-Петербург, Малый пр., В.О., дом ¹57";	
+	
+	//IGNORE на PHP5.5 все равно выдает NOTICE и возвращает пустую строку
+	//return iconv("UTF-8", "windows-1251//IGNORE", $str);
+	
+	//TRANSLIT работает без ошибок, левые символы заменяет на ?
+	//return iconv("UTF-8", "windows-1251//TRANSLIT", $str);
+	
+	//без ini_set работает как TRANSLIT, с ним так, как должен работать IGNORE
+	ini_set('mbstring.substitute_character', "none");
+	return mb_convert_encoding($str, "windows-1251", "utf-8");
+}
 
 ?>
 
