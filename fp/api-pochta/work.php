@@ -2,10 +2,12 @@
 /*
 с uft-8 в deplhi какая-то непонятная проблема при запуске планировщиком.
 отвечам в windows-1251
+
+победил - возвращаю обратно uft-8
 */
 
-//header("Content-type: text/plain; charset=utf-8");
-header("Content-type: text/plain; charset=windows-1251");
+header("Content-type: text/plain; charset=utf-8");
+//header("Content-type: text/plain; charset=windows-1251");
 include "errorhandler.php";
 define('EOL', "\r\n");
 
@@ -55,7 +57,8 @@ if( !empty($wbno) and empty($tracknumber) ){
 	$result_str = 'ОШИБКА=не заданы параметры';
 }
 
-print utf8_to_win1251($result_str);
+//print utf8_to_win1251($result_str);
+echo $result_str;
 
 //functions
 
