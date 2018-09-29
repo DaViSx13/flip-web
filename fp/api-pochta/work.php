@@ -51,8 +51,8 @@ if( !empty($wbno) and empty($tracknumber) ){
 	/* если есть трекномер, то запрос в АПИ отслеживания */
 	//print "запрос в АПИ отслеживания\n";
 	
-	//$result_track = get_tracking_info($barcode);
-	//$result_str = $result_str . $result_track;
+	$result_track = get_tracking_info($barcode);
+	$result_str = $result_str . $result_track;
 } else {
 	$result_str = 'ОШИБКА=не заданы параметры';
 }
