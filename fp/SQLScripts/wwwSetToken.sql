@@ -1,29 +1,28 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwSetToken]    Script Date: 11.06.2018 7:55:21 ******/
-DROP PROCEDURE [dbo].[wwwSetToken]
+/****** Object:  StoredProcedure [dbo].[wwwCheckToken]    Script Date: 06/05/2018 14:38:44 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwCheckToken]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[wwwCheckToken]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwSetToken]    Script Date: 11.06.2018 7:55:21 ******/
+USE [ALERT_F]
+GO
+
+/****** Object:  StoredProcedure [dbo].[wwwCheckToken]    Script Date: 06/05/2018 14:38:44 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-
-CREATE procedure [dbo].[wwwSetToken]
-@token varchar(32),
-@ag int	
+CREATE procedure [dbo].[wwwCheckToken]
+@token varchar(32)
 as
-Update wwwUser set aToken = @token
-where agentID = @ag
-exec wwwGetToken  @ag
-
+select u.agentID, u.aUser from wwwUser u where u.aToken = @token
 
 GO
-GRANT EXECUTE ON [dbo].[wwwSetToken] TO [pod] AS [dbo]
+GRANT EXECUTE ON [dbo].[wwwCheckToken] TO [pod] AS [dbo]
 GO
 
 
