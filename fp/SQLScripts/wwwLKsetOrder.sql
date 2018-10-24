@@ -1,7 +1,7 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwLKsetOrder]    Script Date: 06/27/2018 09:45:15 ******/
+/****** Object:  StoredProcedure [dbo].[wwwLKsetOrder]    Script Date: 07/26/2018 11:46:15 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[wwwLKsetOrder]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[wwwLKsetOrder]
 GO
@@ -9,12 +9,13 @@ GO
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwLKsetOrder]    Script Date: 06/27/2018 09:45:15 ******/
+/****** Object:  StoredProcedure [dbo].[wwwLKsetOrder]    Script Date: 07/26/2018 11:46:15 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
@@ -80,7 +81,7 @@ select @R_City_Code = c.Code from N_City c where c.id=@DEST
 if @RordNum >0
 begin 
 
-if exists(select 1 from AgOrders where ROrdNum = @RordNum and Status > 0) 
+if exists(select 1 from RegOrders where ROrdNum = @RordNum and Status > 0) 
 	  RAISERROR ('Заказ в работе. Редактирование запрещено.', -- Message text.
                16, -- Severity.
                1 -- State.
@@ -128,8 +129,8 @@ FrmID,
 UserIn,
 CurId,
 CACC,
-ContentDescr
-
+ContentDescr,
+isWEB
  )VALUES (
 @ORG, 
 @S_City_Code,
@@ -161,7 +162,8 @@ ContentDescr
 @UserIn,
 0,
 @CACC,
-''
+'',
+1
        )
       
 declare @StrBody varchar(max), @StrSub varchar(max)
@@ -226,7 +228,12 @@ BEGIN CATCH
 END CATCH
 
 
+
+
 GO
+
+
+
 
 grant execute on [wwwLKsetOrder] to [pod]
 go
