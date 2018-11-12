@@ -160,7 +160,8 @@ class SQLSRV_DataBase {
 						set numeric_roundabort off
 						set ansi_warnings on
 						set ansi_padding on
-						set ansi_nulls on"	);
+						set ansi_nulls on
+						SET ANSI_NULL_DFLT_ON ON"	);
 			}
 			else {
 				// Set the schema store location to be alongside the DB class

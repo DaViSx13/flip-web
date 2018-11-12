@@ -58,8 +58,12 @@ class orderController{
 	$token = Flight::checkToken($token);
 	$response = new Response();	
 	$cname = trim(Flight::request()->data->sendername);	
+	if (isset($cname)){
 	if (strlen($cname)==0 || strlen($cname)> 60){
 		throw new Exception('Длинна поля sendername должна быть больше 0 и меньше 60 символов!');
+	}
+	} else{
+		throw new Exception('Не заполнено поле sendername');
 	}
 	$address = trim(Flight::request()->data->senderaddress);
 	if (strlen($address)==0 || strlen($address)> 200){
@@ -179,7 +183,7 @@ class orderController{
 	}else{
 	$rordnum = 0;	
 	}
-	if (isset($cname,$address,$org,$contname,$contphone,$dest,$dname,$dadr,$dcontname,
+	if (isset($address,$org,$contname,$contphone,$dest,$dname,$dadr,$dcontname,
 				$dcontphone,$type,$packs,$wt,$volwt,$courdate,$courtimef,$courtimet,$token)){
 	$token = current($token);
 	$userin = $token['auser'];	

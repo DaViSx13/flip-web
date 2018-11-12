@@ -12,6 +12,7 @@ Flight::register("types","typeController");
 
 Flight::register("orders","orderController");
 
+Flight::register("tarifs","tarifsController");
 
 
 Flight::map('error', function(Exception $ex){

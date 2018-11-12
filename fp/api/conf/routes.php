@@ -10,3 +10,5 @@ Flight::route('GET /orders/@ID',['orderController','getOrder']);
 Flight::route('GET /cities(/@city(/@state(/@country)))',['cityController','serchCities']);
 
 Flight::route('GET /types',['typeController','getTypes']);
+
+Flight::route('GET /tarifs/@org/@dest/@wt',['tarifsController','getTarifs']);
