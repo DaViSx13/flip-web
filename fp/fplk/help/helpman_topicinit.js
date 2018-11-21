@@ -1,4 +1,4 @@
-﻿/* --------------- Script (c) 2006-2013 EC Software ---------------
+﻿/* --------------- Script (c) 2006-2011 EC Software ---------------
 This script was created by Help & Manual. It is designed for use 
 in combination with the output of Help & Manual and must not
 be used outside this context.     http://www.helpandmanual.com
@@ -92,7 +92,7 @@ var HMToggleExpandDropdown = function(obj, value, animate) {
     }
     else {
 	  $(obj).animate({ height: 'toggle' }, 'fast', function() {
-		if (document.all && !window.opera) { // Avoid collapsing margins bug in IE
+		if ($.browser.msie) { // Avoid collapsing margins bug in IE
 	  	  var dummy = $(obj).prev();
 	  	  if ($(dummy).outerHeight!=0) dummy = $('<div style="height:1px"></div>').insertBefore(obj);
 	  	  else $(dummy).css('display', 'block');
@@ -107,9 +107,7 @@ var HMToggleExpandDropdown = function(obj, value, animate) {
 }
 
 var HMToggleExpandPicture = function(obj, value, animate) {
-  var oldFile = (value ? obj.getAttribute("hm.src0") : obj.getAttribute("hm.src1"));
-  var newFile = (value ? obj.getAttribute("hm.src1") : obj.getAttribute("hm.src0"));
-  var newSrc = obj.src.replace(oldFile, newFile);
+  var newSrc = (value ? obj.getAttribute("hm.src1") : obj.getAttribute("hm.src0"));
   var isToggleIcon = (obj.getAttribute("hm.type")=="dropdown");
 
   if ((!isToggleIcon) && (animate)) {
@@ -153,10 +151,8 @@ var HMShowPictureLightbox = function(objID) {
   var startT = $(obj).offset().top;
   var startW = $(obj).outerWidth();
   var startH = $(obj).outerHeight();
-
-  var oldFile = obj.getAttribute("hm.src0");
-  var newFile = obj.getAttribute("hm.src1");
-  var newSrc = obj.src.replace(oldFile, newFile);
+	
+  var newSrc = obj.getAttribute("hm.src1");
   var newTitle = obj.getAttribute("hm.title1");
   var newCaption = obj.getAttribute("hm.caption1");
 
@@ -376,14 +372,13 @@ var HMInitToggle = function() {
 		if (HMInitToggle.arguments[i] == "onclick") {
 		  node.onclick = Function(HMInitToggle.arguments[i+1]); 
 		}
-		if (HMInitToggle.arguments[i].substring(0,6) == "hm.src") {
-		  node.setAttribute(HMInitToggle.arguments[i], decodeURI(HMInitToggle.arguments[i+1]));
-	      var img = new Image();
-		  img.src = HMInitToggle.arguments[i+1];
-		}
 		else { 
-		  node.setAttribute(HMInitToggle.arguments[i], HMInitToggle.arguments[i+1]);
+		  node.setAttribute(HMInitToggle.arguments[i], decodeURI(HMInitToggle.arguments[i+1]));
 		  if ((HMInitToggle.arguments[i] == "hm.type") && (HMInitToggle.arguments[i+1] == "picture")) { isPicture = true; } 
+		}
+		if (HMInitToggle.arguments[i].substring(0,6) == "hm.src") {
+			var img = new Image();
+			img.src = HMInitToggle.arguments[i+1];
 		}
 	}
 	if (isPicture) {

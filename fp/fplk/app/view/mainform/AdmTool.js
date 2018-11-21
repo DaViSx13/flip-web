@@ -48,8 +48,8 @@ Ext.define('fplk.view.mainform.AdmTool', {
 			tooltip : 'Помощь',
 			iconCls : 'help',
 			action : 'help',
-			xtype : 'button',
-			hidden: true
+			xtype : 'button'
+			
 		},
 		{
 			tooltip : 'Выход',
