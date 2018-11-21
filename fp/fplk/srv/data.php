@@ -287,7 +287,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWbsTotal':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec [wwwClientGetWbsTotal] @period='{$params['period']}',  @clientID={$ag} ";
+			$query = "exec wwwLKGetWbsTotal @period='{$params['period']}',  @clientID={$ag} ";
 			break;
 		/*case 'GetAgents':
 			$query = "exec wwwLKgetClients";
