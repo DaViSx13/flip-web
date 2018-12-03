@@ -214,7 +214,8 @@ class orderController{
 			@Payr=$ag,
 			@UserIn='$userin',
 			@RordNum=$rordnum";	
-		//echo $sql;
+		$sql = Flight::utf8_to_win1251($sql);
+        $sql = stripslashes($sql);
 		$result = Flight::db()->query($sql);  
 		$response->data = $result;
 		$response->status = 'success';

@@ -41,3 +41,7 @@ Flight::map('checkToken',function($token){
      //   return false;
      // }
 });
+Flight::map('utf8_to_win1251',function ($str){
+	ini_set('mbstring.substitute_character', "none");
+	return mb_convert_encoding($str, "windows-1251", "utf-8");
+});
