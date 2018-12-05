@@ -17,7 +17,13 @@ Ext.define('FPAgent.view.mainform.MnfTool', {
 			enableToggle : true,
 			iconCls : 'allbox',
 			action : 'all'
-		}, '-', '->', '-', {
+		}, '-',
+		{
+			text : FPAgent.lib.Translate.tr("WbsTool.excel"),//'Экспорт в Excel',
+			iconCls : 'excel',
+			action : 'excel'
+				},
+		 '->', '-', {
 			xtype : 'numyear'
 		}, '-', {
 			xtype : 'combomonth'

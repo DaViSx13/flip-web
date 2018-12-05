@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TokenWin', 'mainform.TokenForm'],
+	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TokenWin', 'mainform.TokenForm', 'mainform.MnfTool'],
 	models : ['MnfMod', 'WbMod'],
 	stores : ['MnfSt', 'aMonths', 'WbSt'],
 	refs : [{
@@ -61,6 +61,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			'tokenwin button[action=settoken]' : {
 				click : this.setToken
 			},
+			'mnftool button[action=excel]' : {
+				click : this.exportExcel
+			},
 			'tokenwin button[action=help]' : {
 				click : this.showAPIHelp
 			}
@@ -106,6 +109,16 @@ Ext.define('FPAgent.controller.MnfCont', {
 				}
 			});
 
+		}
+	},
+	exportExcel : function (btn) {		
+		var sm = btn.up('mnfgrid').getSelectionModel();
+		if (sm.getCount() > 0) {
+			
+		window.location.href = 'srv/exportMnf.php?mnfRefNo=' + sm.getSelection()[0].get('mnfrefno');
+		
+		} else {
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("UsersCont.SelectRecord")/*'Выберите запись'*/, FPAgent.lib.Translate.tr("UsersCont.RecordNotSelect")/*'Запись не выбрана'*/);
 		}
 	},
 	loadTokenWin : function (btn) {
