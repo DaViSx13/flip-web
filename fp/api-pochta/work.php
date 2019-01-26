@@ -148,10 +148,22 @@ function get_shipment_info($response){
 		if( count($resp_obj) == 0){
 			$resp_str = "ОШИБКА={$wbno} : Отправление не найдено";
 		} else {
-			$resp_obj = $resp_obj[0];
-			$resp_str = "wbno=" . $resp_obj->{'order-num'} . EOL 
-					  . "barcode=" . $resp_obj->barcode . EOL 
-					  . "weight=" . $resp_obj->mass// . EOL 
+			$ordernum = '';
+			$barcode = '';
+			$mass = 0;
+
+			//по одной накладной может быть несколько треков
+			for($i = 0, $size = count($resp_obj); $i < $size; ++$i) {
+				$obj = $resp_obj[$i];
+				
+				$ordernum = $obj->{'order-num'};
+				$barcode = $barcode . $obj->barcode . ($i < $size-1 ? ',' : ''); //номера через запятую
+				$mass = $mass + intval($obj->mass); //вес складываем
+			}
+			
+			$resp_str = "wbno=" . $ordernum . EOL 
+					  . "barcode=" . $barcode . EOL 
+					  . "weight=" . $mass// . EOL 
 					;		
 		};
 		
