@@ -59,14 +59,14 @@ class orderController{
 	$response = new Response();	
 	$cname = trim(Flight::request()->data->sendername);	
 	if (isset($cname)){
-	if (strlen($cname)==0 || strlen($cname)> 60){
+	if (strlen($cname)==0 || mb_strlen($cname, 'utf-8')> 60){
 		throw new Exception('Длинна поля sendername должна быть больше 0 и меньше 60 символов!');
 	}
 	} else{
 		throw new Exception('Не заполнено поле sendername');
 	}
 	$address = trim(Flight::request()->data->senderaddress);
-	if (strlen($address)==0 || strlen($address)> 200){
+	if (strlen($address)==0 || mb_strlen($address, 'utf-8')> 200){
 		throw new Exception('Длинна поля senderaddress должна быть больше 0 и меньше 200 символов!');
 	}
 	$org = trim(Flight::request()->data->orgcitycode);
@@ -79,19 +79,19 @@ class orderController{
 		throw new Exception('Поле orgcitycode должно содержать код в виде целого числа из справочника городов!');
 	}	
 	$contname = trim(Flight::request()->data->sendercontactname);
-	if (strlen($contname)==0 || strlen($contname)> 50){
+	if (strlen($contname)==0 || mb_strlen($contname, 'utf-8')> 50){
 		throw new Exception('Длинна поля sendercontactname должна быть больше 0 и меньше 50 символов!');
 	}
 	$contphone = trim(Flight::request()->data->sendercontactphone);
-	if (strlen($contphone)==0 || strlen($contphone)> 50){
+	if (strlen($contphone)==0 || mb_strlen($contphone, 'utf-8')> 50){
 		throw new Exception('Длинна поля sendercontactphone должна быть больше 0 и меньше 50 символов!');
 	}
 	$contmail = trim(Flight::request()->data->sendercontactemail);
-	if (strlen($contmail)> 50){
+	if (mb_strlen($contmail, 'utf-8')> 50){
 		throw new Exception('Длинна поля sendercontactemail должна быть меньше 50 символов!');
 	}
 	$orgrems = trim(Flight::request()->data->senderdescription);
-	if (strlen($contmail)> 1000){
+	if (mb_strlen($contmail, 'utf-8')> 1000){
 		throw new Exception('Длинна поля senderdescription должна быть меньше 1000 символов!');
 	}
 	$dest = trim(Flight::request()->data->destcitycode);
@@ -104,27 +104,27 @@ class orderController{
 		throw new Exception('Поле destcitycode должно содержать код в виде целого числа из справочника городов!');
 	} 	
 	$dname = trim(Flight::request()->data->destinationname);
-	if (strlen($dname)==0 || strlen($dname)> 50){
+	if (mb_strlen($dname, 'utf-8')==0 || mb_strlen($dname, 'utf-8')> 50){
 		throw new Exception('Длинна поля destinationname должна быть больше 0 и меньше 50 символов!');
 	}
 	$dadr = trim(Flight::request()->data->destinationaddress);
-	if (strlen($dadr)==0 || strlen($dadr)> 200){
+	if (mb_strlen($dadr, 'utf-8')==0 || mb_strlen($dadr, 'utf-8')> 200){
 		throw new Exception('Длинна поля destinationaddress должна быть больше 0 и меньше 200 символов!');
 	}
 	$dcontname = trim(Flight::request()->data->destinationcontactname);
-	if (strlen($dcontname)==0 || strlen($dcontname)> 50){
-		throw new Exception('Длинна поля destinationcontactname должна быть больше 0 и меньше 50 символов!');
+	if (mb_strlen($dcontname, 'utf-8')==0 || mb_strlen($dcontname, 'utf-8')> 50){
+		throw new Exception('Длинна поля destinationcontactname должна быть больше 0 и меньше 50 символов! ');
 	}
 	$dcontphone	= trim(Flight::request()->data->destinationcontactphone);
-	if (strlen($dcontphone)==0 || strlen($dcontphone)> 50){
+	if (strlen($dcontphone)==0 || mb_strlen($dcontphone, 'utf-8')> 50){
 		throw new Exception('Длинна поля destinationcontactphone должна быть больше 0 и меньше 50 символов!');
 	}
 	$dcontmail = trim(Flight::request()->data->destinationcontactemail);
-	if (strlen($dcontmail)> 50){
+	if (mb_strlen($dcontmail, 'utf-8')> 50){
 		throw new Exception('Длинна поля destinationcontactemail должна быть меньше 50 символов!');
 	}
 	$destrems = trim(Flight::request()->data->destinationdescription);
-	if (strlen($destrems)> 1000){
+	if (mb_strlen($destrems, 'utf-8')> 1000){
 		throw new Exception('Длинна поля destinationdescription должна быть меньше 1000 символов!');
 	}
 	$type = trim(Flight::request()->data->cargotype);

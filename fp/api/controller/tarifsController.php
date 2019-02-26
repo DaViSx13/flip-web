@@ -21,10 +21,10 @@ class tarifsController{
 		/*if (strlen($dest)==0 || (!is_int($dest+0) || !is_numeric($dest))){
 			throw new Exception('Поле destcitycode должно содержать код в виде целого числа из справочника городов!');
 		}*/
-		if (strlen($dest)==0 || strlen($dest)> 50){
+		if (strlen($dest)==0 || mb_strlen($dest, 'utf-8')> 50){
 			throw new Exception('Длинна поля dest должна быть больше 0 и меньше 50 символов!');
 		}
-		if (strlen($org)==0 || strlen($org)> 50){
+		if (strlen($org)==0 || mb_strlen($org, 'utf-8')> 50){
 			throw new Exception('Длинна поля org должна быть больше 0 и меньше 50 символов!');
 		}
 		//$org = trim(Flight::request()->data->orgcitycode);
