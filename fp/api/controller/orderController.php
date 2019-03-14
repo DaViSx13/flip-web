@@ -52,6 +52,23 @@ class orderController{
     $result = Flight::db()->query($sql);
 	return $result;
     }
+	
+  public static function getOrderPDF($ordnum){    
+	$token1 = $_SERVER["HTTP_TOKEN"];
+	
+	$token = Flight::checkToken($token1);
+	$response = new Response();
+	if(isset($token)){				
+		$sql = "exec wwwAPIgetOrderPDF @ordnum='$ordnum', @token = '$token1'";		
+		$result = Flight::db()->query($sql);
+		$response->data = $result;		
+		$response->status = 'success';
+	} else {
+		$response->data = NULL;
+		$response->status = 'fail';
+	}	
+   echo Flight::json($response);
+  }
   
   public static function createOrder($ID){	
     $token = $_SERVER["HTTP_TOKEN"];	
