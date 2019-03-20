@@ -7,7 +7,7 @@ Flight::route('GET /cities',['cityController','getCities']);
 
 Flight::route('GET /orders/@ID',['orderController','getOrder']);
 
-Flight::route('GET /orders/PDF/@ordnum',['wbController','getOrderPDF']);
+Flight::route('GET /pdf/orders/@ordnum',['orderController','getOrderPDF']);
 
 Flight::route('GET /cities(/@city(/@state(/@country)))',['cityController','serchCities']);
 
