@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.WbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin'],
+	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin', 'wbs.ExportWbWin'],
 	models : ['WbsMod', 'ExCodeMod', 'ViewExMod'],
 	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore'],
 	refs : [{
@@ -30,6 +30,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 		}, {
 			ref : 'ViewExGrid',
 			selector : 'viewexgrid'
+		}, {
+			ref : 'ExportWbWin',
+			selector : 'exportwbwin'
 		}
 	],
 	init : function () {
@@ -341,6 +344,28 @@ Ext.define('FPAgent.controller.WbsCont', {
 			var t_dir = 'ove';
 			break;		
 		}
+		var expwin = Ext.widget('exportwbwin').show();
+		var expform = expwin.down('exportwbform');
+		var expfrom = expform.down('datefield[name=from_date]').getValue();
+		var expto = expform.down('datefield[name=to_date]').getValue();
+		
+		// if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
+			// form_imp.submit({
+				// url : 'srv/import/import.php',
+				// params : {
+					// act : 'importPod'
+				// },
+				// success : function (form, action) {
+					// me.viewTotal();
+					// me.loadWbs();					
+					// win.close();
+					// Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.ImportOk")/*'Импортирование завершено успешно!'*/, action.result.msg);
+				// },
+				// failure : function (form, action) {
+					// Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.ImportError")/*'Ошибка импорта!'*/, action.result.msg);
+				// }
+			// });
+		
 		window.location.href = 'srv/getAgentWbsXLS.php?newPeriod=' + this.getPeriod() + '&filter=' + t_dir;
 	},
 	loadWBsWin : function (btn) {		
