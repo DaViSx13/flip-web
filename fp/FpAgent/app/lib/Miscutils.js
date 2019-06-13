@@ -5,7 +5,12 @@ Ext.define('FPAgent.lib.Miscutils', {
 	miscFN: function(){
 		console.log('Miscutils miscFN');
 	},
-	
+	GetFormattedDate : function (todayTime) {    
+		var month = todayTime.substring(3, 5);
+		var day = todayTime.substring(0, 2);
+		var year = todayTime.substring(6, 10);
+		return year+''+month+''+day;
+	},
 	checkSession: function(){
 		console.log('Miscutils checkSession');
 		Ext.Ajax.request({

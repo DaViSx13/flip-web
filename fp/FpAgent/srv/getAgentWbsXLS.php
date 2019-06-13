@@ -13,9 +13,12 @@ set_time_limit(300);
 $ag = isset($_REQUEST['newAgent']) ? $_REQUEST['newAgent'] : $_SESSION['xAgentID']; 
 if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];} 
 $filter = $_REQUEST['filter'];
-$period = $_REQUEST['newPeriod'];
+$bdate = $_REQUEST['bdate'];
+$edate = $_REQUEST['edate'];
 
-$query = "exec wwwGetAgentWbs @period='{$period}', @agentID={$ag}, @dir='{$filter}'";
+
+
+$query = "exec wwwGetAgentWbsAnyDates @bDate='{$bdate}', @eDate='{$edate}', @agentID={$ag}, @dir='{$filter}'";
 
 
 $qry = <<<EOD

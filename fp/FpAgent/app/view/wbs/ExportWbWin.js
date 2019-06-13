@@ -3,11 +3,11 @@ Ext.define('FPAgent.view.wbs.ExportWbWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.exportwbwin',
 	requires : ['FPAgent.view.wbs.ExportWbForm'],
-	title : FPAgent.lib.Translate.tr("NewDopWin.title"),//'Заявка на доп. тариф',
+	title : FPAgent.lib.Translate.tr("OrdTool.action.excel"),//'Экспорт в файл Excel',
 	layout : 'fit',
 	autoShow : true,
-	height : 250,
-	width : 340,
+	height : 130,
+	width : 230,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
@@ -16,8 +16,9 @@ Ext.define('FPAgent.view.wbs.ExportWbWin', {
 			}
 		];
 		this.buttons = [{
-				text : FPAgent.lib.Translate.tr("NewDopWin.save"),//'Сохранить',
-				action : 'excel'
+				text : FPAgent.lib.Translate.tr("OrdTool.action.excel"),//'Сохранить',
+				iconCls : 'excel',
+				action : 'exp'
 			}, {
 				text : FPAgent.lib.Translate.tr("NewDopWin.cancel"),//'Отмена',
 				scope : this,

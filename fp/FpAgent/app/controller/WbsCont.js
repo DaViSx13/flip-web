@@ -59,6 +59,9 @@ Ext.define('FPAgent.controller.WbsCont', {
 				click : this.newEx
 			},
 			'wbstool button[action=excel]' : {
+				click : this.showExpWin
+			},
+			'exportwbwin button[action=exp]' : {
 				click : this.exportExcel
 			},
 			'newdopwin button[action=save]' : {
@@ -126,7 +129,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 					agent : newValue[0].data['partcode']
 				},
 				success : function (response) {
-					var text = Ext.decode(response.responseText);
+					//var text = Ext.decode(response.responseText);
 					me.viewTotal();
 					me.loadWbs();					
 				},
@@ -329,7 +332,11 @@ Ext.define('FPAgent.controller.WbsCont', {
 		} else {}
 
 	},
+	showExpWin : function (btn) {
+		var win = Ext.widget('exportwbwin').show();
+	},	
 	exportExcel : function (btn) {
+		var me = this;
 		switch (true) {
 		case this.getWbsTool().down('button[action=all]').pressed:
 			var t_dir = 'all';
@@ -344,29 +351,20 @@ Ext.define('FPAgent.controller.WbsCont', {
 			var t_dir = 'ove';
 			break;		
 		}
-		var expwin = Ext.widget('exportwbwin').show();
-		var expform = expwin.down('exportwbform');
-		var expfrom = expform.down('datefield[name=from_date]').getValue();
-		var expto = expform.down('datefield[name=to_date]').getValue();
+		var winexp = me.getExportWbWin();
+		var formexp = winexp.down('exportwbform');
+		var expfrom = formexp.down('datefield[name=from_date]');
+		var expto = formexp.down('datefield[name=to_date]');
 		
-		// if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
-			// form_imp.submit({
-				// url : 'srv/import/import.php',
-				// params : {
-					// act : 'importPod'
-				// },
-				// success : function (form, action) {
-					// me.viewTotal();
-					// me.loadWbs();					
-					// win.close();
-					// Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.ImportOk")/*'Импортирование завершено успешно!'*/, action.result.msg);
-				// },
-				// failure : function (form, action) {
-					// Ext.Msg.alert(FPAgent.lib.Translate.tr("WbsCont.ImportError")/*'Ошибка импорта!'*/, action.result.msg);
-				// }
-			// });
+		if (expfrom.isValid() && expto.isValid()){
 		
-		window.location.href = 'srv/getAgentWbsXLS.php?newPeriod=' + this.getPeriod() + '&filter=' + t_dir;
+		expfrom = FPAgent.lib.Miscutils.GetFormattedDate(expfrom.getRawValue())+' 00:00:00.000';
+		expto = FPAgent.lib.Miscutils.GetFormattedDate(expto.getRawValue())+' 23:59:59.000';		
+		
+		window.location.href = 'srv/getAgentWbsXLS.php?bdate=' + expfrom + '&edate=' + expto + '&filter=' + t_dir;	
+		
+		winexp.close();
+		}
 	},
 	loadWBsWin : function (btn) {		
 		var newloadwin = Ext.widget('loadwbwin').show();		
