@@ -1,21 +1,15 @@
 <?php
 
 class Response
-{
-
-	
+{	
 	public $status = 'fail';    
-	public $data;
-	
+	public $data;	
 }
 
 class ResponseError
-{
-
-	
+{	
 	public $status = 'error';    
-	public $error;
-	
+	public $error;	
 }
 
 class catapultoController{   
@@ -25,37 +19,34 @@ class catapultoController{
 	$method = Flight::request()->data->method;
 	$params = Flight::request()->data->params;
 	$body = Flight::utf8_to_win1251(Flight::request()->getBody());
-	//var_dump($method['sender']['address']['city']);
-	//exit;
-	
-	
+		
 	switch ($method) {
-    case 'rates':        
-		echo Flight::json(self::getRates($params));	
+    case 'rates': 
+		Flight::logDB($method);
 		Flight::logDB($body);
-		//Flight::logDB($method);
+		echo Flight::json(self::getRates($params));			
         break;
     case 'shipping':
+		Flight::logDB($method);
+		Flight::logDB($body);        
 		echo Flight::json(self::setShipping($params));
-		Flight::logDB($body);
-        Flight::logDB($method);
         break;
-    case 'pickup':
+    case 'pickup':		
+        Flight::logDB($method);
+		Flight::logDB($body);
 		echo Flight::json(self::setPickup($params));
-        Flight::logDB($method);
-		Flight::logDB($body);
         break;
-	case 'print_invoice':
-		echo Flight::json(self::printInvoice($params));
+	case 'print_invoice':		
 		Flight::logDB($method);
 		Flight::logDB($body);
+		echo Flight::json(self::printInvoice($params));
         break;
 	case 'reject':
-		echo Flight::json(self::rejectInvoice($params));
 		Flight::logDB($method);
 		Flight::logDB($body);
+		echo Flight::json(self::rejectInvoice($params));		
         break;		
-}
+	}
 	
 	
   }
@@ -105,9 +96,9 @@ class catapultoController{
 		$t_pak = 'PL';		
 	}
 	
-	$wt = $params['cargoes'][0]['width'];//implode ("|", array_keys($params['cargoes'][0]) );
+	$wt = $params['cargoes'][0]['width'];
 	Flight::logDB($wt);
-	//exit;
+	
 	$planno = 2;
 	
 	$sql = "/*catapulto*/ exec wwwAPIgetTarif @org='$org', @dest = '$dest', @wt = $sumWt, @planno=$planno, @t_pak='$t_pak'";		
@@ -170,8 +161,8 @@ class catapultoController{
 	$contmail = '';
 	$cname   = $params['sender']['company'];
 	$contname   = $params['sender']['name'];
-	$contphone   = $params['sender']['phone'][0];
-	$orgrems   = $params['sender']['comment'];
+	$contphone   = $params['sender']['phone'][0].';'.$params['sender']['phone'][1];
+	$orgrems   = $params['sender']['comment'].' '.$params['comment'];
 	$street = $params['sender']['address']['street'];
 	$house = $params['sender']['address']['house'];
 	$door_number = $params['sender']['address']['door_number'];
@@ -195,8 +186,8 @@ class catapultoController{
 	$dcontmail = '';
 	$dname   = $params['receiver']['company'];
 	$dcontname   = $params['receiver']['name'];
-	$dcontphone   = $params['receiver']['phone'][0];
-	$destrems   = $params['receiver']['comment'];
+	$dcontphone   = $params['receiver']['phone'][0].';'.$params['receiver']['phone'][1];
+	$destrems   = $params['receiver']['comment'].' '.$params['instructions'];
 	$street = $params['receiver']['address']['street'];
 	$house = $params['receiver']['address']['house'];
 	$door_number = $params['receiver']['address']['door_number'];
@@ -213,7 +204,7 @@ class catapultoController{
 		$sumWt += $wt;		
 	}		
 	
-	if ((count($cargoes) == 2) && 
+	if ((count($cargoes) == 1) && 
 		($params['cargoes'][0]['width'] == 10) && ($params['cargoes'][0]['length'] == 5) &&
 		($params['cargoes'][0]['weight'] == 0.2) && ($params['cargoes'][0]['height'] == 10)){
 			
@@ -221,7 +212,7 @@ class catapultoController{
 	} else {
 		$t_pak = 1;//'PL';		
 	}
-	//Flight::logDB(Flight::utf8_to_win1251($sql));
+	
 	$packs = count($cargoes);
 	$volwt = 0;
 	$courdate = $params['delivery_date'];//<YYYYMMDD> "2019-06-05"	
@@ -232,7 +223,10 @@ class catapultoController{
 	$userin = 'catapulto';
 	$rordnum = 0;
 	
-	
+	$planno = 2;// взять запросом из БД.
+	$sql = "/*catapulto*/ exec wwwAPIgetTarif @org='$org', @dest = '$dest', @wt = $sumWt, @planno=$planno, @t_pak='$t_pak'";		
+	$result = Flight::db()->query($sql);
+	$amt = $result[0]['tarif'];
 	
 	$sql = "/*catapulto*/ exec wwwSaveAgOrders
 			@ORG=$org,
@@ -258,76 +252,112 @@ class catapultoController{
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
 			@UserIn='$userin',
+			@amt = $amt,
 			@RordNum=$rordnum";
 		
 	$sql = Flight::utf8_to_win1251($sql);	
 	$sql = stripslashes($sql);
-	//Flight::logDB($sql);
-	//exit;
-	
-	
+		
 	$result = Flight::db()->query($sql);
-		
-	$inv = Flight::inv();
-	$inv->invoice_number = ''.$result[0]['rordnum'];
-	$response = new Response();
-	
-	//$ser = Flight::ser();
-	//$tar = Flight::tar();
-	//$tar->code = 'r: ';
-	//$withreturn = Flight::withreturn();
-	//$withreturn->with_return = $ser;
-	//$withreturn->cod = $ser;
-	//$withreturn->by_hand = $ser;
-	
-	//$tar->services = $withreturn;
-	//$tar->cost = $result[0]['tarif'];
-	//$tar->days = $result[0]['delivery'];
-	
+	if (isset($result)) {	
+		$inv = Flight::inv();
+		$inv->invoice_number = 'ZAK'.$result[0]['rordnum'];
+		$response = new Response();	
 		$response->data = $inv;
-		$response->status = 'success';
-		
-	
-   return $response;
+		$response->status = 'success';	
+		return $response;
+	} else {
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 2000;
+		$err->note = 'общая ошибка создания отправления';
+		$response->error = $err;
+		return $response;
+	}
  }
  public static function setPickup($params){
 	$invoice_number   = $params['invoices'][0]['invoice_number']; 
-	//Flight::logDB($invoice_number); 
-	//exit; 
+	$courdate = $params['pickup_date'];//<YYYYMMDD> "2019-06-05"	
+	$courdate = substr($courdate,0,4).substr($courdate,5,2).substr($courdate,8,2); 
+	$real_num = substr($invoice_number, 3, strlen($invoice_number)-3); 
+	$sql = "/*catapulto*/ exec wwwAPICatapultoGetPickUp @rordnum = $real_num, @courdate='$courdate'";		
+	
+	$result = Flight::db()->query($sql);
+	$cost = $result[0]['amt'];
+	if (isset($cost)) {
+	
 	$order = Flight::order();
 	$order->order_number = ''.$invoice_number;
-	$order->cost = 555.55;
+	$order->cost = $cost;
 	$response = new Response();
 	$response->data = array($order);
 	$response->status = 'success';
 	return $response;
+	} else {
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 3000;
+		$err->note = 'ошибка создания заказа';
+		$response->error = $err;
+		return $response;
+	}	
  }
  public static function printInvoice($params){
 	$invoice_number   = $params['invoice_number']; 
-	Flight::logDB($invoice_number); 
-	//exit; 
+	Flight::logDB($invoice_number); 	
 	$pdf = Flight::pdf();
 	$pdf->invoice_number = ''.$invoice_number;
+	$real_num = substr($invoice_number, 3, strlen($invoice_number)-3);
 	$token = '1a137f33f5576070734e4cfd5f218a80';
-	$sql = "/*catapulto*/ exec wwwAPIgetOrderPDF @ordnum='$invoice_number', @token = '$token'";		
+	$sql = "/*catapulto*/ exec wwwAPIgetOrderPDF @ordnum='$real_num', @token = '$token'";		
 	$result = Flight::db()->query($sql);
 	$href = $result[0]['href'];
-	
-	$b64Doc = /*chunk_split(*/base64_encode(file_get_contents($href))/*)*/;	
+	if (isset($href)) {
+	$b64Doc = base64_encode(file_get_contents($href));	
 	
 	$pdf->invoice_file = $b64Doc;
 	$response = new Response();
 	$response->data = $pdf;
 	$response->status = 'success';
 	return $response;
+	} else {
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 4000;
+		$err->note = 'общая ошибка получения накладной';
+		$response->error = $err;
+		return $response;
+	}
  }
   public static function rejectInvoice($params){
-	$invoice_number   = $params['invoice_number']; 
-	$inv = Flight::inv();
-	$inv->invoice_number = ''.$invoice_number;
-	$response = new Response();	
-	$response->data = $inv;
-	$response->status = 'success';
-	return $response;
+	$invoice_number   = $params['invoice_number'];
+	$real_num = substr($invoice_number, 3, strlen($invoice_number)-3); 
+	$sql = "/*catapulto*/ exec wwwAPICatapultoDelOrder @rordnum = $real_num";		
+	$result = Flight::db()->query($sql);
+	$rordnum = $result[0]['rordnum'];
+	if (isset($rordnum)) {
+		if ($rordnum == -1){
+			$response = new ResponseError();
+			$err = Flight::err();
+			$err->code = 5002;
+			$err->note = 'не найден номер накладной';
+			$response->error = $err;
+			return $response;
+		} else {
+			$inv = Flight::inv();
+			$inv->invoice_number = ''.$invoice_number;
+			$response = new Response();	
+			$response->data = $inv;
+			$response->status = 'success';
+			return $response;
+		}
+	} else {
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 5000;
+		$err->note = 'общая ошибка отмена отправления';
+		$response->error = $err;
+		return $response;
+	}
  } 
 }
