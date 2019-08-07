@@ -79,10 +79,12 @@ class catapultoController{
 	//Flight::logDB(count($cargoes));
 	
 	$sumWt=0;
+	$volwt=0;
 	for($i = 0; $i < count($cargoes)-1; ++$i){
 		
 		$wt = $cargoes[$i]['weight'];
 		$sumWt += $wt;		
+		$volwt += ($cargoes[$i]['width']*$cargoes[$i]['height']*$cargoes[$i]['length'])/6000;
 	}
 	/*
 	Flight::logDB($sumWt);
@@ -96,10 +98,16 @@ class catapultoController{
 		$t_pak = 'PL';		
 	}
 	
-	$wt = $params['cargoes'][0]['width'];
-	Flight::logDB($wt);
+	//$wt = $params['cargoes'][0]['width'];
+	//Flight::logDB($wt);
+	if ($sumWt <= $volwt) {
+		$sumWt = $volwt;
+	}
 	
-	$planno = 2;
+	
+	$sql = "/*catapulto*/ exec wwwAPICatapultoGetTarif";
+	$result = Flight::db()->query($sql);
+	$planno = $result[0]['planno'];
 	
 	$sql = "/*catapulto*/ exec wwwAPIgetTarif @org='$org', @dest = '$dest', @wt = $sumWt, @planno=$planno, @t_pak='$t_pak'";		
 	$result = Flight::db()->query($sql);
@@ -148,11 +156,11 @@ class catapultoController{
   }
  public static function setShipping($params){
 //-----------------------------------sender--------------------------------------------------------------------------------	
-	$city   = $params['sender']['address']['city'];
+	$sender_city   = $params['sender']['address']['city'];
 	$iso    = $params['sender']['address']['iso'];
-	$region = $params['sender']['address']['region'];
+	$sender_region = $params['sender']['address']['region'];
 		
-	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$city', @iso = '$iso', @region='$region'";		
+	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$sender_city', @iso = '$iso', @region='$sender_region'";		
 	$sql = Flight::utf8_to_win1251($sql);	
 	
 	$result = Flight::db()->query($sql);
@@ -162,23 +170,23 @@ class catapultoController{
 	$cname   = $params['sender']['company'];
 	$contname   = $params['sender']['name'];
 	$contphone   = $params['sender']['phone'][0].';'.$params['sender']['phone'][1];
-	$orgrems   = $params['sender']['comment'].' '.$params['comment'];
-	$street = $params['sender']['address']['street'];
-	$house = $params['sender']['address']['house'];
-	$door_number = $params['sender']['address']['door_number'];
-	$zip = $params['sender']['address']['zip'];
+	$orgrems   = $params['sender']['comment'];
+	$sender_street = $params['sender']['address']['street'];
+	$sender_house = $params['sender']['address']['house'];
+	$sender_door_number = $params['sender']['address']['door_number'];
+	$sender_zip = $params['sender']['address']['zip'];
 	
 	
-	$address = 'Индекс '.$zip.'; '.$region.'; г. '.$city.'; '.$street.'; дом '.$house.'; кв. '.$door_number; 
+	$address = 'Индекс '.$sender_zip.'; '.$sender_region.'; г. '.$sender_city.'; '.$sender_street.'; дом '.$sender_house.'; кв. '.$sender_door_number; 
 	//Flight::logDB($address);
 	
 	
 //-----------------------------------receiver--------------------------------------------------------------------------------
-	$city   = $params['receiver']['address']['city'];
+	$receiver_city   = $params['receiver']['address']['city'];
 	$iso    = $params['receiver']['address']['iso'];
-	$region = $params['receiver']['address']['region'];
+	$receiver_region = $params['receiver']['address']['region'];
 	
-	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$city', @iso = '$iso', @region='$region'";		
+	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$receiver_city', @iso = '$iso', @region='$receiver_region'";		
 	$sql = Flight::utf8_to_win1251($sql);
 	$result = Flight::db()->query($sql);
 	$dest = $result[0]['id'];
@@ -187,23 +195,26 @@ class catapultoController{
 	$dname   = $params['receiver']['company'];
 	$dcontname   = $params['receiver']['name'];
 	$dcontphone   = $params['receiver']['phone'][0].';'.$params['receiver']['phone'][1];
-	$destrems   = $params['receiver']['comment'].' '.$params['instructions'];
-	$street = $params['receiver']['address']['street'];
-	$house = $params['receiver']['address']['house'];
-	$door_number = $params['receiver']['address']['door_number'];
-	$zip = $params['receiver']['address']['zip'];
+	$destrems   = $params['receiver']['comment'];
+	$receiver_street = $params['receiver']['address']['street'];
+	$receiver_house = $params['receiver']['address']['house'];
+	$receiver_door_number = $params['receiver']['address']['door_number'];
+	$receiver_zip = $params['receiver']['address']['zip'];
 	
-	$dadr = 'Индекс '.$zip.'; '.$region.'; г. '.$city.'; '.$street.'; дом '.$house.'; кв. '.$door_number; 
+	$dadr = 'Индекс '.$receiver_zip.'; '.$receiver_region.'; г. '.$receiver_city.'; '.$receiver_street.'; дом '.$receiver_house.'; кв. '.$receiver_door_number; 
 	
 //---------------------------------------------cargoes-----------------------------------------------------------------------------
 	$cargoes = $params['cargoes'];	
 	$sumWt=0;
+	$volwt = 0;
 	for($i = 0; $i < count($cargoes); ++$i){
 		
 		$wt = $cargoes[$i]['weight'];
-		$sumWt += $wt;		
+		$sumWt += $wt;
+		$volwt += ($cargoes[$i]['width']*$cargoes[$i]['height']*$cargoes[$i]['length'])/6000;
+		
 	}		
-	
+	Flight::logDB($volwt);
 	if ((count($cargoes) == 1) && 
 		($params['cargoes'][0]['width'] == 10) && ($params['cargoes'][0]['length'] == 5) &&
 		($params['cargoes'][0]['weight'] == 0.2) && ($params['cargoes'][0]['height'] == 10)){
@@ -214,7 +225,7 @@ class catapultoController{
 	}
 	
 	$packs = count($cargoes);
-	$volwt = 0;
+	
 	$courdate = $params['delivery_date'];//<YYYYMMDD> "2019-06-05"	
 	$courdate = substr($courdate,0,4).substr($courdate,5,2).substr($courdate,8,2);
 	$courtimef = '';
@@ -259,9 +270,38 @@ class catapultoController{
 	$sql = stripslashes($sql);
 		
 	$result = Flight::db()->query($sql);
-	if (isset($result)) {	
-		$inv = Flight::inv();
-		$inv->invoice_number = 'ZAK'.$result[0]['rordnum'];
+	if (isset($result)) {
+	$inv = Flight::inv();
+	$inv->invoice_number = 'ZAK'.$result[0]['rordnum'];
+	$catapulto_order_id = $params['catapulto_order_id'];
+	$rordnum = $result[0]['rordnum'];
+	$comment = $params['comment'];
+	$instructions = $params['instructions'];
+	$sql = "/*catapulto*/ exec wwwAPICatapultoSetShipping
+			@rordnum = $rordnum
+			,@catapulto_order_id = '$catapulto_order_id'
+			,@sender_city = '$sender_city'
+			,@sender_region = '$sender_region'
+			,@sender_street = '$sender_street'
+			,@sender_house = '$sender_house'
+			,@sender_door_number = '$sender_door_number'
+			,@sender_zip = '$sender_zip'
+			,@sender_comment = '$orgrems'
+			,@comment = '$comment'
+			,@receiver_city = '$receiver_city'
+			,@receiver_region = '$receiver_region'
+			,@receiver_street = '$receiver_street'
+			,@receiver_house = '$receiver_house'
+			,@receiver_door_number = '$receiver_door_number'
+			,@receiver_zip = '$receiver_zip'
+			,@receiver_comment = '$destrems'
+			,@instructions = '$instructions'
+			";
+	$sql = Flight::utf8_to_win1251($sql);	
+	$sql = stripslashes($sql);	
+	$result = Flight::db()->query($sql);
+	
+		
 		$response = new Response();	
 		$response->data = $inv;
 		$response->status = 'success';	
