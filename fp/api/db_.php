@@ -586,6 +586,30 @@ class SQLSRV_DataBase {
 	 *
 	 * @return bool|resource
 	 */
+	public function execute( $query ) {
+		// If no connection is found we try to restore it
+		if ( ! $this->is_connected ) {
+			$this->is_connected = $this->db_connect();
+
+			// If we couldn't reconnect we break out early
+			if ( ! $this->is_connected ) {
+				return false;
+			}
+		}
+		$this->prepare();
+		//$this->last_query = $query;
+
+		$result = mssql_query( $query, $this->db );
+
+		if ( false === $result ) {
+			
+				$this->log_error( 'query error' );
+				return false;
+		}
+		else {
+			return true;
+		}
+	}
 	public function query( $query ) {
 		// If no connection is found we try to restore it
 		if ( ! $this->is_connected ) {

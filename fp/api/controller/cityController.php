@@ -24,9 +24,9 @@ class cityController{
     }
 	
     public static function serchCities($city, $state, $country){
-		
-      $sql = "exec wwwAPIgetCities @country='$country', @state = '$state', @city = '$city'";
-	  $sql = iconv("UTF-8", "windows-1251", $sql);
+			
+      $sql = "/*catapulto*/ exec wwwAPIgetCities @country='$country', @state = '$state', @city = '$city'";
+	  $sql = Flight::utf8_to_win1251($sql);
       $sql = stripslashes($sql);
       $result = Flight::db()->query($sql);
       $response = new ResponseCity();

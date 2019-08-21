@@ -1,6 +1,7 @@
 <?php
 require 'db_.php';
-//Flight::path("model/");
+
+
 
 Flight::path("controller/");
 
@@ -14,6 +15,22 @@ Flight::register("orders","orderController");
 
 Flight::register("tarifs","tarifsController");
 
+Flight::register("catapulto","catapultoController");
+
+Flight::path("model/");
+Flight::register("tar", "dataTar");
+
+Flight::register("ser", "dataSer");
+
+Flight::register("withreturn", "dataReturn");
+
+Flight::register("err", "dataError");
+
+Flight::register("inv", "dataInv");
+
+Flight::register("order", "dataOrd");
+
+Flight::register("pdf", "dataPdf");
 
 Flight::map('error', function(Exception $ex){
 	class ErResp
@@ -28,10 +45,6 @@ $erresp = new ErResp();
     echo Flight::json($erresp);
 });
 
-//Flight::register("users","userController");
-
-//Flight::set("flight.base_url",$config['web']['base_url']);
-
 Flight::map('checkToken',function($token){
   $sql = "exec wwwAPIcheckToken @token = '$token'";
       $result = Flight::db()->query($sql);
@@ -41,6 +54,16 @@ Flight::map('checkToken',function($token){
      //   return false;
      // }
 });
+
+Flight::map('logDB',function($msg){
+  $sql = "EXEC wwwAPIlogDB @request = '$msg'";
+      $result = Flight::db()->query($sql);
+      
+        return $result;
+     
+});
+
+
 Flight::map('utf8_to_win1251',function ($str){
 	ini_set('mbstring.substitute_character', "none");
 	return mb_convert_encoding($str, "windows-1251", "utf-8");
