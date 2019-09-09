@@ -302,3 +302,4 @@ WbsGrid.flip_cash;оплата;cash
 WbsCont.s_ag_cash;тар аг оплата:;tar ag cash:
 WbsCont.s_flip_cash;тар флип оплата:;tar flip cash:
 TokenWin.token_form_name;Ключ для АПИ;Token for API
+MnfGrid.masterwbno;Мастер накладная;Master waybill

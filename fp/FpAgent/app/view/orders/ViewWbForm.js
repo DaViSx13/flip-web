@@ -133,6 +133,15 @@ Ext.define('FPAgent.view.orders.ViewWbForm', {
 			y : 372,
 			name : 'r_adr'
 		}, {
+			xtype : 'textarea',
+			readOnly : true,
+			cls : 'longstr',
+			width : 415,
+			height : 64,
+			x : 2,
+			y : 412,
+			name : 'descr'
+		}, {
 			xtype : 'displayfield',
 			fieldCls : 'otherstr',
 			width : 420,

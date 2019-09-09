@@ -1,6 +1,6 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt'],
 	refs : [{
@@ -42,6 +42,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'WbsGrid',
 			selector : 'wbsgrid'
+		}, {
+			ref : 'WbGrid',
+			selector : 'wbgrid'
 		}, {
 			ref : 'OrdGrid',
 			selector : 'ordgrid'
@@ -115,6 +118,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				click : this.fileDel
 			},
 			'wbsgrid > tableview' : {
+				itemdblclick : this.dblclickWbsGr
+			},
+			'wbgrid > tableview' : {
 				itemdblclick : this.dblclickWbsGr
 			},
 			'ordgrid > tableview' : {

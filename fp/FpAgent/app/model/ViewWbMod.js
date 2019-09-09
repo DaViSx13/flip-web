@@ -107,6 +107,9 @@ Ext.define('FPAgent.model.ViewWbMod', {
 		}, {
 			name : 'ins',
 			type : 'float'
+		}, {
+			name : 'descr',
+			type : 'string'
 		}
 	]
 });

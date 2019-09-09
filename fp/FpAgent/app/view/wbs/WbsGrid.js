@@ -79,6 +79,12 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				flex : 1,
 				dataIndex : 'r_co'
 			}, {
+				text : FPAgent.lib.Translate.tr("WbGrid.shpcs"),//'мест',
+				width : 35,
+				dataIndex : 'pcs',
+				xtype : 'numbercolumn',
+				format : '00'
+			}, {
 				text : FPAgent.lib.Translate.tr("WbsGrid.wt"),//'Вес',
 				width : 45,
 				dataIndex : 'wt',

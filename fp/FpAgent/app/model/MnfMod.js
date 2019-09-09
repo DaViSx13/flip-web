@@ -31,6 +31,8 @@ Ext.define('FPAgent.model.MnfMod', {
 			type : 'date'
 		}, {
 			name : 'descr'
+		}, {
+			name : 'mawb'
 		}
 	]
 });

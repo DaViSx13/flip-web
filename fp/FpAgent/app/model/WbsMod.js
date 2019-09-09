@@ -104,6 +104,8 @@ Ext.define('FPAgent.model.WbsMod', {
 			name : 'flip_cash'
 		}, {
 			name : 'ag_cash'
+		}, {
+			name : 'pcs'
 		}
 	]
 });

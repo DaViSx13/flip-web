@@ -14,6 +14,11 @@ Ext.define('FPAgent.view.orders.OrdGrid', {
 			dataIndex : 'status',
 			text : FPAgent.lib.Translate.tr("OrdGrid.status")//'Статус'
 		}, {
+			xtype : 'gridcolumn',
+			width : 70,
+			dataIndex : 'wb_no',
+			text : FPAgent.lib.Translate.tr("OrdGrid.wb_no")//'№ накл.'
+		}, {
 			xtype : 'datecolumn',
 			format : 'd.m.Y',
 			width : 70,
@@ -57,11 +62,6 @@ Ext.define('FPAgent.view.orders.OrdGrid', {
 			width : 51,
 			dataIndex : 'volwt',
 			text : FPAgent.lib.Translate.tr("OrdGrid.volwt")//'Об. вес'
-		}, {
-			xtype : 'gridcolumn',
-			width : 70,
-			dataIndex : 'wb_no',
-			text : FPAgent.lib.Translate.tr("OrdGrid.wb_no")//'№ накл.'
 		}
 	],
 	dockedItems : [{

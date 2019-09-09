@@ -1537,6 +1537,11 @@
         "stringID":  "TokenWin.token_form_name",
         "ru":  "Ключ для АПИ",
         "en":  "Token for API"
+    },
+    {
+        "stringID":  "MnfGrid.masterwbno",
+        "ru":  "Мастер накладная",
+        "en":  "Master waybill"
     }
 ]
 

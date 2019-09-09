@@ -54,6 +54,9 @@ Ext.define('FPAgent.view.mainform.MnfGrid', {
 			text : FPAgent.lib.Translate.tr("MnfGrid.descr"),//'Перевозчик',
 			dataIndex : 'descr',
 			flex : 1
+		},{
+			text : FPAgent.lib.Translate.tr("MnfGrid.masterwbno"),
+			dataIndex : 'mawb'			
 		}
 	],
 	dockedItems : [{
