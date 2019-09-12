@@ -214,6 +214,10 @@ if (!isset($_REQUEST['dbAct'])) {
 			  
 			$query = "exec wwwGetWbEx @wbno='$params[wb_no]'";
 			break;
+		case 'GetOrdEx':	
+			$Rordnum=$params['rordnum'] ? $params['rordnum'] : 0;
+			$query = "exec wwwGetAgOrdEx @ROrdNum=$Rordnum";
+			break;
 		case 'SetTar_a_ag':
 			$rem_ag = $params['rem_ag'];   
 			$rem_ag = stripslashes($rem_ag);
