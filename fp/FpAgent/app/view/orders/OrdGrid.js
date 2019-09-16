@@ -30,12 +30,12 @@ Ext.define('FPAgent.view.orders.OrdGrid', {
 			text: '№'
 		}, {
 			xtype: 'gridcolumn',
-			width: 150,
+			width: 130,
 			dataIndex: 'status',
 			text: FPAgent.lib.Translate.tr("OrdGrid.status") //'Статус'
 		}, {
 			xtype: 'gridcolumn',
-			width: 70,
+			width: 80,
 			dataIndex: 'wb_no',
 			text: FPAgent.lib.Translate.tr("OrdGrid.wb_no") //'№ накл.'
 		}, {
