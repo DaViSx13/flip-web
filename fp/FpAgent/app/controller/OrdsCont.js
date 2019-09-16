@@ -1,8 +1,8 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid'],
-	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
+	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
+	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
 	refs : [{
 			ref : 'OrdForm',
 			selector : 'ordform'
@@ -63,6 +63,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'ViewWbForm',
 			selector : 'viewwbform'
+		}, {
+			ref : 'OrdExGrid',
+			selector : 'ordexgrid'
 		}
 	],
 	init : function () {
@@ -159,6 +162,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordtool button[action=import]' : {
 				click : this.loadOrdersWin
 			},
+			'ordgrid actioncolumn' : {
+				itemclick : this.viewEx
+			},
 			'loadorderswin button[action=imp]' : {
 				click : this.importOrders
 			}
@@ -175,6 +181,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+		this.getOrdExStoreStore().on({
+			scope : this,
+			load : this.loadViewExStore
+		});
+	},
+	loadViewExStore : function () {
+		this.getOrdExGrid().getSelectionModel().select(0);
 	},
 	importOrders : function (btn) {
 	var me = this;
@@ -200,6 +213,21 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	loadOrdersWin : function (btn) {		
 		var newloadwin = Ext.widget('loadorderswin').show();		
+	},
+	viewEx : function (column, action, grid, rowIndex, colIndex, record, node) {
+		this.viewExGrid(record.data['rordnum']);		
+	},
+	viewExGrid : function (ex_rordnum) {
+		if (ex_rordnum) {
+			var viewex = Ext.widget('ordexwin').show();
+			this.getOrdExStoreStore().load({
+				params : {
+					rordnum : ex_rordnum
+				}
+			});
+		} else {
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("UsersCont.SelectRecord")/*'Выберите накладную'*/);
+		}
 	},
 	clkList : function (btn) {
 		btn.toggle(true);

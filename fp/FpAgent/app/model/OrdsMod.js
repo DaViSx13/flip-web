@@ -29,6 +29,9 @@ Ext.define('FPAgent.model.OrdsMod', {
 		}, {
 			name : 'wb_no',
 			type : 'string'
+		},{
+			name : 'is_ex',
+			type : 'int'
 		}
 	]
 });
