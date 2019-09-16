@@ -57,6 +57,10 @@ Ext.define('FPClient.view.wbs.WbsTool', {
 			text : 'Фильтр',
 			iconCls : 'filter',
 			action : 'filter'
+		}, ' ', {
+			text : 'Трэк',
+			iconCls : 'track',
+			action : 'track'
 		}, '->', '-', {
 			xtype : 'numyear'
 		}, '-', {

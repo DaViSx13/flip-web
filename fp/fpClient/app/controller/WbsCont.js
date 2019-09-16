@@ -1,8 +1,8 @@
 Ext.define('FPClient.controller.WbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin'],
+	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin', 'wbs.TrackWin'],
 	models : ['WbsMod', 'ExCodeMod', 'ViewExMod'],
-	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore'],
+	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore', 'TrackSt'],
 	refs : [{
 			ref : 'WbsTool',
 			selector : 'wbstool'
@@ -12,6 +12,9 @@ Ext.define('FPClient.controller.WbsCont', {
 		}, {
 			ref : 'LoadWBWin',
 			selector : 'loadwbwin'
+		}, {
+			ref : 'TrackWin',
+			selector : 'trackwin'
 		}, {
 			ref : 'NewExWin',
 			selector : 'newexwin'
@@ -57,6 +60,9 @@ Ext.define('FPClient.controller.WbsCont', {
 			},
 			'wbstool button[action=excel]' : {
 				click : this.exportExcel
+			},
+			'wbstool button[action=track]' : {
+				click : this.trackWb
 			},
 			'newdopwin button[action=save]' : {
 				click : this.saveDop
@@ -316,6 +322,23 @@ Ext.define('FPClient.controller.WbsCont', {
 		//console.log('import');
 		var newloadwin = Ext.widget('loadwbwin').show();
 		//console.log(newloadwin.down('loadwbform'));
+	},
+	trackWb : function (btn) {
+		
+		var sm = btn.up('wbsgrid').getSelectionModel();
+		if (sm.getCount() > 0) {			
+			var viewex = Ext.widget('trackwin').show();
+			var wbno = sm.getSelection()[0].get('wb_no');
+			viewex.setTitle('Трек накладной: '+wbno);
+			this.getTrackStStore().load({
+				params : {
+					dbAct : 'getTrackInfo',
+					wbno : wbno
+				}
+			});			
+		} else {
+			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
+		}			
 	},
 	importWBs : function (btn) {
 	var me = this;

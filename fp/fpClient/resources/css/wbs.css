@@ -13,6 +13,9 @@
 .import {
 	background-image : url(../../resources/images/import.png);
 }
+.track {
+	background-image : url(../../resources/images/track.png);
+}
 .overduebox {
 	background-image : url(../../resources/images/overdue.png);
 }
