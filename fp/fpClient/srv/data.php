@@ -348,7 +348,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'GetClientInfo':
 			$ag=$_SESSION["xClientID"];
-
+			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec [wwwClientGetClientInfo]	@clientID=$ag";
 			break;
     }

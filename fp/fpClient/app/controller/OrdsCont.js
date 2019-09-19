@@ -399,6 +399,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		//auto sender begin
 		client = this.getClientStStore().first();
 		//мухлеж
+		console.log(client);
 		client.set('org', client.get('city'));
 		client.set('orgcode', client.get('cityid'));
 
@@ -478,7 +479,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 							id: sm.getSelection()[0].get('rordnum')
 						}
 					});
-				if (btn.action == 'view') {					
+				if (btn.action == 'view') {
 					win.down('button[action=save]').setText('Повторить заказ');
 				} else {
 					win.down('button[action=save]').setVisible(true);
@@ -504,7 +505,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
-		}		
+		}
 		/*if (org.value == null) {
 		var jsonArrayOrg = this.getCityStOrgStore().data.items;
 		if (jsonArrayOrg.length == 0) {
