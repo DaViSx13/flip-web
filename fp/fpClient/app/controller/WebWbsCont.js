@@ -67,7 +67,7 @@ Ext.define('FPClient.controller.WebWbsCont', {
 				},
 				success: function (response) {
 					var text = Ext.decode(response.responseText);
-					var aTol = me.getWebWbsTool();					
+					var aTol = me.getWebWbsTool();
 					var mo = aTol.down('combomonth').value;
 					var ye = aTol.down('numyear').value;
 					me.loadWebWbs(ye, mo);
@@ -76,18 +76,15 @@ Ext.define('FPClient.controller.WebWbsCont', {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
 				}
 			});
-
 		}
 	},
 	openWbWin: function (btn) {
-
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			var edit = Ext.widget('wbwin');
 			edit.show();
 			var form = edit.down('wbform');
 			form.down('textfield[name=ord_no]').setValue(sm.getSelection()[0].get('rordnum'));
-
 			var cb_org = form.down('combocity[name=org]');
 			cb_org.setValue(sm.getSelection()[0].get('orgcity'));
 			cb_org.store.load({
@@ -96,7 +93,6 @@ Ext.define('FPClient.controller.WebWbsCont', {
 				}
 			});
 			cb_org.select(sm.getSelection()[0].get('org'));
-
 			form.down('textfield[name=s_co]').setValue(sm.getSelection()[0].get('cname'));
 			form.down('textfield[name=s_adr]').setValue(sm.getSelection()[0].get('s_adr'));
 			form.down('textfield[name=s_name]').setValue(sm.getSelection()[0].get('s_name'));
@@ -106,30 +102,24 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			form.down('textfield[name=pcs]').setValue(sm.getSelection()[0].get('packs'));
 			form.down('textfield[name=wt]').setValue(sm.getSelection()[0].get('wt'));
 			form.down('textfield[name=vol_wt]').setValue(sm.getSelection()[0].get('volwt'));
-
 			form.down('combocity[name=dest]').focus(false, true);
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
-
 	},
 	dblclickWebWbsGr: function (me, rec) {
 		var sm = this.getWebWbsGrid().getSelectionModel();
 		if (sm.getCount() > 0) {
-
 			var w = Ext.widget('wbwin');
 			w.setTitle('Редактирование веб накладной №:  ' + rec.get('wb_no'));
-
 			var f = this.getWbForm();
 			f.loadRecord(rec);
-
 			var cb_org = f.down('combocity[name=org]');
 			cb_org.store.load({
 				params: {
 					query: cb_org.getValue()
 				}
 			});
-
 			cb_org.select(rec.data['s_city_id']);
 			var cb_dest = f.down('combocity[name=dest]');
 			cb_dest.store.load({
@@ -137,10 +127,8 @@ Ext.define('FPClient.controller.WebWbsCont', {
 					query: cb_dest.getValue()
 				}
 			});
-
 			cb_dest.select(rec.data['r_city_id']);
 			w.show();
-
 		} else {
 			Ext.Msg.alert('Выберите запись', 'Выберите запись для редактирования')
 		}
@@ -207,12 +195,10 @@ Ext.define('FPClient.controller.WebWbsCont', {
 				},
 				submitEmptyText: false,
 				success: function (form, action) {
-
 					form.reset();
 					me.getWbForm().up('wbwin').close();
 					me.loadWebWbGr();
 					Ext.Msg.alert('Веб накладная сохранена!', action.result.msg);
-
 				},
 				failure: function (form, action) {
 					Ext.Msg.alert('Веб накладная не сохранена!', action.result.msg);
@@ -223,10 +209,8 @@ Ext.define('FPClient.controller.WebWbsCont', {
 		}
 	},
 	printWB: function (btn) {
-
 		var sm = this.getWebWbsGrid().getSelectionModel();
 		if (sm.getCount() > 0) {
-
 			window.open('srv/report.php?wbno=' + sm.getSelection()[0].get('wb_no'));
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите запись в таблице');
@@ -234,7 +218,6 @@ Ext.define('FPClient.controller.WebWbsCont', {
 	},
 	loadWebWbs: function (y, m) {
 		var me = this;
-
 		this.getWebWbStStore().load({
 			params: {
 				newPeriod: y + m
@@ -243,16 +226,13 @@ Ext.define('FPClient.controller.WebWbsCont', {
 				var tt = me.getWebWbsTotal();
 				var sumwt = 0;
 				var sumvolwt = 0;
-
 				records.forEach(function (record) {
-
 					sumwt = sumwt + record.get('wt');
 					sumvolwt = sumvolwt + record.get('vol_wt');
 				});
 				tt.down('label').setText('Количество накладных: ' + records.length + ' Сумма весов: ' + sumwt + ' Сумма объемных весов: ' + sumvolwt);
 			}
 		});
-
 	},
 	monthChange: function (comp, newz, oldz) {
 		var aTol = comp.up('webwbstool');
@@ -263,5 +243,5 @@ Ext.define('FPClient.controller.WebWbsCont', {
 		var aTol = comp.up('webwbstool');
 		var mo = aTol.down('combomonth').value;
 		this.loadWebWbs(newz, mo);
-	},
+	}
 });
