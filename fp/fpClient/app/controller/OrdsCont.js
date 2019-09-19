@@ -398,8 +398,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 
 		//auto sender begin
 		client = this.getClientStStore().first();
-		//мухлеж
-		console.log(client);
+		//мухлеж		
 		client.set('org', client.get('city'));
 		client.set('orgcode', client.get('cityid'));
 
@@ -506,23 +505,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
 		}
-		/*if (org.value == null) {
-		var jsonArrayOrg = this.getCityStOrgStore().data.items;
-		if (jsonArrayOrg.length == 0) {
-		Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-		return;
-		};
-		for (var i = 0; i < jsonArrayOrg.length; i++) {
-		if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-		org.setValue(jsonArrayOrg[i].data.code);
-		break;
-		};
-		};
-		if (org.value == null) {
-		Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-		return;
-		};
-		}*/
+		
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {

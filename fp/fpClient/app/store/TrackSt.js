@@ -8,7 +8,7 @@ Ext.define('FPClient.store.TrackSt', {
 	],
 	proxy: {
 		type: 'ajax',
-		url: 'http://192.168.56.2:8080/client/api.php', //'http://web.flippost.com/fp/client/api.php',
+		url: 'http://web.flippost.com/fp/client/api.php',
 		reader: {
 			type: 'json',
 			root: 'data'
