@@ -61,13 +61,24 @@ function get_plex_info($wbno){
 			$res_str = 'ОШИБКА=' . json_encode($data[0], JSON_UNESCAPED_UNICODE);
 		}else{
 			foreach ($data as $item) {
-				if( preg_match("/(Доставлено. )(.*)/i", $item->status, $matches) ){
+
+/* какая то хрень с русскими символами и preg_match
+//				if( preg_match("/(Доставлено. )(.*)/i", $item->status, $matches) ){
+				if( preg_match("/(Доставлено)[^а-яА-Яa-zA-Z]*([а-яА-Яa-zA-Z]+)/i", $item->status, $matches) ){
 					//print('$matches');
-					//print_r($matches);
+					//print_r($item->status);
+					print_r($matches);
 					$res_str = $res_str . 'wbno=' . $wbno . EOL;
 					$res_str = $res_str . 'RCPN=' . $matches[2] . EOL;
 					$res_str = $res_str . 'DOD=' . $item->date . EOL;
-				}else{
+				}
+*/
+				if( stripos($item->status, "Доставлено") !== false ){
+					$res_str = $res_str . 'wbno=' . $wbno . EOL;
+					$res_str = $res_str . 'RCPN=' . trim(str_replace(["Доставлено", ".",",","_", "  "], "", $item->status) ) . EOL;
+					$res_str = $res_str . 'DOD=' . $item->date . EOL;
+				}
+				else{
 					//print('Нет инфо о доставке');
 				};
 			}
