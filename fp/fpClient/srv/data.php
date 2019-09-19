@@ -279,7 +279,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec [wwwClientGetWbsTotal] @period='{$params['period']}',  @clientID={$ag} ";
 			break;
 		case 'GetAgents':
-			$query = "exec wwwGetAgents";
+			$query = "exec wwwGetClients";
 			break;
 		case 'SetWbno':
 			$paging = false;

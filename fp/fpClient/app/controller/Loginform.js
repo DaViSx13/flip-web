@@ -37,7 +37,7 @@ Ext.define('FPClient.controller.Loginform', {
 				var text = Ext.decode(response.responseText);
 				if (text.success == true) {
 					me.getAdmTool().down('comboagent').store.add(text.data);
-					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
+					//me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
 					
 				} else {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
