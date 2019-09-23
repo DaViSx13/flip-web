@@ -459,6 +459,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, mo);
+		this.getTemplStStore().load();
+		console.log('TemplSt');
 	},
 	openOrdWin : function (btn) {
 		var edit = Ext.widget('ordwin');
