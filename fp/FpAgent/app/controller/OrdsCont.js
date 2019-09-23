@@ -241,8 +241,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var aTol = btn.up('admtool');
 		aTol.down('button[action=list]').toggle(false);
 		this.getOrdsPanel().down('ordgrid').setVisible(false);
-		this.getOrdsPanel().down('templgrid').setVisible(true);
-		this.getTemplStStore().load();
+		this.getOrdsPanel().down('templgrid').setVisible(true);		
 	},
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
@@ -476,12 +475,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		timeEdit.setReadOnly(true);
 		timeEdit.setValue('19:00');
 	},
-	openTpl : function (btn) {
-		this.getTemplStStore().load();
+	openTpl : function (btn) {		
 		if (this.getTemplStStore().getCount() > 0) {
 			var win = Ext.widget('usetemplwin');
-			win.show();
-			win.down('usetemplform').down('combobox[name=tplname]').focus(false, true);
+			win.show();			
+			var cb = win.down('usetemplform').down('combobox[name=tplname]')
+			cb.focus(false, true);
+			cb.select(this.getTemplStStore().first());
 		} else {
 			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.TemplateEmpty")/*'У Вас нет шаблонов!'*/);
 		}

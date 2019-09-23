@@ -2,7 +2,7 @@ Ext.define('FPAgent.controller.TemplCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.TemplForm', 'orders.TemplWin', 'orders.TemplGrid'],
 	models : ['TemplMod'],
-	stores : ['TemplSt'],
+	stores : ['TemplSt', 'CityStOrg', 'CityStDes'],
 	refs : [{
 			ref : 'TemplForm',
 			selector : 'templform'
@@ -141,7 +141,7 @@ Ext.define('FPAgent.controller.TemplCont', {
 					form.reset();
 					me.getTemplForm().up('templwin').close();
 					me.getTemplStStore().reload();
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("TemplCont.TemplateSaveOkHead")/*'Шаблон сохранен!'*/, FPAgent.lib.Translate.tr("TemplCont.TemplateSaveOkBody")/*'Сохранение шаблона заказа прошло успешно '*/ + action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("TemplCont.TemplateSaveOkHead")/*'Шаблон сохранен!'*/, FPAgent.lib.Translate.tr("TemplCont.TemplateSaveOkBody")/*'Сохранение шаблона заказа прошло успешно '*/ +' - '+action.result.msg);
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert(FPAgent.lib.Translate.tr("TemplCont.TemplateSaveErrorHead")/*'Ошибка сохранения'*/, FPAgent.lib.Translate.tr("TemplCont.TemplateSaveErrorBody")/*'Шаблон заказа не сохранен! '*/ + action.result.msg);
