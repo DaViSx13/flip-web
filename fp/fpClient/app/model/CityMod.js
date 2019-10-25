@@ -6,6 +6,9 @@ Ext.define('FPClient.model.CityMod', {
 		}, {
 			name : 'fname',
 			type : 'string'
+		}, {
+			name : 'citycode',
+			type : 'string'
 		}
 	],
 	proxy : {
