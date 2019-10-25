@@ -99,6 +99,9 @@ Ext.define('FPClient.controller.OrdsCont', {
 			'loadfileform button[action=delete]': {
 				click: this.fileDel
 			},
+			'ordform checkboxfield[name=webwb]': {
+				change: this.checkWb
+			},
 			'wbsgrid > tableview': {
 				itemdblclick: this.dblclickWbsGr
 			},
@@ -150,6 +153,15 @@ Ext.define('FPClient.controller.OrdsCont', {
 		});
 		this.getClientStStore().load();
 	},
+	checkWb: function (ch, newValue, oldValue, eOpts){		
+		var print = ch.up('ordform').down('checkboxfield[name=webwbprint]');
+		if (newValue) {
+			print.setDisabled(false);
+		} else {
+			print.setValue(0);
+			print.setDisabled(true);
+		}
+	},
 	clkList: function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('admtool');
@@ -163,7 +175,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		aTol.down('button[action=list]').toggle(false);
 		this.getOrdsPanel().down('ordgrid').setVisible(false);
 		this.getOrdsPanel().down('templgrid').setVisible(true);
-		this.getTemplStStore().load();
+		//this.getTemplStStore().load();
 	},
 	pressEnter: function (fild, e) {
 		var keyCode = e.getKey();
@@ -380,6 +392,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, mo);
+		this.getTemplStStore().load();
 	},
 	openOrdWin: function (btn) {
 		var edit = Ext.widget('ordwin');
@@ -418,8 +431,10 @@ Ext.define('FPClient.controller.OrdsCont', {
 		this.getTemplStStore().load();
 		if (this.getTemplStStore().getCount() > 0) {
 			var win = Ext.widget('usetemplwin');
-			win.show();
-			win.down('usetemplform').down('combobox[name=tplname]').focus(false, true);
+			win.show();			
+			var cb = win.down('usetemplform').down('combobox[name=tplname]')
+			cb.focus(false, true);
+			cb.select(this.getTemplStStore().first());
 		} else {
 			Ext.Msg.alert('Запрещено!', 'У Вас нет шаблонов!');
 		}
@@ -501,6 +516,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
+		var prtwb = form_ord.down('checkboxfield[name=webwbprint]');
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
@@ -540,25 +556,32 @@ Ext.define('FPClient.controller.OrdsCont', {
 									orderNum: action.result.data[0].rordnum
 								},
 								success: function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
+									//form.reset();
+									//me.getOrdForm().up('ordwin').close();
+									//me.loadOrdGr();
 									Ext.Msg.alert('Заказ сохранен!', action.result.msg);
 								},
 								failure: function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
+									//form.reset();
+									//me.getOrdForm().up('ordwin').close();
+									//me.loadOrdGr();
 									Ext.Msg.alert('Файл не сохранен!', action.result.msg);
 								}
 							});
 						}
 					} else {
-						form.reset();
-						me.getOrdForm().up('ordwin').close();
-						me.loadOrdGr();
-						Ext.Msg.alert('Заказ сохранен!', action.result.msg);
-					}
+						//form.reset();
+						//me.getOrdForm().up('ordwin').close();
+						//me.loadOrdGr();
+						Ext.Msg.alert('Заказ сохранен!', action.result.msg);						
+						
+					}						
+					if (prtwb.getValue() == 1 ){							
+							me.getController('WebWbsCont').printWebWB(action.result.data[0].wbno);
+						}
+					form.reset();
+					me.getOrdForm().up('ordwin').close();
+					me.loadOrdGr();
 				},
 				failure: function (form, action) {
 					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);

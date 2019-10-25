@@ -351,6 +351,13 @@ if (!isset($_REQUEST['dbAct'])) {
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec [wwwClientGetClientInfo]	@clientID=$ag";
 			break;
+		case 'getTarif':
+			$weight = $params['weight'] ? $params['weight'] : 0.1;
+			$planno = $_SESSION['xPlanno'] ? $_SESSION['xPlanno'] : 1;
+			$volwt = ($params['width']*$params['height']*$params['length'])/6000;
+			if ($weight<$volwt) $weight = $volwt;			
+			$query = "exec wwwAPIgetTarif @org='$params[org]', @dest = '$params[dest]', @wt = {$weight}, @planno = {$planno}, @t_pak='LE'";						
+            break;
     }
 
     if (!isset($query)) {
@@ -363,10 +370,29 @@ if (!isset($_REQUEST['dbAct'])) {
 			if (!isSessionActive()){
 				throw new Exception('Сеанс завершен. Обновите страницу.');
 				};
-				
+$qry = <<<EOD
+-- user={$_SESSION['xUser']} dbAct={$params['dbAct']} 
+BEGIN TRY
+
+{$query};
+
+END TRY
+BEGIN CATCH
+	DECLARE @ErrorMessage NVARCHAR(4000);	
+	SELECT @ErrorMessage = 'E1: '+ ERROR_MESSAGE()
+	RAISERROR (@ErrorMessage, -- Message text.
+               16, -- Severity.
+               1 -- State.
+               );
+END CATCH
+EOD;
+
+		
+
+		
             include "dbConnect.php";
-			$result = mssql_query($query);
-            if ($result) {
+			$result = mssql_query($qry);
+            if (is_resource($result) === TRUE) {
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);

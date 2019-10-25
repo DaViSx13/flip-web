@@ -208,14 +208,19 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
 		}
 	},
+	printWebWB: function (wbno) {		
+		if (wbno != '') {			
+			window.open('srv/report.php?wbno=' + wbno);
+		}
+	},
 	printWB: function (btn) {
 		var sm = this.getWebWbsGrid().getSelectionModel();
 		if (sm.getCount() > 0) {
-			window.open('srv/report.php?wbno=' + sm.getSelection()[0].get('wb_no'));
+			this.printWebWB(sm.getSelection()[0].get('wb_no'));
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите запись в таблице');
 		}
-	},
+	},	
 	loadWebWbs: function (y, m) {
 		var me = this;
 		this.getWebWbStStore().load({

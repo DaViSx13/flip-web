@@ -236,8 +236,17 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			inputValue: 1,
 			uncheckedValue: 0,
 			x : 10,
-			y : 486//,
-			//width : 360
+			y : 486
+		}, {
+			xtype : 'checkboxfield',
+			boxLabel : 'Распечатать веб накладную',
+			name : 'webwbprint',
+			inputValue: 1,
+			uncheckedValue: 0,
+			disabled: true,
+			x : 190,
+			y : 486
+			
 		}
 	]
 });
