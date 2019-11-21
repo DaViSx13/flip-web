@@ -112,7 +112,14 @@ class catapultoController{
 	$sql = "/*catapulto*/ exec wwwAPIgetTarif @org='$org', @dest = '$dest', @wt = $sumWt, @planno=$planno, @t_pak='$t_pak'";		
 	$result = Flight::db()->query($sql);
 	
-	
+	if ($result[0]['tarif'] == 0){
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 1000;
+		$err->note = 'общая ошибка расчета';
+		$response->error = $err;
+		return $response;	
+	} else {
 	//var_dump($params);
 	//exit;
 	//Flight::logDB($city);
@@ -134,6 +141,7 @@ class catapultoController{
 		$response->data = array($tar);
 		$response->status = 'success';
 		return $response;
+	}
 	}else {
 		$response = new ResponseError();
 		$err = Flight::err();
@@ -214,7 +222,7 @@ class catapultoController{
 		$volwt += ($cargoes[$i]['width']*$cargoes[$i]['height']*$cargoes[$i]['length'])/6000;
 		
 	}		
-	Flight::logDB($volwt);
+	//Flight::logDB($volwt);
 	if ((count($cargoes) == 1) && 
 		($params['cargoes'][0]['width'] == 10) && ($params['cargoes'][0]['length'] == 5) &&
 		($params['cargoes'][0]['weight'] == 0.2) && ($params['cargoes'][0]['height'] == 10)){
@@ -344,7 +352,7 @@ class catapultoController{
  }
  public static function printInvoice($params){
 	$invoice_number   = $params['invoice_number']; 
-	Flight::logDB($invoice_number); 	
+	//Flight::logDB($invoice_number); 	
 	$pdf = Flight::pdf();
 	$pdf->invoice_number = ''.$invoice_number;
 	$real_num = substr($invoice_number, 3, strlen($invoice_number)-3);
