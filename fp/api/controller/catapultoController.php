@@ -136,8 +136,11 @@ class catapultoController{
 	
 	$tar->services = $withreturn;
 	$tar->cost = $result[0]['tarif'];
+	if ($result[0]['delivery'] == 0) {
+	$tar->days = 1;	
+	} else {
 	$tar->days = $result[0]['delivery'];
-	
+	}
 		$response->data = array($tar);
 		$response->status = 'success';
 		return $response;
