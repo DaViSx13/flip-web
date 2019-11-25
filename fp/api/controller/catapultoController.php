@@ -228,7 +228,7 @@ class catapultoController{
 	//Flight::logDB($volwt);
 	if ((count($cargoes) == 1) && 
 		($params['cargoes'][0]['width'] == 10) && ($params['cargoes'][0]['length'] == 5) &&
-		($params['cargoes'][0]['weight'] == 0.2) && ($params['cargoes'][0]['height'] == 10)){
+		($params['cargoes'][0]['weight'] == 0.2) && ($params['cargoes'][0]['height'] == 10) && ($params['cargoes'][0]['comment'] == 'Документы')){
 			
 		$t_pak = 1;//'LE';
 	} else {
