@@ -230,9 +230,9 @@ class catapultoController{
 		($params['cargoes'][0]['width'] == 10) && ($params['cargoes'][0]['length'] == 5) &&
 		($params['cargoes'][0]['weight'] == 0.2) && ($params['cargoes'][0]['height'] == 10)){
 			
-		$t_pak = 0;//'LE';
+		$t_pak = 1;//'LE';
 	} else {
-		$t_pak = 1;//'PL';		
+		$t_pak = 0;//'PL';		
 	}
 	
 	$packs = count($cargoes);
