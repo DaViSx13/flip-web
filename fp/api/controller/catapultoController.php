@@ -22,8 +22,8 @@ class catapultoController{
 		
 	switch ($method) {
     case 'rates': 
-		Flight::logDB($method);
-		Flight::logDB($body);
+		//Flight::logDB($method);
+		//Flight::logDB($body);
 		echo Flight::json(self::getRates($params));			
         break;
     case 'shipping':
@@ -32,13 +32,13 @@ class catapultoController{
 		echo Flight::json(self::setShipping($params));
         break;
     case 'pickup':		
-        Flight::logDB($method);
-		Flight::logDB($body);
+        //Flight::logDB($method);
+		//Flight::logDB($body);
 		echo Flight::json(self::setPickup($params));
         break;
 	case 'print_invoice':		
-		Flight::logDB($method);
-		Flight::logDB($body);
+		//Flight::logDB($method);
+		//Flight::logDB($body);
 		echo Flight::json(self::printInvoice($params));
         break;
 	case 'reject':
@@ -178,14 +178,14 @@ class catapultoController{
 	$org = $result[0]['id'];
 	
 	$contmail = '';
-	$cname   = $params['sender']['company'];
-	$contname   = $params['sender']['name'];
+	$cname   = str_ireplace("'", "''", $params['sender']['company']);
+	$contname   = str_ireplace("'", "''", $params['sender']['name']);
 	$contphone   = $params['sender']['phone'][0].';'.$params['sender']['phone'][1];
-	$orgrems   = $params['sender']['comment'];
-	$sender_street = $params['sender']['address']['street'];
-	$sender_house = $params['sender']['address']['house'];
-	$sender_door_number = $params['sender']['address']['door_number'];
-	$sender_zip = $params['sender']['address']['zip'];
+	$orgrems   = str_ireplace("'", "''", $params['sender']['comment']);
+	$sender_street = str_ireplace("'", "''", $params['sender']['address']['street']);
+	$sender_house = str_ireplace("'", "''", $params['sender']['address']['house']);
+	$sender_door_number = str_ireplace("'", "''", $params['sender']['address']['door_number']);
+	$sender_zip = str_ireplace("'", "''", $params['sender']['address']['zip']);
 	
 	
 	$address = 'Индекс '.$sender_zip.'; '.$sender_region.'; г. '.$sender_city.'; '.$sender_street.'; дом '.$sender_house.'; кв. '.$sender_door_number; 
@@ -203,14 +203,14 @@ class catapultoController{
 	$dest = $result[0]['id'];
 	
 	$dcontmail = '';
-	$dname   = $params['receiver']['company'];
-	$dcontname   = $params['receiver']['name'];
+	$dname   = str_ireplace("'", "''", $params['receiver']['company']);
+	$dcontname   = str_ireplace("'", "''", $params['receiver']['name']);
 	$dcontphone   = $params['receiver']['phone'][0].';'.$params['receiver']['phone'][1];
-	$destrems   = $params['receiver']['comment'];
-	$receiver_street = $params['receiver']['address']['street'];
-	$receiver_house = $params['receiver']['address']['house'];
-	$receiver_door_number = $params['receiver']['address']['door_number'];
-	$receiver_zip = $params['receiver']['address']['zip'];
+	$destrems   = str_ireplace("'", "''", $params['receiver']['comment']);
+	$receiver_street = str_ireplace("'", "''", $params['receiver']['address']['street']);
+	$receiver_house = str_ireplace("'", "''", $params['receiver']['address']['house']);
+	$receiver_door_number = str_ireplace("'", "''", $params['receiver']['address']['door_number']);
+	$receiver_zip = str_ireplace("'", "''", $params['receiver']['address']['zip']);
 	
 	$dadr = 'Индекс '.$receiver_zip.'; '.$receiver_region.'; г. '.$receiver_city.'; '.$receiver_street.'; дом '.$receiver_house.'; кв. '.$receiver_door_number; 
 	
@@ -286,8 +286,8 @@ class catapultoController{
 	$inv->invoice_number = 'ZAK'.$result[0]['rordnum'];
 	$catapulto_order_id = $params['catapulto_order_id'];
 	$rordnum = $result[0]['rordnum'];
-	$comment = $params['comment'];
-	$instructions = $params['instructions'];
+	$comment = str_ireplace("'", "''", $params['comment']);
+	$instructions = str_ireplace("'", "''", $params['instructions']);
 	$sql = "/*catapulto*/ exec wwwAPICatapultoSetShipping
 			@rordnum = $rordnum
 			,@catapulto_order_id = '$catapulto_order_id'

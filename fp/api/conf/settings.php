@@ -1,8 +1,6 @@
 <?php
 require 'db_.php';
 
-
-
 Flight::path("controller/");
 
 Flight::register('db','SQLSRV_DataBase',[$config['db']['username'], $config['db']['password'], $config['db']['databasename'], $config['db']['host']]);
@@ -18,6 +16,7 @@ Flight::register("tarifs","tarifsController");
 Flight::register("catapulto","catapultoController");
 
 Flight::path("model/");
+
 Flight::register("tar", "dataTar");
 
 Flight::register("ser", "dataSer");
@@ -36,8 +35,7 @@ Flight::map('error', function(Exception $ex){
 	class ErResp
 {
 	public $status = 'error';
-    public $message = '';
-	//public $data = null;
+    public $message = '';	
 }
 $erresp = new ErResp();
     // Handle error
@@ -47,20 +45,15 @@ $erresp = new ErResp();
 
 Flight::map('checkToken',function($token){
   $sql = "exec wwwAPIcheckToken @token = '$token'";
-      $result = Flight::db()->query($sql);
-      //if($result != false){
-        return $result;
-     // }else {
-     //   return false;
-     // }
+  $result = Flight::db()->query($sql);      
+  return $result;     
 });
 
 Flight::map('logDB',function($msg){
-  $sql = "EXEC wwwAPIlogDB @request = '$msg'";
-      $result = Flight::db()->query($sql);
-      
-        return $result;
-     
+	$msg = str_ireplace("'", "''", $msg);
+	$sql = "EXEC wwwAPIlogDB @request = '$msg'";
+    $result = Flight::db()->query($sql);      
+    return $result;     
 });
 
 
