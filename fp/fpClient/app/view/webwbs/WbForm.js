@@ -36,7 +36,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 					width : 337,
 					name : 's_co',
 					fieldLabel : 'Название клиента',
-					maxLength : 60,
+					maxLength : 90,
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
@@ -98,7 +98,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 					width : 337,
 					name : 'r_co',
 					fieldLabel : 'Название клиента',
-					maxLength : 60,
+					maxLength : 90,
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
