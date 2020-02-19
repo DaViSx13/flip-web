@@ -176,7 +176,7 @@ class catapultoController{
 	
 	$result = Flight::db()->query($sql);
 	$org = $result[0]['id'];
-	
+	if (isset($org)) {
 	$contmail = '';
 	$cname   = str_ireplace("'", "''", $params['sender']['company']);
 	$contname   = str_ireplace("'", "''", $params['sender']['name']);
@@ -201,7 +201,7 @@ class catapultoController{
 	$sql = Flight::utf8_to_win1251($sql);
 	$result = Flight::db()->query($sql);
 	$dest = $result[0]['id'];
-	
+	if (isset($dest)) {
 	$dcontmail = '';
 	$dname   = str_ireplace("'", "''", $params['receiver']['company']);
 	$dcontname   = str_ireplace("'", "''", $params['receiver']['name']);
@@ -322,6 +322,22 @@ class catapultoController{
 		$err = Flight::err();
 		$err->code = 2000;
 		$err->note = 'общая ошибка создания отправления';
+		$response->error = $err;
+		return $response;
+	}
+	}else {
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 2002;
+		$err->note = 'не правильный адрес получателя';
+		$response->error = $err;
+		return $response;
+	}
+	}else {
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 2001;
+		$err->note = 'не правильный адрес отправителя';
 		$response->error = $err;
 		return $response;
 	}
