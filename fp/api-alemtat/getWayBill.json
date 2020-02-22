@@ -1,0 +1,68 @@
+{
+	"Id": "fb20520b-7a2e-4043-8c7c-32e3b11679a7",
+	"Number": "000408756",
+	"PickUpTime": "13.01.2020",
+	"SenderName": "ФП ЛОГИСТИКА",
+	"FromLocal": "РК, г.АЛМАТЫ",
+	"ToLocal": "РК, г.АЛМАТЫ",
+	"Places": 1,
+	"CurrentState": "УСПЕШНО ДОСТАВЛЕНО",
+	"IsDelivered": true,
+	"Shipments": [{
+			"Id": "43294047",
+			"Number": "43294047",
+			"Events": [{
+					"DateDelivery": "13.01.2020",
+					"TimeDelivery": "19:02",
+					"ToName": "Зайнуллина",
+					"CodeName": "OK",
+					"CodeType": "Completion",
+					"Comment": "УСПЕШНО ДОСТАВЛЕН",
+					"Company": "Mardirosuan Zarina",
+					"Station": "РК, г.АЛМАТЫ",
+					"ToLocal": ""
+				}, {
+					"DateDelivery": "13.01.2020",
+					"TimeDelivery": "13:13",
+					"ToName": null,
+					"CodeName": "WC",
+					"CodeType": "Progress",
+					"Comment": "ПЕРЕДАНО КУРЬЕРУ НА ДОСТАВКУ",
+					"Company": "Mardirosuan Zarina",
+					"Station": "РК, г.АЛМАТЫ",
+					"ToLocal": ""
+				}, {
+					"DateDelivery": "13.01.2020",
+					"TimeDelivery": "11:08",
+					"ToName": "0043",
+					"CodeName": "SP",
+					"CodeType": "Incendent",
+					"Comment": "ПЕЧАТЬ СТИКЕРА ОТПРАВЛЕНИЯ",
+					"Company": "Mardirosuan Zarina",
+					"Station": "РК, г.АЛМАТЫ",
+					"ToLocal": ""
+				}, {
+					"DateDelivery": "13.01.2020",
+					"TimeDelivery": "11:08",
+					"ToName": "Вес (указ.): 1,52 кг.; Вес (факт.): 1,52 кг.; Разница : 0,00 кг.",
+					"CodeName": "CW",
+					"CodeType": "Incendent",
+					"Comment": "КОНТРОЛЬНОЕ ВЗВЕШИВАНИЕ",
+					"Company": "Mardirosuan Zarina",
+					"Station": "РК, г.АЛМАТЫ",
+					"ToLocal": ""
+				}, {
+					"DateDelivery": "13.01.2020",
+					"TimeDelivery": "11:08",
+					"ToName": "КБ",
+					"CodeName": "PA",
+					"CodeType": "Progress",
+					"Comment": "ПРИНЯТО ОТ ПАРТНЕРА",
+					"Company": "Mardirosuan Zarina",
+					"Station": "РК, г.АЛМАТЫ",
+					"ToLocal": ""
+				}
+			]
+		}
+	]
+}
