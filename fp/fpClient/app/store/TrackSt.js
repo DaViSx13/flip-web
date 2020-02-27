@@ -8,7 +8,7 @@ Ext.define('FPClient.store.TrackSt', {
 	],
 	proxy: {
 		type: 'ajax',
-		url: '../fp/client/api.php',
+		url: '../client/api.php',
 		reader: {
 			type: 'json',
 			root: 'data'
