@@ -1,8 +1,8 @@
 Ext.define('fplk.controller.WbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin'],
+	views : ['wbs.WbsGrid', 'wbs.NewPodWin', 'wbs.NewExWin', 'wbs.ViewExWin', 'wbs.NewDopWin', 'wbs.LoadWBWin', 'wbs.TrackWin'],
 	models : ['WbsMod', 'ExCodeMod', 'ViewExMod'],
-	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore'],
+	stores : ['WbsStore', 'aMonths', 'ExCodeStore', 'ViewExStore', 'TrackSt'],
 	refs : [{
 			ref : 'WbsTool',
 			selector : 'wbstool'
@@ -12,7 +12,10 @@ Ext.define('fplk.controller.WbsCont', {
 		}, {
 			ref : 'LoadWBWin',
 			selector : 'loadwbwin'
-		}, {
+		}, {  
+			ref : 'TrackWin',
+			selector : 'trackwin'
+		},{
 			ref : 'NewExWin',
 			selector : 'newexwin'
 		}, {
@@ -36,6 +39,9 @@ Ext.define('fplk.controller.WbsCont', {
 		this.control({
 			'wbsgrid' : {
 				activate : this.loadWbsGrid
+			},
+			'wbstool button[action=track]' : {
+				click : this.trackWb
 			},
 			'wbsgrid button[action=all]' : {
 				click : this.allWbs
@@ -340,6 +346,25 @@ Ext.define('fplk.controller.WbsCont', {
 			});
 		}
 	},
+	
+	trackWb : function (btn) {
+		
+		var sm = btn.up('wbsgrid').getSelectionModel();
+		if (sm.getCount() > 0) {			
+			var viewex = Ext.widget('trackwin').show();
+			var wbno = sm.getSelection()[0].get('wb_no');
+			viewex.setTitle('Трек накладной: '+wbno);
+			this.getTrackStStore().load({
+				params : {
+					dbAct : 'getTrackInfo',
+					wbno : wbno
+				}
+			});			
+		} else {
+			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
+		}			
+	},
+	
 	viewExGrid : function (ex_wb_no) {
 		if (ex_wb_no) {
 			var viewex = Ext.widget('viewexwin').show();
