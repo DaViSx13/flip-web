@@ -22,6 +22,9 @@
 .templ {
 	background-image : url(../../resources/images/template.png);
 }
+.track {
+	background-image : url(../../resources/images/track.png);
+}
 .wbno {
 	background-image : url(../../resources/images/wbno.png);
 }
