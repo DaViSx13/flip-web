@@ -133,6 +133,47 @@ Ext.define('FPClient.controller.UsersCont', {
 		var me = this;
 		var win = btn.up('userswin');
 		var form = win.down('usersform');
+		
+				var invalidSymbols = [
+			'+',
+			'-',
+			'?',
+			'*',
+			'/',
+			'=',
+			')',
+			'(',
+			'*',
+			'&',
+			',',
+			'^',
+			'%',
+			'$',
+			'№',
+			'@',
+			'!',
+			'"',
+			'#',
+			';',
+		]
+		
+		var wrongSymbol = "";
+		var loginValue = form.getForm().findField('auser').getValue();
+
+		if(loginValue.length > 0) {
+			invalidSymbols.forEach(function (item, i, arr){
+				if(loginValue.indexOf(item) > -1) {
+					wrongSymbol = item;
+					return;
+				}
+			});
+			
+			if(wrongSymbol != "") {
+				Ext.Msg.alert('Обнаружены недопустимые символы', 'Найден символ "' + wrongSymbol + '"');
+				return;
+			}
+		}
+		
 		if (form.getForm().findField('passfirst').getValue() == form.getForm().findField('passsecond').getValue()) {
 			if (form.getForm().isValid()) {
 				function showResult(btn) {
