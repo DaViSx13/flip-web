@@ -153,7 +153,7 @@ Ext.define('fplk.controller.UsersCont', {
 			'!',
 			'"',
 			'#',
-			';',
+			';'
 		]
 		
 		var wrongSymbol = "";

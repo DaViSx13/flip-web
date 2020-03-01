@@ -136,7 +136,7 @@ Ext.define('FPAgent.controller.UsersCont', {
 			'!',
 			'"',
 			'#',
-			';',
+			';'
 		]
 		
 		var wrongSymbol = "";
