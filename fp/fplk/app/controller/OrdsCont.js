@@ -466,18 +466,18 @@ Ext.define('fplk.controller.OrdsCont', {
 		}
 		this.editOrdWin(vbut);
 	},
-	editOrdWin : function (btn) {
+	editOrdWin: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
 				var win = Ext.create('fplk.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
-						params : {
-							id : sm.getSelection()[0].get('rordnum')
+						params: {
+							id: sm.getSelection()[0].get('rordnum')
 						}
 					});
 				if (btn.action == 'view') {
-					win.down('button[action=save]').setVisible(false);
+					win.down('button[action=save]').setText('Повторить заказ');
 				} else {
 					win.down('button[action=save]').setVisible(true);
 				}
@@ -500,6 +500,10 @@ Ext.define('fplk.controller.OrdsCont', {
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
 		
+		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
+			form_ord.down('textfield[name=rordnum]').setValue(null);
+			form_ord.down('datefield[name=courdate]').setValue(new Date());
+		}
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {
