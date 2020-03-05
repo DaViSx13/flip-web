@@ -154,7 +154,7 @@ Ext.define('FPClient.controller.UsersCont', {
 			'!',
 			'"',
 			'#',
-			';',
+			';'
 		]
 		
 		var wrongSymbol = "";
