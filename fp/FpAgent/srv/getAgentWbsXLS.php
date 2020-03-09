@@ -67,6 +67,7 @@ $fields['DEST'] = 'dest';
 $fields['Услуга'] = 't_srv';
 $fields['Отправитель'] = 's_co';
 $fields['Получатель'] = 'r_co';
+$fields['Мест'] = 'pcs';
 $fields['Вес'] = 'wt';
 $fields['Об.вес'] = 'vol_wt';
 
@@ -153,9 +154,16 @@ $sharedStyle1->applyFromArray($rowStyle);
 $worksheet->setSharedStyle($sharedStyle1, "A3:AA{$lastRow}");
 //итоги
 if ($lastRow > 3) {
-$startColNo = array_search('wt', array_values($fields));
+	
+$startColNo = array_search('pcs', array_values($fields));
 $cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
 $cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($lastRow);
+$worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
+setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
+	
+$startColNo = array_search('wt', array_values($fields));
+$cell1 = PHPExcel_Cell::stringFromColumnIndex($startColNo).'3';
+$cell2 = PHPExcel_Cell::stringFromColumnIndex($startColNo).($lastRow - 1);
 $worksheet->setCellValue(PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, "=SUM($cell1:$cell2)");
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
