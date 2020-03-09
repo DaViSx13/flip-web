@@ -359,6 +359,9 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWb':
 			$query = "exec wwwGetWb @wb_no='{$params['wb_no']}'";
 			break;
+		case 'GetCACC':
+			$query = "select COUNT(*) as count from Klient where CACC = '{$params['clientid']}'";
+			break;
 		case 'GetClientInfo':
 			$ag=$_SESSION["xClientID"];
 

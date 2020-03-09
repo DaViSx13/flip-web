@@ -133,6 +133,16 @@ Ext.define('fplk.controller.UsersCont', {
 		var me = this;
 		var win = btn.up('userswin');
 		var form = win.down('usersform');
+		
+		let sassValue = form.getForm().findField('clientid').getValue();
+			
+		/*var re1 = /[A-Za-zА-Яа-я]/
+
+		if(re1.test(sassValue)){
+			Ext.Msg.alert('Обнаружены недопустимые символы', 'Поле САСС не подразумевает ввод букв');
+			return;
+		}*/
+		
 		var invalidSymbols = [
 			'+',
 			'-',
@@ -154,7 +164,21 @@ Ext.define('fplk.controller.UsersCont', {
 			'"',
 			'#',
 			';'
-		]
+		];
+		
+		Ext.Ajax.request({
+        url: location.href + '/srv/data.php?dbAct=GetCACC&clientid=' + sassValue,
+        success: function(response, options){
+            var objAjax = Ext.decode(response.responseText); 
+			if(objAjax.data[0].count == 0) {
+				Ext.Msg.alert('Ошибка сохранения пользователя', 'Не найден САСС');
+				return;
+			}
+        },
+        failure: function(response, options){
+            Ext.Msg.alert('Ошибка сохранения пользователя', 'Проблемы с доступом к базе данных');
+        }
+		}); 
 		
 		var wrongSymbol = "";
 		var loginValue = form.getForm().findField('auser').getValue();
@@ -172,7 +196,7 @@ Ext.define('fplk.controller.UsersCont', {
 				return;
 			}
 		}
-		
+			
 		if (form.getForm().findField('passfirst').getValue() == form.getForm().findField('passsecond').getValue()) {
 			if (form.getForm().isValid()) {
 				function showResult(btn) {
