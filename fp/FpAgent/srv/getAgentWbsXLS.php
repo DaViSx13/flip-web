@@ -151,7 +151,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 $sharedStyle1 = new PHPExcel_Style();
 $lastRow = $rowNo-1;
 $sharedStyle1->applyFromArray($rowStyle);
-$worksheet->setSharedStyle($sharedStyle1, "A3:AA{$lastRow}");
+$worksheet->setSharedStyle($sharedStyle1, "A3:AB{$lastRow}");
 //итоги
 if ($lastRow > 3) {
 	
