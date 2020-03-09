@@ -11,7 +11,7 @@ items : [{
 			width : 154,
 			x : 320,
 			y : 35,
-			//name : 'wb_no'
+			name : 'wb_no'
 		}, {
 			xtype : 'displayfield',
 			width : 154,
