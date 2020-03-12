@@ -67,6 +67,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					width: 84,
 					name: 's_tel',
 					fieldLabel: 'Телефон',
+					maxLength: 50,
 					labelAlign: 'top',
 					anchor: '100%',
 					allowBlank: false
@@ -128,6 +129,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					width: 84,
 					name: 'r_tel',
 					fieldLabel: 'Телефон',
+					maxLength: 50,
 					labelAlign: 'top',
 					anchor: '100%',
 					allowBlank: false
