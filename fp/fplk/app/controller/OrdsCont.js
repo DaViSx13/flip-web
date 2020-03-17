@@ -233,7 +233,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	loadViewWbSt : function (st, rec, suc) {
 		if (suc) {
 			if (rec[0].data.wbstatus == 0) {
-				Ext.Msg.alert('Внимание!', 'Накладная не введена в систему!');
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbEmpty")/*'Накладная не введена в систему!'*/);
 			} else {
 				var win = Ext.widget('viewwbwin');
 				var form = win.down('viewwbform');
@@ -319,7 +319,7 @@ Ext.define('fplk.controller.OrdsCont', {
 				win.show();
 			}
 		} else {
-			Ext.Msg.alert('Ошибка!', 'Ошибка связи с сервером!');
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Error")/*'Ошибка!'*/, FPAgent.lib.Translate.tr("ServerdDown")/*'Ошибка связи с сервером!'*/);
 		}
 	},
 	exportExcel : function (btn) {
