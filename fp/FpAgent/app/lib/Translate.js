@@ -28,6 +28,11 @@
         "ru":  "Город",
         "en":  "City"
     },
+	{
+        "stringID":  "MainPanel.ClientOrders",
+        "ru":  "Клиентский заказ",
+        "en":  "Client's orders"
+    },
     {
         "stringID":  "Loginform.user",
         "ru":  "Пользователь",

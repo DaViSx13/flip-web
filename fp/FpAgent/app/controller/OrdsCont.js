@@ -1,14 +1,20 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
+	stores : ['OrdsSt', 'OrdsClientSt',  'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
 	refs : [{
 			ref : 'OrdForm',
 			selector : 'ordform'
 		}, {
 			ref : 'OrdTool',
 			selector : 'ordtool'
+		}, {
+		ref : 'OrdClientTool',
+			selector : 'ordclienttool'
+		}, {
+			ref : 'OrdsClientPanel',
+			selector : 'ordsclientpanel'
 		}, {
 			ref : 'OrdTotal',
 			selector : 'ordtotal'
@@ -114,6 +120,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordtool combomonth' : {
 				change : this.monthChange
 			},
+			'ordclienttool combomonth' : {
+				change : this.monthClientChange
+			},
 			'ordtool numyear' : {
 				change : this.yearChange
 			},
@@ -180,6 +189,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		this.getOrdsStStore().on({
 			scope : this,
 			load : this.loadOrdersSt
+		});
+		this.getOrdsClientStStore().on({
+			scope : this,
+			load : this.loadClientOrdersSt
 		});
 		this.getOrdExStoreStore().on({
 			scope : this,
@@ -445,6 +458,15 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 	},
+	
+	loadClientOrds : function (y, m) {
+		this.getOrdsClientStStore().load({
+			params : {
+				newPeriod : y + m
+			}
+		});
+	},
+	
 	loadOrdGr : function (Pan) {
 		var adTol = this.getAdmTool();
 		if (adTol.down('label').text == 'WEB Администратор') {
@@ -459,6 +481,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, mo);
+		this.loadClientOrds(ye, mo);
 		this.getTemplStStore().load();
 		console.log('TemplSt');
 	},
@@ -662,7 +685,18 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var aTol = comp.up('ordtool');
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, newz);
+		console.log("work");
+		this.loadClientOrds(ye, newz);
 	},
+	
+	monthClientChange : function (comp, newz, oldz) {
+		var aTol = comp.up('ordclienttool');
+		var ye = aTol.down('numyear').value;
+		this.loadOrds(ye, newz);
+		console.log("work");
+		this.loadClientOrds(ye, newz);
+	},
+	
 	yearChange : function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
 		var mo = aTol.down('combomonth').value;
@@ -725,6 +759,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		form_ord.down('combocity[name=org]').focus(false, true);
 	},
 	loadOrdersSt : function (st, rec, suc) {
+		var tt = this.getOrdTotal();
+		tt.down('label').setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount")/*'Количество заказов: '*/ + st.getCount());
+	},
+	
+	loadClientOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount")/*'Количество заказов: '*/ + st.getCount());
 	}
