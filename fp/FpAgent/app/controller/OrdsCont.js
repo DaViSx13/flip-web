@@ -1,6 +1,8 @@
+var clientFlag = false;
+
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
+	views : ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
 	stores : ['OrdsSt', 'OrdsClientSt',  'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
 	refs : [{
@@ -55,6 +57,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			ref : 'OrdGrid',
 			selector : 'ordgrid'
 		}, {
+			ref : 'OrdClientGrid',
+			selector : 'ordclientgrid'
+		}, {
 			ref : 'TemplGrid',
 			selector : 'templgrid'
 		}, {
@@ -99,6 +104,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordspanel' : {
 				activate : this.loadOrdGr
 			},
+			'ordsclientpanel' : {
+				activate : this.loadOrdclientGr
+			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
 			},
@@ -126,6 +134,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordtool numyear' : {
 				change : this.yearChange
 			},
+			'ordclienttool numyear' : {
+				change : this.yearClientChange
+			},
 			'loadfileform button[action=delete]' : {
 				click : this.fileDel
 			},
@@ -137,6 +148,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'ordgrid > tableview' : {
 				itemdblclick : this.dblclickOrdGr
+			},
+			'ordclientgrid > tableview' : {
+				itemdblclick : this.dblclickOrdClientGr
 			},
 			'admtool comboagent' : {
 				select : this.changeAgent
@@ -152,6 +166,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			},
 			'ordtool button[action=wbno]' : {
 				click : this.editWbno
+			},
+			'ordclienttool button[action=wbno]' : {
+				click : this.editWbnoClient
 			},
 			'ordtool button[action=wbview]' : {
 				click : this.viewWb
@@ -282,7 +299,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				success : function (form, action) {
 					form.reset();
 					win.close();
-					me.loadOrdGr();
+					if(!clientFlag) {
+						me.loadOrdGr();
+					} else {
+						me.loadOrdclientGr();
+					}	
 				},
 				failure : function (form, action) {
 					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.WbSaveError")/*'Номер накладной не сохранен!'*/, action.result.msg);
@@ -294,6 +315,17 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	editWbno : function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
+		clientFlag = false;
+		this.editWbnoBase(sm);
+	},
+	
+	editWbnoClient : function (btn) {
+		var sm = btn.up('ordclientgrid').getSelectionModel();
+		clientFlag = true;
+		this.editWbnoBase(sm);
+	},
+	
+	editWbnoBase : function (sm) {
 		if (sm.getCount() > 0) {
 			var win = Ext.widget('wbnowin');
 			win.show();
@@ -475,16 +507,38 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var btnList = adTol.down('button[action=list]');
 		var btnTempl = adTol.down('button[action=templ]');
 		btnList.setVisible(true);
-		btnTempl.setVisible(true);
+		btnTempl.setVisible(true);		
+
 		this.clkList(btnList);
 		var aTol = this.getOrdTool();
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, mo);
+		//this.loadClientOrds(ye, mo);
+		this.getTemplStStore().load();
+	},
+	
+	loadOrdclientGr : function (Pan) {
+		var adTol = this.getAdmTool();
+		if (adTol.down('label').text == 'WEB Администратор') {
+			adTol.down('buttongroup[itemId=admgroup]').setVisible(true);
+		}
+		
+		var btnList = adTol.down('button[action=list]');
+		var btnTempl = adTol.down('button[action=templ]');
+			btnList.setVisible(false);
+			btnTempl.setVisible(false);		
+
+
+		this.clkList(btnList);
+		var aTol = this.getOrdTool();
+		var mo = aTol.down('combomonth').value;
+		var ye = aTol.down('numyear').value;
+		//this.loadOrds(ye, mo);
 		this.loadClientOrds(ye, mo);
 		this.getTemplStStore().load();
-		console.log('TemplSt');
 	},
+	
 	openOrdWin : function (btn) {
 		var edit = Ext.widget('ordwin');
 		edit.show();
@@ -557,8 +611,19 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 		this.editOrdWin(vbut);
 	},
+	dblclickOrdClientGr : function (gr, rec) {
+		var tt = this.getOrdClientTool();
+		if (rec.data['status'] == 'заявлен') {
+			var vbut = tt.down('button[action=edit]');
+		} else {
+			var vbut = tt.down('button[action=view]');
+		}
+		this.showClientOrdWin(gr);
+	},
 	editOrdWin : function (btn) {
+		
 		var sm = btn.up('ordgrid').getSelectionModel();
+		
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
 				var win = Ext.create('FPAgent.view.orders.OrdWin').show();
@@ -575,6 +640,33 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			} else {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.ErrorOrderEdit")/*'Редактировать можно только заявленные заказы'*/);
 			}
+		} else {
+			if (btn.action == 'edit') {
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit")/*'Выберите заказ для редактирования'*/);
+			} else {
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderView")/*'Выберите заказ для просмотра'*/);
+			}
+		}
+	},
+	showClientOrdWin : function (grid) {
+
+		var sm = grid.getSelectionModel();
+	
+		if (sm.getCount() > 0) {
+				var win = Ext.create('FPAgent.view.orders.OrdWin').show();
+				var store_ord = this.getOrderStStore().load({
+						params : {
+							id : sm.getSelection()[0].get('rordnum')
+						}
+					});
+					
+			var formWin = win.items.items[0];
+			var fields = formWin.items;
+			for(let i = 0; i < fields.length; i++) {
+				fields.items[i].setDisabled(true);
+			}
+			
+			win.down('button[action=save]').setVisible(false);
 		} else {
 			if (btn.action == 'edit') {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit")/*'Выберите заказ для редактирования'*/);
@@ -685,7 +777,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var aTol = comp.up('ordtool');
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, newz);
-		console.log("work");
 		this.loadClientOrds(ye, newz);
 	},
 	
@@ -693,8 +784,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var aTol = comp.up('ordclienttool');
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, newz);
-		console.log("work");
 		this.loadClientOrds(ye, newz);
+	},
+	
+	yearClientChange : function (comp, newz, oldz) {
+		var aTol = comp.up('ordclienttool');
+		var mo = aTol.down('combomonth').value;
+		this.loadOrds(newz, mo);
 	},
 	
 	yearChange : function (comp, newz, oldz) {
@@ -702,6 +798,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var mo = aTol.down('combomonth').value;
 		this.loadOrds(newz, mo);
 	},
+	
 	fileDel : function (but) {
 		var form_lf = but.up('loadfileform');
 		var form_ord = this.getOrdForm();

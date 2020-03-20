@@ -30,7 +30,7 @@
     },
 	{
         "stringID":  "MainPanel.ClientOrders",
-        "ru":  "Клиентский заказ",
+        "ru":  "Клиентские заказы",
         "en":  "Client's orders"
     },
     {
