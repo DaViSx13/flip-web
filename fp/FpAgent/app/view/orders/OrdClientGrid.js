@@ -1,7 +1,7 @@
 Ext.define('FPAgent.view.orders.OrdClientGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.ordclientgrid',
-	requires: ['FPAgent.view.orders.OrdClientTool', 'FPAgent.view.orders.OrdTotal'],
+	requires: ['FPAgent.view.orders.OrdClientTool', 'FPAgent.view.orders.OrdClientTotal'],
 	store: 'OrdsClientSt',
 	columns: [{
 			xtype: 'gridcolumn',
@@ -68,7 +68,7 @@ Ext.define('FPAgent.view.orders.OrdClientGrid', {
 			xtype: 'ordclienttool',
 			dock: 'top'
 		}, {
-			xtype: 'ordtotal',
+			xtype: 'ordclienttotal',
 			dock: 'bottom'
 		}
 	]

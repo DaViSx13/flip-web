@@ -8,7 +8,6 @@ Ext.define('FPAgent.view.orders.OrdClientTool', {
 			action : 'wbno'
 		}, '-', {
 			text : FPAgent.lib.Translate.tr("OrdTool.action.wbview"),//'Просмотр накладной',
-			hidden:true,
 			iconCls : 'wbview',
 			action : 'wbview'
 		}, '->', '-', {
