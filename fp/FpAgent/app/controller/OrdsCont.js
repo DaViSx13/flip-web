@@ -662,9 +662,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					
 			var formWin = win.items.items[0];
 			var fields = formWin.items;
-			for(let i = 0; i < fields.length; i++) {
-				fields.items[i].setDisabled(true);
-			}
 			
 			win.down('button[action=save]').setVisible(false);
 		} else {
