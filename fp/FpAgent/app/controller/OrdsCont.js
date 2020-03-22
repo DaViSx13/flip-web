@@ -4,7 +4,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
 	stores : ['OrdsSt', 'OrdsClientSt',  'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
 	refs : [{
-			ref : 'OrdForm',
+		ref : 'OrdForm',
 			selector : 'ordform'
 		}, {
 			ref : 'OrdTool',
@@ -553,9 +553,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var aTol = this.getOrdTool();
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
-		//this.loadOrds(ye, mo);
 		this.loadClientOrds(ye, mo);
-		this.getTemplStStore().load();
 	},
 	
 	openOrdWin : function (btn) {
