@@ -1,5 +1,3 @@
-var clientFlag = false;
-
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
@@ -20,6 +18,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}, {
 			ref : 'OrdTotal',
 			selector : 'ordtotal'
+		}, {
+			ref : 'OrdClientTotal',
+			selector : 'ordclienttotal'
 		}, {
 			ref : 'ComboCity',
 			selector : 'combocity[name=org]'
@@ -170,6 +171,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordclienttool button[action=wbno]' : {
 				click : this.editWbnoClient
 			},
+			'ordclienttool button[action=wbview]' : {
+				click : this.viewClientWb
+			},
 			'ordtool button[action=wbview]' : {
 				click : this.viewWb
 			},
@@ -287,7 +291,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	saveWbno : function (btn) {
 		var me = this;
+		
 		var win = btn.up('wbnowin');
+		var activetab = this
+							.getAdmTool()
+							.ownerCt
+							.activeTab
+							.title;					
 		var form_wbno = win.down('wbnoform');
 		if (form_wbno.getForm().isValid()) {
 			form_wbno.submit({
@@ -299,7 +309,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				success : function (form, action) {
 					form.reset();
 					win.close();
-					if(!clientFlag) {
+					if(activetab != FPAgent.lib.Translate.tr("MainPanel.ClientOrders")) {
 						me.loadOrdGr();
 					} else {
 						me.loadOrdclientGr();
@@ -339,6 +349,15 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	viewWb : function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
+		this.viewWBase(sm);
+	},
+	
+	viewClientWb : function (btn) {
+		var sm = btn.up('ordclientgrid').getSelectionModel();
+		this.viewWBase(sm);
+	},
+	
+	viewWBase : function (sm) {
 		if(sm.selected.length > 0)
 		if (sm.getSelection()[0].get('wb_no')) {
 			this.getViewWbStStore().load({
@@ -787,7 +806,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	yearClientChange : function (comp, newz, oldz) {
 		var aTol = comp.up('ordclienttool');
 		var mo = aTol.down('combomonth').value;
-		this.loadOrds(newz, mo);
+		this.loadClientOrds(newz, mo);
 	},
 	
 	yearChange : function (comp, newz, oldz) {
@@ -858,7 +877,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	
 	loadClientOrdersSt : function (st, rec, suc) {
-		var tt = this.getOrdTotal();
-		tt.down('label').setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount")/*'Количество заказов: '*/ + st.getCount());
+		var tt = this.getOrdClientTotal();
+		let label = tt.down('label');
+		label.setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount")/*'Количество заказов: '*/ + rec.length, true);
 	}
 });
