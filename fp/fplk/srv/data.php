@@ -128,7 +128,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'editagorder':
 			$id =  $params['id'];
 			$agent = $_SESSION['xClientID'];
-			$query = "exec wwwLKgetOrder @id={$id}, @agent={$agent}";
+			$query = "exec wwwLKgetOrder @id={$id}, @agent='{$agent}'";
 			break;
 		case 'saveagorder':
 			$CName=$params['cname'];
@@ -181,7 +181,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourDate='$courdate',
 			@CourTimeF='$courtimef',
 			@CourTimeT='$courtimet',
-			@Payr=$ag,
+			@Payr='$ag',
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum,
 			@clientID='$ag',
