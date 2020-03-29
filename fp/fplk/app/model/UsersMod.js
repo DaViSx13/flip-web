@@ -11,7 +11,7 @@ Ext.define('fplk.model.UsersMod', {
 			type : 'int'
 		}, {
 			name : 'clientid',
-			type : 'int'
+			type : 'string'
 		}, {
 			name : 'c_name',
 			type : 'string'

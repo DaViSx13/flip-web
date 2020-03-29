@@ -102,12 +102,12 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getAgOrders':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec wwwLKgetOrders @period='$params[newPeriod]', @clientID={$ag}";
+            $query = "exec wwwLKgetOrders @period='$params[newPeriod]', @clientID='{$ag}'";
             break;
 		case 'GetWebWbs':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec wwwLKgetWebWbs @period='$params[newPeriod]', @clientID={$ag}";
+            $query = "exec wwwLKgetWebWbs @period='$params[newPeriod]', @clientID='{$ag}'";
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
@@ -128,7 +128,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'editagorder':
 			$id =  $params['id'];
 			$agent = $_SESSION['xClientID'];
-			$query = "exec wwwLKgetOrder @id={$id}, @agent={$agent}";
+			$query = "exec wwwLKgetOrder @id={$id}, @agent='{$agent}'";
 			break;
 		case 'saveagorder':
 			$CName=$params['cname'];
@@ -181,10 +181,10 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourDate='$courdate',
 			@CourTimeF='$courtimef',
 			@CourTimeT='$courtimet',
-			@Payr=$ag,
+			@Payr='$ag',
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum,
-			@clientID=$ag,
+			@clientID='$ag',
 			@webwb=$webwb";
 			break;
 		case 'SetWebWB':			
@@ -253,7 +253,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwLKgetWbs @period='$params[newPeriod]', @clientID={$ag}, @dir='$params[dir]'";
+			$query = "exec wwwLKgetWbs @period='$params[newPeriod]', @clientID='{$ag}', @dir='$params[dir]'";
             $paging = true;
 			break;
 		case 'GetExCodes':
@@ -287,7 +287,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWbsTotal':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwLKGetWbsTotal @period='{$params['period']}',  @clientID={$ag} ";
+			$query = "exec wwwLKGetWbsTotal @period='{$params['period']}',  @clientID='{$ag}' ";
 			break;
 		/*case 'GetAgents':
 			$query = "exec wwwLKgetClients";
@@ -301,7 +301,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'getAgTemplates':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwLKgetTemplates @clientID={$ag}";
+			$query = "exec wwwLKgetTemplates @clientID='{$ag}'";
 			break;
 		case 'SetAgTemplates':
 			$CName=$params['cname'];
@@ -321,7 +321,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			
 			$query = "exec wwwLKsetTemplate
 			@TemplateName='$params[templatename]',
-			@clientID=$ag,
+			@clientID='$ag',
 			@tplid=$id,
 			@ORG=$org,
 			@CName='$CName',
@@ -362,7 +362,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetClientInfo':
 			$ag=$_SESSION["xClientID"];
 
-			$query = "exec [wwwClientGetClientInfo]	@clientID=$ag";
+			$query = "exec [wwwClientGetClientInfo]	@clientID='$ag'";
 			break;
     }
 
