@@ -36,7 +36,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'address',
-					maxLength : 70,
+					maxLength : 200,
 					fieldLabel : 'Адрес',
 					labelAlign : 'top',
 					_allowBlank : false
@@ -96,7 +96,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'dadr',
-					maxLength : 70,
+					maxLength : 200,
 					fieldLabel : 'Адрес',
 					labelAlign : 'top',
 					allowBlank : false
