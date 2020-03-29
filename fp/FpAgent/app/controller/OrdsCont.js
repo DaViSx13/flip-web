@@ -1,341 +1,335 @@
 Ext.define('FPAgent.controller.OrdsCont', {
-	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
-	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
-	stores : ['OrdsSt', 'OrdsClientSt',  'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
-	refs : [{
-		ref : 'OrdForm',
-			selector : 'ordform'
+	extend: 'Ext.app.Controller',
+	views: ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
+	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
+	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
+	refs: [{
+			ref: 'OrdForm',
+			selector: 'ordform'
 		}, {
-			ref : 'OrdTool',
-			selector : 'ordtool'
+			ref: 'OrdTool',
+			selector: 'ordtool'
 		}, {
-		ref : 'OrdClientTool',
-			selector : 'ordclienttool'
+			ref: 'OrdClientTool',
+			selector: 'ordclienttool'
 		}, {
-			ref : 'OrdsClientPanel',
-			selector : 'ordsclientpanel'
+			ref: 'OrdsClientPanel',
+			selector: 'ordsclientpanel'
 		}, {
-			ref : 'OrdTotal',
-			selector : 'ordtotal'
+			ref: 'OrdTotal',
+			selector: 'ordtotal'
 		}, {
-			ref : 'OrdClientTotal',
-			selector : 'ordclienttotal'
+			ref: 'OrdClientTotal',
+			selector: 'ordclienttotal'
 		}, {
-			ref : 'ComboCity',
-			selector : 'combocity[name=org]'
+			ref: 'ComboCity',
+			selector: 'combocity[name=org]'
 		}, {
-			ref : 'ComboCity',
-			selector : 'combocity[name=dest]'
+			ref: 'ComboCity',
+			selector: 'combocity[name=dest]'
 		}, {
-			ref : 'OrdWin',
-			selector : 'ordwin'
+			ref: 'OrdWin',
+			selector: 'ordwin'
 		}, {
-			ref : 'AdmTool',
-			selector : 'admtool'
+			ref: 'AdmTool',
+			selector: 'admtool'
 		}, {
-			ref : 'LoadFileForm',
-			selector : 'loadfileform'
+			ref: 'LoadFileForm',
+			selector: 'loadfileform'
 		}, {
-			ref : 'ViewWbWin',
-			selector : 'viewwbwin'
+			ref: 'ViewWbWin',
+			selector: 'viewwbwin'
 		}, {
-			ref : 'WbNoWin',
-			selector : 'wbnowin'
+			ref: 'WbNoWin',
+			selector: 'wbnowin'
 		}, {
-			ref : 'WbNoForm',
-			selector : 'wbnoform'
+			ref: 'WbNoForm',
+			selector: 'wbnoform'
 		}, {
-			ref : 'MainPanel',
-			selector : 'mainpanel'
+			ref: 'MainPanel',
+			selector: 'mainpanel'
 		}, {
-			ref : 'WbsGrid',
-			selector : 'wbsgrid'
+			ref: 'WbsGrid',
+			selector: 'wbsgrid'
 		}, {
-			ref : 'WbGrid',
-			selector : 'wbgrid'
+			ref: 'WbGrid',
+			selector: 'wbgrid'
 		}, {
-			ref : 'OrdGrid',
-			selector : 'ordgrid'
+			ref: 'OrdGrid',
+			selector: 'ordgrid'
 		}, {
-			ref : 'OrdClientGrid',
-			selector : 'ordclientgrid'
+			ref: 'OrdClientGrid',
+			selector: 'ordclientgrid'
 		}, {
-			ref : 'TemplGrid',
-			selector : 'templgrid'
+			ref: 'TemplGrid',
+			selector: 'templgrid'
 		}, {
-			ref : 'OrdsPanel',
-			selector : 'ordspanel'
+			ref: 'OrdsPanel',
+			selector: 'ordspanel'
 		}, {
-			ref : 'UseTemplForm',
-			selector : 'usetemplform'
+			ref: 'UseTemplForm',
+			selector: 'usetemplform'
 		}, {
-			ref : 'LoadOrdersWin',
-			selector : 'loadorderswin'
+			ref: 'LoadOrdersWin',
+			selector: 'loadorderswin'
 		}, {
-			ref : 'ViewWbForm',
-			selector : 'viewwbform'
+			ref: 'ViewWbForm',
+			selector: 'viewwbform'
 		}, {
-			ref : 'OrdExGrid',
-			selector : 'ordexgrid'
+			ref: 'OrdExGrid',
+			selector: 'ordexgrid'
 		}
 	],
-	init : function () {
-		
+	init: function () {
+
 		//////////////////////
 		//на onload каждого store вешаем проверку сессии
 		//кажется вешается только на созданные store, поэтому в другом контроллере тоже сделаем
 		//console.log('ЗАКАЗЫ');
 		Ext.data.StoreManager.each(
-			function(item){
-				//console.log(item.storeId);
-				//item.on('focus', this.myfunc, this);
-				item.on('load', 
-					function(store, records, success){
-						//console.log(store.storeId + ' loaded');
-						//console.log(success);
-						if(!success){FPAgent.lib.Miscutils.checkSession();}						
-					},
-					this);
-			}
-			);
-		
+			function (item) {
+			//console.log(item.storeId);
+			//item.on('focus', this.myfunc, this);
+			item.on('load',
+				function (store, records, success) {
+				//console.log(store.storeId + ' loaded');
+				//console.log(success);
+				if (!success) {
+					FPAgent.lib.Miscutils.checkSession();
+				}
+			},
+				this);
+		});
+
 		///////////////
 		this.control({
-			'ordspanel' : {
-				activate : this.loadOrdGr
+			'ordspanel': {
+				activate: this.loadOrdGr
 			},
-			'ordsclientpanel' : {
-				activate : this.loadOrdclientGr
+			'ordsclientpanel': {
+				activate: this.loadOrdclientGr
 			},
-			'ordgrid button[action=new]' : {
-				click : this.openOrdWin
+			'ordgrid button[action=new]': {
+				click: this.openOrdWin
 			},
-			'ordgrid button[action=newtpl]' : {
-				click : this.openTpl
+			'ordgrid button[action=newtpl]': {
+				click: this.openTpl
 			},
-			'ordgrid button[action=edit]' : {
-				click : this.editOrdWin
+			'ordgrid button[action=edit]': {
+				click: this.editOrdWin
 			},
-			'ordgrid button[action=view]' : {
-				click : this.editOrdWin
+			'ordgrid button[action=view]': {
+				click: this.editOrdWin
 			},
-			'ordwin button[action=save]' : {
-				click : this.saveOrder
+			'ordwin button[action=save]': {
+				click: this.saveOrder
 			},
-			'viewwbwin button[action=printWB]' : {
-				click : this.printWB
+			'viewwbwin button[action=printWB]': {
+				click: this.printWB
 			},
-			'ordtool combomonth' : {
-				change : this.monthChange
+			'ordtool combomonth': {
+				change: this.monthChange
 			},
-			'ordclienttool combomonth' : {
-				change : this.monthClientChange
+			'ordclienttool combomonth': {
+				change: this.monthClientChange
 			},
-			'ordtool numyear' : {
-				change : this.yearChange
+			'ordtool numyear': {
+				change: this.yearChange
 			},
-			'ordclienttool numyear' : {
-				change : this.yearClientChange
+			'ordclienttool numyear': {
+				change: this.yearClientChange
 			},
-			'loadfileform button[action=delete]' : {
-				click : this.fileDel
+			'loadfileform button[action=delete]': {
+				click: this.fileDel
 			},
-			'wbsgrid > tableview' : {
-				itemdblclick : this.dblclickWbsGr
+			'wbsgrid > tableview': {
+				itemdblclick: this.dblclickWbsGr
 			},
-			'wbgrid > tableview' : {
-				itemdblclick : this.dblclickWbsGr
+			'wbgrid > tableview': {
+				itemdblclick: this.dblclickWbsGr
 			},
-			'ordgrid > tableview' : {
-				itemdblclick : this.dblclickOrdGr
+			'ordgrid > tableview': {
+				itemdblclick: this.dblclickOrdGr
 			},
-			'ordclientgrid > tableview' : {
-				itemdblclick : this.dblclickOrdClientGr
+			'ordclientgrid > tableview': {
+				itemdblclick: this.dblclickOrdClientGr
 			},
-			'admtool comboagent' : {
-				select : this.changeAgent
+			'admtool comboagent': {
+				select: this.changeAgent
 			},
-			'admtool button[action=list]' : {
-				click : this.clkList
+			'admtool button[action=list]': {
+				click: this.clkList
 			},
-			'admtool button[action=templ]' : {
-				click : this.clkTempl
+			'admtool button[action=templ]': {
+				click: this.clkTempl
 			},
-			'ordtool button[action=excel]' : {
-				click : this.exportExcel
+			'ordtool button[action=excel]': {
+				click: this.exportExcel
 			},
-			'ordtool button[action=wbno]' : {
-				click : this.editWbno
+			'ordtool button[action=wbno]': {
+				click: this.editWbno
 			},
-			'ordclienttool button[action=wbno]' : {
-				click : this.editWbnoClient
+			'ordclienttool button[action=wbno]': {
+				click: this.editWbnoClient
 			},
-			'ordclienttool button[action=wbview]' : {
-				click : this.viewClientWb
+			'ordclienttool button[action=wbview]': {
+				click: this.viewClientWb
 			},
-			'ordtool button[action=wbview]' : {
-				click : this.viewWb
+			'ordtool button[action=wbview]': {
+				click: this.viewWb
 			},
-			'wbnowin button[action=save]' : {
-				click : this.saveWbno
+			'wbnowin button[action=save]': {
+				click: this.saveWbno
 			},
-			'wbnoform textfield' : {
-				keypress : this.pressEnter
+			'wbnoform textfield': {
+				keypress: this.pressEnter
 			},
-			'usetemplwin button[action=set]' : {
-				click : this.setTpl
+			'usetemplwin button[action=set]': {
+				click: this.setTpl
 			},
-			'usetemplform combobox' : {
-				keypress : this.pressTpl
+			'usetemplform combobox': {
+				keypress: this.pressTpl
 			},
-			'ordtool button[action=import]' : {
-				click : this.loadOrdersWin
+			'ordtool button[action=import]': {
+				click: this.loadOrdersWin
 			},
-			'ordgrid actioncolumn' : {
-				itemclick : this.viewEx
+			'ordgrid actioncolumn': {
+				itemclick: this.viewEx
 			},
-			'loadorderswin button[action=imp]' : {
-				click : this.importOrders
+			'loadorderswin button[action=imp]': {
+				click: this.importOrders
 			}
 		});
 		this.getOrderStStore().on({
-			scope : this,
-			load : this.loadOrdStore
+			scope: this,
+			load: this.loadOrdStore
 		});
 		this.getViewWbStStore().on({
-			scope : this,
-			load : this.loadViewWbSt
+			scope: this,
+			load: this.loadViewWbSt
 		});
 		this.getOrdsStStore().on({
-			scope : this,
-			load : this.loadOrdersSt
+			scope: this,
+			load: this.loadOrdersSt
 		});
 		this.getOrdsClientStStore().on({
-			scope : this,
-			load : this.loadClientOrdersSt
+			scope: this,
+			load: this.loadClientOrdersSt
 		});
 		this.getOrdExStoreStore().on({
-			scope : this,
-			load : this.loadViewExStore
+			scope: this,
+			load: this.loadViewExStore
 		});
 	},
-	loadViewExStore : function () {
+	loadViewExStore: function () {
 		this.getOrdExGrid().getSelectionModel().select(0);
 	},
-	importOrders : function (btn) {
-	var me = this;
+	importOrders: function (btn) {
+		var me = this;
 		var win = btn.up('loadorderswin');
 		var form_imp = win.down('loadordersform');
 		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
 			form_imp.submit({
-				url : 'srv/import/import.php',
-				params : {
-					act : 'importOrders'
+				url: 'srv/import/import.php',
+				params: {
+					act: 'importOrders'
 				},
-				success : function (form, action) {
-					
+				success: function (form, action) {
+
 					me.loadOrdGr();
 					win.close();
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.ImportOk")/*'Импортирование завершено успешно!'*/, action.result.msg);
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.ImportOk") /*'Импортирование завершено успешно!'*/, action.result.msg);
 				},
-				failure : function (form, action) {
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.ImportError")/*'Ошибка импорта!'*/, action.result.msg);
+				failure: function (form, action) {
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.ImportError") /*'Ошибка импорта!'*/, action.result.msg);
 				}
 			});
 		}
 	},
-	loadOrdersWin : function (btn) {		
-		var newloadwin = Ext.widget('loadorderswin').show();		
+	loadOrdersWin: function (btn) {
+		var newloadwin = Ext.widget('loadorderswin').show();
 	},
-	viewEx : function (column, action, grid, rowIndex, colIndex, record, node) {
-		this.viewExGrid(record.data['rordnum']);		
+	viewEx: function (column, action, grid, rowIndex, colIndex, record, node) {
+		this.viewExGrid(record.data['rordnum']);
 	},
-	viewExGrid : function (ex_rordnum) {
+	viewExGrid: function (ex_rordnum) {
 		if (ex_rordnum) {
 			var viewex = Ext.widget('ordexwin').show();
 			this.getOrdExStoreStore().load({
-				params : {
-					rordnum : ex_rordnum
+				params: {
+					rordnum: ex_rordnum
 				}
 			});
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("UsersCont.SelectRecord")/*'Выберите накладную'*/);
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess") /*'Запрещено!'*/, FPAgent.lib.Translate.tr("UsersCont.SelectRecord") /*'Выберите накладную'*/);
 		}
 	},
-	clkList : function (btn) {
+	clkList: function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('admtool');
 		aTol.down('button[action=templ]').toggle(false);
 		this.getOrdsPanel().down('templgrid').setVisible(false);
 		this.getOrdsPanel().down('ordgrid').setVisible(true);
 	},
-	clkTempl : function (btn) {
+	clkTempl: function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('admtool');
 		aTol.down('button[action=list]').toggle(false);
 		this.getOrdsPanel().down('ordgrid').setVisible(false);
-		this.getOrdsPanel().down('templgrid').setVisible(true);		
+		this.getOrdsPanel().down('templgrid').setVisible(true);
 	},
-	pressEnter : function (fild, e) {
+	pressEnter: function (fild, e) {
 		var keyCode = e.getKey();
 		if (keyCode == 13) {
 			this.saveWbno(fild.up('wbnoform').up('wbnowin').down('button[action=save]'));
 		}
 	},
-	pressTpl : function (fild, e) {
+	pressTpl: function (fild, e) {
 		var keyCode = e.getKey();
 		if (keyCode == 13) {
 			this.setTpl();
 		}
 	},
-	saveWbno : function (btn) {
+	saveWbno: function (btn) {
 		var me = this;
-		
 		var win = btn.up('wbnowin');
-		var activetab = this
-							.getAdmTool()
-							.ownerCt
-							.activeTab
-							.title;					
+		var activetab = me.getOrdsPanel().hidden;
 		var form_wbno = win.down('wbnoform');
 		if (form_wbno.getForm().isValid()) {
 			form_wbno.submit({
-				url : 'srv/data.php',
-				params : {
-					dbAct : 'SetWbno'
+				url: 'srv/data.php',
+				params: {
+					dbAct: 'SetWbno'
 				},
-				submitEmptyText : false,
-				success : function (form, action) {
+				submitEmptyText: false,
+				success: function (form, action) {
 					form.reset();
 					win.close();
-					if(activetab != FPAgent.lib.Translate.tr("MainPanel.ClientOrders")) {
+					if (activetab) {
 						me.loadOrdGr();
 					} else {
 						me.loadOrdclientGr();
-					}	
+					}
 				},
-				failure : function (form, action) {
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.WbSaveError")/*'Номер накладной не сохранен!'*/, action.result.msg);
+				failure: function (form, action) {
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.WbSaveError") /*'Номер накладной не сохранен!'*/, action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.WbNumEmptyHead")/*'Нет номера накладной!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbNumEmptyBody")/*'Откорректируйте информацию'*/)
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.WbNumEmptyHead") /*'Нет номера накладной!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbNumEmptyBody") /*'Откорректируйте информацию'*/)
 		}
 	},
-	editWbno : function (btn) {
+	editWbno: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
-		clientFlag = false;
 		this.editWbnoBase(sm);
 	},
-	
-	editWbnoClient : function (btn) {
+
+	editWbnoClient: function (btn) {
 		var sm = btn.up('ordclientgrid').getSelectionModel();
-		clientFlag = true;
 		this.editWbnoBase(sm);
 	},
-	
-	editWbnoBase : function (sm) {
+
+	editWbnoBase: function (sm) {
 		if (sm.getCount() > 0) {
 			var win = Ext.widget('wbnowin');
 			win.show();
@@ -347,44 +341,44 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
-	viewWb : function (btn) {
+	viewWb: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		this.viewWBase(sm);
 	},
-	
-	viewClientWb : function (btn) {
+
+	viewClientWb: function (btn) {
 		var sm = btn.up('ordclientgrid').getSelectionModel();
 		this.viewWBase(sm);
 	},
-	
-	viewWBase : function (sm) {
-		if(sm.selected.length > 0)
-		if (sm.getSelection()[0].get('wb_no')) {
-			this.getViewWbStStore().load({
-				params : {
-					wb_no : sm.getSelection()[0].get('wb_no')
-				}
-			});
-		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.OrderAlertBody")/*'Выберите заказ с введенным номером накладной!'*/);
-		}
+
+	viewWBase: function (sm) {
+		if (sm.selected.length > 0)
+			if (sm.getSelection()[0].get('wb_no')) {
+				this.getViewWbStStore().load({
+					params: {
+						wb_no: sm.getSelection()[0].get('wb_no')
+					}
+				});
+			} else {
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.OrderAlertBody") /*'Выберите заказ с введенным номером накладной!'*/);
+			}
 	},
-	dblclickWbsGr : function (gr, rec) {
+	dblclickWbsGr: function (gr, rec) {
 		var sm = gr.getSelectionModel();
 		if (sm.getSelection()[0].get('wb_no')) {
 			this.getViewWbStStore().load({
-				params : {
-					wb_no : sm.getSelection()[0].get('wb_no')
+				params: {
+					wb_no: sm.getSelection()[0].get('wb_no')
 				}
 			});
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.OrderAlertBody")/*'Выберите заказ с введенным номером накладной!'*/);
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.OrderAlertBody") /*'Выберите заказ с введенным номером накладной!'*/);
 		}
 	},
-	loadViewWbSt : function (st, rec, suc) {
+	loadViewWbSt: function (st, rec, suc) {
 		if (suc) {
 			if (rec[0].data.wbstatus == 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbEmpty")/*'Накладная не введена в систему!'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbEmpty") /*'Накладная не введена в систему!'*/);
 			} else {
 				var win = Ext.widget('viewwbwin');
 				var form = win.down('viewwbform');
@@ -470,55 +464,55 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				win.show();
 			}
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("Error")/*'Ошибка!'*/, FPAgent.lib.Translate.tr("ServerdDown")/*'Ошибка связи с сервером!'*/);
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Error") /*'Ошибка!'*/, FPAgent.lib.Translate.tr("ServerdDown") /*'Ошибка связи с сервером!'*/);
 		}
 	},
-	exportExcel : function (btn) {
+	exportExcel: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			window.location.href = 'srv/getOrderXLS.php?ordnum=' + sm.getSelection()[0].get('rordnum');
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.AlertExportBody")/*'Выберите заказ для экспорта'*/);
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.AlertExportBody") /*'Выберите заказ для экспорта'*/);
 		}
 	},
-	changeAgent : function (comp, newValue) {
+	changeAgent: function (comp, newValue) {
 		var me = this;
 		if (comp.up('mainpanel').activeTab.title == 'Заказы') {
 			Ext.Ajax.request({
-				url : 'srv/change.php',
-				params : {
-					agent : newValue[0].data['partcode']
+				url: 'srv/change.php',
+				params: {
+					agent: newValue[0].data['partcode']
 				},
-				success : function (response) {
+				success: function (response) {
 					var text = Ext.decode(response.responseText);
 					var aTol = me.getOrdTool();
 					var ye = aTol.down('numyear').value;
 					var mo = aTol.down('combomonth').value;
 					me.loadOrds(ye, mo);
 				},
-				failure : function (response) {
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/, response.statusText);
+				failure: function (response) {
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown") /*'Сервер недоступен!'*/, response.statusText);
 				}
 			});
 		}
 	},
-	loadOrds : function (y, m) {
+	loadOrds: function (y, m) {
 		this.getOrdsStStore().load({
-			params : {
-				newPeriod : y + m
+			params: {
+				newPeriod: y + m
 			}
 		});
 	},
-	
-	loadClientOrds : function (y, m) {
+
+	loadClientOrds: function (y, m) {
 		this.getOrdsClientStStore().load({
-			params : {
-				newPeriod : y + m
+			params: {
+				newPeriod: y + m
 			}
 		});
 	},
-	
-	loadOrdGr : function (Pan) {
+
+	loadOrdGr: function (Pan) {
 		var adTol = this.getAdmTool();
 		if (adTol.down('label').text == 'WEB Администратор') {
 			adTol.down('buttongroup[itemId=admgroup]').setVisible(true);
@@ -526,7 +520,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var btnList = adTol.down('button[action=list]');
 		var btnTempl = adTol.down('button[action=templ]');
 		btnList.setVisible(true);
-		btnTempl.setVisible(true);		
+		btnTempl.setVisible(true);
 
 		this.clkList(btnList);
 		var aTol = this.getOrdTool();
@@ -536,53 +530,52 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		//this.loadClientOrds(ye, mo);
 		this.getTemplStStore().load();
 	},
-	
-	loadOrdclientGr : function (Pan) {
+
+	loadOrdclientGr: function (Pan) {
 		var adTol = this.getAdmTool();
 		if (adTol.down('label').text == 'WEB Администратор') {
 			adTol.down('buttongroup[itemId=admgroup]').setVisible(true);
 		}
-		
+
 		var btnList = adTol.down('button[action=list]');
 		var btnTempl = adTol.down('button[action=templ]');
-			btnList.setVisible(false);
-			btnTempl.setVisible(false);		
-
+		btnList.setVisible(false);
+		btnTempl.setVisible(false);
 
 		this.clkList(btnList);
-		var aTol = this.getOrdTool();
+		var aTol = this.getOrdClientTool();
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadClientOrds(ye, mo);
 	},
-	
-	openOrdWin : function (btn) {
+
+	openOrdWin: function (btn) {
 		var edit = Ext.widget('ordwin');
 		edit.show();
 		var form_lf = edit.down('loadfileform');
 		form_lf.down('filefield[name=uploadFile]').setVisible(true);
 		edit.down('ordform').down('combocity[name=org]').focus(false, true);
-		
+
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimef]');
 		timeEdit.setReadOnly(true);
 		timeEdit.setValue('10:00');
-		
+
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
 		timeEdit.setReadOnly(true);
 		timeEdit.setValue('19:00');
 	},
-	openTpl : function (btn) {		
+	openTpl: function (btn) {
 		if (this.getTemplStStore().getCount() > 0) {
 			var win = Ext.widget('usetemplwin');
-			win.show();			
+			win.show();
 			var cb = win.down('usetemplform').down('combobox[name=tplname]')
-			cb.focus(false, true);
+				cb.focus(false, true);
 			cb.select(this.getTemplStStore().first());
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.TemplateEmpty")/*'У Вас нет шаблонов!'*/);
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess") /*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.TemplateEmpty") /*'У Вас нет шаблонов!'*/);
 		}
 	},
-	setTpl : function (btn) {
+	setTpl: function (btn) {
 		var tplform = this.getUseTemplForm();
 		if (tplform.getForm().isValid()) {
 			var record = this.getTemplStStore().findRecord('id', tplform.down('combobox[name=tplname]').getValue());
@@ -593,7 +586,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			var timeEdit = win.down('ordform').down('textfield[name=courtimef]');
 			timeEdit.setReadOnly(true);
 			timeEdit.setValue('10:00');
-			
+
 			var timeEdit = win.down('ordform').down('textfield[name=courtimet]');
 			timeEdit.setReadOnly(true);
 			timeEdit.setValue('19:00');
@@ -602,24 +595,24 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			form.loadRecord(record);
 			var cb_org = form.down('combocity[name=org]');
 			cb_org.store.load({
-				params : {
-					query : cb_org.getValue()
+				params: {
+					query: cb_org.getValue()
 				}
 			});
 			if (record.data['orgcode'] != 0)
-			cb_org.select(record.data['orgcode']);
+				cb_org.select(record.data['orgcode']);
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
-				params : {
-					query : cb_des.getValue()
+				params: {
+					query: cb_des.getValue()
 				}
 			});
 			if (record.data['destcode'] != 0)
-			cb_des.select(record.data['destcode']);
+				cb_des.select(record.data['destcode']);
 			this.getLoadFileForm().down('filefield[name=uploadFile]').setVisible(true);
 		}
 	},
-	dblclickOrdGr : function (gr, rec) {
+	dblclickOrdGr: function (gr, rec) {
 		var tt = this.getOrdTool();
 		if (rec.data['status'] == 'заявлен') {
 			var vbut = tt.down('button[action=edit]');
@@ -628,25 +621,21 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 		this.editOrdWin(vbut);
 	},
-	dblclickOrdClientGr : function (gr, rec) {
+	dblclickOrdClientGr: function (gr, rec) {
 		var tt = this.getOrdClientTool();
-		if (rec.data['status'] == 'заявлен') {
-			var vbut = tt.down('button[action=edit]');
-		} else {
-			var vbut = tt.down('button[action=view]');
-		}
+		var vbut = tt.down('button[action=view]');
 		this.showClientOrdWin(gr);
 	},
-	editOrdWin : function (btn) {
-		
+	editOrdWin: function (btn) {
+
 		var sm = btn.up('ordgrid').getSelectionModel();
-		
+
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
 				var win = Ext.create('FPAgent.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
-						params : {
-							id : sm.getSelection()[0].get('rordnum')
+						params: {
+							id: sm.getSelection()[0].get('rordnum')
 						}
 					});
 				if (btn.action == 'view') {
@@ -655,51 +644,51 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					win.down('button[action=save]').setVisible(true);
 				}
 			} else {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess")/*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.ErrorOrderEdit")/*'Редактировать можно только заявленные заказы'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess") /*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.ErrorOrderEdit") /*'Редактировать можно только заявленные заказы'*/);
 			}
 		} else {
 			if (btn.action == 'edit') {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit")/*'Выберите заказ для редактирования'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit") /*'Выберите заказ для редактирования'*/);
 			} else {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderView")/*'Выберите заказ для просмотра'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderView") /*'Выберите заказ для просмотра'*/);
 			}
 		}
 	},
-	showClientOrdWin : function (grid) {
+	showClientOrdWin: function (grid) {
 
 		var sm = grid.getSelectionModel();
-	
+
 		if (sm.getCount() > 0) {
-				var win = Ext.create('FPAgent.view.orders.OrdWin').show();
-				var store_ord = this.getOrderStStore().load({
-						params : {
-							id : sm.getSelection()[0].get('rordnum')
-						}
-					});
-					
+			var win = Ext.create('FPAgent.view.orders.OrdWin').show();
+			var store_ord = this.getOrderStStore().load({
+					params: {
+						id: sm.getSelection()[0].get('rordnum')
+					}
+				});
+
 			var formWin = win.items.items[0];
 			var fields = formWin.items;
-			
+
 			win.down('button[action=save]').setVisible(false);
 		} else {
 			if (btn.action == 'edit') {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit")/*'Выберите заказ для редактирования'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit") /*'Выберите заказ для редактирования'*/);
 			} else {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderView")/*'Выберите заказ для просмотра'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderView") /*'Выберите заказ для просмотра'*/);
 			}
 		}
 	},
-	printWB : function (btn) {
+	printWB: function (btn) {
 		//window.location.href = 'http://localhost:8080/jasperserver/flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports&reportUnit=%2Freports%2F112233&standAlone=true';//'srv/downloadTariffs.php';
-	
-	var record = this.getViewWbStStore().findRecord('wb_no', this.getViewWbForm().down('displayfield[name=wb_no]').value);
-	//console.log(Ext.encode(record.getData()));
-	
-	//console.log('srv/report.php?rec='+Ext.encode(record.getData()));
-	window.open('srv/report.php?wbno='+this.getViewWbForm().down('displayfield[name=wb_no]').value);
+
+		var record = this.getViewWbStStore().findRecord('wb_no', this.getViewWbForm().down('displayfield[name=wb_no]').value);
+		//console.log(Ext.encode(record.getData()));
+
+		//console.log('srv/report.php?rec='+Ext.encode(record.getData()));
+		window.open('srv/report.php?wbno=' + this.getViewWbForm().down('displayfield[name=wb_no]').value);
 	},
-	
-	saveOrder : function (btn) {
+
+	saveOrder: function (btn) {
 		var me = this;
 		var win = btn.up('ordwin');
 		var form_ord = win.down('ordform');
@@ -709,7 +698,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		if (org.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError")/*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 			for (var i = 0; i < jsonArrayOrg.length; i++) {
@@ -719,14 +708,14 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				};
 			};
 			if (org.value == null) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError")/*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError")/*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 			for (var i = 0; i < jsonArrayDes.length; i++) {
@@ -736,38 +725,38 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				};
 			};
 			if (dest.value == null) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError")/*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
+				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
 		if (form_ord.getForm().isValid()) {
 			btn.disable();
 			form_ord.submit({
-				url : 'srv/data.php',
-				params : {
-					dbAct : 'saveagorder'
+				url: 'srv/data.php',
+				params: {
+					dbAct: 'saveagorder'
 				},
-				submitEmptyText : false,
-				success : function (form, action) {
+				submitEmptyText: false,
+				success: function (form, action) {
 					if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
 						if (form_lf.getForm().isValid()) {
 							form_lf.submit({
-								url : 'srv/upload.php',
-								params : {
-									act : 'ins',
-									orderNum : action.result.data[0].rordnum
+								url: 'srv/upload.php',
+								params: {
+									act: 'ins',
+									orderNum: action.result.data[0].rordnum
 								},
-								success : function (form, action) {
+								success: function (form, action) {
 									form.reset();
 									me.getOrdForm().up('ordwin').close();
 									me.loadOrdGr();
-									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave")/*'Заказ сохранен!'*/, action.result.msg);
+									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave") /*'Заказ сохранен!'*/, action.result.msg);
 								},
-								failure : function (form, action) {
+								failure: function (form, action) {
 									form.reset();
 									me.getOrdForm().up('ordwin').close();
 									me.loadOrdGr();
-									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FileNotSave")/*'Файл не сохранен!'*/, action.result.msg);
+									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FileNotSave") /*'Файл не сохранен!'*/, action.result.msg);
 								}
 							});
 						}
@@ -775,65 +764,63 @@ Ext.define('FPAgent.controller.OrdsCont', {
 						form.reset();
 						me.getOrdForm().up('ordwin').close();
 						me.loadOrdGr();
-						Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave")/*'Заказ сохранен!'*/, action.result.msg);
+						Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave") /*'Заказ сохранен!'*/, action.result.msg);
 					}
 				},
-				failure : function (form, action) {
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderNotSave")/*'Заказ не сохранен!'*/, action.result.msg);
+				failure: function (form, action) {
+					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderNotSave") /*'Заказ не сохранен!'*/, action.result.msg);
 					btn.enable();
 				}
 			});
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead")/*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody")/*'Откорректируйте информацию'*/)
+			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead") /*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody") /*'Откорректируйте информацию'*/)
 		}
 	},
-	monthChange : function (comp, newz, oldz) {
+	monthChange: function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
 		var ye = aTol.down('numyear').value;
-		this.loadOrds(ye, newz);
-		this.loadClientOrds(ye, newz);
+		this.loadOrds(ye, newz);		
 	},
-	
-	monthClientChange : function (comp, newz, oldz) {
+
+	monthClientChange: function (comp, newz, oldz) {
 		var aTol = comp.up('ordclienttool');
-		var ye = aTol.down('numyear').value;
-		this.loadOrds(ye, newz);
+		var ye = aTol.down('numyear').value;		
 		this.loadClientOrds(ye, newz);
 	},
-	
-	yearClientChange : function (comp, newz, oldz) {
+
+	yearClientChange: function (comp, newz, oldz) {
 		var aTol = comp.up('ordclienttool');
 		var mo = aTol.down('combomonth').value;
 		this.loadClientOrds(newz, mo);
 	},
-	
-	yearChange : function (comp, newz, oldz) {
+
+	yearChange: function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
 		var mo = aTol.down('combomonth').value;
 		this.loadOrds(newz, mo);
 	},
-	
-	fileDel : function (but) {
+
+	fileDel: function (but) {
 		var form_lf = but.up('loadfileform');
 		var form_ord = this.getOrdForm();
 		Ext.Ajax.request({
-			url : 'srv/upload.php',
-			params : {
-				orderNum : form_ord.down('textfield[name=rordnum]').getValue(),
-				act : 'del'
+			url: 'srv/upload.php',
+			params: {
+				orderNum: form_ord.down('textfield[name=rordnum]').getValue(),
+				act: 'del'
 			},
-			success : function (fp) {
+			success: function (fp) {
 				jData = Ext.decode(fp.responseText);
 				form_lf.down('label[name=urlf]').setText('', false);
 				form_lf.down('button[action=delete]').hide();
 				form_lf.down('filefield[name=uploadFile]').show();
 			},
-			failure : function (response) {
+			failure: function (response) {
 				Ext.Msg.alert('error!');
 			}
 		});
 	},
-	loadOrdStore : function (st, rec, suc) {
+	loadOrdStore: function (st, rec, suc) {
 		var edi = this.getOrdWin();
 		var form_ord = edi.down('ordform');
 		var form_lf = edi.down('loadfileform');
@@ -855,28 +842,28 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
-			params : {
-				query : cb_org.getValue()
+			params: {
+				query: cb_org.getValue()
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
-			params : {
-				query : cb_des.getValue()
+			params: {
+				query: cb_des.getValue()
 			}
 		});
 		cb_des.select(rec[0].data['destcode']);
 		form_ord.down('combocity[name=org]').focus(false, true);
 	},
-	loadOrdersSt : function (st, rec, suc) {
+	loadOrdersSt: function (st, rec, suc) {
 		var tt = this.getOrdTotal();
-		tt.down('label').setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount")/*'Количество заказов: '*/ + st.getCount());
+		tt.down('label').setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount") /*'Количество заказов: '*/ + st.getCount());
 	},
-	
-	loadClientOrdersSt : function (st, rec, suc) {
+
+	loadClientOrdersSt: function (st, rec, suc) {
 		var tt = this.getOrdClientTotal();
-		let label = tt.down('label');
-		label.setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount")/*'Количество заказов: '*/ + rec.length, true);
+		var label = tt.down('label');
+		label.setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount") /*'Количество заказов: '*/ + rec.length, true);
 	}
 });
