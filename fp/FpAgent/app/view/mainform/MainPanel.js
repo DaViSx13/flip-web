@@ -15,6 +15,13 @@ Ext.define('FPAgent.view.mainform.MainPanel', {
 			},
 			title : FPAgent.lib.Translate.tr("MainPanel.ordspanel")//'Заказы'
 		}, {
+			xtype : 'ordsclientpanel',
+			border : false,
+			style : {
+				borderStyle : 'none'
+			},
+			title : FPAgent.lib.Translate.tr("MainPanel.ClientOrders")//'Заказы Клиена'
+		}, {
 			xtype : 'mnfpanel',
 			title : FPAgent.lib.Translate.tr("MainPanel.mnfpanel")//'Манифесты'
 		}, {

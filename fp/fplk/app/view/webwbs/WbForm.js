@@ -43,7 +43,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					xtype: 'textfield',
 					width: 337,
 					name: 's_adr',
-					maxLength: 70,
+					maxLength: 200,
 					fieldLabel: 'Адрес',
 					labelAlign: 'top',
 					allowBlank: false
@@ -67,6 +67,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					width: 84,
 					name: 's_tel',
 					fieldLabel: 'Телефон',
+					maxLength: 50,
 					labelAlign: 'top',
 					anchor: '100%',
 					allowBlank: false
@@ -104,7 +105,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					xtype: 'textfield',
 					width: 337,
 					name: 'r_adr',
-					maxLength: 70,
+					maxLength: 200,
 					fieldLabel: 'Адрес',
 					labelAlign: 'top',
 					allowBlank: false
@@ -128,6 +129,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					width: 84,
 					name: 'r_tel',
 					fieldLabel: 'Телефон',
+					maxLength: 50,
 					labelAlign: 'top',
 					anchor: '100%',
 					allowBlank: false

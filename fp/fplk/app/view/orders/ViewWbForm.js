@@ -5,7 +5,7 @@ Ext.define('fplk.view.orders.ViewWbForm', {
 		type : 'absolute'
 	},
 	bodyPadding : 5,
-	items : [{
+items : [{
 			xtype : 'displayfield',
 			fieldCls : 'otherstr',
 			width : 154,
@@ -132,6 +132,15 @@ Ext.define('fplk.view.orders.ViewWbForm', {
 			x : 2,
 			y : 372,
 			name : 'r_adr'
+		}, {
+			xtype : 'textarea',
+			readOnly : true,
+			cls : 'longstr',
+			width : 415,
+			height : 64,
+			x : 2,
+			y : 412,
+			name : 'descr'
 		}, {
 			xtype : 'displayfield',
 			fieldCls : 'otherstr',
@@ -346,7 +355,7 @@ Ext.define('fplk.view.orders.ViewWbForm', {
 		xtype : 'image',
 		height : 2000,
 		width : 2000,
-		src : 'http://localhost/fp_view_wb/fplk/resources/images/wbtemplate.svg'
+		src : 'http://localhost/fp_view_wb/fpagent/resources/images/wbtemplate.svg'
 		}*/
 	]
 });
