@@ -1,6 +1,6 @@
 Ext.define('FPClient.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TarifWin'],
+	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TarifWin', 'mainform.GroupTarifWin'],
 	models : ['MnfMod', 'WbMod'],
 	stores : ['MnfSt', 'aMonths', 'WbSt', 'CityStOrg', 'CityStDes'],
 	refs : [{
@@ -18,6 +18,9 @@ Ext.define('FPClient.controller.MnfCont', {
 		}, {
 			ref : 'TarifWin',
 			selector : 'tarifwin'
+		}, {
+			ref : 'GroupTarifWin',
+			selector : 'grouptarifwin'
 		}
 	],
 	init : function () {
@@ -57,6 +60,15 @@ Ext.define('FPClient.controller.MnfCont', {
 			},
 			'admtool button[action=tariffs]' : {
 				click : this.downloadTariffs
+			},
+			'admtool button[action=showGroupClac]' : {
+				click : this.showGroupClac
+			},
+			'grouptarifwin button[action=upload]' : {
+				click : this.uploadTarifCalculate
+			},
+			'grouptarifwin button[action=close]' : {
+				click : this.closeWindow
 			}
 		});
 		this.getMnfStStore().on({
@@ -68,14 +80,44 @@ Ext.define('FPClient.controller.MnfCont', {
 			load : this.loadWbStore
 		});
 	},
+	
+	
+	closeWindow: function(btn) {
+		btn.up('window').close();
+	},
+	
 	downloadTariffs : function (btn) {
-		//console.log('tariffs');
 		var win = Ext.widget('tarifwin');
 		
 	},
 	
+	// Вывод окна расчета.
+	showGroupClac(btn) {
+		var win = Ext.widget('grouptarifwin');
+	},
+	
+	// Обработка файла групового расчета.
+	uploadTarifCalculate: function(btn){
+		var frm = btn.up('form');
+		var fileField = frm.down('filefield');
+		var fileName = fileField.value;
+			if(fileName.includes(".xls") == true) {
+				if (frm.getForm().isValid()){
+					frm.getForm().submit({
+						url		:'/fpClient/srv/importTarifClaculate.php',
+						params  : {
+							action		:'getTarfGroupCalulate',
+							isDocument	: frm.down('radiofield').inputValue
+						},
+					});
+				}
+			} else {
+				Ext.Msg.alert('Не верный тип файла. Требуется *.xls или *.xlsx');
+			}
+		
+	},
+		
 	calcTar : function (btn) {
-		//console.log('tariffs');
 		btn.isDisabled(true);
 		var me = this;
 		var win = btn.up('tarifwin');

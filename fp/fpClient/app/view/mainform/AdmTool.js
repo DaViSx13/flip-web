@@ -32,7 +32,16 @@ Ext.define('FPClient.view.mainform.AdmTool', {
 			enableToggle : true,
 			xtype : 'button'
 		},' ',
-		'->',{
+		'->',
+		{
+			tooltip : 'Пакетный расчет',
+			text : 'Пакетный расчет',
+			iconCls : 'calc',
+			action : 'showGroupClac',
+			xtype : 'button'
+		},
+		' ',
+		{
 			tooltip : 'Тарифы',
 			text : 'Тарифы',
 			iconCls : 'excel',
