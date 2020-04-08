@@ -100,19 +100,29 @@ Ext.define('FPClient.controller.MnfCont', {
 	uploadTarifCalculate: function(btn){
 		var frm = btn.up('form');
 		var fileField = frm.down('filefield');
+		var data = null;
 		var fileName = fileField.value;
 			if(fileName.includes(".xls") == true) {
 				if (frm.getForm().isValid()){
 					frm.getForm().submit({
 						url		:'/fpClient/srv/importTarifClaculate.php',
+						headers : {'Content-Type': "application/vnd.ms-excel"},
+						waitMsg : 'Uploading file...',
 						params  : {
 							action		:'getTarfGroupCalulate',
 							isDocument	: frm.down('radiofield').inputValue
 						},
+						success : function(fp, output) {
+							Ext.Msg.alert('Усешно','Данные успешно расчитаны Загрузка файла результата...');
+							window.open("/fpClient/srv/importTarifClaculate.php?action=downloadCalculated&filename=" + output.result.link, '_blank');
+						},
+						failure: function(form, action){
+							Ext.Msg.alert('Ошибка загрузки на сервер', 'При попытке загрузить данные на сервер произошла ошибка');
+						}
 					});
 				}
 			} else {
-				Ext.Msg.alert('Не верный тип файла. Требуется *.xls или *.xlsx');
+				Ext.Msg.alert('Не верный тип файла', 'Требуется *.xls или *.xlsx');
 			}
 		
 	},
