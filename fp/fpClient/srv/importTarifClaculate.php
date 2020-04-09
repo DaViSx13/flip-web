@@ -38,7 +38,7 @@ if (!isset($_REQUEST['action'])) {
 
 function downloadCalc($filename) {
     $xls = PHPExcel_IOFactory::load(getFileTempDir()."/".$filename);
-    downloadFile($xls, "Результат расчета.xls");
+    downloadFile($xls, "Результат расчета(".date("d.m.y H:i").").xls");
     unlink(getFileTempDir()."/".$filename);
 }
 
@@ -118,7 +118,7 @@ function getBodyStyle() {
  * @return string Путь
  */
 function getFileTempDir() {
-    return '/media/www/flip-web/fp/fpClient/temp';
+    return '/media/www/flip-web/fp/fpClient/temp'; //sys_get_temp_dir();
 }
 
 /**
@@ -167,7 +167,10 @@ function printTitles(PHPExcel_Worksheet $sheet) {
 function checkTitles(PHPExcel_Worksheet $sheet) {
     $startRow = 0;
     $firstTitleValue = $sheet -> getCell("A1") -> getValue();
-
+	if(strlen($firstTitleValue) == 0) {
+		printTitles($sheet);
+		$firstTitleValue = $sheet -> getCell("A1") -> getValue();		
+	}
     if ($firstTitleValue != 'Город отправления') {
         $sheet -> insertNewRowBefore(1);
         printTitles($sheet);
@@ -263,13 +266,14 @@ function calculateTariff(){
                     while($row = mssql_fetch_assoc($res)){
                         $aSheet->setCellValue('G'.$i, $row['tarif'].' руб.');
                         if(isset($row['deliverymin'])){
-                            $aSheet->setCellValue('H'.$i, $row['delivery'].' - '.$row['deliverymin'].' раб. дней');
+                            $aSheet->setCellValue('H'.$i, $row['deliverymin'].' - '.$row['delivery'].' раб. дней');
                         } else {
                             $aSheet->setCellValue('H'.$i, $row['delivery'].' раб. дней');
                         }
                     }
 				} else {
 					$aSheet->setCellValue('G'.$i, "Ошибка запроса");
+					$aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
 					$i++;
 					continue;
 				}
@@ -300,19 +304,19 @@ function checkData($row) {
     }
 
     if (!is_numeric($row[2])) {
-        throw new Exception("Не корректно введены данные в столбец 'Вес");
+        throw new Exception("Не корректно введены данные в столбец 'Вес'");
     }
 
     if (!is_numeric($row[3])) {
-        throw new Exception("Не корректно введены данные в столбец 'Длинна");
+        throw new Exception("Не корректно введены данные в столбец 'Длинна'");
     }
 
     if (!is_numeric($row[4])) {
-        throw new Exception("Не корректно введены данные в столбец 'Высота");
+        throw new Exception("Не корректно введены данные в столбец 'Высота'");
     }
 
     if (!is_numeric($row[5])) {
-        throw new Exception("Не корректно введены данные в столбец 'Ширина");
+        throw new Exception("Не корректно введены данные в столбец 'Ширина'");
     }
 }
 

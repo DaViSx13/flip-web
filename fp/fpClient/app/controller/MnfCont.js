@@ -105,16 +105,16 @@ Ext.define('FPClient.controller.MnfCont', {
 			if(fileName.includes(".xls") == true) {
 				if (frm.getForm().isValid()){
 					frm.getForm().submit({
-						url		:'/fpClient/srv/importTarifClaculate.php',
+						url		:location.href + '/srv/importTarifClaculate.php',
 						headers : {'Content-Type': "application/vnd.ms-excel"},
-						waitMsg : 'Uploading file...',
+						waitMsg : 'Обработка файла',
 						params  : {
 							action		:'getTarfGroupCalulate',
 							isDocument	: frm.down('radiofield').inputValue
 						},
-						success : function(fp, output) {
-							Ext.Msg.alert('Усешно','Данные успешно расчитаны Загрузка файла результата...');
-							window.open("/fpClient/srv/importTarifClaculate.php?action=downloadCalculated&filename=" + output.result.link, '_blank');
+						success : function(fp, output) {												
+							window.open(location.href + "/srv/importTarifClaculate.php?action=downloadCalculated&filename=" + output.result.link, '_parent');
+							frm.up('window').close();							
 						},
 						failure: function(form, action){
 							Ext.Msg.alert('Ошибка загрузки на сервер', 'При попытке загрузить данные на сервер произошла ошибка');
