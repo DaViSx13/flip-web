@@ -6,6 +6,7 @@ require_once 'Excel/PHPExcel.php';
 require_once 'Excel/PHPExcel/IOFactory.php';
 session_name("CLIENTSESSIONID");
 session_start();
+set_time_limit(300);
 
 if (!isset($_REQUEST['action'])) {
     echo "echo '{\"success\": false}'";
@@ -29,7 +30,7 @@ if (!isset($_REQUEST['action'])) {
                     downloadCalc($_REQUEST['filename']);
                 }
                 downloadCalc();
-            } catch (exception $e) {
+            } catch (exception $e) {				
                 echo '{"success": false}';
             }
         break;
@@ -212,6 +213,7 @@ function calculateTariff(){
             $savedFileName = getSavedUploadingFileDir();
 	        $savedFilePath = getFileTempDir().'/'.$savedFileName;
 			$xls = PHPExcel_IOFactory::load($savedFilePath);
+			
 			$xls->setActiveSheetIndex(0);
 			$aSheet = $xls->getActiveSheet();
 
@@ -282,11 +284,12 @@ function calculateTariff(){
 		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());
         $objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
         $objWriter->save($savedFilePath);
+		echo '{"success": true, "link":"'.$savedFileName.'" }';
 	} catch (exception $e) {
-        //echo '{"success": false}';
+        echo '{"success": false, "msg":"Не корректный файл для рассчета!"}';
     }
 
-    echo '{"success": true, "link":"'.$savedFileName.'" }';
+    
 }
 
 /**

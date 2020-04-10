@@ -117,7 +117,7 @@ Ext.define('FPClient.controller.MnfCont', {
 							frm.up('window').close();							
 						},
 						failure: function(form, action){
-							Ext.Msg.alert('Ошибка загрузки на сервер', 'При попытке загрузить данные на сервер произошла ошибка');
+							Ext.Msg.alert('Ошибка при загрузке на сервер', 'При попытке загрузить данные на сервер произошла ошибка ' + action.result.msg);
 						}
 					});
 				}
