@@ -34,6 +34,7 @@ Ext.define('FPClient.view.mainform.GroupTarifWin', {
 			text	:'Шаблон',
 			iconCls	:'download',
 			margin  :'10 0 0 0',
+			hrefTarget : '_parent',
 			href	:'/FpClient/srv/importTarifClaculate.php?action=getGroupTarifExample'
 			
 		}]
