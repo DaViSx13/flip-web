@@ -168,10 +168,7 @@ function printTitles(PHPExcel_Worksheet $sheet) {
 function checkTitles(PHPExcel_Worksheet $sheet) {
     $startRow = 0;
     $firstTitleValue = $sheet -> getCell("A1") -> getValue();
-	if(strlen($firstTitleValue) == 0) {
-		printTitles($sheet);
-		$firstTitleValue = $sheet -> getCell("A1") -> getValue();		
-	}
+
     if ($firstTitleValue != 'Город отправления') {
         $sheet -> insertNewRowBefore(1);
         printTitles($sheet);
