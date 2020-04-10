@@ -245,7 +245,7 @@ function calculateTariff(){
 				$height 	= $row[4];
 				$width 		= $row[5];
 
-                if(!isset($cityFrom)) {
+                if(!isset($cityFrom)) {					
                     $aSheet->setCellValue('G'.$i, "Не найден 'Город из'");
                     $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
                     $i++;
@@ -306,19 +306,23 @@ function checkData($row) {
         throw new Exception("Не задан 'Город получения'");
     }
 
-    if (!is_numeric($row[2])) {
+    //if (!is_numeric($row[2])) {
+	if (strlen($row[2])==0 || (!is_float($row[2]+0) || !is_numeric($row[2]))){	
         throw new Exception("Не корректно введены данные в столбец 'Вес'");
     }
 
-    if (!is_numeric($row[3])) {
+    //if (!is_numeric($row[3])) {
+	if (strlen($row[3])==0 || (!is_float($row[3]+0) || !is_numeric($row[3]))){	
         throw new Exception("Не корректно введены данные в столбец 'Длинна'");
     }
 
-    if (!is_numeric($row[4])) {
+    //if (!is_numeric($row[4])) {
+	if (strlen($row[4])==0 || (!is_float($row[4]+0) || !is_numeric($row[4]))){	
         throw new Exception("Не корректно введены данные в столбец 'Высота'");
     }
 
-    if (!is_numeric($row[5])) {
+    //if (!is_numeric($row[5])) {
+	if (strlen($row[5])==0 || (!is_float($row[5]+0) || !is_numeric($row[5]))){	
         throw new Exception("Не корректно введены данные в столбец 'Ширина'");
     }
 }
@@ -331,7 +335,6 @@ function checkData($row) {
 function getCity($city) {	
 	$query = 'exec wwwGetCity @pName = \''.$city.'\'';
 	$res = sendRequest($query);
-
     if (is_resource($res) === TRUE) {
         while($row = mssql_fetch_assoc($res)) {
             return $row['cityCode'];
@@ -340,7 +343,7 @@ function getCity($city) {
 		echo '{"success": false}';
 	}
 
-    return '';
+    return NULL;
 }
 
 /**
