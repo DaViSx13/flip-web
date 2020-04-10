@@ -118,7 +118,7 @@ function getBodyStyle() {
  * @return string Путь
  */
 function getFileTempDir() {
-    return '/media/www/flip-web/fp/fpClient/temp'; //sys_get_temp_dir();
+    return sys_get_temp_dir();
 }
 
 /**
