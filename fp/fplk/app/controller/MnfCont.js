@@ -1,6 +1,6 @@
 Ext.define('fplk.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel'],
+	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.GroupTarifWin'],
 	models : ['MnfMod', 'WbMod'],
 	stores : ['MnfSt', 'aMonths', 'WbSt'],
 	refs : [{
@@ -15,6 +15,9 @@ Ext.define('fplk.controller.MnfCont', {
 		}, {
 			ref : 'MnfTool',
 			selector : 'mnftool'
+		}, {
+		ref : 'GroupTarifWin',
+		selector : 'grouptarifwin'
 		}
 	],
 	init : function () {
@@ -51,6 +54,15 @@ Ext.define('fplk.controller.MnfCont', {
 			},
 			'admtool button[action=help]' : {
 				click : this.showHelp
+			},
+			'admtool button[action=showGroupClac]' : {
+				click : this.showGroupClac
+			},
+			'grouptarifwin button[action=upload]' : {
+				click : this.uploadTarifCalculate
+			},
+			'grouptarifwin button[action=close]' : {
+				click : this.closeWindow
 			}
 		});
 		this.getMnfStStore().on({
@@ -93,6 +105,56 @@ Ext.define('fplk.controller.MnfCont', {
 			
 		}
 	},
+
+	/**
+	 * Закрытие окна.
+	 * @param btn Кнопка 'Закрыть'
+	 */
+	closeWindow: function(btn) {
+		btn.up('window').close();
+	},
+
+	/**
+	 * Вывод окна расчета
+	 * @param btn Кнопка 'Пакетный расчет'
+	 */
+	showGroupClac(btn) {
+		var win = Ext.widget('grouptarifwin');
+	},
+
+	/**
+	 * Обработка пакетного расчета.
+	 * @param btn Кнопка 'Расчитать'
+	 */
+	uploadTarifCalculate: function(btn){
+		var frm = btn.up('form');
+		var fileField = frm.down('filefield');
+		var fileName = fileField.value;
+		if(fileName.includes(".xls") == true) {
+			if (frm.getForm().isValid()){
+				frm.getForm().submit({
+					url		:location.href + '/srv/importTarifClaculate.php',
+					headers : {'Content-Type': "application/vnd.ms-excel"},
+					waitMsg : 'Обработка файла',
+					params  : {
+						action		:'getTarfGroupCalulate',
+						isDocument	: frm.down('radiofield').inputValue
+					},
+					success : function(fp, output) {
+						window.open(location.href + "/srv/importTarifClaculate.php?action=downloadCalculated&filename=" + output.result.link, '_parent');
+						frm.up('window').close();
+					},
+					failure: function(form, action){
+						Ext.Msg.alert('Ошибка при загрузке на сервер', 'При попытке загрузить данные на сервер произошла ошибка ' + action.result.msg);
+					}
+				});
+			}
+		} else {
+			Ext.Msg.alert('Не верный тип файла', 'Требуется *.xls или *.xlsx');
+		}
+
+	},
+
 	downloadTariffs : function (btn) {
 		window.location.href = 'srv/downloadTariffs.php';
 	},

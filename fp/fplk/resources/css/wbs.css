@@ -13,6 +13,9 @@
 .import {
 	background-image : url(../../resources/images/import.png);
 }
+.download {
+	 background: url(../../resources/images/download.png);
+}
 .overduebox {
 	background-image : url(../../resources/images/overdue.png);
 }
@@ -25,6 +28,12 @@
 .track {
 	background-image : url(../../resources/images/track.png);
 }
+.calc {
+	background-image : url(../../resources/images/calculator.png);
+}
+.find {
+	 background: url(../../resources/images/find.png);
+ }
 .wbno {
 	background-image : url(../../resources/images/wbno.png);
 }
