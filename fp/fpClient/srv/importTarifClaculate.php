@@ -243,13 +243,13 @@ function calculateTariff(){
 				$width 		= $row[5];
 
                 if(!isset($cityFrom)) {					
-                    $aSheet->setCellValue('G'.$i, "Не найден 'Город из'");
+                    $aSheet->setCellValue('G'.$i, "Не найден 'Город отправителя'");
                     $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
                     $i++;
                     continue;
                 }
                 if(!isset($cityTo)) {
-                    $aSheet->setCellValue('G'.$i, "Не найден 'Город до'");
+                    $aSheet->setCellValue('G'.$i, "Не найден 'Город получателя'");
                     $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
                     $i++;
                     continue;
@@ -278,8 +278,10 @@ function calculateTariff(){
 				}
 				$i++;
 			}
-		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());
-        $objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
+		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());		
+		$xls->removeSheetByIndex (2);
+		$xls->removeSheetByIndex (1);
+		$objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
         $objWriter->save($savedFilePath);
 		echo '{"success": true, "link":"'.$savedFileName.'" }';
 	} catch (exception $e) {
