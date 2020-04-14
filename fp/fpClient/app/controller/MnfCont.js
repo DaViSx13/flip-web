@@ -79,25 +79,19 @@ Ext.define('FPClient.controller.MnfCont', {
 			scope : this,
 			load : this.loadWbStore
 		});
-	},
-	
-	
-	closeWindow: function(btn) {
+	},	
+	closeWindow : function(btn){
 		btn.up('window').close();
-	},
-	
-	downloadTariffs : function (btn) {
-		var win = Ext.widget('tarifwin');
-		
-	},
-	
+	},	
+	downloadTariffs : function (btn){
+		var win = Ext.widget('tarifwin');		
+	},	
 	// Вывод окна расчета.
-	showGroupClac(btn) {
+	showGroupClac : function(btn){
 		var win = Ext.widget('grouptarifwin');
-	},
-	
+	},	
 	// Обработка файла групового расчета.
-	uploadTarifCalculate: function(btn){
+	uploadTarifCalculate : function(btn){
 		var frm = btn.up('form');
 		var fileField = frm.down('filefield');
 		var data = null;
