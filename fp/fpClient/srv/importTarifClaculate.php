@@ -278,9 +278,13 @@ function calculateTariff(){
 				}
 				$i++;
 			}
-		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());		
-		$xls->removeSheetByIndex (2);
-		$xls->removeSheetByIndex (1);
+		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());
+        $count = $xls -> getSheetCount();
+        if($count > 1) {
+            for($i = 1; $i < $count; $i++) {
+                $xls -> removeSheetByIndex($i);
+            }
+        }
 		$objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
         $objWriter->save($savedFilePath);
 		echo '{"success": true, "link":"'.$savedFileName.'" }';
@@ -339,7 +343,7 @@ function getCity($city) {
             return $row['cityCode'];
         }
 	} else {
-		echo '{"success": false}';
+        return NULL;
 	}
 
     return NULL;
@@ -378,7 +382,7 @@ EOD;
         return mssql_query($qry);
     }
     catch (exception $e) {
-        echo '{"success": false}';
+        return NULL;
     }
 
     return '';
