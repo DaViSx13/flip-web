@@ -4,7 +4,7 @@
  */
 require_once 'Excel/PHPExcel.php';
 require_once 'Excel/PHPExcel/IOFactory.php';
-session_name("CLIENTSESSIONID");
+session_name("LKSESSIONID");
 session_start();
 set_time_limit(300);
 
@@ -216,8 +216,6 @@ function calculateTariff(){
 
             $i = checkTitles($aSheet);
 
-			include "dbConnect.php";
-
 			$targetArray = $aSheet->toArray();
 			if($i != 0) {
 			   unset($targetArray[0]);
@@ -278,6 +276,7 @@ function calculateTariff(){
 				}
 				$i++;
 			}
+
 		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());
         $count = $xls -> getSheetCount();
         if($count > 1) {
@@ -357,7 +356,6 @@ function getCity($city) {
 function sendRequest($query) {
 	$query = utf8_to_win1251($query);
     $query = stripslashes($query);
-
 	try {
 		if (!isSessionActive()){
 			throw new Exception('Сеанс завершен. Обновите страницу.');
@@ -379,13 +377,14 @@ BEGIN CATCH
 END CATCH
 EOD;
         error_reporting(E_ERROR);
+        include "dbConnect.php";
         return mssql_query($qry);
     }
     catch (exception $e) {
-        return NULL;
+        return null;
     }
 
-    return '';
+    return NULL;
 }
 
 /**
@@ -393,7 +392,7 @@ EOD;
  * @return bool Активна ли сессия
  */
 function isSessionActive(){
-	return isset($_SESSION['xUser']);
+    return isset($_SESSION['xUser']);
 }
 
 /**
