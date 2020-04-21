@@ -6,7 +6,11 @@ Ext.define('fplk.model.CityMod', {
 		}, {
 			name : 'fname',
 			type : 'string'
-		}
+		}, {
+		name : 'citycode',
+		type : 'string'
+	}
+
 	],
 	proxy : {
 		type : 'ajax',

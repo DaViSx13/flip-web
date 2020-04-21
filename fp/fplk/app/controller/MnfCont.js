@@ -1,8 +1,8 @@
 Ext.define('fplk.controller.MnfCont', {
 	extend : 'Ext.app.Controller',
-	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.GroupTarifWin'],
+	views : ['mainform.MnfGrid', 'mainform.MnfPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'mainform.MainPanel', 'mainform.TarifWin', 'mainform.GroupTarifWin'],
 	models : ['MnfMod', 'WbMod'],
-	stores : ['MnfSt', 'aMonths', 'WbSt'],
+	stores : ['MnfSt', 'aMonths', 'WbSt', 'CityStOrg', 'CityStDes'],
 	refs : [{
 			ref : 'TotalTool',
 			selector : 'totaltool'
@@ -16,14 +16,20 @@ Ext.define('fplk.controller.MnfCont', {
 			ref : 'MnfTool',
 			selector : 'mnftool'
 		}, {
-		ref : 'GroupTarifWin',
-		selector : 'grouptarifwin'
+			ref : 'TarifWin',
+			selector : 'tarifwin'
+		}, {
+			ref : 'GroupTarifWin',
+			selector : 'grouptarifwin'
 		}
 	],
 	init : function () {
 		this.control({
 			'mnfpanel' : {
 				activate : this.loadMnf
+			},
+			'tarifwin button[action=calculate]' : {
+				click : this.calcTar
 			},
 			'mainpanel' : {
 				tabchange : this.gotoWb
@@ -74,6 +80,82 @@ Ext.define('fplk.controller.MnfCont', {
 			load : this.loadWbStore
 		});
 	},
+
+	/**
+	 * Расчет тарифа.
+	 * @param btn Кнопка 'Расчитать'
+	 */
+	calcTar : function (btn) {
+		btn.isDisabled(true);
+		var me = this;
+		var win = btn.up('tarifwin');
+		var form_ord = win.down('tarifform');
+		var org = form_ord.down('combocity[name=org]');
+		var dest = form_ord.down('combocity[name=dest]');
+		if (org.value == null) {
+			var jsonArrayOrg = this.getCityStOrgStore().data.items;
+			if (jsonArrayOrg.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			};
+			for (var i = 0; i < jsonArrayOrg.length; i++) {
+				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+					org.setValue(jsonArrayOrg[i].data.code);
+					break;
+				};
+			};
+			if (org.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			};
+		}
+		if (dest.value == null) {
+			var jsonArrayDes = this.getCityStDesStore().data.items;
+			if (jsonArrayDes.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			};
+			for (var i = 0; i < jsonArrayDes.length; i++) {
+				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+					dest.setValue(jsonArrayDes[i].data.code);
+					break;
+				};
+			};
+			if (dest.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			};
+		}
+		if (form_ord.getForm().isValid()) {
+			form_ord.submit({
+				url : 'srv/data.php',
+				params : {
+					dbAct : 'getTarif'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					//form.reset();
+					//me.getTemplForm().up('templwin').close();
+					//me.getTemplStStore().reload();
+					//Ext.Msg.alert('Шаблон сохранен!', 'Сохранение шаблона заказа прошло успешно ' + action.result.msg);
+					//console.log(action.result);
+					form_ord.down('label[name=delivery]').setText('Cрок доставки: <font size="5">'+Number(action.result.data[0].deliverymin)+'-'+action.result.data[0].delivery+'</font> рабочих дней.', false);
+					form_ord.down('label[name=tarif]').setText('Стоимость: <font size="5">'+action.result.data[0].tarif+'</font> руб.', false);
+					btn.isDisabled(false);
+
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Ошибка расчета', 'Расчет не удался! - ' + action.result.msg);
+					btn.isDisabled(false);
+				}
+			});
+		} else {
+			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию');
+			btn.isDisabled(false);
+		}
+
+	},
+
 	changeAgent : function (comp, newValue) {
 		var me = this;
 		if (comp.up('mainpanel').activeTab.title == 'Манифесты') {
@@ -156,7 +238,7 @@ Ext.define('fplk.controller.MnfCont', {
 	},
 
 	downloadTariffs : function (btn) {
-		window.location.href = 'srv/downloadTariffs.php';
+		var win = Ext.widget('tarifwin');
 	},
 	loadMnfAll : function (y, m, tab) {
 		this.getMnfStStore().load({
