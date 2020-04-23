@@ -3,11 +3,11 @@ Ext.define('FPClient.view.orders.WbNoWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.wbnowin',
 	requires : ['FPClient.view.orders.WbNoForm'],
-	title : 'Введите № накладной',
+	title : 'Список накладных',
 	layout : 'fit',
 	autoShow : true,
-	height : 95,
-	width : 180,
+	height : 300,
+	width : 400,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
@@ -16,14 +16,13 @@ Ext.define('FPClient.view.orders.WbNoWin', {
 			}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
-				action : 'save'
-			}, {
-				text : 'Отмена',
-				scope : this,
-				handler : this.close
-			}
-		];
+			text	: 'Сохранить',
+			action	: 'syncData'
+		}, {
+			text 	: 'Отмена',
+			scope 	: this,
+			handler : this.close
+		}];
 		this.callParent(arguments);
 	}
 });

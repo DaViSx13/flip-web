@@ -24,12 +24,12 @@ Ext.define('FPClient.view.orders.OrdTool', {
 			action : 'excel',
 			hidden: true
 		}, /*'-',*/ {
-			text : '№ накладной',
+			text : 'Накладные',
 			iconCls : 'wbno',
 			action : 'wbno',
 			hidden: true
 		}, /*'-',*/ {
-			text : 'Просмотр накладной',
+			text : 'Накладные',
 			iconCls : 'wbview',
 			action : 'wbview'
 		},{
