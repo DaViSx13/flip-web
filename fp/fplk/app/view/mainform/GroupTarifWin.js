@@ -49,12 +49,12 @@ Ext.define('fplk.view.mainform.GroupTarifWin', {
 				    boxLabel  : 'Да',
 					checked	  : true,		
                     name      : 'isDocument',
-                    inputValue: 'LE',
+                    inputValue: 'LE'
 			}, {
 					boxLabel  : 'Нет',
 					margin    :	'0 0 0 10',
                     name      : 'isDocument',
-                    inputValue: 'PL',
+                    inputValue: 'PL'
 			}]
 		}],	
 		buttons	:[{

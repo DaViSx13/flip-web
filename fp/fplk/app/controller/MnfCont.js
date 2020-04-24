@@ -200,7 +200,7 @@ Ext.define('fplk.controller.MnfCont', {
 	 * Вывод окна расчета
 	 * @param btn Кнопка 'Пакетный расчет'
 	 */
-	showGroupClac(btn) {
+	showGroupClac: function(btn) {
 		var win = Ext.widget('grouptarifwin');
 	},
 
