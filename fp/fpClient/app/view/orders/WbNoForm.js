@@ -16,7 +16,7 @@ Ext.define('FPClient.view.orders.WbNoForm', {
 				clicksToEdit	: 2,
 				pluginId		: "editRow"
 			}],
-			tbar:[{
+			bbar:[{
 				xtype	: 'button',
 				text	: 'Добавить',
 				action	: 'addRecord',
