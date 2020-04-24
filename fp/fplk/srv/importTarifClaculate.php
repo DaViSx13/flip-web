@@ -205,93 +205,92 @@ function getSavedUploadingFileDir() {
  */
 function calculateTariff(){
 
-    $savedFilePath = "";
-	try {
-            $savedFileName = getSavedUploadingFileDir();
-	        $savedFilePath = getFileTempDir().'/'.$savedFileName;
-			$xls = PHPExcel_IOFactory::load($savedFilePath);
-			
-			$xls->setActiveSheetIndex(0);
-			$aSheet = $xls->getActiveSheet();
+    try {
+        $savedFileName = getSavedUploadingFileDir();
+        $savedFilePath = getFileTempDir().'/'.$savedFileName;
+        $xls = PHPExcel_IOFactory::load($savedFilePath);
 
-            $i = checkTitles($aSheet);
+        $xls->setActiveSheetIndex(0);
+        $aSheet = $xls->getActiveSheet();
 
-			$targetArray = $aSheet->toArray();
-			if($i != 0) {
-			   unset($targetArray[0]);
+        $i = checkTitles($aSheet);
+
+        include "dbConnect.php";
+
+        $targetArray = $aSheet->toArray();
+        unset($targetArray[0]);
+
+        $i = 2;
+
+        foreach($targetArray as $row) {
+            try {
+                checkData($row);
+            } catch (exception $e) {
+                $aSheet->setCellValue('G'.$i, $e -> getMessage());
+                $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
+                $i++;
+                continue;
             }
 
-            $i = 2;
+            $cityFrom 	= getCity(strtolower($row[0]));
+            $cityTo 	= getCity(strtolower($row[1]));
+            $weight 	= $row[2];
+            $length 	= $row[3];
+            $height 	= $row[4];
+            $width 		= $row[5];
 
-			foreach($targetArray as $row) {
-			    try {
-                    checkData($row);
-                } catch (exception $e) {
-                    $aSheet->setCellValue('G'.$i, $e -> getMessage());
-                    $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
-                    $i++;
-                    continue;
-                }
+            if(!isset($cityFrom)) {
+                $aSheet->setCellValue('G'.$i, "Не найден 'Город отправителя'");
+                $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
+                $i++;
+                continue;
+            }
+            if(!isset($cityTo)) {
+                $aSheet->setCellValue('G'.$i, "Не найден 'Город получателя'");
+                $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
+                $i++;
+                continue;
+            }
 
-				$cityFrom 	= getCity(strtolower($row[0]));
-				$cityTo 	= getCity(strtolower($row[1]));
-				$weight 	= $row[2];
-				$length 	= $row[3];
-				$height 	= $row[4];
-				$width 		= $row[5];
+            $planno = $_SESSION['xPlanno'] ? $_SESSION['xPlanno'] : 1;
+            $volwt = ($width * $height * $length )/6000;
+            if ($weight<$volwt) $weight = $volwt;
 
-                if(!isset($cityFrom)) {					
-                    $aSheet->setCellValue('G'.$i, "Не найден 'Город отправителя'");
-                    $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
-                    $i++;
-                    continue;
-                }
-                if(!isset($cityTo)) {
-                    $aSheet->setCellValue('G'.$i, "Не найден 'Город получателя'");
-                    $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
-                    $i++;
-                    continue;
-                }
-
-				$planno = $_SESSION['xPlanno'] ? $_SESSION['xPlanno'] : 1;
-				$volwt = ($width * $height * $length )/6000;
-				if ($weight<$volwt) $weight = $volwt;	
-
-				$query = "exec wwwAPIgetTarif @org='{$cityFrom}', @dest = '{$cityTo}', @wt = {$weight}, @planno = {$planno}, @t_pak='{$_REQUEST['isDocument']}'";
-				$res = sendRequest($query);
-				if (is_resource($res) === TRUE) {			
-                    while($row = mssql_fetch_assoc($res)){
-                        $aSheet->setCellValue('G'.$i, $row['tarif'].' руб.');
-                        if(isset($row['deliverymin'])){
-                            $aSheet->setCellValue('H'.$i, $row['deliverymin'].' - '.$row['delivery'].' раб. дней');
-                        } else {
-                            $aSheet->setCellValue('H'.$i, $row['delivery'].' раб. дней');
-                        }
+            $query = "exec wwwAPIgetTarif @org='{$cityFrom}', @dest = '{$cityTo}', @wt = {$weight}, @planno = {$planno}, @t_pak='{$_REQUEST['isDocument']}'";
+            $res = sendRequest($query);
+            if (is_resource($res) === TRUE) {
+                while($row = mssql_fetch_assoc($res)){
+                    $aSheet->setCellValue('G'.$i, $row['tarif'].' руб.');
+                    if(isset($row['deliverymin'])){
+                        $aSheet->setCellValue('H'.$i, $row['deliverymin'].' - '.$row['delivery'].' раб. дней');
+                    } else {
+                        $aSheet->setCellValue('H'.$i, $row['delivery'].' раб. дней');
                     }
-				} else {
-					$aSheet->setCellValue('G'.$i, "Ошибка запроса");
-					$aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
-					$i++;
-					continue;
-				}
-				$i++;
-			}
-
-		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());
-        $count = $xls -> getSheetCount();
+                }
+            } else {
+                $aSheet->setCellValue('G'.$i, "Ошибка запроса");
+                $aSheet->getStyle('G'.$i)->applyFromArray(getErrorStyle());
+                $i++;
+                continue;
+            }
+            $i++;
+        }
+        $aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());
+        $count = $xls -> getSheetCount() - 1;
         if($count > 1) {
-            for($i = 1; $i < $count; $i++) {
+            for($i = $count; $i > 0; $i--) {
                 $xls -> removeSheetByIndex($i);
             }
         }
-		$objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
-        $objWriter->save($savedFilePath);
-		echo '{"success": true, "link":"'.$savedFileName.'" }';
-	} catch (exception $e) {
-        echo '{"success": false, "msg":"Не корректный файл для рассчета!"}';
-    }
+        $objWriter = (!strpos($savedFileName, "xlsx"))
+            ? PHPExcel_IOFactory::createWriter($xls, 'Excel2007')
+            : PHPExcel_IOFactory::createWriter($xls, 'Excel5');
 
-    
+        $objWriter->save($savedFilePath);
+        echo '{"success": true, "link":"'.$savedFileName.'" }';
+    } catch (exception $e) {
+        echo '{"success": false, "msg":"Не корректный файл для рассчета!", "err":"'.$e->getMessage().'+'.$xls -> getActiveSheetIndex().'"}';
+    }
 }
 
 /**

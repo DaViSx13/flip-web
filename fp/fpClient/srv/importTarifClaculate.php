@@ -205,7 +205,6 @@ function getSavedUploadingFileDir() {
  */
 function calculateTariff(){
 
-    $savedFilePath = "";
 	try {
             $savedFileName = getSavedUploadingFileDir();
 	        $savedFilePath = getFileTempDir().'/'.$savedFileName;
@@ -219,9 +218,7 @@ function calculateTariff(){
 			include "dbConnect.php";
 
 			$targetArray = $aSheet->toArray();
-			if($i != 0) {
-			   unset($targetArray[0]);
-            }
+			unset($targetArray[0]);
 
             $i = 2;
 
@@ -279,20 +276,21 @@ function calculateTariff(){
 				$i++;
 			}
 		$aSheet->getStyle("A1:H".($i - 1))->applyFromArray(getBodyStyle());
-        $count = $xls -> getSheetCount();
+        $count = $xls -> getSheetCount() - 1;
         if($count > 1) {
-            for($i = 1; $i < $count; $i++) {
+            for($i = $count; $i > 0; $i--) {
                 $xls -> removeSheetByIndex($i);
             }
         }
-		$objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
+		$objWriter = (!strpos($savedFileName, "xlsx"))
+            ? PHPExcel_IOFactory::createWriter($xls, 'Excel2007')
+            : PHPExcel_IOFactory::createWriter($xls, 'Excel5');
+
         $objWriter->save($savedFilePath);
 		echo '{"success": true, "link":"'.$savedFileName.'" }';
 	} catch (exception $e) {
-        echo '{"success": false, "msg":"Не корректный файл для рассчета!"}';
+        echo '{"success": false, "msg":"Не корректный файл для рассчета!", "err":"'.$e->getMessage().'+'.$xls -> getActiveSheetIndex().'"}';
     }
-
-    
 }
 
 /**
