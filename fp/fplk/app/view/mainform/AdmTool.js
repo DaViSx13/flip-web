@@ -34,6 +34,13 @@ Ext.define('fplk.view.mainform.AdmTool', {
 		},' ',
 		'->',
 		{
+			tooltip : 'Пакетный расчет',
+			text : 'Пакетный расчет',
+			iconCls : 'calc',
+			action : 'showGroupClac',
+			xtype : 'button'
+		},
+		{
 			tooltip : "Тарифы",
 			text : "Тарифы",
 			iconCls : 'tariffs',

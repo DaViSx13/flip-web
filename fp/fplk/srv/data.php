@@ -380,6 +380,13 @@ if (!isset($_REQUEST['dbAct'])) {
 
 			$query = "exec [wwwClientGetClientInfo]	@clientID='$ag'";
 			break;
+        case 'getTarif':
+            $weight = $params['weight'] ? $params['weight'] : 0.1;
+            $planno = $_SESSION['xClientPlanNo'] ? $_SESSION['xClientPlanNo'] : 1;
+            $volwt = ($params['width']*$params['height']*$params['length'])/6000;
+            if ($weight<$volwt) $weight = $volwt;
+            $query = "exec wwwAPIgetTarif @org='$params[org]', @dest = '$params[dest]', @wt = {$weight}, @planno = {$planno}, @t_pak='LE'";
+            break;
     }
 
     if (!isset($query) || strlen($query) == 0) {
