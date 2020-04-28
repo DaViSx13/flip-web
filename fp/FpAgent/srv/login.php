@@ -38,6 +38,7 @@ if ( !empty( $_POST['user'] )) {
                 }; 
         }; 
     }
-	
+header('Access-Control-Allow-Origin: https://flippost.com');
+header('Access-Control-Allow-Credentials: true');	
 echo json_encode($response);
 ?>
