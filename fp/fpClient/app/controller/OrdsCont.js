@@ -1,8 +1,8 @@
 Ext.define('FPClient.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
 	views: ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid' /*, 'orders.WbWin', 'orders.WbForm'*/],
-	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'WbNoMod' /*, 'WebWbMod'*/],
-	stores: ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt', 'WbNoSt' /*, 'WebWbSt'*/],
+	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod' /*, 'WebWbMod'*/],
+	stores: ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt' /*, 'WebWbSt'*/],
 	refs: [/*{
 		ref : 'WbForm',
 		selector : 'wbform'
@@ -132,12 +132,6 @@ Ext.define('FPClient.controller.OrdsCont', {
 			'wbnoform textfield': {
 				keypress: this.pressEnter
 			},
-			'wbnoform button[action=addRecord]': {
-				click: this.addWebNoRecord
-			},
-			'wbnowin button[action=syncData]': {
-				click: this.syncWebNoData
-			},
 			'usetemplwin button[action=set]': {
 				click: this.setTpl
 			},
@@ -159,26 +153,6 @@ Ext.define('FPClient.controller.OrdsCont', {
 		});
 		this.getClientStStore().load();
 	},
-
-	syncWebNoData: function(button) {
-		console.log("Синхранизация");
-	},
-
-	/**
-	 * Добавляет в грид пустую модель
-	 * для дальнейшего ввода данных.
-	 * @param button Кнопка 'Добавить'
-	 */
-	addWebNoRecord: function(button) {
-		let win = button.up('window');
-		let grid = win.down("grid");
-		let store = grid.getStore();
-		let gridModel = store.model;
-		store.insert(0, new gridModel());
-		let editor = grid.getPlugin('editRow');
-		editor.startEdit(0,1);
-	},
-
 	checkWb: function (ch, newValue, oldValue, eOpts){		
 		var print = ch.up('ordform').down('checkboxfield[name=webwbprint]');
 		if (newValue) {
@@ -252,19 +226,16 @@ Ext.define('FPClient.controller.OrdsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
-
-	/**
-	 * Открытие формы 'Накладные'.
-	 * Если не выделить строку в таблице
-	 * Выйдет сообщение об этом.
-	 * @param btn Кнопка 'Накладные'
-	 */
 	viewWb: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
-		if(sm.getCount() > 0) {
-			Ext.widget('wbnowin');
+		if (sm.getSelection()[0].get('wb_no')) {
+			this.getViewWbStStore().load({
+				params: {
+					wb_no: sm.getSelection()[0].get('wb_no')
+				}
+			});
 		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите заказ');
+			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
 		}
 	},
 	dblclickWbsGr: function (gr, rec) {
