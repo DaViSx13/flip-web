@@ -1,8 +1,8 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
 	views: ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
-	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
-	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
+	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod', 'WbNoMod'],
+	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore', 'WbNoSt'],
 	refs: [{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -184,6 +184,25 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'wbnoform textfield': {
 				keypress: this.pressEnter
 			},
+			'wbnoform button[action=addRecord]': {
+				click: this.addWebNoRecord
+			},
+			'wbnowin button[action=syncData]': {
+				click: this.syncWebNoData
+			},
+			'wbnoform button[action=showDeleted]': {
+				click: this.showHideDeletedRecords
+			},
+			'wbnoform grid': {
+				beforeedit: this.WebNoDisableEditing
+			},
+			'wbnoform actioncolumn': {
+				click: this.deleteRecordWebNo
+			},
+			'wbnoform button[action=wbview]': {
+				click: this.viewWbGroup
+			},
+
 			'usetemplwin button[action=set]': {
 				click: this.setTpl
 			},
@@ -221,6 +240,227 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			load: this.loadViewExStore
 		});
 	},
+
+	/**
+	 * Удаляет или восстанавливает запись,
+	 * если парматр isDeleted имеет занчение:
+	 * 0 - удалет из хранилища
+	 * 1 - восстанавливает
+	 * @param grid Таблица
+	 * @param rowIndex Индекс строки (Не используется)
+	 * @param colIndex Индекс колонки (Не используется)
+	 * @param item Нажатая колонка (Не используется)
+	 * @param event Действие (Не используется)
+	 * @param record Запись
+	 */
+	deleteRecordWebNo: function (grid, rowIndex, colIndex, item, event, record) {
+		if (record.get('isdeleted') == 0) {
+			record.set('isdeleted', 1);
+		} else {
+			record.set('isdeleted', 0);
+		}
+	},
+
+	/**
+	 * Получает хранилище таблицы,
+	 * находящаяся в окне
+	 * @param element Элемент окна
+	 * @returns Хранилище
+	 */
+	getWebNoStoreByElement: function(element) {
+		let win = element.up('window');
+		let grid = win.down('grid');
+		return grid.getStore();
+	},
+	/**
+	 * Запрещает редактирование строк в таблице,
+	 * кроме новой записи.
+	 * @param editor Редактор
+	 * @param e Набор данных:
+	 *  - Таблица
+	 *  - Запись
+	 *  - Выделеная модель
+	 * @returns {boolean} Если не новая запись,
+	 * завершает выполнение криптов
+	 * @constructor Конструктор
+	 */
+	WebNoDisableEditing: function(editor, e) {
+		if(!e.record.phantom) return false;
+	},
+
+	/**
+	 * Функция скрывает или показывает
+	 * удаленные записи в таблице
+	 * @param button Кнопка
+	 * 'Показать/Скрыть удаленные записи'
+	 */
+	showHideDeletedRecords: function(button) {
+		let buttonText = button.getText();
+		const store = this.getWebNoStoreByElement(button);
+		if (buttonText == 'Показать удаленные') {
+			button.setText('Скрыть удаленные');
+			button.setIconCls('eyeClosed');
+			store.clearFilter();
+		} else {
+			button.setText('Показать удаленные');
+			button.setIconCls('eyeOpened');
+			store.filter('isDeleted', 1);
+		}
+	},
+
+	/**
+	 * Синхранизация данных накладных с сервером
+	 * @param button Кнопка 'Сохранить'
+	 */
+	syncWebNoData: function(button) {
+		let win = button.up('window');
+		let statusBar = win.down('label[name=webNoStatusBar]');
+		statusBar.show();
+		let orderNum = win.name;
+		let tools = this.getOrdClientTool();
+		let tabs = tools.up('tabpanel');
+		let activeTabName = tabs.getActiveTab().title;
+		const store = this.getWebNoStoreByElement(button);
+		var errors = [];
+
+		let updatedRows = store.getUpdatedRecords();
+
+		statusBar.update('<img src="resources/images/loading.gif" height="15px"/><p>   ОБНОВЛЕНИЕ СТАТУСОВ</p>');
+		if(updatedRows.length > 0) {
+			let tempErrors = this.webNumChangeStatus(updatedRows);
+			errors.push(tempErrors);
+		}
+
+		statusBar.update('<p><img src="resources/images/loading.gif" height="15px"/>   ДОБАВЛЕНИЕ ЗАПИСЕЙ</p>');
+		let newRows = store.getNewRecords();
+
+		if(newRows.length > 0) {
+			var tempErrors;
+			if(activeTabName == 'Заказы') {
+				tempErrors = this.webNumAddRecord(
+													newRows,
+													orderNum,
+													1);
+			}
+			else {
+				tempErrors = this.webNumAddRecord(
+													newRows,
+													orderNum,
+													0);
+			}
+
+			errors.push(tempErrors);
+		}
+
+
+		statusBar.update('<img src="resources/images/loading.gif" height="15px"/>   ПРОВЕРКА ДАННЫХ');
+		if(errors.length > 0) {
+			statusBar.update('<img src="resources/images/warning.png" height="15px"/>  НЕКОТОРЫЕ ЗАПИСИ НЕ УДАЛОСЬ СОХРАНИТЬ');
+			let message = 'Найдены ошибки при обновлении базы даннах: ';
+			errors.forEach(rec => {
+				console.log(rec);
+				message += '<br>' + rec;
+			});
+			Ext.Msg.alert(message);
+		} else {
+			statusBar.update('<img src="resources/images/ready.png" height="15px"/>  УСПЕШНО');
+		}
+
+	},
+	
+	webNumAddRecord: function(rows, orderNum, isAgent) {
+
+		var errorsRows = [];
+		Ext.Array.each(rows, function (record) {
+			if(record.get('web_num') == 'NaN') {
+				errorsRows.push(record.get('web_num')
+								+ ' Ошибка: Не допустимый номер накладной');
+				return false;
+			}
+
+			if(record.get('web_num').length == 0) {
+				errorsRows.push('Без номера. '
+					+ 'Ошибка: Не допустимый номер накладной');
+				return false;
+			}
+
+			if(record.get('web_num').length > 50) {
+				errorsRows.push(record.get('web_num')
+					+ ' Ошибка: Не допустимый количество символов в номере накладной');
+				return false;
+			}
+
+			Ext.Ajax.request({
+				url: 'srv/data.php',
+				method: 'POST',
+				params: {
+					dbAct		: 'setWebNoGroup',
+					orderNum	: orderNum,
+					webNum		: record.get('web_num'),
+					isAgent		: isAgent,
+					cost		: record.get('cost')
+				},
+				callback: function(options, success, response){
+					let responseJson = Ext.decode(response.responseText);
+
+					if(!responseJson.success) {
+						errorsRows.push(record.get('web_num')
+										+ ' Ошибка: "'
+										+ responseJson.msg
+										+ '"');
+					}
+				},
+			});
+		});
+
+		return errorsRows;
+	},
+
+	/**
+	 * Удаляет записи на сервере
+	 * @param rows Список строк
+	 * @param status Статус
+	 */
+	webNumChangeStatus: function(rows) {
+		var errorsRows = [];
+		Ext.Array.each(rows, function (record) {
+			Ext.Ajax.request({
+				url: 'srv/data.php',
+				method: 'POST',
+				params: {
+					dbAct		: 'ChangeStatusWebNo',
+					webNum		: record.get('web_num'),
+					isDeleted	: record.get('isdeleted')
+				},
+				callback: function(options, success, response){
+					if(!success) {
+						errorsRows.push(record.get('web_num'));
+					}
+				},
+			});
+		});
+
+		return errorsRows;
+	},
+
+	/**
+	 * Добавляет в грид пустую модель
+	 * для дальнейшего ввода данных.
+	 * @param button Кнопка 'Добавить'
+	 */
+	addWebNoRecord: function(button) {
+		let win = button.up('window');
+		let grid = win.down('grid');
+		let store = this.getWebNoStoreByElement(button);
+		console.log(grid);
+		let editor = grid.getPlugin('editRow');
+
+		editor.enable();
+		let gridModel = store.model;
+		store.insert(0, new gridModel());
+		editor.startEdit(0,1);
+	},
+
 	loadViewExStore: function () {
 		this.getOrdExGrid().getSelectionModel().select(0);
 	},
@@ -332,31 +572,62 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	editWbnoBase: function (sm) {
 		if (sm.getCount() > 0) {
 			var win = Ext.widget('wbnowin');
+			win.name = sm
+					  .getSelection()[0]
+					  .get('rordnum');
+			let grid = win.down('grid');
+			let store = grid.getStore();
+
+			store.load({
+				params: {
+					rordnum: sm
+							.getSelection()[0]
+							.get('rordnum')
+				}
+			});
+
+			store.filter('isdeleted', 0);
+
+			let tools = this.getOrdClientTool();
+			let tabs = tools.up('tabpanel');
+			let activeTabName = tabs.getActiveTab().title;
+			if(activeTabName == 'Заказы') store.filter('isagent', 1);
+			else store.filter('isagent', 0);
+
 			win.show();
-			var form = win.down('wbnoform');
-			form.down('textfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
-			form.down('textfield[name=rordnum]').setValue(sm.getSelection()[0].get('rordnum'));
-			form.down('textfield[name=wbno]').focus(false, true);
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
+
+	/**
+	 * Просмотр накладных в групповом вводе
+	 * @param btn Кнопка 'Просмотр накладных'
+	 */
+	viewWbGroup: function (btn) {
+		let sm = btn
+				.up('window')
+				.down('grid')
+				.getSelectionModel();
+		this.viewWBase(sm, 'web_num');
+	},
+
 	viewWb: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
-		this.viewWBase(sm);
+		this.viewWBase(sm, 'wb_no');
 	},
 
 	viewClientWb: function (btn) {
 		var sm = btn.up('ordclientgrid').getSelectionModel();
-		this.viewWBase(sm);
+		this.viewWBase(sm, 'wb_no');
 	},
 
-	viewWBase: function (sm) {
+	viewWBase: function (sm, webNum) {
 		if (sm.selected.length > 0)
-			if (sm.getSelection()[0].get('wb_no')) {
+			if (sm.getSelection()[0].get(webNum)) {
 				this.getViewWbStStore().load({
 					params: {
-						wb_no: sm.getSelection()[0].get('wb_no')
+						wb_no: sm.getSelection()[0].get(webNum)
 					}
 				});
 			} else {
@@ -543,7 +814,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		btnTempl.setVisible(false);
 
 		this.clkList(btnList);
-		var aTol = this.getOrdClientTool();
+		var aTol = ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc;
 		var mo = aTol.down('combomonth').value;
 		var ye = aTol.down('numyear').value;
 		this.loadClientOrds(ye, mo);
