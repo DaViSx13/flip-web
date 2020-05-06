@@ -9,6 +9,7 @@ Ext.define('FPAgent.view.orders.WbNoWin', {
 	autoShow : true,
 	height : 300,
 	width : 400,
+	closable: false,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
@@ -24,12 +25,8 @@ Ext.define('FPAgent.view.orders.WbNoWin', {
 			flex	: 1,
 			height	: '100%'
 		}, {
-				text : FPAgent.lib.Translate.tr("WbNoWin.button.save"),//'Сохранить',
+				text : 'Закрыть',
 				action : 'syncData'
-			}, {
-				text : FPAgent.lib.Translate.tr("WbNoWin.button.cancel"),//'Отмена',
-				scope : this,
-				handler : this.close
 			}
 		];
 		this.callParent(arguments);

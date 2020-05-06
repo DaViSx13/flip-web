@@ -188,7 +188,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				click: this.addWebNoRecord
 			},
 			'wbnowin button[action=syncData]': {
-				click: this.syncWebNoData
+				click: this.closeWebNoByButton
+			},
+			'wbnowin': {
+				beforeclose: this.closeWebNoByWindow
 			},
 			'wbnoform button[action=showDeleted]': {
 				click: this.showHideDeletedRecords
@@ -239,6 +242,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			scope: this,
 			load: this.loadViewExStore
 		});
+	},
+
+	test: function() {
+		console.log("work");
 	},
 
 	/**
@@ -304,38 +311,52 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		} else {
 			button.setText('Показать удаленные');
 			button.setIconCls('eyeOpened');
-			store.filter('isDeleted', 1);
+			store.filter('isdeleted', 0);
 		}
 	},
 
 	/**
-	 * Синхранизация данных накладных с сервером
-	 * @param button Кнопка 'Сохранить'
+	 * Закрытие окна Накладных
+	 * от кнопки в шапке окна.
+	 * @param window Окно
 	 */
-	syncWebNoData: function(button) {
-		let win = button.up('window');
+	closeWebNoByWindow: function(window) {
+		//this.syncWebNoData(window);
+	},
+
+	/**
+	 * Закрытие окна накладных
+	 * от кнопки 'Закрыть'
+	 * @param button кнопка 'Закрыть'
+	 */
+	closeWebNoByButton: function(button) {
+		this.syncWebNoData(button.up('window'));
+	},
+
+	/**
+	 * Синхранизация данных накладных с сервером
+	 * @param win Окно накладные
+	 */
+	syncWebNoData: function(win) {
 		let statusBar = win.down('label[name=webNoStatusBar]');
+
 		statusBar.show();
 		let orderNum = win.name;
 		let tools = this.getOrdClientTool();
 		let tabs = tools.up('tabpanel');
 		let activeTabName = tabs.getActiveTab().title;
-		const store = this.getWebNoStoreByElement(button);
+		const store = win.down('grid').getStore();
 		var errors = [];
 
 		let updatedRows = store.getUpdatedRecords();
-
-		statusBar.update('<img src="resources/images/loading.gif" height="15px"/><p>   ОБНОВЛЕНИЕ СТАТУСОВ</p>');
 		if(updatedRows.length > 0) {
 			let tempErrors = this.webNumChangeStatus(updatedRows);
-			errors.push(tempErrors);
+			errors = tempErrors;
 		}
-
-		statusBar.update('<p><img src="resources/images/loading.gif" height="15px"/>   ДОБАВЛЕНИЕ ЗАПИСЕЙ</p>');
 		let newRows = store.getNewRecords();
 
 		if(newRows.length > 0) {
-			var tempErrors;
+			let tempErrors;
 			if(activeTabName == 'Заказы') {
 				tempErrors = this.webNumAddRecord(
 													newRows,
@@ -349,70 +370,62 @@ Ext.define('FPAgent.controller.OrdsCont', {
 													0);
 			}
 
-			errors.push(tempErrors);
+			errors = tempErrors;
 		}
 
-
-		statusBar.update('<img src="resources/images/loading.gif" height="15px"/>   ПРОВЕРКА ДАННЫХ');
 		if(errors.length > 0) {
-			statusBar.update('<img src="resources/images/warning.png" height="15px"/>  НЕКОТОРЫЕ ЗАПИСИ НЕ УДАЛОСЬ СОХРАНИТЬ');
-			let message = 'Найдены ошибки при обновлении базы даннах: ';
-			errors.forEach(rec => {
-				console.log(rec);
-				message += '<br>' + rec;
-			});
-			Ext.Msg.alert(message);
+			statusBar.update('<img src="resources/images/warning.png" height="15px"/>  ЕСТЬ ЗАМЕЧАНИЯ');
+			let message = 'Найдены ошибки при обновлении базы даннах: <br>'
+						  + errors;
+			Ext.Msg.alert("Замечания", message);
 		} else {
-			statusBar.update('<img src="resources/images/ready.png" height="15px"/>  УСПЕШНО');
+			win.close();
 		}
-
 	},
 	
 	webNumAddRecord: function(rows, orderNum, isAgent) {
 
-		var errorsRows = [];
+		var errorsRows = '';
 		Ext.Array.each(rows, function (record) {
 			if(record.get('web_num') == 'NaN') {
-				errorsRows.push(record.get('web_num')
-								+ ' Ошибка: Не допустимый номер накладной');
-				return false;
+				errorsRows += record.get('web_num')
+								+ ' Ошибка: Не допустимый номер накладной<br>';
+			}
+			else if(record.get('web_num').length == 0) {
+				errorsRows  += ('Без номера. '
+					+ 'Ошибка: Не допустимый номер накладной, ');
 			}
 
-			if(record.get('web_num').length == 0) {
-				errorsRows.push('Без номера. '
-					+ 'Ошибка: Не допустимый номер накладной');
-				return false;
+			else if(record.get('web_num').length > 50) {
+				errorsRows  += (record.get('web_num')
+					+ ' Ошибка: Не допустимый количество символов в номере накладной<br> ');
+			} else {
+				Ext.Ajax.request({
+					url: 'srv/data.php',
+					method: 'POST',
+					async:false,
+					params: {
+						dbAct		: 'setWebNoGroup',
+						orderNum	: orderNum,
+						webNum		: record.get('web_num'),
+						isAgent		: isAgent,
+						cost		: record.get('cost')
+					},
+					callback: function(options, success, response){
+						let responseJson = Ext.decode(response.responseText);
+
+						if(!responseJson.success) {
+							console.log(responseJson);
+							errorsRows += (record.get('web_num')
+								+ ' Ошибка: '
+								+ responseJson.msg
+								+ '<br> ');
+						}
+					},
+				});
 			}
 
-			if(record.get('web_num').length > 50) {
-				errorsRows.push(record.get('web_num')
-					+ ' Ошибка: Не допустимый количество символов в номере накладной');
-				return false;
-			}
-
-			Ext.Ajax.request({
-				url: 'srv/data.php',
-				method: 'POST',
-				params: {
-					dbAct		: 'setWebNoGroup',
-					orderNum	: orderNum,
-					webNum		: record.get('web_num'),
-					isAgent		: isAgent,
-					cost		: record.get('cost')
-				},
-				callback: function(options, success, response){
-					let responseJson = Ext.decode(response.responseText);
-
-					if(!responseJson.success) {
-						errorsRows.push(record.get('web_num')
-										+ ' Ошибка: "'
-										+ responseJson.msg
-										+ '"');
-					}
-				},
-			});
 		});
-
 		return errorsRows;
 	},
 
@@ -422,7 +435,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * @param status Статус
 	 */
 	webNumChangeStatus: function(rows) {
-		var errorsRows = [];
+		var errorsRows = '';
 		Ext.Array.each(rows, function (record) {
 			Ext.Ajax.request({
 				url: 'srv/data.php',
@@ -433,8 +446,14 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					isDeleted	: record.get('isdeleted')
 				},
 				callback: function(options, success, response){
-					if(!success) {
-						errorsRows.push(record.get('web_num'));
+					let responseJson = Ext.decode(response.responseText);
+
+					if(!responseJson.success) {
+
+						errorsRows += (record.get('web_num')
+							+ ' Ошибка: "'
+							+ responseJson.msg
+							+ '<br> ');
 					}
 				},
 			});
