@@ -126,7 +126,10 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'usetemplform combobox' : {
 				keypress : this.pressTpl
-			}
+			},
+			'viewwbwin button[action=printWB]': {
+				click: this.printWB
+			},
 		});
 		this.getOrderStStore().on({
 			scope : this,
@@ -142,6 +145,16 @@ Ext.define('fplk.controller.OrdsCont', {
 		});
 		this.getClientStStore().load();
 	},
+
+	/**
+	 * Печть накладной.
+	 * @param button Кнопка 'Печать'
+	 */
+	printWB: function (button) {
+		let form = button.up('window').down('form');
+		window.open('srv/report.php?wbno=' + form.down('displayfield[name=wb_no]').value);
+	},
+
 	clkList : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('admtool');
