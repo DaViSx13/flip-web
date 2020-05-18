@@ -13,8 +13,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Отправитель',
 			x : 10,
-			y : 0,
-			//hidden: true,
+			y : 0,			
 			items : [{
 					xtype : 'combocity',
 					name : 'org',
@@ -149,7 +148,9 @@ Ext.define('fplk.view.orders.OrdForm', {
 					name : 'courdate',
 					fieldLabel : 'Дата',
 					startDay : 1,
-					format : 'd.m.Y'
+					format : 'd.m.Y',
+					value : new Date(),
+					allowBlank : false
 				}, {
 					xtype : 'fieldset',
 					layout: 'hbox',

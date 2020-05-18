@@ -149,7 +149,9 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					name : 'courdate',
 					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.courdate"),//'Дата',
 					startDay : 1,
-					format : 'd.m.Y'
+					format : 'd.m.Y',
+					value : new Date(),
+					allowBlank : false
 				}, {
 					xtype : 'textfield',
 					name : 'courtimef',

@@ -13,8 +13,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			width : 360,
 			title : 'Отправитель',
 			x : 10,
-			y : 0,
-			//hidden: true,
+			y : 0,			
 			items : [{
 					xtype : 'combocity',
 					name : 'org',
@@ -150,8 +149,10 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					xtype : 'datefield',
 					name : 'courdate',
 					fieldLabel : 'Дата',
-					startDay : 1,
-					format : 'd.m.Y'
+					startDay : 1,					
+					format : 'd.m.Y',
+					value : new Date(),
+					allowBlank : false
 				}, {
 					xtype : 'fieldset',
 					layout: 'hbox',
