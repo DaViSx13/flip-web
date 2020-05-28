@@ -129,7 +129,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
-			},
+			}
 		});
 		this.getOrderStStore().on({
 			scope : this,
@@ -145,14 +145,10 @@ Ext.define('fplk.controller.OrdsCont', {
 		});
 		this.getClientStStore().load();
 	},
-
-	/**
-	 * Печть накладной.
-	 * @param button Кнопка 'Печать'
-	 */
-	printWB: function (button) {
-		let form = button.up('window').down('form');
-		window.open('srv/report.php?wbno=' + form.down('displayfield[name=wb_no]').value);
+	
+	printWB: function (but) {
+		var frm = but.up('window').down('form');
+		window.open('srv/report.php?wbno=' + frm.down('displayfield[name=wb_no]').value+'&iswb=1');
 	},
 
 	clkList : function (btn) {

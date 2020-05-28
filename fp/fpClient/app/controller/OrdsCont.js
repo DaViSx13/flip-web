@@ -2,11 +2,8 @@ Ext.define('FPClient.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
 	views: ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid' /*, 'orders.WbWin', 'orders.WbForm'*/],
 	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod' /*, 'WebWbMod'*/],
-	stores: ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt' /*, 'WebWbSt'*/],
-	refs: [/*{
-		ref : 'WbForm',
-		selector : 'wbform'
-		},*/
+	stores: ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'],
+	refs: [
 		{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -140,7 +137,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 			},
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
-			},
+			}
 		});
 		this.getOrderStStore().on({
 			scope: this,
@@ -157,13 +154,9 @@ Ext.define('FPClient.controller.OrdsCont', {
 		this.getClientStStore().load();
 	},
 
-	/**
-	 * Печть накладной.
-	 * @param button Кнопка 'Печать'
-	 */
-	printWB: function (button) {
-		let form = button.up('window').down('form');
-		window.open('srv/report.php?wbno=' + form.down('displayfield[name=wb_no]').value);
+	printWB: function (but) {
+		var frm = but.up('window').down('form');
+		window.open('srv/report.php?wbno=' + frm.down('displayfield[name=wb_no]').value+'&iswb=1');
 	},
 
 
