@@ -126,6 +126,9 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'usetemplform combobox' : {
 				keypress : this.pressTpl
+			},
+			'viewwbwin button[action=printWB]': {
+				click: this.printWB
 			}
 		});
 		this.getOrderStStore().on({
@@ -142,6 +145,12 @@ Ext.define('fplk.controller.OrdsCont', {
 		});
 		this.getClientStStore().load();
 	},
+	
+	printWB: function (but) {
+		var frm = but.up('window').down('form');
+		window.open('srv/report.php?wbno=' + frm.down('displayfield[name=wb_no]').value+'&iswb=1');
+	},
+
 	clkList : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('admtool');

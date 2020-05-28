@@ -2,11 +2,8 @@ Ext.define('FPClient.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
 	views: ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid' /*, 'orders.WbWin', 'orders.WbForm'*/],
 	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod' /*, 'WebWbMod'*/],
-	stores: ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt' /*, 'WebWbSt'*/],
-	refs: [/*{
-		ref : 'WbForm',
-		selector : 'wbform'
-		},*/
+	stores: ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'],
+	refs: [
 		{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -137,6 +134,9 @@ Ext.define('FPClient.controller.OrdsCont', {
 			},
 			'usetemplform combobox': {
 				keypress: this.pressTpl
+			},
+			'viewwbwin button[action=printWB]': {
+				click: this.printWB
 			}
 		});
 		this.getOrderStStore().on({
@@ -153,6 +153,13 @@ Ext.define('FPClient.controller.OrdsCont', {
 		});
 		this.getClientStStore().load();
 	},
+
+	printWB: function (but) {
+		var frm = but.up('window').down('form');
+		window.open('srv/report.php?wbno=' + frm.down('displayfield[name=wb_no]').value+'&iswb=1');
+	},
+
+
 	checkWb: function (ch, newValue, oldValue, eOpts){		
 		var print = ch.up('ordform').down('checkboxfield[name=webwbprint]');
 		if (newValue) {

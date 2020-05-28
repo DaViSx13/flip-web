@@ -4,7 +4,12 @@ include 'dbConnect.php';
 set_time_limit(300);
 
 $wbno = $_REQUEST['wbno'];
-$qry = "exec wwwGetWebWb @wb_no='{$wbno}'";
+$isWb = $_REQUEST['iswb'];
+if ($isWb == 1){
+	$qry = "exec wwwGetWb @wb_no='{$wbno}'";
+} else {
+	$qry = "exec wwwGetWebWb @wb_no='{$wbno}'";
+	}
 $result=mssql_query($qry);
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
@@ -26,7 +31,7 @@ $result=mssql_query($qry);
 $wbData = json_encode($response->data[0]);
 $data_string = urlencode($wbData);
 $str = "?wbData={$data_string}";
-$url = 'http://jasperadmin:jasperadmin@192.168.56.1:8080/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
+$url = 'http://jasperadmin:jasperadmin@10.10.10.6:8080/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
 $ch = curl_init($url); 
 $fh = fopen('php://temp', 'w');                                                                                                                  
 curl_setopt($ch, CURLOPT_FILE, $fh);
