@@ -525,6 +525,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					'Ошибка ввода города',
 					'Не заполнено поле "Город отправителя".');
 			cityFrom.setFieldStyle("border-color:red");
+			cityFrom.on({focus:this.resetMarkedFields});
 			return null;
 		}
 
@@ -535,6 +536,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					'Ошибка ввода города',
 					'Не заполнено поле "Город получателя".');
 			cityTo.setFieldStyle("border-color:red");
+			cityTo.on({focus:this.resetMarkedFields});
 			return null;
 		}
 
@@ -542,6 +544,15 @@ Ext.define('fplk.controller.OrdsCont', {
 		jsonArrayOrg.forEach(elem=> result.push(elem.get('code')));
 		jsonArrayDes.forEach(elem=> result.push(elem.get('code')));
 		return result;
+	},
+
+
+	/**
+	 * Сброс помеченых полей.
+	 * @param field Поле для сброса
+	 */
+	resetMarkedFields: function(field) {
+		field.setFieldStyle("border-color:gray");
 	},
 
 	/**
@@ -580,9 +591,9 @@ Ext.define('fplk.controller.OrdsCont', {
 			form_ord.submit({
 				url : 'srv/data.php',
 				params : {
-					dbAct : 'saveagorder',
-					org: sites[0],
-					dest: sites[1]
+					dbAct 	: 'saveagorder',
+					org		: sites[0],
+					dest	: sites[1]
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
