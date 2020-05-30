@@ -541,8 +541,8 @@ Ext.define('fplk.controller.OrdsCont', {
 		}
 
 		let result = [];
-		jsonArrayOrg.forEach(elem=> result.push(elem.get('code')));
-		jsonArrayDes.forEach(elem=> result.push(elem.get('code')));
+		jsonArrayOrg.forEach(elem => result.push(elem.get('code')));
+		jsonArrayDes.forEach(elem => result.push(elem.get('code')));
 		return result;
 	},
 
@@ -606,10 +606,7 @@ Ext.define('fplk.controller.OrdsCont', {
 									+ action.result.msg);
 				},
 				failure : function () {
-					Ext.Msg.alert(
-								'Заказ не сохранен!',
-								'Неверно введен город Получателя!' +
-								' Выберите город из выпадающего списка.');
+					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
 				}
 			});
 		} else {

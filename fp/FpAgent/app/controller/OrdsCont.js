@@ -978,94 +978,120 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		window.open('srv/report.php?wbno=' + this.getViewWbForm().down('displayfield[name=wb_no]').value);
 	},
 
-	saveOrder: function (btn) {
-		var me = this;
-		var win = btn.up('ordwin');
-		var form_ord = win.down('ordform');
-		var form_lf = win.down('loadfileform');
-		var org = form_ord.down('combocity[name=org]');
-		var dest = form_ord.down('combocity[name=dest]');
-		if (org.value == null) {
-			var jsonArrayOrg = this.getCityStOrgStore().data.items;
-			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
-				return;
-			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-					org.setValue(jsonArrayOrg[i].data.code);
-					break;
-				};
-			};
-			if (org.value == null) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
-				return;
-			};
+	/**
+	 * Проверка ввода города.
+	 * @param cityFrom Город отправителя
+	 * @param cityTo Город получателя
+	 * @returns Array Возвращает коды городов.
+	 */
+	checkCity: function(cityFrom, cityTo) {
+		const jsonArrayDes = this
+			.getCityStDesStore()
+			.data
+			.items;
+		const jsonArrayOrg = this
+			.getCityStOrgStore()
+			.data
+			.items;
+
+		if (cityFrom.value == null & jsonArrayOrg.length) {
+			Ext
+				.Msg
+				.alert(
+					'Ошибка ввода города',
+					'Не заполнено поле "Город отправителя".');
+			cityFrom.setFieldStyle("border-color:red");
+			cityFrom.on({focus:this.resetMarkedFields});
+			return null;
 		}
-		if (dest.value == null) {
-			var jsonArrayDes = this.getCityStDesStore().data.items;
-			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
-				return;
-			};
-			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
-					dest.setValue(jsonArrayDes[i].data.code);
-					break;
-				};
-			};
-			if (dest.value == null) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
-				return;
-			};
+
+		if (cityTo.value == null & jsonArrayDes.length) {
+			Ext
+				.Msg
+				.alert(
+					'Ошибка ввода города',
+					'Не заполнено поле "Город получателя".');
+			cityTo.setFieldStyle("border-color:red");
+			cityTo.on({focus:this.resetMarkedFields});
+			return null;
 		}
+
+		let result = [];
+		jsonArrayOrg.forEach(elem => result.push(elem.get('code')));
+		jsonArrayDes.forEach(elem => result.push(elem.get('code')));
+		return result;
+	},
+
+
+	/**
+	 * Сброс помеченых полей.
+	 * @param field Поле для сброса
+	 */
+	resetMarkedFields: function(field) {
+		field.setFieldStyle("border-color:gray");
+	},
+
+	/**
+	 * Сохраняет заказы.
+	 * @param btn Кнопка "Сохранить"
+	 */
+	saveOrder : function (btn) {
+		const me 		= this;
+		const win 		= btn
+			.up('ordwin');
+		const form_ord 	= win
+			.down('ordform');
+		const org 		= form_ord
+			.down('combocity[name=org]');
+		const dest 		= form_ord
+			.down('combocity[name=dest]');
+
+		this.checkCity(org, dest);
+
+		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
+			form_ord
+				.down('textfield[name=rordnum]')
+				.setValue(null);
+			form_ord
+				.down('datefield[name=courdate]')
+				.setValue(new Date());
+		}
+
+		const sites = this.checkCity(org, dest);
+
+		if(sites == null) {
+			return;
+		}
+
 		if (form_ord.getForm().isValid()) {
-			btn.disable();
 			form_ord.submit({
-				url: 'srv/data.php',
-				params: {
-					dbAct: 'saveagorder'
+				url : 'srv/data.php',
+				params : {
+					dbAct 	: 'saveagorder',
+					org		: sites[0],
+					dest	: sites[1]
 				},
-				submitEmptyText: false,
-				success: function (form, action) {
-					if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
-						if (form_lf.getForm().isValid()) {
-							form_lf.submit({
-								url: 'srv/upload.php',
-								params: {
-									act: 'ins',
-									orderNum: action.result.data[0].rordnum
-								},
-								success: function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
-									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave") /*'Заказ сохранен!'*/, action.result.msg);
-								},
-								failure: function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
-									Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FileNotSave") /*'Файл не сохранен!'*/, action.result.msg);
-								}
-							});
-						}
-					} else {
-						form.reset();
-						me.getOrdForm().up('ordwin').close();
-						me.loadOrdGr();
-						Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderSave") /*'Заказ сохранен!'*/, action.result.msg);
-					}
+				submitEmptyText : false,
+				success : function (form, action) {
+					form.reset();
+					me.getOrdForm().up('ordwin').close();
+					me.loadOrdGr();
+					Ext.Msg.alert(
+						'Сохранение заказа',
+						'Заказ успешно сохранен: '
+						+ action.result.msg);
 				},
-				failure: function (form, action) {
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.OrderNotSave") /*'Заказ не сохранен!'*/, action.result.msg);
-					btn.enable();
+				failure : function () {
+					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
 				}
 			});
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead") /*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody") /*'Откорректируйте информацию'*/)
+			Ext.Msg.alert(
+				'Не все поля заполнены',
+				'Откорректируйте информацию')
 		}
 	},
+
 	monthChange: function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
 		var ye = aTol.down('numyear').value;
