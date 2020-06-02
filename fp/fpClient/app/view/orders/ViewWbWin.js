@@ -18,6 +18,9 @@ Ext.define('FPClient.view.orders.ViewWbWin', {
 			}
 		];
 		this.buttons = [{
+				text:	'Печать',
+				action: 'printWB'
+			}, {
 				text : 'Закрыть',
 				scope : this,
 				handler : this.close
