@@ -67,6 +67,12 @@ Ext.define('fplk.controller.OrdsCont', {
 			'ordspanel' : {
 				activate : this.loadOrdGr
 			},
+			'ordform combocity[name=dest]' : {
+				change : this.getKladr
+			},
+			'ordform combocity[name=org]' : {
+				change : this.getKladr
+			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
 			},			
@@ -144,6 +150,62 @@ Ext.define('fplk.controller.OrdsCont', {
 			load : this.loadOrdersSt
 		});
 		this.getClientStStore().load();
+	},
+
+	/**
+	 * Получает гоод по его индексу.
+	 * Проверяет количество символов при вводе,
+	 * если число равно 6, то
+	 * производит проверку что все символы явдяются числами
+	 * через регулярное выражение.
+	 * Если проверки успешны - добавляет к индексу населенный пункт,
+	 * блокирует ввод,
+	 * Для сброса ввода нужно снова выставить фокус на поле.
+	 * @param component ComboCity Комбобокс выбора города.
+	 */
+	getKladr: function(component) {
+		var input = component.rawValue;
+		if (input.length == 6) {
+			if(input.match(/\d\d\d\d\d\d/) != null) {
+				Ext.Ajax.request({
+					url : 'srv/KladrApi.php',
+					async: false,
+					params : {
+						searchingIndex : input
+					},
+					success : function (response) {
+						var text = Ext.decode(response.responseText);
+						var values = text.result[0].parents;
+						var cityComboValue = "";
+						for (var i = 0; i < 3; i++) {
+							if(values[i].typeShort == "г") {
+								cityComboValue += ", "
+									+ values[i].name
+									+ " "
+									+ values[i].typeShort;
+								break;
+							}
+							cityComboValue += ", "
+								+ values[i].name
+								+ " "
+								+ values[i].typeShort;
+						}
+						component.setRawValue(input + cityComboValue);
+						component.setReadOnly(true);
+						component.on({focus: function () {
+								component.setRawValue("");
+								component.setReadOnly(false);
+							}});
+					},
+					failure : function () {
+						Ext.Msg.alert(
+							'Сервер КЛАДР не доступен!',
+							"Возможны проблемы с удаленным сервером КЛАДР." +
+							" Повторите позже");
+					}
+				});
+			}
+		}
 	},
 	
 	printWB: function (but) {
@@ -501,6 +563,19 @@ Ext.define('fplk.controller.OrdsCont', {
 			}
 		}
 	},
+
+
+	/**
+	 * Сохраняет заказ.
+	 * Если введен индекс,
+	 * обращается к API КАДР,
+	 * далее выбирает город и ищет
+	 * совпадения во внутренней базе
+	 * и выставляет код города из внутренней базы.
+	 * Если город введен вручную проверяет правильност
+	 * ввода и выставляет код из внутренней базы.
+	 * @param btn Кнопка сохранить.
+	 */
 	saveOrder : function (btn) {
 		var me = this;
 		var win = btn.up('ordwin');
@@ -508,89 +583,141 @@ Ext.define('fplk.controller.OrdsCont', {
 		//var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		
+
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
 		}
-		if (dest.value == null) {
-			var jsonArrayDes = this.getCityStDesStore().data.items;
-			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
-					dest.setValue(jsonArrayDes[i].data.code);
-					break;
-				};
-			};
-			if (dest.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}
-		if (org.value == null) {
-			var jsonArrayOrg = this.getCityStOrgStore().data.items;
-			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-					org.setValue(jsonArrayOrg[i].data.code);
-					break;
-				};
-			};
-			if (org.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}
-		if (form_ord.getForm().isValid()) {
-			form_ord.submit({
-				url : 'srv/data.php',
-				params : {
-					dbAct : 'saveagorder'
+
+		if(dest.rawValue.match(/\d\d\d\d\d\d/) != null) {
+			var text = dest.getRawValue().split(',');
+			var city = text[text.length - 1].trim().split(" ")[0];
+			console.log(city);
+			Ext.Ajax.request({
+				url: 'srv/data.php',
+				params: {
+					async: false,
+					dbAct: "GetCity",
+					query: city
 				},
-				submitEmptyText : false,
-				success : function (form, action) {
-					/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
-						if (form_lf.getForm().isValid()) {
-							form_lf.submit({
-								url : 'srv/upload.php',
-								params : {
-									act : 'ins',
-									orderNum : action.result.data[0].rordnum
-								},
-								success : function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
-									Ext.Msg.alert('Заказ сохранен!', action.result.msg);
-								},
-								failure : function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
-									Ext.Msg.alert('Файл не сохранен!', action.result.msg);
-								}
-							});
-						}
-					} else {*/
+				success: function (response) {
+					var responseJson = Ext.decode(response.responseText);
+					dest.setValue(responseJson.data[0].code);
+				},
+				failure: function () {
+					Ext.Msg.alert(
+						'Город не найден!',
+						"Проверьте данные и повторите запрос");
+				}
+			});
+		} else {
+			if (dest.value == null) {
+				var jsonArrayDes = this.getCityStDesStore().data.items;
+				if (jsonArrayDes.length == 0) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+					return;
+				}
+				for (var i = 0; i < jsonArrayDes.length; i++) {
+					if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+						dest.setValue(jsonArrayDes[i].data.code);
+						break;
+					}
+				}
+				if (dest.value == null) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+					return;
+				}
+			}
+		}
+
+		if(org.rawValue.match(/\d\d\d\d\d\d/) != null) {
+			var text = org.getRawValue().split(',');
+			var city = text[text.length - 1].trim().split(" ")[0];
+			console.log(city);
+			Ext.Ajax.request({
+				url: 'srv/data.php',
+				params: {
+					async: false,
+					dbAct: "GetCity",
+					query: city
+				},
+				success: function (response) {
+					var responseJson = Ext.decode(response.responseText);
+					org.setValue(responseJson.data[0].code);
+				},
+				failure: function () {
+					Ext.Msg.alert(
+						'Город не найден!',
+						"Проверьте данные и повторите запрос");
+				}
+			});
+		} else {
+			if (org.value == null) {
+				var jsonArrayOrg = this.getCityStOrgStore().data.items;
+				if (jsonArrayOrg.length == 0) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+					return;
+				}
+				for (var i = 0; i < jsonArrayOrg.length; i++) {
+					if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+						org.setValue(jsonArrayOrg[i].data.code);
+						break;
+					}
+				}
+				if (org.value == null) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+					return;
+				}
+			}
+		}
+		setTimeout(function() {
+			if (form_ord.getForm().isValid()) {
+				form_ord.submit({
+					url : 'srv/data.php',
+					async : false,
+					params : {
+						dbAct : 'saveagorder'
+					},
+					submitEmptyText : false,
+					success : function (form, action) {
+						/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
+                            if (form_lf.getForm().isValid()) {
+                                form_lf.submit({
+                                    url : 'srv/upload.php',
+                                    params : {
+                                        act : 'ins',
+                                        orderNum : action.result.data[0].rordnum
+                                    },
+                                    success : function (form, action) {
+                                        form.reset();
+                                        me.getOrdForm().up('ordwin').close();
+                                        me.loadOrdGr();
+                                        Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+                                    },
+                                    failure : function (form, action) {
+                                        form.reset();
+                                        me.getOrdForm().up('ordwin').close();
+                                        me.loadOrdGr();
+                                        Ext.Msg.alert('Файл не сохранен!', action.result.msg);
+                                    }
+                                });
+                            }
+                        } else {*/
 						form.reset();
 						me.getOrdForm().up('ordwin').close();
 						me.loadOrdGr();
 						Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
-					//}
-				},
-				failure : function (form, action) {
-					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
-				}
-			});
-		} else {
-			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
-		}
+						//}
+					},
+					failure : function (form, action) {
+						Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
+					}
+				});
+			}
+			else Ext.Msg.alert(
+				'Не все поля заполнены',
+				'Откорректируйте информацию')
+		}, 500);
 	},	
 	monthChange : function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
