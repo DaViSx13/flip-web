@@ -35,7 +35,7 @@ Ext.define('fplk.view.mainform.GroupTarifWin', {
 			iconCls	:'download',
 			margin  :'10 0 0 0',
 			hrefTarget : '_parent',
-			href	:'/FpClient/srv/importTarifClaculate.php?action=getGroupTarifExample'
+			href	:'srv/importTarifClaculate.php?action=getGroupTarifExample'
 
 			}]
 		}, {
