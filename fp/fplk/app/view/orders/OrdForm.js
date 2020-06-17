@@ -15,6 +15,13 @@ Ext.define('fplk.view.orders.OrdForm', {
 			x : 10,
 			y : 0,			
 			items : [{
+					xtype : 'textfield',
+					name : 'orgIndex',
+					width : 337,
+					allowBlank : true,
+					fieldLabel : 'Индекс',
+					labelAlign : 'top',
+				}, {
 					xtype : 'combocity',
 					name : 'org',
 					store : 'CityStOrg',
@@ -80,6 +87,13 @@ Ext.define('fplk.view.orders.OrdForm', {
 			x : 390,
 			y : 0,
 			items : [{
+					xtype : 'textfield',
+					width : 337,
+					name : 'destIndex',
+					allowBlank : true,
+					fieldLabel : 'Индекс',
+					labelAlign : 'top',
+				},{
 					xtype : 'combocity',
 					name : 'dest',
 					store : 'CityStDes'

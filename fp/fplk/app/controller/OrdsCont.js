@@ -67,10 +67,10 @@ Ext.define('fplk.controller.OrdsCont', {
 			'ordspanel' : {
 				activate : this.loadOrdGr
 			},
-			'ordform combocity[name=dest]' : {
+			'ordform textfield[name=destIndex]' : {
 				change : this.getKladr
 			},
-			'ordform combocity[name=org]' : {
+			'ordform textfield[name=orgIndex]' : {
 				change : this.getKladr
 			},
 			'ordgrid button[action=new]' : {
@@ -164,6 +164,16 @@ Ext.define('fplk.controller.OrdsCont', {
 	 * @param component ComboCity Комбобокс выбора города.
 	 */
 	getKladr: function(component) {
+
+
+		var targetComponent;
+
+		if(component.name == "orgIndex") {
+			targetComponent = component.up("window").down("ordform combocity[name=org]");
+		} else {
+			targetComponent = component.up("window").down("ordform combocity[name=dest]");
+		}
+
 		var input = component.rawValue;
 		if (input.length == 6) {
 			if(input.match(/\d\d\d\d\d\d/) != null) {
@@ -190,11 +200,14 @@ Ext.define('fplk.controller.OrdsCont', {
 								+ " "
 								+ values[i].typeShort;
 						}
-						component.setRawValue(input + cityComboValue);
-						component.setReadOnly(true);
+
+						targetComponent.setValue(input + cityComboValue);
+						targetComponent.setReadOnly(true);
 						component.on({focus: function () {
 								component.setRawValue("");
 								component.setReadOnly(false);
+								targetComponent.setRawValue("");
+								targetComponent.setReadOnly(false);
 							}});
 					},
 					failure : function () {
@@ -205,6 +218,9 @@ Ext.define('fplk.controller.OrdsCont', {
 					}
 				});
 			}
+		} else {
+			targetComponent.setValue("");
+			targetComponent.setReadOnly(false);
 		}
 	},
 	
@@ -633,7 +649,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		if(org.rawValue.match(/\d\d\d\d\d\d/) != null) {
 			var text = org.getRawValue().split(',');
 			var city = text[text.length - 1].trim().split(" ")[0];
-			console.log(city);
+
 			Ext.Ajax.request({
 				url: 'srv/data.php',
 				params: {
@@ -767,7 +783,11 @@ Ext.define('fplk.controller.OrdsCont', {
 			form_lf.down('label[name=urlf]').setVisible(false);
 			form_lf.down('button[action=delete]').hide();
 		}*/
+
 		form_ord.loadRecord(rec[0]);
+
+		form_ord.down("textfield[name = destIndex]").setRawValue(rec[0].raw['destadressindex']);
+		form_ord.down("textfield[name = orgIndex]").setRawValue(rec[0].raw['orgadressindex']);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
