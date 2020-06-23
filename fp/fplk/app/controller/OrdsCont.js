@@ -68,10 +68,10 @@ Ext.define('fplk.controller.OrdsCont', {
 				activate : this.loadOrdGr
 			},
 			'ordform textfield[name=destIndex]' : {
-				change : this.getKladr
+				change : this.setCityByKLADR
 			},
 			'ordform textfield[name=orgIndex]' : {
-				change : this.getKladr
+				change : this.setCityByKLADR
 			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
@@ -154,74 +154,102 @@ Ext.define('fplk.controller.OrdsCont', {
 
 	/**
 	 * Получает гоод по его индексу.
-	 * Проверяет количество символов при вводе,
-	 * если число равно 6, то
-	 * производит проверку что все символы явдяются числами
-	 * через регулярное выражение.
-	 * Если проверки успешны - добавляет к индексу населенный пункт,
-	 * блокирует ввод,
-	 * Для сброса ввода нужно снова выставить фокус на поле.
-	 * @param component ComboCity Комбобокс выбора города.
+	 * Сайт - https://kladr-api.ru
+	 * Логин - aleksiev_vova@mail.ru
+	 * Пароль - 1234098sam
+	 * @param rawValue Индекс города
 	 */
-	getKladr: function(component) {
+	getKladr: function(rawValue) {
+		var result = null;
 
-
-		var targetComponent;
-
-		if(component.name == "orgIndex") {
-			targetComponent = component.up("window").down("ordform combocity[name=org]");
-		} else {
-			targetComponent = component.up("window").down("ordform combocity[name=dest]");
-		}
-
-		var input = component.rawValue;
-		if (input.length == 6) {
-			if(input.match(/\d\d\d\d\d\d/) != null) {
 				Ext.Ajax.request({
-					url : 'srv/KladrApi.php',
+					url: 'srv/KladrApi.php',
 					async: false,
-					params : {
-						searchingIndex : input
+					params: {
+						searchingIndex: rawValue
 					},
-					success : function (response) {
+					success: function (response) {
 						var text = Ext.decode(response.responseText);
-						var values = text.result[0].parents;
-						var cityComboValue = "";
-						for (var i = 0; i < 3; i++) {
-							if(values[i].typeShort == "г") {
-								cityComboValue += ", "
-									+ values[i].name
-									+ " "
-									+ values[i].typeShort;
-								break;
-							}
-							cityComboValue += ", "
-								+ values[i].name
-								+ " "
-								+ values[i].typeShort;
-						}
-
-						targetComponent.setValue(input + cityComboValue);
-						targetComponent.setReadOnly(true);
-						component.on({focus: function () {
-								component.setRawValue("");
-								component.setReadOnly(false);
-								targetComponent.setRawValue("");
-								targetComponent.setReadOnly(false);
-							}});
+						result = text.result[0].parents;
 					},
-					failure : function () {
+					failure: function () {
 						Ext.Msg.alert(
 							'Сервер КЛАДР не доступен!',
 							"Возможны проблемы с удаленным сервером КЛАДР." +
 							" Повторите позже");
 					}
 				});
-			}
+		return result;
+	},
+
+	/**
+	 * Задает поле города по индексу.
+	 * Если поле содержит 6 символов и
+	 * все символы числовые, то идет запрос к
+	 * КЛАДР и после ищет совпадения в базе.
+	 * @param component Активное поле "Индекс"
+	 */
+	setCityByKLADR: function(component) {
+		var input = component.rawValue;
+		var kladr = null;
+		var targetComponent;
+		if(component.name == "orgIndex") {
+			targetComponent = component.up("window").down("ordform combocity[name=org]");
 		} else {
+			targetComponent = component.up("window").down("ordform combocity[name=dest]");
+		}
+
+		if (input.length == 6) {
+			if (input.match(/\d\d\d\d\d\d/) != null) {
+				kladr = this.getKladr(input);
+				if (kladr == null) {
+					Ext.Msg.alert(
+						'Сервер КЛАДР не доступен!',
+						"Возможны проблемы с удаленным сервером КЛАДР." +
+						" Повторите позже");
+				} else {
+					this.setCityValueAndEvents(targetComponent, kladr);
+
+				}
+			}
+		}  else {
 			targetComponent.setValue("");
 			targetComponent.setReadOnly(false);
 		}
+
+	},
+
+	/**
+	 * Выбирает значения в Combocity
+	 * @param component Активное поле Combocity
+	 * @param value Искомое значение
+	 */
+	setCityValueAndEvents: function(component, value) {
+
+		var store = component.store;
+		store.load({
+			params: {
+				dbAct: "GetCity",
+				query: value[value.length - 2].name,
+			},
+			scope: this,
+			callback: function(record, operation, success) {
+				if (!success) {
+					Ext.Msg.alert(
+						'Не найден адресс!',
+						"Ошибка запроса к базе данных");
+				} else {
+					if(record.length == 0) {
+						Ext.Msg.alert(
+							'Не найден адресс!',
+							"Не найден подходящий адрес в базе данных");
+					} else {
+						component.select(record);
+						component.setReadOnly(true);
+					}
+				}
+			}
+		});
 	},
 	
 	printWB: function (but) {
@@ -605,28 +633,6 @@ Ext.define('fplk.controller.OrdsCont', {
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
 		}
 
-		if(dest.rawValue.match(/\d\d\d\d\d\d/) != null) {
-			var text = dest.getRawValue().split(',');
-			var city = text[text.length - 1].trim().split(" ")[0];
-			console.log(city);
-			Ext.Ajax.request({
-				url: 'srv/data.php',
-				params: {
-					async: false,
-					dbAct: "GetCity",
-					query: city
-				},
-				success: function (response) {
-					var responseJson = Ext.decode(response.responseText);
-					dest.setValue(responseJson.data[0].code);
-				},
-				failure: function () {
-					Ext.Msg.alert(
-						'Город не найден!',
-						"Проверьте данные и повторите запрос");
-				}
-			});
-		} else {
 			if (dest.value == null) {
 				var jsonArrayDes = this.getCityStDesStore().data.items;
 				if (jsonArrayDes.length == 0) {
@@ -644,30 +650,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					return;
 				}
 			}
-		}
 
-		if(org.rawValue.match(/\d\d\d\d\d\d/) != null) {
-			var text = org.getRawValue().split(',');
-			var city = text[text.length - 1].trim().split(" ")[0];
-
-			Ext.Ajax.request({
-				url: 'srv/data.php',
-				params: {
-					async: false,
-					dbAct: "GetCity",
-					query: city
-				},
-				success: function (response) {
-					var responseJson = Ext.decode(response.responseText);
-					org.setValue(responseJson.data[0].code);
-				},
-				failure: function () {
-					Ext.Msg.alert(
-						'Город не найден!',
-						"Проверьте данные и повторите запрос");
-				}
-			});
-		} else {
 			if (org.value == null) {
 				var jsonArrayOrg = this.getCityStOrgStore().data.items;
 				if (jsonArrayOrg.length == 0) {
@@ -685,7 +668,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					return;
 				}
 			}
-		}
+
 		setTimeout(function() {
 			if (form_ord.getForm().isValid()) {
 				form_ord.submit({
