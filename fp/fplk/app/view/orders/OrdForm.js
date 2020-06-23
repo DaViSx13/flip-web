@@ -9,7 +9,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 	items : [{
 			xtype : 'fieldset',
 			id : 'fs1',
-			height : 390,
+			height : 420,
 			width : 360,
 			title : 'Отправитель',
 			x : 10,
