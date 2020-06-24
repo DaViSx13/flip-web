@@ -5,6 +5,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 	layout : {
 		type : 'absolute'
 	},
+	flex: 1,
 	bodyPadding : 10,
 	items : [{
 			xtype : 'fieldset',
@@ -81,7 +82,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 390,
+			height : 420,
 			width : 360,
 			title : 'Получатель',
 			x : 390,
@@ -152,7 +153,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Дата приезда курьера',
 			x : 10,
-			y : 390,
+			y : 420,
 			defaults : {
 				anchor : '100%'
 			},
@@ -201,7 +202,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Информация о грузе',
 			x : 390,
-			y : 390,
+			y : 420,
 			defaults : {
 				anchor : '100%'
 			},
@@ -242,7 +243,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			xtype : 'label',
 			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
-			y : 510,
+			y : 540,
 			width : 360
 		}, {
 			xtype : 'checkboxfield',
@@ -251,7 +252,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			inputValue: 1,
 			uncheckedValue: 0,
 			x : 10,
-			y : 486//,
+			y : 516//,
 			//width : 360
 		}
 	]
