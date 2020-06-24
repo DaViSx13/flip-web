@@ -10,7 +10,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 	items : [{
 			xtype : 'fieldset',
 			id : 'fs1',
-			height : 420,
+			height : 450,
 			width : 360,
 			title : 'Отправитель',
 			x : 10,
@@ -18,6 +18,8 @@ Ext.define('fplk.view.orders.OrdForm', {
 			items : [{
 					xtype : 'textfield',
 					name : 'orgIndex',
+					maxLength: 6,
+					maxLengthText: 6,
 					width : 337,
 					allowBlank : true,
 					fieldLabel : 'Индекс',
@@ -73,7 +75,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 				}, {
 					xtype : 'textareafield',
 					name : 'orgrems',
-					height : 75,
+					height : 85,
 					maxLength : 1000,
 					fieldLabel : 'Примечание',
 					labelAlign : 'top',
@@ -82,7 +84,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 420,
+			height : 450,
 			width : 360,
 			title : 'Получатель',
 			x : 390,
@@ -91,6 +93,8 @@ Ext.define('fplk.view.orders.OrdForm', {
 					xtype : 'textfield',
 					width : 337,
 					name : 'destIndex',
+					maxLength: 6,
+					maxLengthText: 6,
 					allowBlank : true,
 					fieldLabel : 'Индекс',
 					labelAlign : 'top',
@@ -140,7 +144,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 				}, {
 					xtype : 'textareafield',
 					name : 'destrems',
-					height : 75,
+					height : 85,
 					maxLength : 1000,
 					fieldLabel : 'Примечание',
 					labelAlign : 'top',
@@ -153,7 +157,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Дата приезда курьера',
 			x : 10,
-			y : 420,
+			y : 450,
 			defaults : {
 				anchor : '100%'
 			},
@@ -202,7 +206,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Информация о грузе',
 			x : 390,
-			y : 420,
+			y : 450,
 			defaults : {
 				anchor : '100%'
 			},
@@ -243,7 +247,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			xtype : 'label',
 			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
-			y : 540,
+			y : 580,
 			width : 360
 		}, {
 			xtype : 'checkboxfield',
@@ -252,7 +256,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			inputValue: 1,
 			uncheckedValue: 0,
 			x : 10,
-			y : 516//,
+			y : 550//,
 			//width : 360
 		}
 	]

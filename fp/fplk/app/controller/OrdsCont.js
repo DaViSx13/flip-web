@@ -170,7 +170,13 @@ Ext.define('fplk.controller.OrdsCont', {
 					},
 					success: function (response) {
 						var text = Ext.decode(response.responseText);
-						result = text.result[0].parents;
+						if(text.result.length == 0) {
+							Ext.Msg.alert(
+								'Неверный индекс!',
+								"Не найден введенный индекс");
+						} else {
+							result = text.result[0].parents;
+						}
 					},
 					failure: function () {
 						Ext.Msg.alert(
@@ -204,16 +210,25 @@ Ext.define('fplk.controller.OrdsCont', {
 				kladr = this.getKladr(input);
 				if (kladr == null) {
 					Ext.Msg.alert(
-						'Сервер КЛАДР не доступен!',
-						"Возможны проблемы с удаленным сервером КЛАДР." +
-						" Повторите позже");
+						'Не найден индекс!',
+						"Не найден индекс в базе КЛАДР. " +
+						"Проверьте данные и повторите запрос");
 				} else {
 					this.setCityValueAndEvents(targetComponent, kladr);
-
 				}
+			} else {
+				Ext.Msg.alert(
+					'Неверный индекс!',
+					"Введен не верный формат индекса");
 			}
 		}  else {
-			targetComponent.setValue("");
+			if(input.length > 6) {
+				component.setValue(input.substring(0, 6));
+				Ext.Msg.alert(
+					'Не верный формат индекса!',
+					"Индекс должен содержать 6 имволов.");
+			}
+			targetComponent.clearValue();
 			targetComponent.setReadOnly(false);
 		}
 
