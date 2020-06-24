@@ -222,12 +222,6 @@ Ext.define('fplk.controller.OrdsCont', {
 					"Введен не верный формат индекса");
 			}
 		}  else {
-			if(input.length > 6) {
-				component.setValue(input.substring(0, 6));
-				Ext.Msg.alert(
-					'Не верный формат индекса!',
-					"Индекс должен содержать 6 имволов.");
-			}
 			targetComponent.clearValue();
 			targetComponent.setReadOnly(false);
 		}
@@ -242,6 +236,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	setCityValueAndEvents: function(component, value) {
 
 		var store = component.store;
+		component.clearValue();
 		store.load({
 			params: {
 				dbAct: "GetCity",
