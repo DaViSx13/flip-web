@@ -1,6 +1,6 @@
 Ext.define('fplk.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'/*, 'orders.WbWin', 'orders.WbForm'*/],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'/*, 'WebWbMod'*/],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'/*, 'WebWbSt'*/],
 	refs : [/*{
@@ -129,6 +129,12 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
+			},
+			'ordtool button[action=import]': {
+				click: this.loadOrdersWin
+			},
+			'loadorderswin button[action=imp]': {
+				click: this.importOrders
 			}
 		});
 		this.getOrderStStore().on({
@@ -150,7 +156,34 @@ Ext.define('fplk.controller.OrdsCont', {
 		var frm = but.up('window').down('form');
 		window.open('srv/report.php?wbno=' + frm.down('displayfield[name=wb_no]').value+'&iswb=1');
 	},
+	
+	loadOrdersWin: function (btn) {
+		var newloadwin = Ext.widget('loadorderswin').show();
+	},
+	
+	importOrders: function (btn) {
+		var me = this;
+		var win = btn.up('loadorderswin');
+		var form_imp = win.down('loadordersform');
+		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
+			form_imp.submit({
+				url: 'srv/import/import.php',
+				params: {
+					act: 'importWebWB'
+				},
+				success: function (form, action) {
 
+					me.loadOrdGr();
+					win.close();
+					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+				},
+				failure: function (form, action) {
+					Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+				}
+			});
+		}
+	},
+	
 	clkList : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('admtool');
