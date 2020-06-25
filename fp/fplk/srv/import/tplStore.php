@@ -15,7 +15,7 @@ class tplStore {
 	var $tpls; 
 	function tplStore() {
 		$this->tpls = array (
-							'importWebWB_' => array( 
+							'importWebWB' => array( 
 												array('wwwImportWebWB'),
 												array('ord_no', 'int', 0, 1),
 												array('s_city', 'str', 1, 1),
@@ -34,11 +34,13 @@ class tplStore {
 												array('r_ref', 'str', 14, 1),
 												array('pcs', 'float', 15, 1),
 												array('wt', 'float', 16, 1),
-												array('vol_wt', 'int', 17, 1),
+												array('vol_wt', 'float', 17, 1),
 												array('t_pac', 'str', 18, 1),
 												array('descr', 'str', 19, 1),
 												array('inssum', 'float', 20, 1),
-												array('metpaym', 'str', 21, 1)
+												array('metpaym', 'str', 21, 1),
+												array('payr', 'str', 22, 1),
+												array('user_in', 'constant', $_SESSION['xUser'])
 												),
 							'importPod' => array( 
 												array('wwwImportPod'),
