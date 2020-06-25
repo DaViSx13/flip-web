@@ -779,8 +779,8 @@ Ext.define('fplk.controller.OrdsCont', {
 
 		form_ord.loadRecord(rec[0]);
 
-		form_ord.down("textfield[name = destIndex]").setRawValue(rec[0].raw['destadressindex']);
-		form_ord.down("textfield[name = orgIndex]").setRawValue(rec[0].raw['orgadressindex']);
+		form_ord.down("textfield[name = destIndex]").setRawValue(rec[0].raw['destzip']);
+		form_ord.down("textfield[name = orgIndex]").setRawValue(rec[0].raw['orgzip']);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
