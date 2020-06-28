@@ -170,7 +170,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					},
 					success: function (response) {
 						var text = Ext.decode(response.responseText);
-						if(text.result.length == 0) {
+						if(text.result.length === 0) {
 							Ext.Msg.alert(
 								'Неверный индекс!',
 								"Не найден введенный индекс");
@@ -199,13 +199,13 @@ Ext.define('fplk.controller.OrdsCont', {
 		var input = component.rawValue;
 		var kladr = null;
 		var targetComponent;
-		if(component.name == "orgIndex") {
+		if(component.name === "orgIndex") {
 			targetComponent = component.up("window").down("ordform combocity[name=org]");
 		} else {
 			targetComponent = component.up("window").down("ordform combocity[name=dest]");
 		}
 
-		if (input.length == 6) {
+		if (input.length === 6) {
 			if (input.match(/\d\d\d\d\d\d/) != null) {
 				kladr = this.getKladr(input);
 				if (kladr == null) {
@@ -213,6 +213,7 @@ Ext.define('fplk.controller.OrdsCont', {
 						'Не найден индекс!',
 						"Не найден индекс в базе КЛАДР. " +
 						"Проверьте данные и повторите запрос");
+					input.clearValue();
 				} else {
 					this.setCityValueAndEvents(targetComponent, kladr);
 				}
@@ -249,7 +250,12 @@ Ext.define('fplk.controller.OrdsCont', {
 						'Не найден адресс!',
 						"Ошибка запроса к базе данных");
 				} else {
-					if(record.length == 0) {
+					if(record.length === 0) {
+						var win = component.up('ordwin');
+						var index = (component.name === "org")
+							? win.down("textfield[name=orgIndex]")
+							: win.down("textfield[name=destIndex]");
+						index.setRawValue("");
 						Ext.Msg.alert(
 							'Не найден адресс!',
 							"Не найден подходящий адрес в базе данных");
@@ -284,7 +290,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	},
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
-		if (keyCode == 13) {
+		if (keyCode === 13) {
 			this.saveWbno(fild.up('wbnoform').up('wbnowin').down('button[action=save]'));
 		}
 	},
@@ -633,10 +639,20 @@ Ext.define('fplk.controller.OrdsCont', {
 	saveOrder : function (btn) {
 		var me = this;
 		var win = btn.up('ordwin');
+		var indexDest = win.down("textfield[name=orgIndex]");
+		var indexOrg = win.down("textfield[name=destIndex]");
 		var form_ord = win.down('ordform');
-		//var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
+		if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null) {
+			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
+			return;
+		}
+
+		if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null) {
+			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
+			return;
+		}
 
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
