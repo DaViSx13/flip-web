@@ -34,9 +34,7 @@ Ext.define('FPAgent.view.orders.OrdTool', {
 			text : FPAgent.lib.Translate.tr("OrdTool.action.wbview"),//'Просмотр накладной',
 			iconCls : 'wbview',
 			action : 'wbview'
-		}, '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
+		}, '->',  '-', {
 			xtype : 'combomonth'
 		}
 	]

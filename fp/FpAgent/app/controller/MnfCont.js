@@ -37,6 +37,9 @@ Ext.define('FPAgent.controller.MnfCont', {
 			'mnfgrid button[action=all]' : {
 				click : this.openAllmnf
 			},
+			'mnfgrid combomonth button[name=periodRefresh]' : {
+				click : this.periodChange
+			},
 			'mnfgrid combomonth' : {
 				change : this.monthChange
 			},
@@ -77,6 +80,36 @@ Ext.define('FPAgent.controller.MnfCont', {
 			load : this.loadWbStore
 		});
 	},
+
+	/**
+	 * Получает период из фильтров даты.
+	 * @returns {[*, *]} Период
+	 */
+	getPeriodFromPickers: function() {
+		var target = this.getMnfTool();
+		var fromDate = target.down('datefield[name=fromDate]').getValue();
+		var toDate = target.down('datefield[name=toDate]').getValue();
+
+		return [Ext.Date.format(fromDate, 'Ymd'), Ext.Date.format(toDate, 'Ymd')]
+	},
+
+	periodChange: function() {
+		var aTol = this.getMnfTool();
+		if (aTol.down('button[action=out]').pressed == true) {
+			var tab = -1
+		};
+		if (aTol.down('button[action=in]').pressed == true) {
+			var tab = 2
+		};
+		if (aTol.down('button[action=all]').pressed == true) {
+			var tab = 3
+		};
+
+		var period = this.getPeriodFromPickers(aTol);
+		this.loadMnfAllByPeriod(period[0], period[1], tab);
+	},
+
+
 	changeAgent : function (comp, newValue) {
 		var me = this;
 		if (comp.up('mainpanel').activeTab.title == FPAgent.lib.Translate.tr("MainPanel.mnfpanel")/*'Манифесты'*/
@@ -99,9 +132,8 @@ Ext.define('FPAgent.controller.MnfCont', {
 					if (aTol.down('button[action=all]').pressed == true) {
 						var tab = 3
 					};
-					var mo = aTol.down('combomonth').value;
-					var ye = aTol.down('numyear').value;
-					me.loadMnfAll(ye, mo, tab);
+					var period = this.getPeriodFromPickers();
+					me.loadMnfAllByPeriod(period[0], period[1], tab);
 				},
 				failure : function (response) {
 					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown")/*'Сервер недоступен!'*/
@@ -173,6 +205,24 @@ Ext.define('FPAgent.controller.MnfCont', {
 			}
 		});
 	},
+
+
+	/**
+	 * Загрузка хранилища по датам.
+	 * @param start Стартовая дата
+	 * @param end Конечная дата
+	 * @param tab Вкоадка
+	 */
+	loadMnfAllByPeriod : function (start, end, tab) {
+		this.getMnfStStore().load({
+			params : {
+				from : start,
+				to: end,
+				is_Ready : tab
+			}
+		});
+	},
+
 	showAPIHelp : function (btn) {	
 		window.open('help/index.html?api.html');
 	},
@@ -202,18 +252,16 @@ Ext.define('FPAgent.controller.MnfCont', {
 		var aTol = btn.up('mnftool');
 		aTol.down('button[action=in]').toggle(false);
 		aTol.down('button[action=all]').toggle(false);
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadMnfAll(ye, mo, -1);
+		var period = this.getPeriodFromPickers();
+		this.loadMnfAllByPeriod(period[0], period[1], -1);
 	},
 	openInmnf : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('mnftool');
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=all]').toggle(false);
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadMnfAll(ye, mo, 2);
+		var period = this.getPeriodFromPickers();
+		this.loadMnfAllByPeriod(period[0], period[1], 2);
 	},
 	gotoWb : function (pan, ntab) {
 		if (ntab.title == /*'Накладные'*/
@@ -228,10 +276,10 @@ Ext.define('FPAgent.controller.MnfCont', {
 		var aTol = btn.up('mnftool');
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadMnfAll(ye, mo, 3);
+		var period = this.getPeriodFromPickers();
+		this.loadMnfAllByPeriod(period[0], period[1], 3);
 	},
+
 	monthChange : function (comp, newz, oldz) {
 		var aTol = comp.up('mnftool');
 		var ye = aTol.down('numyear').value;

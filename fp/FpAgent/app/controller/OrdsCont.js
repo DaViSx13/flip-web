@@ -127,17 +127,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
 			},
-			'ordtool combomonth': {
-				change: this.monthChange
+			'ordtool combomonth button[name=periodRefresh]': {
+				click: this.periodChange
 			},
-			'ordclienttool combomonth': {
-				change: this.monthClientChange
-			},
-			'ordtool numyear': {
-				change: this.yearChange
-			},
-			'ordclienttool numyear': {
-				change: this.yearClientChange
+			'ordclienttool combomonth button[name=periodRefresh]': {
+				click: this.periodClientChange
 			},
 			'loadfileform button[action=delete]': {
 				click: this.fileDel
@@ -244,6 +238,36 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		});
 	},
 
+	/**
+	 * Получает введенный период.
+	 * @returns {[*, *]} Период от и до
+	 */
+	getDateFromPeriodFilter: function() {
+		var panel = this.getOrdTool();
+		var fromDate = panel.down('datefield[name=fromDate]').getValue();
+		var toDate = panel.down('datefield[name=toDate]').getValue();
+		return [
+			Ext.Date.format(fromDate, 'Ymd'),
+			Ext.Date.format(toDate, 'Ymd')];
+	},
+
+	/**
+	 * Выполняет запрос на клиентские заказы.
+	 */
+	periodClientChange: function() {
+		var period = this.getDateFromPeriodFilter();
+		this.loadClientOrdersByPeriod(period[0], period[1]);
+	},
+
+	/**
+	 * Выполняет запрос на заказы.
+	 * @param button Кнопка "Обновить"
+	 */
+	periodChange: function(button) {
+		var period = this.getDateFromPeriodFilter();
+		this.loadOrdersByPeriod(period[0], period[1]);
+	},
+
 	test: function() {
 		console.log("work");
 	},
@@ -261,7 +285,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * @param record Запись
 	 */
 	deleteRecordWebNo: function (grid, rowIndex, colIndex, item, event, record) {
-		if (record.get('isdeleted') == 0) {
+		if (record.get('isdeleted') === 0) {
 			record.set('isdeleted', 1);
 		} else {
 			record.set('isdeleted', 0);
@@ -415,7 +439,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 						let responseJson = Ext.decode(response.responseText);
 
 						if(!responseJson.success) {
-							console.log(responseJson);
 							errorsRows += (record.get('web_num')
 								+ ' Ошибка: '
 								+ responseJson.msg
@@ -506,14 +529,14 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 	},
 	loadOrdersWin: function (btn) {
-		var newloadwin = Ext.widget('loadorderswin').show();
+		Ext.widget('loadorderswin').show();
 	},
 	viewEx: function (column, action, grid, rowIndex, colIndex, record, node) {
 		this.viewExGrid(record.data['rordnum']);
 	},
 	viewExGrid: function (ex_rordnum) {
 		if (ex_rordnum) {
-			var viewex = Ext.widget('ordexwin').show();
+			Ext.widget('ordexwin').show();
 			this.getOrdExStoreStore().load({
 				params: {
 					rordnum: ex_rordnum
@@ -754,7 +777,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				win.show();
 			}
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("Error") /*'Ошибка!'*/, FPAgent.lib.Translate.tr("ServerdDown") /*'Ошибка связи с сервером!'*/);
+			Ext.Msg.alert(
+				FPAgent.lib.Translate.tr("Error") /*'Ошибка!'*/,
+				FPAgent.lib.Translate.tr("ServerdDown") /*'Ошибка связи с сервером!'*/);
 		}
 	},
 	exportExcel: function (btn) {
@@ -765,27 +790,41 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.AlertExportBody") /*'Выберите заказ для экспорта'*/);
 		}
 	},
+
+	/**
+	 * Нажатие на вкладку.
+	 * @param comp Вкладка
+	 * @param newValue Значение
+	 */
 	changeAgent: function (comp, newValue) {
-		var me = this;
 		if (comp.up('mainpanel').activeTab.title == 'Заказы') {
 			Ext.Ajax.request({
 				url: 'srv/change.php',
 				params: {
 					agent: newValue[0].data['partcode']
 				},
-				success: function (response) {
-					var text = Ext.decode(response.responseText);
-					var aTol = me.getOrdTool();
-					var ye = aTol.down('numyear').value;
-					var mo = aTol.down('combomonth').value;
-					me.loadOrds(ye, mo);
+				success: function () {
+					var period = this.getDateFromPeriodFilter();
+					this.loadOrdersByPeriod(period[0], period[1]);
 				},
 				failure: function (response) {
-					Ext.Msg.alert(FPAgent.lib.Translate.tr("ServerdDown") /*'Сервер недоступен!'*/, response.statusText);
+					Ext.Msg.alert(
+						FPAgent.lib.Translate.tr("ServerdDown") /*'Сервер недоступен!'*/,
+						response.statusText);
 				}
 			});
 		}
 	},
+
+	loadOrdersByPeriod: function(startDate, endDate) {
+		this.getOrdsStStore().load({
+			params: {
+				startDate: startDate,
+				endDate: endDate
+			}
+		});
+	},
+
 	loadOrds: function (y, m) {
 		this.getOrdsStStore().load({
 			params: {
@@ -794,13 +833,15 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		});
 	},
 
-	loadClientOrds: function (y, m) {
+	loadClientOrdersByPeriod: function(startDate, endDate) {
 		this.getOrdsClientStStore().load({
 			params: {
-				newPeriod: y + m
+				startDate: startDate,
+				endDate: endDate
 			}
 		});
 	},
+
 
 	loadOrdGr: function (Pan) {
 		var adTol = this.getAdmTool();
@@ -813,11 +854,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		btnTempl.setVisible(true);
 
 		this.clkList(btnList);
-		var aTol = this.getOrdTool();
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadOrds(ye, mo);
-		//this.loadClientOrds(ye, mo);
+		var period = this.getDateFromPeriodFilter();
+		this.loadOrdersByPeriod(period[0], period[1]);
 		this.getTemplStStore().load();
 	},
 
@@ -833,10 +871,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		btnTempl.setVisible(false);
 
 		this.clkList(btnList);
-		var aTol = ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc;
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadClientOrds(ye, mo);
+
+		var period = this.getDateFromPeriodFilter();
+		this.loadClientOrdersByPeriod(period[0], period[1]);
 	},
 
 	openOrdWin: function (btn) {
@@ -945,7 +982,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 	},
 	showClientOrdWin: function (grid) {
-
 		var sm = grid.getSelectionModel();
 
 		if (sm.getCount() > 0) {
@@ -969,12 +1005,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 	},
 	printWB: function (btn) {
-		//window.location.href = 'http://localhost:8080/jasperserver/flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports&reportUnit=%2Freports%2F112233&standAlone=true';//'srv/downloadTariffs.php';
-
 		var record = this.getViewWbStStore().findRecord('wb_no', this.getViewWbForm().down('displayfield[name=wb_no]').value);
-		//console.log(Ext.encode(record.getData()));
-
-		//console.log('srv/report.php?rec='+Ext.encode(record.getData()));
 		window.open('srv/report.php?wbno=' + this.getViewWbForm().down('displayfield[name=wb_no]').value);
 	},
 
@@ -988,7 +1019,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		if (org.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
+				Ext.Msg.alert(
+					FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/,
+					FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 			for (var i = 0; i < jsonArrayOrg.length; i++) {
@@ -1066,29 +1099,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyHead") /*'Не все поля заполнены'*/, FPAgent.lib.Translate.tr("OrdsCont.FieldIsEmptyBody") /*'Откорректируйте информацию'*/)
 		}
 	},
-	monthChange: function (comp, newz, oldz) {
-		var aTol = comp.up('ordtool');
-		var ye = aTol.down('numyear').value;
-		this.loadOrds(ye, newz);		
-	},
-
-	monthClientChange: function (comp, newz, oldz) {
-		var aTol = comp.up('ordclienttool');
-		var ye = aTol.down('numyear').value;		
-		this.loadClientOrds(ye, newz);
-	},
-
-	yearClientChange: function (comp, newz, oldz) {
-		var aTol = comp.up('ordclienttool');
-		var mo = aTol.down('combomonth').value;
-		this.loadClientOrds(newz, mo);
-	},
-
-	yearChange: function (comp, newz, oldz) {
-		var aTol = comp.up('ordtool');
-		var mo = aTol.down('combomonth').value;
-		this.loadOrds(newz, mo);
-	},
 
 	fileDel: function (but) {
 		var form_lf = but.up('loadfileform');
@@ -1110,7 +1120,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 	},
-	loadOrdStore: function (st, rec, suc) {
+
+	loadOrdStore: function (st, rec) {
 		var edi = this.getOrdWin();
 		var form_ord = edi.down('ordform');
 		var form_lf = edi.down('loadfileform');
@@ -1146,12 +1157,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		cb_des.select(rec[0].data['destcode']);
 		form_ord.down('combocity[name=org]').focus(false, true);
 	},
-	loadOrdersSt: function (st, rec, suc) {
+	loadOrdersSt: function (st) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount") /*'Количество заказов: '*/ + st.getCount());
 	},
 
-	loadClientOrdersSt: function (st, rec, suc) {
+	loadClientOrdersSt: function (st, rec) {
 		var tt = this.getOrdClientTotal();
 		var label = tt.down('label');
 		label.setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount") /*'Количество заказов: '*/ + rec.length, true);

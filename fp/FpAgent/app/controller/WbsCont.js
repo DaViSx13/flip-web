@@ -76,11 +76,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			'newpodwin button[action=save]' : {
 				click : this.savePod
 			},
-			'wbstool combomonth' : {
-				change : this.monthChange
-			},
-			'wbstool numyear' : {
-				change : this.yearChange
+			'wbstool combomonth button[name=periodRefresh]' : {
+				click : this.periodChange
 			},
 			'wbsgrid actioncolumn' : {
 				itemclick : this.viewEx
@@ -110,7 +107,13 @@ Ext.define('FPAgent.controller.WbsCont', {
 			scope : this,
 			load : this.loadViewExStore
 		});
-	},	 
+	},
+
+	periodChange: function() {
+		this.viewTotal();
+		this.loadWbs();
+	},
+
 	loadWbsStore : function () {		
 		this.getWbsTool().down('button[action=all]').setDisabled(false);
 		this.getWbsTool().down('button[action=in]').setDisabled(false);
@@ -169,10 +172,16 @@ Ext.define('FPAgent.controller.WbsCont', {
 			this.editDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a'], rec.data['req_rem'])
 		}
 	},
+
+	/**
+	 * Получает введенный период.
+	 * @param button Кнопка "Обновить"
+	 * @returns {[*, *]} Период от и до
+	 */
 	getPeriod : function () {
-		var m = this.getWbsTool().down('combomonth').value;
-		var y = this.getWbsTool().down('numyear').value;
-		return y + m + '01';
+		var fromDate = this.getWbsTool().down('datefield[name=fromDate]').getValue();
+		var toDate = this.getWbsTool().down('datefield[name=toDate]').getValue();
+		return [Ext.Date.format(fromDate, 'Ymd'), Ext.Date.format(toDate, 'Ymd')];
 	},
 	viewTotal : function () {
 		var tc = this;
@@ -197,7 +206,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 				params : {
 					dbAct : 'GetWbsTotal',
 					dir : t_dir,
-					period : tc.getPeriod()
+					from : tc.getPeriod()[0],
+					to: tc.getPeriod()[1]
 				},
 				success : function (response) {					
 					var text = Ext.decode(response.responseText);
@@ -430,7 +440,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 	},
 	beforeloadWbsStore: function (store, operation) {
 		var proxy = store.getProxy();
-		proxy.setExtraParam('newPeriod', this.getPeriod());
+		proxy.setExtraParam('from', this.getPeriod()[0]);
+		proxy.setExtraParam('to', this.getPeriod()[1]);
 		switch (true) {
 		case this.getWbsTool().down('button[action=all]').pressed:
 			proxy.setExtraParam('dir', 'all');

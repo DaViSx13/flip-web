@@ -111,18 +111,28 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getAgOrders':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec wwwGetAgOrders @period='$params[newPeriod]', @agentID={$ag}";
+			if(isset($params['newPeriod']))
+                $query = "exec wwwGetAgOrders @period='$params[newPeriod]', @agentID={$ag}";
+			else
+                $query = "exec wwwGetAgOrders @First='$params[startDate]',@Last='$params[endDate]', @agentID={$ag}";
             break;
 	    case 'getClientAgOrders':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec [wwwGetAgClientOrders] @period='$params[newPeriod]', @agentID={$ag}";
+            if(isset($params['newPeriod']))
+                $query = "exec wwwGetAgClientOrders @period='$params[newPeriod]', @agentID={$ag}";
+            else
+                $query = "exec wwwGetAgClientOrders @First='$params[startDate]', @Last='$params[endDate]', @agentID={$ag}";
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetMnf @period='{$params['period']}', @agentID={$ag}, @is_Ready={$is_Ready}";
+			if(isset($params['period'])) {
+                $query = "exec wwwGetMnf @period='{$params['period']}', @agentID={$ag}, @is_Ready={$is_Ready}";
+            } else {
+                $query = "exec wwwGetMnf @from='{$params['from']}', @to='{$params['to']}', @agentID={$ag}, @is_Ready={$is_Ready}";
+            }
 			break;
 		case 'GetWbMnf':
 			$mnfRefNo = $params['mnfRefNo'];
@@ -131,7 +141,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwGetWbMnf @agentID={$ag}, @mnfRefNo='{$mnfRefNo}'";
 			break;
 		case 'GetCity':
-			$pName = isset($params['query']) ? $params['query'] : '';  
+			$pName = isset($params['query']) ? $params['query'] : '';
 			$query = "exec wwwGetCity @pName = '{$pName}'";
 			break;
 		case 'editagorder':
@@ -141,7 +151,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			break;
 		case 'saveagorder':
 			$needLogRequest = true;
-			
+
 			$CName=$params['cname'];
 			$ag=$_SESSION['xAgentID'];
 			$DName=$params['dname'];
@@ -191,18 +201,21 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
 			@UserIn=$UserIn,
-			@RordNum=$Rordnum";			
+			@RordNum=$Rordnum";
 			break;
 		case 'GetAgentWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$dirWbs = $params['dir'];
-			$newPeriodWbs = $params['newPeriod'];
-			$query = "exec wwwGetAgentWbs @period='{$newPeriodWbs}', @agentID={$ag}, @dir='{$dirWbs}'";
+			if(isset($params['newPeriod'])) {
+                $newPeriodWbs = $params['newPeriod'];
+                $query = "exec wwwGetAgentWbs @period='{$newPeriodWbs}', @agentID={$ag}, @dir='{$dirWbs}'";
+            } else {
+                $query = "exec wwwGetAgentWbs @from='{$params['from']}', @to='{$params['to']}', @agentID={$ag}, @dir='{$dirWbs}'";
+            }
             $paging = true;
 			break;
 		case 'GetExCodes':
-			  
 			$query = "exec wwwGetExCodes";
 			break;
 		case 'SetToken':
@@ -248,7 +261,11 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWbsTotal':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwGetWbsTotal @dir='{$params['dir']}', @period='{$params['period']}',  @agentID={$ag} ";
+			if(isset($params['dir'])) {
+                $query = "exec wwwGetWbsTotal @dir='{$params['dir']}', @period='{$params['period']}',  @agentID={$ag} ";
+            } else {
+                $query = "exec wwwGetWbsTotal @dir='{$params['dir']}', @from='{$params['from']}', @to='{$params['to']}',  @agentID={$ag} ";
+            }
 			break;
 		case 'GetAgents':
 			$query = "exec wwwGetAgents";

@@ -55,9 +55,7 @@ Ext.define('FPAgent.view.wbs.WbsTool', {
 			text : FPAgent.lib.Translate.tr("WbsTool.filter"),//'Фильтр',
 			iconCls : 'filter',
 			action : 'filter'
-		}, '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
+		}, '->',  '-', {
 			xtype : 'combomonth'
 		}
 	]

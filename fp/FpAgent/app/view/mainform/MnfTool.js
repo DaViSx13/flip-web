@@ -24,8 +24,6 @@ Ext.define('FPAgent.view.mainform.MnfTool', {
 			action : 'excel'
 				},
 		 '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
 			xtype : 'combomonth'
 		}
 	]
