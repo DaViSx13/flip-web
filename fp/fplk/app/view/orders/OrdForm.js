@@ -24,7 +24,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					width : 337,
 					allowBlank : true,
 					fieldLabel : 'Индекс',
-					labelAlign : 'top',
+					labelAlign : 'top'
 				}, {
 					xtype : 'combocity',
 					name : 'org',
@@ -99,7 +99,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					enforceMaxLength: true,
 					allowBlank : true,
 					fieldLabel : 'Индекс',
-					labelAlign : 'top',
+					labelAlign : 'top'
 				},{
 					xtype : 'combocity',
 					name : 'dest',

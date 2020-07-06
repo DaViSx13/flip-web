@@ -241,7 +241,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		store.load({
 			params: {
 				dbAct: "GetCity",
-				query: value[value.length - 2].name,
+				query: value[value.length - 2].name
 			},
 			scope: this,
 			callback: function(record, operation, success) {
@@ -644,7 +644,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var form_ord = win.down('ordform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null) {
+		/*if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null) {
 			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
 			return;
 		}
@@ -652,7 +652,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null) {
 			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
 			return;
-		}
+		}*/
 
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
