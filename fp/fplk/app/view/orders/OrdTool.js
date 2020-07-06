@@ -40,6 +40,10 @@ Ext.define('fplk.view.orders.OrdTool', {
 			text : 'Из шаблона',
 			iconCls : 'wbnewtpl',
 			action : 'wbnewtpl'
+		}, {
+			text : 'Импорт из Excel',
+			iconCls : 'import',
+			action : 'import'
 		}, '->', '-', {
 			xtype : 'numyear'
 		}, '-', {

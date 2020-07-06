@@ -159,6 +159,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];
 			$webwb=$params['webwb'] ? $params['webwb'] : 0;
+			$orgIndex = isset($params['orgIndex']) & strlen($params['orgIndex']) > 0 ? $params['orgIndex'] : 0;
+			$destIndex = isset($params['destIndex'])  & strlen($params['destIndex']) > 0 ? $params['destIndex'] : 0;
 			
 			if($courdate){
 				$d = explode('.', $courdate);
@@ -193,7 +195,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum,
 			@clientID='$ag',
-			@webwb=$webwb";
+			@webwb=$webwb,
+			@destIndex = $destIndex,
+			@orgIndex = $orgIndex";
 			break;
 		case 'SetWebWB':			
 			$id=$params['id'] ? $params['id'] : 0;

@@ -74,6 +74,10 @@ Ext.define('fplk.model.OrderMod', {
 			name : 'fileowner'
 		}, {
 			name : 'status'
+		}, {
+			name: 'ORGAdressIndex'
+		} , {
+			name: 'DESTAdressIndex'
 		}
 	]
 });

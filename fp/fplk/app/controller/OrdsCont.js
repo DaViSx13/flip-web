@@ -1,6 +1,6 @@
 Ext.define('fplk.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid'/*, 'orders.WbWin', 'orders.WbForm'*/],
+	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin'],
 	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'/*, 'WebWbMod'*/],
 	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'/*, 'WebWbSt'*/],
 	refs : [/*{
@@ -67,6 +67,12 @@ Ext.define('fplk.controller.OrdsCont', {
 			'ordspanel' : {
 				activate : this.loadOrdGr
 			},
+			'ordform textfield[name=destIndex]' : {
+				change : this.setCityByKLADR
+			},
+			'ordform textfield[name=orgIndex]' : {
+				change : this.setCityByKLADR
+			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
 			},			
@@ -129,6 +135,12 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
+			},
+			'ordtool button[action=import]': {
+				click: this.loadOrdersWin
+			},
+			'loadorderswin button[action=imp]': {
+				click: this.importOrders
 			}
 		});
 		this.getOrderStStore().on({
@@ -145,12 +157,156 @@ Ext.define('fplk.controller.OrdsCont', {
 		});
 		this.getClientStStore().load();
 	},
+
+	/**
+	 * Получает гоод по его индексу.
+	 * Сайт - https://kladr-api.ru
+	 * Логин - aleksiev_vova@mail.ru
+	 * Пароль - 1234098sam
+	 * @param rawValue Индекс города
+	 */
+	getKladr: function(rawValue) {
+		var result = null;
+
+				Ext.Ajax.request({
+					url: 'srv/KladrApi.php',
+					async: false,
+					params: {
+						searchingIndex: rawValue
+					},
+					success: function (response) {
+						var text = Ext.decode(response.responseText);
+						if(text.result.length === 0) {
+							Ext.Msg.alert(
+								'Неверный индекс!',
+								"Не найден введенный индекс");
+						} else {
+							result = text.result[0].parents;
+						}
+					},
+					failure: function () {
+						Ext.Msg.alert(
+							'Сервер КЛАДР не доступен!',
+							"Возможны проблемы с удаленным сервером КЛАДР." +
+							" Повторите позже");
+					}
+				});
+		return result;
+	},
+
+	/**
+	 * Задает поле города по индексу.
+	 * Если поле содержит 6 символов и
+	 * все символы числовые, то идет запрос к
+	 * КЛАДР и после ищет совпадения в базе.
+	 * @param component Активное поле "Индекс"
+	 */
+	setCityByKLADR: function(component) {
+		var input = component.rawValue;
+		var kladr = null;
+		var targetComponent = null;
+		if(component.name === "orgIndex") {
+			targetComponent = component.up("window").down("ordform combocity[name=org]");
+		} else {
+			targetComponent = component.up("window").down("ordform combocity[name=dest]");
+		}
+
+		if (input.length === 6) {
+			if (input.match(/\d\d\d\d\d\d/) != null) {
+				kladr = this.getKladr(input);
+				if (kladr == null) {
+					Ext.Msg.alert(
+						'Не найден индекс!',
+						"Не найден индекс в базе КЛАДР. " +
+						"Проверьте данные и повторите запрос");
+					component.reset();
+				} else {
+					this.setCityValueAndEvents(targetComponent, kladr);
+				}
+			} else {
+				Ext.Msg.alert(
+					'Неверный индекс!',
+					"Введен не верный формат индекса");
+			}
+		}  else {			
+			targetComponent.clearValue();
+			targetComponent.setReadOnly(false);
+		}
+
+	},
+
+	/**
+	 * Выбирает значения в Combocity
+	 * @param component Активное поле Combocity
+	 * @param value Искомое значение
+	 */
+	setCityValueAndEvents: function(component, value) {
+
+		var store = component.store;
+		var cb = component;
+		cb.clearValue();
+		store.load({
+			params: {
+				dbAct: "GetCity",
+				query: value[value.length - 2].name + ", Россия, " + value[0].name
+			},
+			scope: this,
+			callback: function(record, operation, success) {
+				if (!success) {
+					Ext.Msg.alert(
+						'Не найден адресс!',
+						"Ошибка запроса к базе данных");
+				} else {
+					if(record.length === 0) {
+						var win = component.up('ordwin');
+						var index = (component.name === "org")
+							? win.down("textfield[name=orgIndex]")
+							: win.down("textfield[name=destIndex]");
+						index.setRawValue("");
+						Ext.Msg.alert(
+							'Не найден адресс!',
+							"Не найден подходящий адрес в базе данных");
+					} else {
+						component.select(record);
+						component.setReadOnly(true);
+					}
+				}
+			}
+		});
+	},
 	
 	printWB: function (but) {
 		var frm = but.up('window').down('form');
 		window.open('srv/report.php?wbno=' + frm.down('displayfield[name=wb_no]').value+'&iswb=1');
 	},
+	
+	loadOrdersWin: function (btn) {
+		var newloadwin = Ext.widget('loadorderswin').show();
+	},
+	
+	importOrders: function (btn) {
+		var me = this;
+		var win = btn.up('loadorderswin');
+		var form_imp = win.down('loadordersform');
+		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
+			form_imp.submit({
+				url: 'srv/import/import.php',
+				params: {
+					act: 'importWebWB'
+				},
+				success: function (form, action) {
 
+					me.loadOrdGr();
+					win.close();
+					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+				},
+				failure: function (form, action) {
+					Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+				}
+			});
+		}
+	},
+	
 	clkList : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('admtool');
@@ -168,7 +324,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	},
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
-		if (keyCode == 13) {
+		if (keyCode === 13) {
 			this.saveWbno(fild.up('wbnoform').up('wbnowin').down('button[action=save]'));
 		}
 	},
@@ -501,96 +657,129 @@ Ext.define('fplk.controller.OrdsCont', {
 			}
 		}
 	},
+
+
+	/**
+	 * Сохраняет заказ.
+	 * Если введен индекс,
+	 * обращается к API КАДР,
+	 * далее выбирает город и ищет
+	 * совпадения во внутренней базе
+	 * и выставляет код города из внутренней базы.
+	 * Если город введен вручную проверяет правильност
+	 * ввода и выставляет код из внутренней базы.
+	 * @param btn Кнопка сохранить.
+	 */
 	saveOrder : function (btn) {
 		var me = this;
 		var win = btn.up('ordwin');
+		var indexOrg = win.down("textfield[name=orgIndex]");
+		var indexDest = win.down("textfield[name=destIndex]");
 		var form_ord = win.down('ordform');
-		//var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
+		if (indexDest.rawValue.length != 0){
+		if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null){
+			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
+			return;
+		}
+		}
 		
+		if (indexOrg.rawValue.length != 0) {
+			if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null){
+			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
+			return;
+		}
+		}
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
 		}
-		if (dest.value == null) {
-			var jsonArrayDes = this.getCityStDesStore().data.items;
-			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
-					dest.setValue(jsonArrayDes[i].data.code);
-					break;
-				};
-			};
+
 			if (dest.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}
-		if (org.value == null) {
-			var jsonArrayOrg = this.getCityStOrgStore().data.items;
-			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-					org.setValue(jsonArrayOrg[i].data.code);
-					break;
-				};
-			};
+				var jsonArrayDes = this.getCityStDesStore().data.items;
+				if (jsonArrayDes.length == 0) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+					return;
+				}
+				for (var i = 0; i < jsonArrayDes.length; i++) {
+					if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+						dest.setValue(jsonArrayDes[i].data.code);
+						break;
+					}
+				}
+				if (dest.value == null) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+					return;
+				}
+			}
+
 			if (org.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}
-		if (form_ord.getForm().isValid()) {
-			form_ord.submit({
-				url : 'srv/data.php',
-				params : {
-					dbAct : 'saveagorder'
-				},
-				submitEmptyText : false,
-				success : function (form, action) {
-					/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
-						if (form_lf.getForm().isValid()) {
-							form_lf.submit({
-								url : 'srv/upload.php',
-								params : {
-									act : 'ins',
-									orderNum : action.result.data[0].rordnum
-								},
-								success : function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
-									Ext.Msg.alert('Заказ сохранен!', action.result.msg);
-								},
-								failure : function (form, action) {
-									form.reset();
-									me.getOrdForm().up('ordwin').close();
-									me.loadOrdGr();
-									Ext.Msg.alert('Файл не сохранен!', action.result.msg);
-								}
-							});
-						}
-					} else {*/
+				var jsonArrayOrg = this.getCityStOrgStore().data.items;
+				if (jsonArrayOrg.length == 0) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+					return;
+				}
+				for (var i = 0; i < jsonArrayOrg.length; i++) {
+					if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+						org.setValue(jsonArrayOrg[i].data.code);
+						break;
+					}
+				}
+				if (org.value == null) {
+					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+					return;
+				}
+			}
+
+		
+			if (form_ord.getForm().isValid()) {
+				form_ord.submit({
+					url : 'srv/data.php',
+					async : false,
+					params : {
+						dbAct : 'saveagorder'
+					},
+					submitEmptyText : false,
+					success : function (form, action) {
+						/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
+                            if (form_lf.getForm().isValid()) {
+                                form_lf.submit({
+                                    url : 'srv/upload.php',
+                                    params : {
+                                        act : 'ins',
+                                        orderNum : action.result.data[0].rordnum
+                                    },
+                                    success : function (form, action) {
+                                        form.reset();
+                                        me.getOrdForm().up('ordwin').close();
+                                        me.loadOrdGr();
+                                        Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+                                    },
+                                    failure : function (form, action) {
+                                        form.reset();
+                                        me.getOrdForm().up('ordwin').close();
+                                        me.loadOrdGr();
+                                        Ext.Msg.alert('Файл не сохранен!', action.result.msg);
+                                    }
+                                });
+                            }
+                        } else {*/
 						form.reset();
 						me.getOrdForm().up('ordwin').close();
 						me.loadOrdGr();
 						Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
-					//}
-				},
-				failure : function (form, action) {
-					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
-				}
-			});
-		} else {
-			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
-		}
+						//}
+					},
+					failure : function (form, action) {
+						Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
+					}
+				});
+			}
+			else Ext.Msg.alert(
+				'Не все поля заполнены',
+				'Откорректируйте информацию')
+	
 	},	
 	monthChange : function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
@@ -640,7 +829,11 @@ Ext.define('fplk.controller.OrdsCont', {
 			form_lf.down('label[name=urlf]').setVisible(false);
 			form_lf.down('button[action=delete]').hide();
 		}*/
+
 		form_ord.loadRecord(rec[0]);
+
+		form_ord.down("textfield[name = destIndex]").setRawValue(rec[0].raw['destzip']);
+		form_ord.down("textfield[name = orgIndex]").setRawValue(rec[0].raw['orgzip']);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
