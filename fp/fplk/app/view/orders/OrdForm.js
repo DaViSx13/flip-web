@@ -16,7 +16,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			x : 10,
 			y : 0,			
 			items : [{
-					xtype : 'textfield',
+					xtype : 'numberfield',
 					name : 'orgIndex',
 					maxLength: 6,
 					maxLengthText: 6,
@@ -24,6 +24,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					width : 337,
 					allowBlank : true,
 					fieldLabel : 'Индекс',
+					hideTrigger : true,
 					labelAlign : 'top'
 				}, {
 					xtype : 'combocity',
@@ -91,14 +92,15 @@ Ext.define('fplk.view.orders.OrdForm', {
 			x : 390,
 			y : 0,
 			items : [{
-					xtype : 'textfield',
+					xtype : 'numberfield',
 					width : 337,
 					name : 'destIndex',
 					maxLength: 6,
-					maxLengthText: 6,
+					maxLengthText: 6,					
 					enforceMaxLength: true,
 					allowBlank : true,
 					fieldLabel : 'Индекс',
+					hideTrigger : true,
 					labelAlign : 'top'
 				},{
 					xtype : 'combocity',

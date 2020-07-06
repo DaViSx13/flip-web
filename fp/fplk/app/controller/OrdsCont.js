@@ -644,15 +644,15 @@ Ext.define('fplk.controller.OrdsCont', {
 		var form_ord = win.down('ordform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		/*if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null) {
+		if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null | indexDest.rawValue.length != 0) {
 			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
 			return;
 		}
 
-		if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null) {
+		if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null | indexOrg.rawValue.length != 0) {
 			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
 			return;
-		}*/
+		}
 
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
@@ -695,7 +695,7 @@ Ext.define('fplk.controller.OrdsCont', {
 				}
 			}
 
-		setTimeout(function() {
+		
 			if (form_ord.getForm().isValid()) {
 				form_ord.submit({
 					url : 'srv/data.php',
@@ -742,7 +742,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			else Ext.Msg.alert(
 				'Не все поля заполнены',
 				'Откорректируйте информацию')
-		}, 500);
+	
 	},	
 	monthChange : function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
