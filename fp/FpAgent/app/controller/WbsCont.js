@@ -212,7 +212,6 @@ Ext.define('FPAgent.controller.WbsCont', {
 				success : function (response) {					
 					var text = Ext.decode(response.responseText);
 					if (text.success === true){
-						console.log(twt);
 						twt.down('label[itemId=lab1]').setText(FPAgent.lib.Translate.tr("WbsCont.Sum")/*'Всего: '*/ + text.data[0].s_wb);
 						twt.down('label[itemId=lab2]').setText(FPAgent.lib.Translate.tr("WbsCont.Wt")/*'Вес: '*/ + text.data[0].s_wt);
 						twt.down('label[itemId=lab3]').setText(FPAgent.lib.Translate.tr("WbsCont.VolWt")/*'V вес: '*/ + text.data[0].s_vol_wt);

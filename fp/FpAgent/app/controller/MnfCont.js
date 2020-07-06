@@ -322,6 +322,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 	},
 	loadMnfStore : function (st, rec, suc) {
 		var tt = this.getTotalTool();
+		console.log("workMF");
 		tt.down('label').setText(FPAgent.lib.Translate.tr("MnfCont.MnfCount")/*'Количество манифестов: '*/
 			 + st.getCount());
 

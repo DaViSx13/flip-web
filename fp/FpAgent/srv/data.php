@@ -261,7 +261,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWbsTotal':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			if(isset($params['dir'])) {
+			if(isset($params['period'])) {
                 $query = "exec wwwGetWbsTotal @dir='{$params['dir']}', @period='{$params['period']}',  @agentID={$ag} ";
             } else {
                 $query = "exec wwwGetWbsTotal @dir='{$params['dir']}', @from='{$params['from']}', @to='{$params['to']}',  @agentID={$ag} ";
