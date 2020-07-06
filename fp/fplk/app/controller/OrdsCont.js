@@ -198,7 +198,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	setCityByKLADR: function(component) {
 		var input = component.rawValue;
 		var kladr = null;
-		var targetComponent;
+		var targetComponent = null;
 		if(component.name === "orgIndex") {
 			targetComponent = component.up("window").down("ordform combocity[name=org]");
 		} else {
@@ -213,7 +213,7 @@ Ext.define('fplk.controller.OrdsCont', {
 						'Не найден индекс!',
 						"Не найден индекс в базе КЛАДР. " +
 						"Проверьте данные и повторите запрос");
-					input.clearValue();
+					component.reset();
 				} else {
 					this.setCityValueAndEvents(targetComponent, kladr);
 				}
@@ -222,7 +222,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					'Неверный индекс!',
 					"Введен не верный формат индекса");
 			}
-		}  else {
+		}  else {			
 			targetComponent.clearValue();
 			targetComponent.setReadOnly(false);
 		}
@@ -237,7 +237,8 @@ Ext.define('fplk.controller.OrdsCont', {
 	setCityValueAndEvents: function(component, value) {
 
 		var store = component.store;
-		component.clearValue();
+		var cb = component;
+		cb.clearValue();
 		store.load({
 			params: {
 				dbAct: "GetCity",
@@ -639,21 +640,24 @@ Ext.define('fplk.controller.OrdsCont', {
 	saveOrder : function (btn) {
 		var me = this;
 		var win = btn.up('ordwin');
-		var indexDest = win.down("textfield[name=orgIndex]");
-		var indexOrg = win.down("textfield[name=destIndex]");
+		var indexOrg = win.down("textfield[name=orgIndex]");
+		var indexDest = win.down("textfield[name=destIndex]");
 		var form_ord = win.down('ordform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null | indexDest.rawValue.length != 0) {
+		if (indexDest.rawValue.length != 0){
+		if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null){
 			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
 			return;
 		}
-
-		if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null | indexOrg.rawValue.length != 0) {
+		}
+		
+		if (indexOrg.rawValue.length != 0) {
+			if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null){
 			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
 			return;
 		}
-
+		}
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
