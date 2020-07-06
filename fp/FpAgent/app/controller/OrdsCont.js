@@ -1165,6 +1165,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	loadClientOrdersSt: function (st, rec) {
 		var tt = this.getOrdClientTotal();
 		var label = tt.down('label');
-		label.setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount") /*'Количество заказов: '*/ + rec.length, true);
+		label.setText(FPAgent.lib.Translate.tr("OrdsCont.OrdersCount") /*'Количество заказов: '*/ + st.getCount());
 	}
 });

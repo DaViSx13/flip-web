@@ -11,8 +11,6 @@ Ext.define('FPAgent.view.orders.OrdClientTool', {
 			iconCls : 'wbview',
 			action : 'wbview'
 		}, '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
 			xtype : 'combomonth'
 		}
 	]
