@@ -242,7 +242,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		store.load({
 			params: {
 				dbAct: "GetCity",
-				query: value[value.length - 2].name
+				query: value[value.length - 2].name + ", Россия, " + value[0].name
 			},
 			scope: this,
 			callback: function(record, operation, success) {
