@@ -7,21 +7,6 @@
 	width : 16px;
 	cursor : pointer;
 }
-.add {
-	background-image: url(../../resources/images/addRecord.png) !important;
-	background-size: 15px !important;
-}
-.eyeOpened {
-	background-image: url(../../resources/images/eye_open.png) !important;
-	background-size: 19px !important;
-}
-.colorDeleted-row .x-grid-cell {
-	background-color: lightcoral;
-}
-.eyeClosed {
-	background-image: url(../../resources/images/eye_close.png) !important;
-	background-size: 19px !important;
-}
 .excel {
 	background-image : url(../../resources/images/excel_.png);
 }
