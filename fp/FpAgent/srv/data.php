@@ -150,21 +150,29 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwEditAgOrders @id={$id}, @agent={$agent}";
 			break;
 		case 'saveagorder':
-			$needLogRequest = true;
-
+			$needLogRequest = true;			
+			
 			$CName=$params['cname'];
+			$CName = preg_replace('/[\x00-\x1F\x7F]/u', '', $CName);
 			$ag=$_SESSION['xAgentID'];
 			$DName=$params['dname'];
+			$DName = preg_replace('/[\x00-\x1F\x7F]/u', '', $DName);
 			$Amt=isset($params['amt']) ? $params['amt'] : 0;
 			$CurId=isset($params['curid']) ? $params['curid'] : 0;
 			$VolWt=$params['volwt'] ? $params['volwt'] : 0;
 			$Rordnum=$params['rordnum'] ? $params['rordnum'] : 0;
 			$Address=$params['address'];
+			$Address = preg_replace('/[\x00-\x1F\x7F]/u', '', $Address);
 			$ContName=$params['contname'];
+			$ContName = preg_replace('/[\x00-\x1F\x7F]/u', '', $ContName);
 			$OrgRems=$params['orgrems'];
+			$OrgRems = preg_replace('/[\x00-\x1F\x7F]/u', '', $OrgRems);
 			$DContName=$params['dcontname'];
+			$DContName = preg_replace('/[\x00-\x1F\x7F]/u', '', $DContName);
 			$DAdr=$params['dadr'];
+			$DAdr = preg_replace('/[\x00-\x1F\x7F]/u', '', $DAdr);
 			$DESTRems=$params['destrems'];
+			$DESTRems = preg_replace('/[\x00-\x1F\x7F]/u', '', $DESTRems);
 			$UserIn= $_SESSION['xUser'];
 			$courdate=$params['courdate'];
 			$courtimef=$params['courtimef'];

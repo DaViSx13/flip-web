@@ -106,6 +106,12 @@ Ext.define('FPAgent.model.WbsMod', {
 			name : 'ag_cash'
 		}, {
 			name : 'pcs'
+		}, {
+			name : 'mnfrefno',
+			type : 'string'
+		}, {
+			name : 's_ref',
+			type : 'string'
 		}
 	]
 });

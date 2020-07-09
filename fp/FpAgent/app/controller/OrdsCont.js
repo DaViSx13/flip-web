@@ -911,7 +911,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
-				var win = Ext.create('FPAgent.view.orders.OrdWin').show();
+				var win = Ext.widget('ordwin');
+				win.show();
+				//Ext.create('FPAgent.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params: {
 							id: sm.getSelection()[0].get('rordnum')
@@ -977,7 +979,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				return;
 			};
 			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+				if (jsonArrayOrg[i].get('fname') == Ext.String.trim(org.getRawValue())) {
 					org.setValue(jsonArrayOrg[i].data.code);
 					break;
 				};
@@ -994,7 +996,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				return;
 			};
 			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+				if (jsonArrayDes[i].get('fname') == Ext.String.trim(dest.getRawValue())) {
 					dest.setValue(jsonArrayDes[i].data.code);
 					break;
 				};
@@ -1012,7 +1014,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					dbAct: 'saveagorder'
 				},
 				submitEmptyText: false,
-				success: function (form, action) {
+				success: function (form, action) {					
 					if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
 						if (form_lf.getForm().isValid()) {
 							form_lf.submit({
@@ -1093,6 +1095,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 		form_ord.loadRecord(rec[0]);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
+		
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
 			params: {
@@ -1100,6 +1103,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
+		
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params: {
@@ -1107,6 +1111,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 		cb_des.select(rec[0].data['destcode']);
+		
 		form_ord.down('combocity[name=org]').focus(false, true);
 	},
 	loadOrdersSt: function (st) {

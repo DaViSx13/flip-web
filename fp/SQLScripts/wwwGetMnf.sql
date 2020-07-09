@@ -15,6 +15,7 @@ ALTER procedure [dbo].[wwwGetMnf]
 @agentID int,
 @is_Ready int
 AS
+BEGIN
 declare @bDate date, @eDate date
 /*
 declare @period varchar(10), @agentID int, @is_Ready int
@@ -23,22 +24,21 @@ set @is_Ready = -1
 set @period = '201207'
 */
 
-BEGIN
+
 IF @from IS NULL
 set @bDate = @period+'01'
 ELSE
 set @bDate = CONVERT(DATE, @from, 112);
-END
 
-BEGIN
+
+
 IF @to IS NULL
 set @eDate = dateadd(d, -1, DATEADD(m,1,@bDate))
 --select @bDate, @eDate
 ELSE
-
+BEGIN
 set @eDate = CONVERT(DATE, @to, 112);
-
---select @bDate, @eDate
+set @eDate = DATEADD(d,1,@eDate)
 END
 
 
@@ -63,9 +63,4 @@ where (is_Ready=2  or is_ReadyA=2) and
 
 and (shpd between @bDate and @eDate)
  order by Shpd desc
-
-GO
-
-GRANT EXECUTE ON wwwGetMnf TO pod
-
-
+END
