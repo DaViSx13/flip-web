@@ -1,8 +1,8 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
 	views: ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
-	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod', 'WbNoMod'],
-	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore', 'WbNoSt'],
+	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
+	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
 	refs: [{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -178,28 +178,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'wbnoform textfield': {
 				keypress: this.pressEnter
 			},
-			'wbnoform button[action=addRecord]': {
-				click: this.addWebNoRecord
-			},
-			'wbnowin button[action=syncData]': {
-				click: this.closeWebNoByButton
-			},
-			'wbnowin': {
-				beforeclose: this.closeWebNoByWindow
-			},
-			'wbnoform button[action=showDeleted]': {
-				click: this.showHideDeletedRecords
-			},
-			'wbnoform grid': {
-				beforeedit: this.WebNoDisableEditing
-			},
-			'wbnoform actioncolumn': {
-				click: this.deleteRecordWebNo
-			},
-			'wbnoform button[action=wbview]': {
-				click: this.viewWbGroup
-			},
-
 			'usetemplwin button[action=set]': {
 				click: this.setTpl
 			},
@@ -577,17 +555,22 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var win = btn.up('wbnowin');
 		var activetab = me.getOrdsPanel().hidden;
 		var form_wbno = win.down('wbnoform');
+		if (!activetab) {
+						var Action = 'SetWbno';
+					} else {
+						var Action = 'SetWbnoCli';
+					}		
 		if (form_wbno.getForm().isValid()) {
 			form_wbno.submit({
 				url: 'srv/data.php',
 				params: {
-					dbAct: 'SetWbno'
+					dbAct: Action//'SetWbno'
 				},
 				submitEmptyText: false,
 				success: function (form, action) {
 					form.reset();
 					win.close();
-					if (activetab) {
+					if (!activetab) {
 						me.loadOrdGr();
 					} else {
 						me.loadOrdclientGr();
@@ -614,62 +597,31 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	editWbnoBase: function (sm) {
 		if (sm.getCount() > 0) {
 			var win = Ext.widget('wbnowin');
-			win.name = sm
-					  .getSelection()[0]
-					  .get('rordnum');
-			let grid = win.down('grid');
-			let store = grid.getStore();
-
-			store.load({
-				params: {
-					rordnum: sm
-							.getSelection()[0]
-							.get('rordnum')
-				}
-			});
-
-			store.filter('isdeleted', 0);
-
-			let tools = this.getOrdClientTool();
-			let tabs = tools.up('tabpanel');
-			let activeTabName = tabs.getActiveTab().title;
-			if(activeTabName == 'Заказы') store.filter('isagent', 1);
-			else store.filter('isagent', 0);
-
 			win.show();
+			var form = win.down('wbnoform');
+			form.down('textfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
+			form.down('textfield[name=rordnum]').setValue(sm.getSelection()[0].get('rordnum'));
+			form.down('textfield[name=wbno]').focus(false, true);
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
-
-	/**
-	 * Просмотр накладных в групповом вводе
-	 * @param btn Кнопка 'Просмотр накладных'
-	 */
-	viewWbGroup: function (btn) {
-		let sm = btn
-				.up('window')
-				.down('grid')
-				.getSelectionModel();
-		this.viewWBase(sm, 'web_num');
-	},
-
 	viewWb: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
-		this.viewWBase(sm, 'wb_no');
+		this.viewWBase(sm);
 	},
 
 	viewClientWb: function (btn) {
 		var sm = btn.up('ordclientgrid').getSelectionModel();
-		this.viewWBase(sm, 'wb_no');
+		this.viewWBase(sm);
 	},
 
-	viewWBase: function (sm, webNum) {
+	viewWBase: function (sm) {
 		if (sm.selected.length > 0)
-			if (sm.getSelection()[0].get(webNum)) {
+			if (sm.getSelection()[0].get('wb_no')) {
 				this.getViewWbStStore().load({
 					params: {
-						wb_no: sm.getSelection()[0].get(webNum)
+						wb_no: sm.getSelection()[0].get('wb_no')
 					}
 				});
 			} else {

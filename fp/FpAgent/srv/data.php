@@ -276,26 +276,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			$wbno = isset($params['wbno']) ? $params['wbno'] : 'NULL';
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
-        case 'GetWebNoGroup':
-            $rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
-            $query = "exec wwwGetWebNoGroup @orderNum={$rordnum}";
-            break;
-        case 'setWebNoGroup':
-            $query = "exec wwwSetWebNoGroup
-                                           @orderNum = {$params['orderNum']},
-                                           @webNum = '{$params['webNum']}',
-                                           @cost = {$params['cost']},
-                                           @isAgent = {$params['isAgent']}";
-            break;
-        case 'ChangeStatusWebNo':
-            $webNum = isset($params['webNum']) ? $params['webNum'] : 0;
-            $query = "exec wwwChangeWebNumGroupStatus
-                                                     @webNum    = {$webNum},
-                                                     @isDeleted = {$params['isDeleted']}";
-            break;
-            $rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
-            $query = "exec wwwGetWebNoGroup @orderNum={$rordnum}";
-            break;
+		case 'SetWbnoCli':
+			$paging = false;
+			$rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
+			$wbno = isset($params['wbno']) ? $params['wbno'] : 'NULL';
+			$query = "exec wwwSetWbnoCli @rordnum={$rordnum}, @wbno='{$wbno}'";
+			break;
 		case 'getAgTemplates':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}

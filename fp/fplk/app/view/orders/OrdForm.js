@@ -5,16 +5,28 @@ Ext.define('fplk.view.orders.OrdForm', {
 	layout : {
 		type : 'absolute'
 	},
+	flex: 1,
 	bodyPadding : 10,
 	items : [{
 			xtype : 'fieldset',
 			id : 'fs1',
-			height : 390,
+			height : 450,
 			width : 360,
 			title : 'Отправитель',
 			x : 10,
 			y : 0,			
 			items : [{
+					xtype : 'numberfield',
+					name : 'orgIndex',
+					maxLength: 6,
+					maxLengthText: 6,
+					enforceMaxLength: true,
+					width : 337,
+					allowBlank : true,
+					fieldLabel : 'Индекс',
+					hideTrigger : true,
+					labelAlign : 'top'
+				}, {
 					xtype : 'combocity',
 					name : 'org',
 					store : 'CityStOrg',
@@ -65,7 +77,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 				}, {
 					xtype : 'textareafield',
 					name : 'orgrems',
-					height : 75,
+					height : 85,
 					maxLength : 1000,
 					fieldLabel : 'Примечание',
 					labelAlign : 'top',
@@ -74,12 +86,23 @@ Ext.define('fplk.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 390,
+			height : 450,
 			width : 360,
 			title : 'Получатель',
 			x : 390,
 			y : 0,
 			items : [{
+					xtype : 'numberfield',
+					width : 337,
+					name : 'destIndex',
+					maxLength: 6,
+					maxLengthText: 6,					
+					enforceMaxLength: true,
+					allowBlank : true,
+					fieldLabel : 'Индекс',
+					hideTrigger : true,
+					labelAlign : 'top'
+				},{
 					xtype : 'combocity',
 					name : 'dest',
 					store : 'CityStDes'
@@ -125,7 +148,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 				}, {
 					xtype : 'textareafield',
 					name : 'destrems',
-					height : 75,
+					height : 85,
 					maxLength : 1000,
 					fieldLabel : 'Примечание',
 					labelAlign : 'top',
@@ -138,7 +161,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Дата приезда курьера',
 			x : 10,
-			y : 390,
+			y : 450,
 			defaults : {
 				anchor : '100%'
 			},
@@ -187,7 +210,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Информация о грузе',
 			x : 390,
-			y : 390,
+			y : 450,
 			defaults : {
 				anchor : '100%'
 			},
@@ -228,7 +251,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			xtype : 'label',
 			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
-			y : 510,
+			y : 580,
 			width : 360
 		}, {
 			xtype : 'checkboxfield',
@@ -237,7 +260,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			inputValue: 1,
 			uncheckedValue: 0,
 			x : 10,
-			y : 486//,
+			y : 550//,
 			//width : 360
 		}
 	]
