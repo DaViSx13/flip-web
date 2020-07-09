@@ -295,17 +295,22 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var win = btn.up('wbnowin');
 		var activetab = me.getOrdsPanel().hidden;
 		var form_wbno = win.down('wbnoform');
+		if (!activetab) {
+						var Action = 'SetWbno';
+					} else {
+						var Action = 'SetWbnoCli';
+					}		
 		if (form_wbno.getForm().isValid()) {
 			form_wbno.submit({
 				url: 'srv/data.php',
 				params: {
-					dbAct: 'SetWbno'
+					dbAct: Action//'SetWbno'
 				},
 				submitEmptyText: false,
 				success: function (form, action) {
 					form.reset();
 					win.close();
-					if (activetab) {
+					if (!activetab) {
 						me.loadOrdGr();
 					} else {
 						me.loadOrdclientGr();

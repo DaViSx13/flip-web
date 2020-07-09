@@ -2,11 +2,11 @@ Ext.define('FPAgent.view.orders.OrdClientTool', {
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.ordclienttool',
 	requires : ['FPAgent.view.mainform.ComboMonth', 'FPAgent.view.mainform.NumYear', 'FPAgent.view.mainform.ComboAgent'],
-	items : [{
+	items : [/*{
 			text : FPAgent.lib.Translate.tr("OrdTool.action.wbno"),//'№ накладной',
 			iconCls : 'wbno',
 			action : 'wbno'
-		}, '-', {
+		}, '-', */{
 			text : FPAgent.lib.Translate.tr("OrdTool.action.wbview"),//'Просмотр накладной',
 			iconCls : 'wbview',
 			action : 'wbview'
