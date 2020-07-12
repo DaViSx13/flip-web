@@ -28,7 +28,7 @@ set @period = '201207'
 IF @from IS NULL
 set @bDate = @period+'01'
 ELSE
-set @bDate = CONVERT(DATE, @from, 112);
+set @bDate = CONVERT(DATE, @from, 112)
 
 
 
@@ -37,7 +37,7 @@ set @eDate = dateadd(d, -1, DATEADD(m,1,@bDate))
 --select @bDate, @eDate
 ELSE
 BEGIN
-set @eDate = CONVERT(DATE, @to, 112);
+set @eDate = CONVERT(DATE, @to, 112)
 set @eDate = DATEADD(d,1,@eDate)
 END
 

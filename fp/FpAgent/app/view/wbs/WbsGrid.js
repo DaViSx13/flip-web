@@ -184,6 +184,7 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 						dataIndex : 'mnfrefno'
 			}, {
 						text : FPAgent.lib.Translate.tr("WbsGrid.rem_ag"),//'прим.',
+						width : 200,
 						dataIndex : 's_ref'
 				}
 		];
