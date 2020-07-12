@@ -1,8 +1,8 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
 	views: ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
-	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod', 'WbNoMod'],
-	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore', 'WbNoSt'],
+	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
+	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderClientSt', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
 	refs: [{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -178,28 +178,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'wbnoform textfield': {
 				keypress: this.pressEnter
 			},
-			'wbnoform button[action=addRecord]': {
-				click: this.addWebNoRecord
-			},
-			'wbnowin button[action=syncData]': {
-				click: this.closeWebNoByButton
-			},
-			'wbnowin': {
-				beforeclose: this.closeWebNoByWindow
-			},
-			'wbnoform button[action=showDeleted]': {
-				click: this.showHideDeletedRecords
-			},
-			'wbnoform grid': {
-				beforeedit: this.WebNoDisableEditing
-			},
-			'wbnoform actioncolumn': {
-				click: this.deleteRecordWebNo
-			},
-			'wbnoform button[action=wbview]': {
-				click: this.viewWbGroup
-			},
-
 			'usetemplwin button[action=set]': {
 				click: this.setTpl
 			},
@@ -219,6 +197,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		this.getOrderStStore().on({
 			scope: this,
 			load: this.loadOrdStore
+		});
+		this.getOrderClientStStore().on({
+			scope: this,
+			load: this.loadOrdClientStore
 		});
 		this.getViewWbStStore().on({
 			scope: this,
@@ -242,8 +224,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * Получает введенный период.
 	 * @returns {[*, *]} Период от и до
 	 */
-	getDateFromPeriodFilter: function() {
+	getDateFromPeriodFilter: function(isClient) {
+		if (isClient)
+		var panel = this.getOrdClientTool();
+		else
 		var panel = this.getOrdTool();
+	
 		var fromDate = panel.down('datefield[name=fromDate]').getValue();
 		var toDate = panel.down('datefield[name=toDate]').getValue();
 		return [
@@ -255,7 +241,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * Выполняет запрос на клиентские заказы.
 	 */
 	periodClientChange: function() {
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(true);
 		this.loadClientOrdersByPeriod(period[0], period[1]);
 	},
 
@@ -264,243 +250,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * @param button Кнопка "Обновить"
 	 */
 	periodChange: function(button) {
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(false);
 		this.loadOrdersByPeriod(period[0], period[1]);
 	},
 
 	test: function() {
 		console.log("work");
-	},
-
-	/**
-	 * Удаляет или восстанавливает запись,
-	 * если парматр isDeleted имеет занчение:
-	 * 0 - удалет из хранилища
-	 * 1 - восстанавливает
-	 * @param grid Таблица
-	 * @param rowIndex Индекс строки (Не используется)
-	 * @param colIndex Индекс колонки (Не используется)
-	 * @param item Нажатая колонка (Не используется)
-	 * @param event Действие (Не используется)
-	 * @param record Запись
-	 */
-	deleteRecordWebNo: function (grid, rowIndex, colIndex, item, event, record) {
-		if (record.get('isdeleted') === 0) {
-			record.set('isdeleted', 1);
-		} else {
-			record.set('isdeleted', 0);
-		}
-	},
-
-	/**
-	 * Получает хранилище таблицы,
-	 * находящаяся в окне
-	 * @param element Элемент окна
-	 * @returns Хранилище
-	 */
-	getWebNoStoreByElement: function(element) {
-		let win = element.up('window');
-		let grid = win.down('grid');
-		return grid.getStore();
-	},
-	/**
-	 * Запрещает редактирование строк в таблице,
-	 * кроме новой записи.
-	 * @param editor Редактор
-	 * @param e Набор данных:
-	 *  - Таблица
-	 *  - Запись
-	 *  - Выделеная модель
-	 * @returns {boolean} Если не новая запись,
-	 * завершает выполнение криптов
-	 * @constructor Конструктор
-	 */
-	WebNoDisableEditing: function(editor, e) {
-		if(!e.record.phantom) return false;
-	},
-
-	/**
-	 * Функция скрывает или показывает
-	 * удаленные записи в таблице
-	 * @param button Кнопка
-	 * 'Показать/Скрыть удаленные записи'
-	 */
-	showHideDeletedRecords: function(button) {
-		let buttonText = button.getText();
-		const store = this.getWebNoStoreByElement(button);
-		if (buttonText == 'Показать удаленные') {
-			button.setText('Скрыть удаленные');
-			button.setIconCls('eyeClosed');
-			store.clearFilter();
-		} else {
-			button.setText('Показать удаленные');
-			button.setIconCls('eyeOpened');
-			store.filter('isdeleted', 0);
-		}
-	},
-
-	/**
-	 * Закрытие окна Накладных
-	 * от кнопки в шапке окна.
-	 * @param window Окно
-	 */
-	closeWebNoByWindow: function(window) {
-		//this.syncWebNoData(window);
-	},
-
-	/**
-	 * Закрытие окна накладных
-	 * от кнопки 'Закрыть'
-	 * @param button кнопка 'Закрыть'
-	 */
-	closeWebNoByButton: function(button) {
-		this.syncWebNoData(button.up('window'));
-	},
-
-	/**
-	 * Синхранизация данных накладных с сервером
-	 * @param win Окно накладные
-	 */
-	syncWebNoData: function(win) {
-		let statusBar = win.down('label[name=webNoStatusBar]');
-
-		statusBar.show();
-		let orderNum = win.name;
-		let tools = this.getOrdClientTool();
-		let tabs = tools.up('tabpanel');
-		let activeTabName = tabs.getActiveTab().title;
-		const store = win.down('grid').getStore();
-		var errors = [];
-
-		let updatedRows = store.getUpdatedRecords();
-		if(updatedRows.length > 0) {
-			let tempErrors = this.webNumChangeStatus(updatedRows);
-			errors = tempErrors;
-		}
-		let newRows = store.getNewRecords();
-
-		if(newRows.length > 0) {
-			let tempErrors;
-			if(activeTabName == 'Заказы') {
-				tempErrors = this.webNumAddRecord(
-													newRows,
-													orderNum,
-													1);
-			}
-			else {
-				tempErrors = this.webNumAddRecord(
-													newRows,
-													orderNum,
-													0);
-			}
-
-			errors = tempErrors;
-		}
-
-		if(errors.length > 0) {
-			statusBar.update('<img src="resources/images/warning.png" height="15px"/>  ЕСТЬ ЗАМЕЧАНИЯ');
-			let message = 'Найдены ошибки при обновлении базы даннах: <br>'
-						  + errors;
-			Ext.Msg.alert("Замечания", message);
-		} else {
-			win.close();
-		}
-	},
-	
-	webNumAddRecord: function(rows, orderNum, isAgent) {
-
-		var errorsRows = '';
-		Ext.Array.each(rows, function (record) {
-			if(record.get('web_num') == 'NaN') {
-				errorsRows += record.get('web_num')
-								+ ' Ошибка: Не допустимый номер накладной<br>';
-			}
-			else if(record.get('web_num').length == 0) {
-				errorsRows  += ('Без номера. '
-					+ 'Ошибка: Не допустимый номер накладной, ');
-			}
-
-			else if(record.get('web_num').length > 50) {
-				errorsRows  += (record.get('web_num')
-					+ ' Ошибка: Не допустимый количество символов в номере накладной<br> ');
-			} else {
-				Ext.Ajax.request({
-					url: 'srv/data.php',
-					method: 'POST',
-					async:false,
-					params: {
-						dbAct		: 'setWebNoGroup',
-						orderNum	: orderNum,
-						webNum		: record.get('web_num'),
-						isAgent		: isAgent,
-						cost		: record.get('cost')
-					},
-					callback: function(options, success, response){
-						let responseJson = Ext.decode(response.responseText);
-
-						if(!responseJson.success) {
-							errorsRows += (record.get('web_num')
-								+ ' Ошибка: '
-								+ responseJson.msg
-								+ '<br> ');
-						}
-					},
-				});
-			}
-
-		});
-		return errorsRows;
-	},
-
-	/**
-	 * Удаляет записи на сервере
-	 * @param rows Список строк
-	 * @param status Статус
-	 */
-	webNumChangeStatus: function(rows) {
-		var errorsRows = '';
-		Ext.Array.each(rows, function (record) {
-			Ext.Ajax.request({
-				url: 'srv/data.php',
-				method: 'POST',
-				params: {
-					dbAct		: 'ChangeStatusWebNo',
-					webNum		: record.get('web_num'),
-					isDeleted	: record.get('isdeleted')
-				},
-				callback: function(options, success, response){
-					let responseJson = Ext.decode(response.responseText);
-
-					if(!responseJson.success) {
-
-						errorsRows += (record.get('web_num')
-							+ ' Ошибка: "'
-							+ responseJson.msg
-							+ '<br> ');
-					}
-				},
-			});
-		});
-
-		return errorsRows;
-	},
-
-	/**
-	 * Добавляет в грид пустую модель
-	 * для дальнейшего ввода данных.
-	 * @param button Кнопка 'Добавить'
-	 */
-	addWebNoRecord: function(button) {
-		let win = button.up('window');
-		let grid = win.down('grid');
-		let store = this.getWebNoStoreByElement(button);
-		console.log(grid);
-		let editor = grid.getPlugin('editRow');
-
-		editor.enable();
-		let gridModel = store.model;
-		store.insert(0, new gridModel());
-		editor.startEdit(0,1);
 	},
 
 	loadViewExStore: function () {
@@ -577,17 +332,22 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var win = btn.up('wbnowin');
 		var activetab = me.getOrdsPanel().hidden;
 		var form_wbno = win.down('wbnoform');
+		if (!activetab) {
+						var Action = 'SetWbno';
+					} else {
+						var Action = 'SetWbnoCli';
+					}		
 		if (form_wbno.getForm().isValid()) {
 			form_wbno.submit({
 				url: 'srv/data.php',
 				params: {
-					dbAct: 'SetWbno'
+					dbAct: Action//'SetWbno'
 				},
 				submitEmptyText: false,
 				success: function (form, action) {
 					form.reset();
 					win.close();
-					if (activetab) {
+					if (!activetab) {
 						me.loadOrdGr();
 					} else {
 						me.loadOrdclientGr();
@@ -614,62 +374,31 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	editWbnoBase: function (sm) {
 		if (sm.getCount() > 0) {
 			var win = Ext.widget('wbnowin');
-			win.name = sm
-					  .getSelection()[0]
-					  .get('rordnum');
-			let grid = win.down('grid');
-			let store = grid.getStore();
-
-			store.load({
-				params: {
-					rordnum: sm
-							.getSelection()[0]
-							.get('rordnum')
-				}
-			});
-
-			store.filter('isdeleted', 0);
-
-			let tools = this.getOrdClientTool();
-			let tabs = tools.up('tabpanel');
-			let activeTabName = tabs.getActiveTab().title;
-			if(activeTabName == 'Заказы') store.filter('isagent', 1);
-			else store.filter('isagent', 0);
-
 			win.show();
+			var form = win.down('wbnoform');
+			form.down('textfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
+			form.down('textfield[name=rordnum]').setValue(sm.getSelection()[0].get('rordnum'));
+			form.down('textfield[name=wbno]').focus(false, true);
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
-
-	/**
-	 * Просмотр накладных в групповом вводе
-	 * @param btn Кнопка 'Просмотр накладных'
-	 */
-	viewWbGroup: function (btn) {
-		let sm = btn
-				.up('window')
-				.down('grid')
-				.getSelectionModel();
-		this.viewWBase(sm, 'web_num');
-	},
-
 	viewWb: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
-		this.viewWBase(sm, 'wb_no');
+		this.viewWBase(sm);
 	},
 
 	viewClientWb: function (btn) {
 		var sm = btn.up('ordclientgrid').getSelectionModel();
-		this.viewWBase(sm, 'wb_no');
+		this.viewWBase(sm);
 	},
 
-	viewWBase: function (sm, webNum) {
+	viewWBase: function (sm) {
 		if (sm.selected.length > 0)
-			if (sm.getSelection()[0].get(webNum)) {
+			if (sm.getSelection()[0].get('wb_no')) {
 				this.getViewWbStStore().load({
 					params: {
-						wb_no: sm.getSelection()[0].get(webNum)
+						wb_no: sm.getSelection()[0].get('wb_no')
 					}
 				});
 			} else {
@@ -804,7 +533,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					agent: newValue[0].data['partcode']
 				},
 				success: function () {
-					var period = this.getDateFromPeriodFilter();
+					var period = this.getDateFromPeriodFilter(false);
 					this.loadOrdersByPeriod(period[0], period[1]);
 				},
 				failure: function (response) {
@@ -854,7 +583,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		btnTempl.setVisible(true);
 
 		this.clkList(btnList);
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(false);
 		this.loadOrdersByPeriod(period[0], period[1]);
 		this.getTemplStStore().load();
 	},
@@ -872,7 +601,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 
 		this.clkList(btnList);
 
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(true);
 		this.loadClientOrdersByPeriod(period[0], period[1]);
 	},
 
@@ -959,7 +688,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
-				var win = Ext.create('FPAgent.view.orders.OrdWin').show();
+				var win = Ext.widget('ordwin');
+				win.show();
+				//Ext.create('FPAgent.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params: {
 							id: sm.getSelection()[0].get('rordnum')
@@ -985,8 +716,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var sm = grid.getSelectionModel();
 
 		if (sm.getCount() > 0) {
-			var win = Ext.create('FPAgent.view.orders.OrdWin').show();
-			var store_ord = this.getOrderStStore().load({
+			var win = Ext.widget('ordwin');
+				win.show();
+			var store_ord = this.getOrderClientStStore().load({
 					params: {
 						id: sm.getSelection()[0].get('rordnum')
 					}
@@ -1025,7 +757,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				return;
 			};
 			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+				if (jsonArrayOrg[i].get('fname') == Ext.String.trim(org.getRawValue())) {
 					org.setValue(jsonArrayOrg[i].data.code);
 					break;
 				};
@@ -1042,7 +774,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				return;
 			};
 			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+				if (jsonArrayDes[i].get('fname') == Ext.String.trim(dest.getRawValue())) {
 					dest.setValue(jsonArrayDes[i].data.code);
 					break;
 				};
@@ -1060,7 +792,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					dbAct: 'saveagorder'
 				},
 				submitEmptyText: false,
-				success: function (form, action) {
+				success: function (form, action) {					
 					if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
 						if (form_lf.getForm().isValid()) {
 							form_lf.submit({
@@ -1120,7 +852,34 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 	},
-
+	loadOrdClientStore: function (st, rec) {
+		var edi = this.getOrdWin();
+		var form_ord = edi.down('ordform');
+		var form_lf = edi.down('loadfileform');			
+		form_lf.down('label[name=urlf]').setVisible(false);
+		form_lf.down('button[action=delete]').hide();
+		
+		form_ord.loadRecord(rec[0]);
+		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
+		
+		var cb_org = form_ord.down('combocity[name=org]');
+		cb_org.store.load({
+			params: {
+				query: cb_org.getValue()
+			}
+		});
+		cb_org.select(rec[0].data['orgcode']);
+		
+		var cb_des = form_ord.down('combocity[name=dest]');
+		cb_des.store.load({
+			params: {
+				query: cb_des.getValue()
+			}
+		});
+		cb_des.select(rec[0].data['destcode']);
+		
+		form_ord.down('combocity[name=org]').focus(false, true);
+	},
 	loadOrdStore: function (st, rec) {
 		var edi = this.getOrdWin();
 		var form_ord = edi.down('ordform');
@@ -1141,6 +900,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 		form_ord.loadRecord(rec[0]);
 		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
+		
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
 			params: {
@@ -1148,6 +908,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
+		
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params: {
@@ -1155,6 +916,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 		cb_des.select(rec[0].data['destcode']);
+		
 		form_ord.down('combocity[name=org]').focus(false, true);
 	},
 	loadOrdersSt: function (st) {

@@ -102,8 +102,8 @@ Ext.define('FPAgent.controller.TemplCont', {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/,FPAgent.lib.Translate.tr("OrdsCont.CitySenderError")/*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+			for (var i = 0; i < jsonArrayOrg.length-1; i++) {
+				if (jsonArrayOrg[i].get('fname') == Ext.String.trim(org.getRawValue())) {
 					org.setValue(jsonArrayOrg[i].data.code);
 					break;
 				};
@@ -118,9 +118,9 @@ Ext.define('FPAgent.controller.TemplCont', {
 			if (jsonArrayDes.length == 0) {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError")/*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError")/*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
-			};
-			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+			};			
+			for (var i = 0; i < jsonArrayDes.length-1; i++) {								
+				if (jsonArrayDes[i].get('fname') == Ext.String.trim(dest.getRawValue())) {
 					dest.setValue(jsonArrayDes[i].data.code);
 					break;
 				};

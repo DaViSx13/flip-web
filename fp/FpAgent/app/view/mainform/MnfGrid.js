@@ -56,7 +56,8 @@ Ext.define('FPAgent.view.mainform.MnfGrid', {
 			flex : 1
 		},{
 			text : FPAgent.lib.Translate.tr("MnfGrid.masterwbno"),
-			dataIndex : 'mawb'			
+			dataIndex : 'mawb',
+			width : 130
 		}
 	],
 	dockedItems : [{

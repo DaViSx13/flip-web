@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+	<meta http-equiv="Cache-Control" content="max-age=900, must-revalidate" />
     <title>ФлипПост WEB</title>
     <link rel="stylesheet" href="resources/css/default/app.css">
     <link rel="stylesheet" type="text/css" href="resources/css/wbs.css"/>

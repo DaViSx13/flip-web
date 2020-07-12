@@ -11,12 +11,14 @@ GO
 ALTER procedure [dbo].[wwwGetAgOrders]
 @period varchar(10) = NULL, @agentID int = NULL, @First varchar(8) = NULL, @Last varchar(8) = NULL
 AS
+BEGIN
 declare @bDate date, @eDate date, @agID int
 --if ISNULL(ltrim(rtrim(@period)), '') = '' or @agentID is null return
 IF @First is not NULL and @Last is not NULL
 BEGIN
 select @bDate = CONVERT(date, @First, 112)
 select @eDate = CONVERT(date, @Last, 112)
+set @eDate = DATEADD(d,1,@eDate)
 set @agID = @agentID
 END ELSE
 BEGIN
@@ -77,12 +79,12 @@ SELECT [ROrdNum]--
      ,[wb_no]
     , is_ex = (select COUNT(1) from ExLog ex where ex.AgOrdNo = ROrdNum and ISNULL(ex.WND, 0) = 0 and (ex.ExCode <> 61 and ex.ExCode <> 62))
   FROM [AgOrders]
---  where [DateIn] between @bDate and @eDate
-  where [DateIn] >= @bDate and [DateIn] < @eDate
+  where [DateIn] between @bDate and @eDate
+  --where [DateIn] >= @bDate and [DateIn] < @eDate
   and (@agID=-1 or (PCACC=@agID or (AgentORG = @agID or AgentDEST = @agID)))
   order by ROrdNum desc
+END
 GO
 
-GRANT EXECUTE ON [wwwGetAgOrders] to pod
 
 

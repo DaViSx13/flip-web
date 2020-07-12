@@ -46,7 +46,8 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				text : FPAgent.lib.Translate.tr("WbsGrid.d_acc"),//'Принято',
 				dataIndex : 'd_acc',
 				xtype : 'datecolumn',
-				format : 'd.m.Y'
+				format : 'd.m.Y',
+				width : 80
 			}, {
 				text : FPAgent.lib.Translate.tr("WbsGrid.dod_txt"),//'Доставлено',
 				dataIndex : 'dod_txt'
@@ -57,7 +58,8 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				text : FPAgent.lib.Translate.tr("WbsGrid.p_d_in"),//'Подтв.',
 				dataIndex : 'p_d_in',
 				xtype : 'datecolumn',
-				format : 'd.m.Y'
+				format : 'd.m.Y',
+				width : 80
 			}, {
 				text : 'ORG',
 				width : 50,
@@ -177,7 +179,14 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				dataIndex : 'req_tar_a',
 				width : 45,
 				renderer : this.change
-			}
+			}, {
+						text : FPAgent.lib.Translate.tr("MnfGrid.mnfrefno"),//'прим.',
+						dataIndex : 'mnfrefno'
+			}, {
+						text : FPAgent.lib.Translate.tr("WbsGrid.rem_ag"),//'прим.',
+						width : 200,
+						dataIndex : 's_ref'
+				}
 		];
 		this.dockedItems = [{
 				xtype : 'wbstool',
