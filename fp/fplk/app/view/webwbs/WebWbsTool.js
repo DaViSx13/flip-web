@@ -8,10 +8,7 @@ Ext.define('fplk.view.webwbs.WebWbsTool', {
 			action : 'printwb',
 			iconCls : 'webwbprint'
 		},
-	'->', '-', 
-		{
-			xtype : 'numyear'
-		}, '-', {
+	'->', '-', {
 			xtype : 'combomonth'
 		}
 	]

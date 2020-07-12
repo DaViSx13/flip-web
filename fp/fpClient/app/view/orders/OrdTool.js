@@ -37,8 +37,6 @@ Ext.define('FPClient.view.orders.OrdTool', {
 			iconCls : 'webwb',
 			action : 'wbnew'
 		}, '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
 			xtype : 'combomonth'
 		}
 	]

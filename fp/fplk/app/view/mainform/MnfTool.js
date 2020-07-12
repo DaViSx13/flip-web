@@ -17,9 +17,7 @@ Ext.define('fplk.view.mainform.MnfTool', {
 			enableToggle : true,
 			iconCls : 'allbox',
 			action : 'all'
-		}, '-', '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
+		}, '-', '->', '-',  {
 			xtype : 'combomonth'
 		}
 	]

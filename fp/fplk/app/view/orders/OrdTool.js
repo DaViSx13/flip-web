@@ -45,8 +45,6 @@ Ext.define('fplk.view.orders.OrdTool', {
 			iconCls : 'import',
 			action : 'import'
 		}, '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
 			xtype : 'combomonth'
 		}
 	]

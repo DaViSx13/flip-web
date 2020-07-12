@@ -18,8 +18,6 @@ Ext.define('FPClient.view.mainform.MnfTool', {
 			iconCls : 'allbox',
 			action : 'all'
 		}, '-', '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
 			xtype : 'combomonth'
 		}
 	]

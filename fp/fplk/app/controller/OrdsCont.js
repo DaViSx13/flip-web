@@ -87,12 +87,9 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'ordwin button[action=save]' : {
 				click : this.saveOrder
-			},			
-			'ordtool combomonth' : {
-				change : this.monthChange
 			},
-			'ordtool numyear' : {
-				change : this.yearChange
+			'ordtool > combomonth > button[name=periodRefresh]': {
+				click: this.periodChange
 			},
 			'loadfileform button[action=delete]' : {
 				click : this.fileDel
@@ -156,6 +153,27 @@ Ext.define('fplk.controller.OrdsCont', {
 			load : this.loadOrdersSt
 		});
 		this.getClientStStore().load();
+	},
+
+	/**
+	 * Получает введенный период.
+	 * @returns {[*, *]} Период от и до
+	 */
+	getDateFromPeriodFilter: function() {
+		var panel = this.getOrdTool();
+		var fromDate = panel.down('datefield[name=fromDate]').getValue();
+		var toDate = panel.down('datefield[name=toDate]').getValue();
+		return [
+			Ext.Date.format(fromDate, 'Ymd'),
+			Ext.Date.format(toDate, 'Ymd')];
+	},
+
+	/**
+	 * Выполняет запрос на клиентские заказы.
+	 */
+	periodChange: function() {
+		var period = this.getDateFromPeriodFilter();
+		this.loadOrdersByPeriod(period[0], period[1]);
 	},
 
 	/**
@@ -503,12 +521,9 @@ Ext.define('fplk.controller.OrdsCont', {
 				params : {
 					agent : newValue[0].data['partcode']
 				},
-				success : function (response) {
-					var text = Ext.decode(response.responseText);
-					var aTol = me.getOrdTool();
-					var ye = aTol.down('numyear').value;
-					var mo = aTol.down('combomonth').value;
-					me.loadOrds(ye, mo);
+				success : function () {
+					var period = this.getDateFromPeriodFilter();
+					this.loadOrdersByPeriod(period[0], period[1]);
 				},
 				failure : function (response) {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
@@ -523,6 +538,21 @@ Ext.define('fplk.controller.OrdsCont', {
 			}
 		});
 	},
+
+	/**
+	 * Загрузка заказов по периоду
+	 * @param startDate Начальная дата
+	 * @param endDate Конечная дата
+	 */
+	loadOrdersByPeriod: function(startDate, endDate) {
+		this.getOrdsStStore().load({
+			params: {
+				from: startDate,
+				to: endDate
+			}
+		});
+	},
+
 	loadOrdGr : function (Pan) {
 		var adTol = this.getAdmTool();
 		if (adTol.down('label').text == 'WEB Администратор') {
@@ -533,10 +563,8 @@ Ext.define('fplk.controller.OrdsCont', {
 		btnList.setVisible(true);
 		btnTempl.setVisible(true);
 		this.clkList(btnList);
-		var aTol = this.getOrdTool();
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadOrds(ye, mo);
+		var period = this.getDateFromPeriodFilter();
+		this.loadOrdersByPeriod(period[0], period[1]);
 		this.getTemplStStore().load();
 	},
 	openOrdWin : function (btn) {
