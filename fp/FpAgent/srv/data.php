@@ -149,6 +149,11 @@ if (!isset($_REQUEST['dbAct'])) {
 			$agent = $_SESSION['xAgentID'];
 			$query = "exec wwwEditAgOrders @id={$id}, @agent={$agent}";
 			break;
+		case 'viewregorder':
+			$id =  $params['id'];
+			$agent = $_SESSION['xAgentID'];
+			$query = "exec wwwLKgetOrder @id={$id}, @agent='{$agent}'";
+			break;
 		case 'saveagorder':
 			$needLogRequest = true;			
 			

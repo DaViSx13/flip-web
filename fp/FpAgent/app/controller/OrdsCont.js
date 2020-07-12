@@ -2,7 +2,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
 	views: ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
 	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
-	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
+	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderClientSt', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
 	refs: [{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -197,6 +197,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		this.getOrderStStore().on({
 			scope: this,
 			load: this.loadOrdStore
+		});
+		this.getOrderClientStStore().on({
+			scope: this,
+			load: this.loadOrdClientStore
 		});
 		this.getViewWbStStore().on({
 			scope: this,
@@ -943,8 +947,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var sm = grid.getSelectionModel();
 
 		if (sm.getCount() > 0) {
-			var win = Ext.create('FPAgent.view.orders.OrdWin').show();
-			var store_ord = this.getOrderStStore().load({
+			var win = Ext.widget('ordwin');
+				win.show();
+			var store_ord = this.getOrderClientStStore().load({
 					params: {
 						id: sm.getSelection()[0].get('rordnum')
 					}
@@ -1078,7 +1083,34 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		});
 	},
-
+	loadOrdClientStore: function (st, rec) {
+		var edi = this.getOrdWin();
+		var form_ord = edi.down('ordform');
+		var form_lf = edi.down('loadfileform');			
+		form_lf.down('label[name=urlf]').setVisible(false);
+		form_lf.down('button[action=delete]').hide();
+		
+		form_ord.loadRecord(rec[0]);
+		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
+		
+		var cb_org = form_ord.down('combocity[name=org]');
+		cb_org.store.load({
+			params: {
+				query: cb_org.getValue()
+			}
+		});
+		cb_org.select(rec[0].data['orgcode']);
+		
+		var cb_des = form_ord.down('combocity[name=dest]');
+		cb_des.store.load({
+			params: {
+				query: cb_des.getValue()
+			}
+		});
+		cb_des.select(rec[0].data['destcode']);
+		
+		form_ord.down('combocity[name=org]').focus(false, true);
+	},
 	loadOrdStore: function (st, rec) {
 		var edi = this.getOrdWin();
 		var form_ord = edi.down('ordform');
