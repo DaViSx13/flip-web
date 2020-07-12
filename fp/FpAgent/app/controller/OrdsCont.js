@@ -220,8 +220,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * Получает введенный период.
 	 * @returns {[*, *]} Период от и до
 	 */
-	getDateFromPeriodFilter: function() {
+	getDateFromPeriodFilter: function(isClient) {
+		if (isClient)
+		var panel = this.getOrdClientTool();
+		else
 		var panel = this.getOrdTool();
+	
 		var fromDate = panel.down('datefield[name=fromDate]').getValue();
 		var toDate = panel.down('datefield[name=toDate]').getValue();
 		return [
@@ -233,7 +237,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * Выполняет запрос на клиентские заказы.
 	 */
 	periodClientChange: function() {
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(true);
 		this.loadClientOrdersByPeriod(period[0], period[1]);
 	},
 
@@ -242,7 +246,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * @param button Кнопка "Обновить"
 	 */
 	periodChange: function(button) {
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(false);
 		this.loadOrdersByPeriod(period[0], period[1]);
 	},
 
@@ -756,7 +760,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					agent: newValue[0].data['partcode']
 				},
 				success: function () {
-					var period = this.getDateFromPeriodFilter();
+					var period = this.getDateFromPeriodFilter(false);
 					this.loadOrdersByPeriod(period[0], period[1]);
 				},
 				failure: function (response) {
@@ -806,7 +810,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		btnTempl.setVisible(true);
 
 		this.clkList(btnList);
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(false);
 		this.loadOrdersByPeriod(period[0], period[1]);
 		this.getTemplStStore().load();
 	},
@@ -824,7 +828,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 
 		this.clkList(btnList);
 
-		var period = this.getDateFromPeriodFilter();
+		var period = this.getDateFromPeriodFilter(true);
 		this.loadClientOrdersByPeriod(period[0], period[1]);
 	},
 
