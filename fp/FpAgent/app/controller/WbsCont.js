@@ -110,6 +110,13 @@ Ext.define('FPAgent.controller.WbsCont', {
 	},
 
 	periodChange: function() {
+		var fromDate = this.getWbsTool().down('datefield[name=fromDate]').getValue();
+		var toDate = this.getWbsTool().down('datefield[name=toDate]').getValue();
+		
+		if ((toDate - fromDate)>7776000000){
+		Ext.Msg.alert('Слишком большой период!', 'Выберите период не более 90 дней!');	
+		return;
+		}
 		this.viewTotal();
 		this.loadWbs();
 	},
