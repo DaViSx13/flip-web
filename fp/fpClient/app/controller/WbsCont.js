@@ -76,11 +76,8 @@ Ext.define('FPClient.controller.WbsCont', {
 			'newpodwin button[action=save]' : {
 				click : this.savePod
 			},
-			'wbstool combomonth' : {
-				change : this.monthChange
-			},
-			'wbstool numyear' : {
-				change : this.yearChange
+			'wbstool > combomonth > button[name=periodRefresh]': {
+				click: this.periodChange
 			},
 			'wbsgrid actioncolumn' : {
 				itemclick : this.viewEx
@@ -111,6 +108,29 @@ Ext.define('FPClient.controller.WbsCont', {
 			load : this.loadViewExStore
 		});
 	},
+
+	/**
+	 * Получает введенный период.
+	 * @returns {[*, *]} Период от и до
+	 */
+	getDateFromPeriodFilter: function() {
+		var panel = this.getWbsTool();
+		var fromDate = panel.down('datefield[name=fromDate]').getValue();
+		var toDate = panel.down('datefield[name=toDate]').getValue();
+		return [
+			Ext.Date.format(fromDate, 'Ymd'),
+			Ext.Date.format(toDate, 'Ymd')];
+	},
+
+	/**
+	 * Выполняет запрос на клиентские заказы.
+	 */
+	periodChange: function() {
+		console.log(`abcd${2+3}`);
+		this.loadWbs();
+		this.viewTotal();
+	},
+
 	loadViewExStore : function () {
 		this.getViewExGrid().getSelectionModel().select(0);
 	},
@@ -191,7 +211,8 @@ Ext.define('FPClient.controller.WbsCont', {
 				params : {
 					dbAct : 'GetWbsTotal',
 					dir : t_dir,
-					period : tc.getPeriod()
+					from : tc.getDateFromPeriodFilter()[0],
+					to : tc.getDateFromPeriodFilter()[1]
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
@@ -316,7 +337,7 @@ Ext.define('FPClient.controller.WbsCont', {
 			var t_dir = 'out';
 			break;
 		}
-		window.location.href = 'srv/getAgentWbsXLS.php?newPeriod=' + this.getPeriod() + '&filter=' + t_dir;
+		window.location.href = `srv/getAgentWbsXLS.php?from=${this.getDateFromPeriodFilter()[0]}&to=${this.getDateFromPeriodFilter()[1]}&filter=${t_dir}`;
 	},
 	loadWBsWin : function (btn) {
 		//console.log('import');
@@ -401,7 +422,8 @@ Ext.define('FPClient.controller.WbsCont', {
 		}
 	},
 	beforeprefetchWbsStore : function (store, operation) {
-		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
+		store.getProxy().setExtraParam('from', this.getDateFromPeriodFilter()[0]);
+		store.getProxy().setExtraParam('to', this.getDateFromPeriodFilter()[1]);
 		switch (true) {
 		case this.getWbsTool().down('button[action=all]').pressed:
 			store.getProxy().setExtraParam('dir', 'all');
@@ -418,7 +440,8 @@ Ext.define('FPClient.controller.WbsCont', {
 		}
 	},
 	beforeloadWbsStore : function (store, operation) {
-		store.getProxy().setExtraParam('newPeriod', this.getPeriod());
+		store.getProxy().setExtraParam('from', this.getDateFromPeriodFilter()[0]);
+		store.getProxy().setExtraParam('to', this.getDateFromPeriodFilter()[1]);
 	},
 	loadWbsGrid : function (comp) {
 		var aTol = this.getWbsTool();
@@ -476,13 +499,5 @@ Ext.define('FPClient.controller.WbsCont', {
 		if (sm.getCount() > 0) {
 			this.insertNewEx(sm.getSelection()[0].get('wb_no'));
 		}
-	},
-	monthChange : function (comp, newz, oldz) {
-		this.loadWbs();
-		this.viewTotal();
-	},
-	yearChange : function (comp, newz, oldz) {
-		this.loadWbs();
-		this.viewTotal();
 	}
 });
