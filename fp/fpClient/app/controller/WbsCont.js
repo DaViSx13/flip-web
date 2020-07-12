@@ -126,7 +126,11 @@ Ext.define('FPClient.controller.WbsCont', {
 	 * Выполняет запрос на клиентские заказы.
 	 */
 	periodChange: function() {
-		console.log(`abcd${2+3}`);
+		var period = this.getDateFromPeriodFilter();
+		if((period[1]-period[0]) > 90 * 24 * 60 * 60 * 100) {
+			Ext.Msg.alert('Слишком большой период!', 'Выберите период не более 90 дней!');
+			return;
+		}
 		this.loadWbs();
 		this.viewTotal();
 	},
@@ -142,8 +146,7 @@ Ext.define('FPClient.controller.WbsCont', {
 				params : {
 					agent : newValue[0].data['partcode']
 				},
-				success : function (response) {
-					var text = Ext.decode(response.responseText);
+				success : function () {
 					me.loadWbs();
 					me.viewTotal();
 				},
