@@ -10,28 +10,36 @@ Ext.define('fplk.view.orders.OrdForm', {
 	items : [{
 			xtype : 'fieldset',
 			id : 'fs1',
-			height : 450,
+			height : 400,
 			width : 360,
 			title : 'Отправитель',
 			x : 10,
 			y : 0,			
 			items : [{
-					xtype : 'numberfield',
-					name : 'orgIndex',
-					maxLength: 6,
-					maxLengthText: 6,
-					enforceMaxLength: true,
-					width : 337,
-					allowBlank : true,
-					fieldLabel : 'Индекс',
-					hideTrigger : true,
-					labelAlign : 'top'
-				}, {
-					xtype : 'combocity',
-					name : 'org',
-					store : 'CityStOrg',
-					allowBlank : true
-				}, {
+				xtype: 'panel',
+				width: 337,
+				border: false,
+				layout: 'hbox',
+				items: [{
+						xtype : 'numberfield',
+						name : 'orgIndex',
+						maxLength: 6,
+						maxLengthText: 6,
+						enforceMaxLength: true,
+						width : '25%',
+						allowBlank : true,
+						fieldLabel : 'Индекс',
+						margin: '0 5 0 0',
+						hideTrigger : true,
+						labelAlign : 'top'
+					}, {
+						xtype : 'combocity',
+						name : 'org',
+						store : 'CityStOrg',
+						allowBlank : true,
+						flex : 1
+				}]
+			},  {
 					xtype : 'textfield',
 					name : 'rordnum',
 					hidden : true
@@ -86,14 +94,19 @@ Ext.define('fplk.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 450,
+			height : 400,
 			width : 360,
 			title : 'Получатель',
 			x : 390,
 			y : 0,
 			items : [{
+				xtype: 'panel',
+				border: false,
+				width: 337,
+				layout: 'hbox',
+				items: [{
 					xtype : 'numberfield',
-					width : 337,
+					width : '25%',
 					name : 'destIndex',
 					maxLength: 6,
 					maxLengthText: 6,					
@@ -101,12 +114,15 @@ Ext.define('fplk.view.orders.OrdForm', {
 					allowBlank : true,
 					fieldLabel : 'Индекс',
 					hideTrigger : true,
+					margin: '0 5 0 0',
 					labelAlign : 'top'
 				},{
 					xtype : 'combocity',
 					name : 'dest',
-					store : 'CityStDes'
-				}, {
+					store : 'CityStDes',
+					flex: 1
+				}]
+			}, {
 					xtype : 'textfield',
 					width : 337,
 					name : 'dname',
@@ -161,7 +177,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Дата приезда курьера',
 			x : 10,
-			y : 450,
+			y : 400,
 			defaults : {
 				anchor : '100%'
 			},
@@ -179,27 +195,22 @@ Ext.define('fplk.view.orders.OrdForm', {
 					layout: 'hbox',
 					border: 0,
 					padding:  '1 1 1 1',					
-					items : [
-					
-					{
-					xtype : 'textfield',
-					name : 'courtimef',
-					fieldLabel : 'Время с',
-					labelWidth:  60,
-					width : 150,
-					vtype: 'time'
-				}, {
-					xtype : 'textfield',
-					name : 'courtimet',
-					labelWidth:  60,
-					padding:  '0 0 0 30',
-					fieldLabel : 'Время до',
-					width : 150,
-					vtype: 'time'
-				}
-					
-					
-					]
+					items : [{
+						xtype : 'textfield',
+						name : 'courtimef',
+						fieldLabel : 'Время с',
+						labelWidth:  60,
+						width : 150,
+						vtype: 'time'
+					}, {
+						xtype : 'textfield',
+						name : 'courtimet',
+						labelWidth:  60,
+						padding:  '0 0 0 30',
+						fieldLabel : 'Время до',
+						width : 150,
+						vtype: 'time'
+					}]
 				}
 			]
 		}, 
@@ -210,7 +221,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			width : 360,
 			title : 'Информация о грузе',
 			x : 390,
-			y : 450,
+			y : 400,
 			defaults : {
 				anchor : '100%'
 			},
@@ -251,7 +262,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			xtype : 'label',
 			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
-			y : 580,
+			y : 495,
 			width : 360
 		}, {
 			xtype : 'checkboxfield',
