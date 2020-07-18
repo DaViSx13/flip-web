@@ -121,8 +121,14 @@ if (!isset($_REQUEST['dbAct'])) {
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			$query = "exec wwwGetWbMnf @agentID={$ag}, @mnfRefNo='{$mnfRefNo}'";
 			break;
+        case 'GetCityByKLADR' :
+            $city = isset($params['city']) ? $params['city'] : '';
+            $region = isset($params['region']) ? $params['region'] : '';
+
+            $query = "exec wwwGetCityByKLADR @city = '{$city}', @region='{$region}'";
+            break;
 		case 'GetCity':
-			$pName = isset($params['query']) ? $params['query'] : '';  
+			$pName = isset($params['query']) ? $params['query'] : '';
 			$query = "exec wwwGetCity @pName = '{$pName}'";
 			break;
 		case 'editagorder':

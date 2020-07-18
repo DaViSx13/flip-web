@@ -247,8 +247,9 @@ Ext.define('fplk.controller.OrdsCont', {
 		cb.clearValue();
 		store.load({
 			params: {
-				dbAct: "GetCity",
-				query: value[value.length - 2].name + ", Россия, " + value[0].name
+				dbAct: "GetCityByKLADR",
+				city: value[value.length - 2].name,
+				region: value[0].name
 			},
 			scope: this,
 			callback: function(record, operation, success) {
