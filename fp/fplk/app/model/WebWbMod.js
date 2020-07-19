@@ -3,11 +3,11 @@ Ext.define('fplk.model.WebWbMod', {
 	fields : [{
 			name : 'wb_no',
 			type : 'string'
-		},/* {
-			name : 'd_acc',
+		}, {
+			name : 'date_in',
 			dateFormat : 'Y-m-d H:i:s',
 			type : 'date'
-		},*/ {
+		}, {
 			name : 'org',
 			type : 'string'
 		}, {
