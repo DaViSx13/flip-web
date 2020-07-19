@@ -26,7 +26,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 						maxLength: 6,
 						maxLengthText: 6,
 						enforceMaxLength: true,
-						width : '25%',
+						width : '16%',
 						allowBlank : true,
 						fieldLabel : 'Индекс',
 						margin: '0 5 0 0',
@@ -106,7 +106,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 				layout: 'hbox',
 				items: [{
 					xtype : 'numberfield',
-					width : '25%',
+					width : '16%',
 					name : 'destIndex',
 					maxLength: 6,
 					maxLengthText: 6,					
