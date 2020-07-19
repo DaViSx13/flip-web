@@ -250,5 +250,5 @@ Ext.define('FPClient.controller.WebWbsCont', {
 				tt.down('label').setText('Количество накладных: ' + records.length + ' Сумма весов: ' + sumwt + ' Сумма объемных весов: ' + sumvolwt);
 			}
 		});
-	},
+	}
 });

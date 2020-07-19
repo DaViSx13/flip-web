@@ -37,7 +37,9 @@
 	background: url(../../resources/images/download.png);	
 }
 .wbview {
-	background: url(../../resources/images/wbview.png) 15px 15px;	
+	background: url(../../resources/images/wbview.png);	
+	height : 16px;
+	width : 16px;
 }
 .find {
 	background: url(../../resources/images/find.png);	

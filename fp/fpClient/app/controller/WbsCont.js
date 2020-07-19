@@ -340,7 +340,8 @@ Ext.define('FPClient.controller.WbsCont', {
 			var t_dir = 'out';
 			break;
 		}
-		window.location.href = `srv/getAgentWbsXLS.php?from=${this.getDateFromPeriodFilter()[0]}&to=${this.getDateFromPeriodFilter()[1]}&filter=${t_dir}`;
+		var peroid = this.getDateFromPeriodFilter();
+		window.location.href = 'srv/getAgentWbsXLS.php?from=' + period[0] + '&to=' + peroid[1] + '&filter=' + t_dir;
 	},
 	loadWBsWin : function (btn) {
 		//console.log('import');

@@ -9,6 +9,12 @@ Ext.define('FPClient.view.webwbs.WebWbsGrid', {
 			dataIndex : 'wb_no',
 			width : 80
 		}, {
+			text : 'Дата',
+			dataIndex : 'date_in',
+			xtype : 'datecolumn',
+			format : 'd.m.Y',
+			width : 150
+		}, {
 			text : 'ORG',
 			dataIndex : 'org',
 			width : 150
