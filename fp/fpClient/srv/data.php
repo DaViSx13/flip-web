@@ -102,12 +102,20 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getAgOrders':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec [wwwClientGetAgOrders] @period='$params[newPeriod]', @clientID={$ag}";
+			if(isset($params['newPeriod'])) {
+                $query = "exec [wwwClientGetAgOrders] @period='$params[newPeriod]', @clientID={$ag}";
+            } else {
+                $query = "exec [wwwClientGetAgOrders] @from='$params[from]', @to='$params[to]', @clientID={$ag}";
+            }
             break;
 		case 'GetWebWbs':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
-			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec [wwwClientGetWebWbs] @period='$params[newPeriod]', @clientID={$ag}";
+			if (!empty($_SESSION['AdmAgentID'])) $ag =$_SESSION['AdmAgentID'];
+			if(isset($params['newPeriod'])) {
+                $query = "exec [wwwClientGetWebWbs] @period='$params[newPeriod]', @clientID={$ag}";
+            } else {
+                $query = "exec [wwwClientGetWebWbs] @from='$params[from]', @to='$params[to]', @clientID={$ag}";
+            }
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
@@ -242,7 +250,11 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec [wwwClientGetWbs] @period='$params[newPeriod]', @clientID={$ag}, @dir='$params[dir]'";
+			if(isset($params['newPeriod'])) {
+                $query = "exec [wwwClientGetWbs] @period='$params[newPeriod]', @clientID={$ag}, @dir='$params[dir]'";
+            } else {
+                $query = "exec [wwwClientGetWbs] @from='$params[from]', @to='$params[to]', @clientID={$ag}, @dir='$params[dir]'";
+            }
             $paging = true;
 			break;
 		case 'GetExCodes':

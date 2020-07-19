@@ -102,12 +102,20 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getAgOrders':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec wwwLKgetOrders @period='$params[newPeriod]', @clientID='{$ag}'";
+			if(isset($params['newPeriod'])) {
+                $query = "exec wwwLKgetOrders @period='$params[newPeriod]', @clientID='{$ag}'";
+            } else {
+                $query = "exec wwwLKgetOrders @from='$params[from]', @to='$params[to]', @clientID='{$ag}'";
+            }
             break;
 		case 'GetWebWbs':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-            $query = "exec wwwLKgetWebWbs @period='$params[newPeriod]', @clientID='{$ag}'";
+			if(isset($params['newPeriod'])) {
+                $query = "exec wwwLKgetWebWbs @period='$params[newPeriod]', @clientID='{$ag}'";
+            } else {
+                $query = "exec wwwLKgetWebWbs @from='$params[from]', @to='$params[to]', @clientID='{$ag}'";
+            }
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
@@ -271,7 +279,11 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwLKgetWbs @period='$params[newPeriod]', @clientID='{$ag}', @dir='$params[dir]'";
+			if(isset($params['newPeriod'])) {
+                $query = "exec wwwLKgetWbs @period='$params[newPeriod]', @clientID='{$ag}', @dir='$params[dir]'";
+            } else {
+                $query = "exec wwwLKgetWbs @from='$params[from]', @to='$params[to]', @clientID='{$ag}', @dir='$params[dir]'";
+            }
             $paging = true;
 			break;
 		case 'GetExCodes':
@@ -305,7 +317,11 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'GetWbsTotal':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
-			$query = "exec wwwLKGetWbsTotal @period='{$params['period']}',  @clientID='{$ag}' ";
+			if(isset($params['period'])) {
+                $query = "exec wwwLKGetWbsTotal @period='{$params['period']}',  @clientID='{$ag}' ";
+            } else {
+                $query = "exec wwwLKGetWbsTotal @from='{$params['from']}', @to='{$params['to']}',  @clientID='{$ag}' ";
+            }
 			break;
 		/*case 'GetAgents':
 			$query = "exec wwwLKgetClients";

@@ -61,9 +61,7 @@ Ext.define('FPClient.view.wbs.WbsTool', {
 			text : 'Трэк',
 			iconCls : 'track',
 			action : 'track'
-		}, '->', '-', {
-			xtype : 'numyear'
-		}, '-', {
+		}, '->', '-',  {
 			xtype : 'combomonth'
 		}
 	]

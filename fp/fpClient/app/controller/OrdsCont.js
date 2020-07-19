@@ -87,11 +87,8 @@ Ext.define('FPClient.controller.OrdsCont', {
 			/*'wbwin button[action=save]' : {
 			click : this.saveWebWb
 			},*/
-			'ordtool combomonth': {
-				change: this.monthChange
-			},
-			'ordtool numyear': {
-				change: this.yearChange
+			'ordtool > combomonth > button[name=periodRefresh]': {
+				click: this.periodChange
 			},
 			'loadfileform button[action=delete]': {
 				click: this.fileDel
@@ -152,6 +149,26 @@ Ext.define('FPClient.controller.OrdsCont', {
 			load: this.loadOrdersSt
 		});
 		this.getClientStStore().load();
+	},
+
+	/**
+	 * Получает введенный период.
+	 * @returns {[*, *]} Период от и до
+	 */
+	getDateFromPeriodFilter: function() {
+		var panel = this.getOrdTool();
+		var fromDate = panel.down('datefield[name=fromDate]').getValue();
+		var toDate = panel.down('datefield[name=toDate]').getValue();
+		return [
+			Ext.Date.format(fromDate, 'Ymd'),
+			Ext.Date.format(toDate, 'Ymd')];
+	},
+
+	/**
+	 * Выполняет запрос на клиентские заказы.
+	 */
+	periodChange: function() {
+		this.loadOrds();
 	},
 
 	printWB: function (but) {
@@ -365,12 +382,8 @@ Ext.define('FPClient.controller.OrdsCont', {
 				params: {
 					agent: newValue[0].data['partcode']
 				},
-				success: function (response) {
-					var text = Ext.decode(response.responseText);
-					var aTol = me.getOrdTool();
-					var ye = aTol.down('numyear').value;
-					var mo = aTol.down('combomonth').value;
-					me.loadOrds(ye, mo);
+				success: function () {
+					me.loadOrds();
 				},
 				failure: function (response) {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
@@ -378,10 +391,11 @@ Ext.define('FPClient.controller.OrdsCont', {
 			});
 		}
 	},
-	loadOrds: function (y, m) {
+	loadOrds: function () {
 		this.getOrdsStStore().load({
 			params: {
-				newPeriod: y + m
+				from: this.getDateFromPeriodFilter()[0],
+				to: this.getDateFromPeriodFilter()[1]
 			}
 		});
 	},
@@ -395,10 +409,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		btnList.setVisible(true);
 		btnTempl.setVisible(true);
 		this.clkList(btnList);
-		var aTol = this.getOrdTool();
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadOrds(ye, mo);
+		this.loadOrds();
 		this.getTemplStStore().load();
 	},
 	openOrdWin: function (btn) {
@@ -614,16 +625,6 @@ Ext.define('FPClient.controller.OrdsCont', {
 		} else {
 			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
 		}
-	},
-	monthChange: function (comp, newz, oldz) {
-		var aTol = comp.up('ordtool');
-		var ye = aTol.down('numyear').value;
-		this.loadOrds(ye, newz);
-	},
-	yearChange: function (comp, newz, oldz) {
-		var aTol = comp.up('ordtool');
-		var mo = aTol.down('combomonth').value;
-		this.loadOrds(newz, mo);
 	},
 	fileDel: function (but) {
 		var form_lf = but.up('loadfileform');

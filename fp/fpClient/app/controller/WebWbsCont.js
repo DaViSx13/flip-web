@@ -34,11 +34,8 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			'webwbsgrid': {
 				activate: this.loadWebWbGr
 			},
-			'webwbstool combomonth': {
-				change: this.monthChange
-			},
-			'webwbstool numyear': {
-				change: this.yearChange
+			'webwbstool > combomonth > button[name=periodRefresh]': {
+				click: this.periodChange
 			},
 			'webwbsgrid > tableview': {
 				itemdblclick: this.dblclickWebWbsGr
@@ -57,6 +54,27 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			}
 		});
 	},
+
+	/**
+	 * Получает введенный период.
+	 * @returns {[*, *]} Период от и до
+	 */
+	getDateFromPeriodFilter: function() {
+		var panel = this.getWebWbsTool();
+		var fromDate = panel.down('datefield[name=fromDate]').getValue();
+		var toDate = panel.down('datefield[name=toDate]').getValue();
+		return [
+			Ext.Date.format(fromDate, 'Ymd'),
+			Ext.Date.format(toDate, 'Ymd')];
+	},
+
+	/**
+	 * Выполняет запрос на клиентские заказы.
+	 */
+	periodChange: function() {
+		this.loadWebWbs();
+	},
+
 	changeAgent: function (comp, newValue) {
 		var me = this;
 		if (comp.up('mainpanel').activeTab.title == 'Веб накладные') {
@@ -65,12 +83,8 @@ Ext.define('FPClient.controller.WebWbsCont', {
 				params: {
 					agent: newValue[0].data['partcode']
 				},
-				success: function (response) {
-					var text = Ext.decode(response.responseText);
-					var aTol = me.getWebWbsTool();
-					var mo = aTol.down('combomonth').value;
-					var ye = aTol.down('numyear').value;
-					me.loadWebWbs(ye, mo);
+				success: function () {
+					me.loadWebWbs();
 				},
 				failure: function (response) {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);
@@ -142,10 +156,7 @@ Ext.define('FPClient.controller.WebWbsCont', {
 		var btnTempl = adTol.down('button[action=templ]');
 		btnList.setVisible(false);
 		btnTempl.setVisible(false);
-		var aTol = this.getWebWbsTool();
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadWebWbs(ye, mo);
+		this.loadWebWbs();
 	},
 	saveWebWb: function (btn) {
 		var me = this;
@@ -221,11 +232,12 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите запись в таблице');
 		}
 	},	
-	loadWebWbs: function (y, m) {
+	loadWebWbs: function () {
 		var me = this;
 		this.getWebWbStStore().load({
 			params: {
-				newPeriod: y + m
+				from: this.getDateFromPeriodFilter()[0],
+				to: this.getDateFromPeriodFilter()[1]
 			},
 			callback: function (records, operation, success) {
 				var tt = me.getWebWbsTotal();
@@ -239,14 +251,4 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			}
 		});
 	},
-	monthChange: function (comp, newz, oldz) {
-		var aTol = comp.up('webwbstool');
-		var ye = aTol.down('numyear').value;
-		this.loadWebWbs(ye, newz);
-	},
-	yearChange: function (comp, newz, oldz) {
-		var aTol = comp.up('webwbstool');
-		var mo = aTol.down('combomonth').value;
-		this.loadWebWbs(newz, mo);
-	}
 });

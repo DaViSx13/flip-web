@@ -41,11 +41,8 @@ Ext.define('fplk.controller.WebWbsCont', {
 			'webwbsgrid' : {
 				activate : this.loadWebWbGr
 			},
-			'webwbstool combomonth' : {
-				change : this.monthChange
-			},
-			'webwbstool numyear' : {
-				change : this.yearChange
+			'webwbstool > combomonth > button[name=periodRefresh]': {
+				click: this.periodChange
 			},
 			'webwbsgrid > tableview' : {
 				itemdblclick : this.dblclickWebWbsGr
@@ -67,6 +64,28 @@ Ext.define('fplk.controller.WebWbsCont', {
 			}
 		});
 	},
+
+
+	/**
+	 * Получает введенный период.
+	 * @returns {[*, *]} Период от и до
+	 */
+	getDateFromPeriodFilter: function() {
+		var panel = this.getWebWbsTool();
+		var fromDate = panel.down('datefield[name=fromDate]').getValue();
+		var toDate = panel.down('datefield[name=toDate]').getValue();
+		return [
+			Ext.Date.format(fromDate, 'Ymd'),
+			Ext.Date.format(toDate, 'Ymd')];
+	},
+
+	/**
+	 * Выполняет запрос на клиентские заказы.
+	 */
+	periodChange: function() {
+		this.loadWebWbs();
+	},
+
 	openWbWin : function (btn) {		
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
@@ -214,11 +233,8 @@ Ext.define('fplk.controller.WebWbsCont', {
 		var btnList = adTol.down('button[action=list]');
 		var btnTempl = adTol.down('button[action=templ]');
 		btnList.setVisible(false);
-		btnTempl.setVisible(false);		
-		var aTol = this.getWebWbsTool();
-		var mo = aTol.down('combomonth').value;
-		var ye = aTol.down('numyear').value;
-		this.loadWebWbs(ye, mo);
+		btnTempl.setVisible(false);
+		this.loadWebWbs();
 		
 	},
 	saveWebWb : function (btn) {
@@ -293,36 +309,29 @@ Ext.define('fplk.controller.WebWbsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите запись в таблице');
 		}
 	},
-	loadWebWbs : function (y, m) {
+
+	loadWebWbs : function () {
 		var me = this;
-		
+		var period = this.getDateFromPeriodFilter()
 		this.getWebWbStStore().load({
 			params : {
-				newPeriod : y + m
+				from: period[0],
+				to: period[1]
 			},
-			callback: function(records, operation, success) {        
+			callback: function(records, operation, success) {
 				var tt = me.getWebWbsTotal();
 				var sumwt = 0;
-				var sumvolwt = 0;				
-				
+				var sumvolwt = 0;
+
 				records.forEach(function(record) {
-                // do some operations
-				sumwt = sumwt + record.get('wt');
-				sumvolwt =  sumvolwt + record.get('vol_wt');
+					// do some operations
+					sumwt = sumwt + record.get('wt');
+					sumvolwt =  sumvolwt + record.get('vol_wt');
 				});
 				tt.down('label').setText('Количество накладных: ' + records.length + ' Сумма весов: '+ sumwt+' Сумма объемных весов: '+sumvolwt);
 			}
-		});		
-				
+		});
+
 	},
-	monthChange : function (comp, newz, oldz) {
-		var aTol = comp.up('webwbstool');
-		var ye = aTol.down('numyear').value;
-		this.loadWebWbs(ye, newz);
-	},
-	yearChange : function (comp, newz, oldz) {
-		var aTol = comp.up('webwbstool');
-		var mo = aTol.down('combomonth').value;
-		this.loadWebWbs(newz, mo);
-	}
+
 	});
