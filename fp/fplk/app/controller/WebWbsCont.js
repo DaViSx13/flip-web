@@ -323,8 +323,7 @@ Ext.define('fplk.controller.WebWbsCont', {
 				var sumwt = 0;
 				var sumvolwt = 0;
 
-				records.forEach(function(record) {
-					// do some operations
+				records.forEach(function(record) {					
 					sumwt = sumwt + record.get('wt');
 					sumvolwt =  sumvolwt + record.get('vol_wt');
 				});
@@ -332,6 +331,6 @@ Ext.define('fplk.controller.WebWbsCont', {
 			}
 		});
 
-	},
+	}
 
 	});

@@ -212,7 +212,7 @@ Ext.define('fplk.controller.WbsCont', {
 					dbAct : 'GetWbsTotal',
 					dir : t_dir,
 					from : tc.getDateFromPeriodFilter()[0],
-					to: tc.getDateFromPeriodFilter()[1],
+					to: tc.getDateFromPeriodFilter()[1]
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
@@ -504,6 +504,6 @@ Ext.define('fplk.controller.WbsCont', {
 		if (sm.getCount() > 0) {
 			this.insertNewEx(sm.getSelection()[0].get('wb_no'));
 		}
-	},
+	}
 
 });
