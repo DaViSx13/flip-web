@@ -69,6 +69,12 @@ Ext.define('fplk.view.wbs.WbsGrid', {
 				flex : 1,
 				dataIndex : 'r_co'
 			}, {
+				text : 'Мест',
+				width : 35,
+				dataIndex : 'pcs',
+				xtype : 'numbercolumn',
+				format : '00'
+			}, {
 				text : 'Вес',
 				width : 45,
 				dataIndex : 'wt',
