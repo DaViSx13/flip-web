@@ -40,7 +40,8 @@ Ext.define('fplk.model.WbsMod', {
 			name : 'r_co',
 			type : 'string'
 		}, {
-			name : 'pcs'
+			name : 'pcs',
+			type : 'int'
 		}, {
 			name : 'wt',
 			type : 'float'
