@@ -53,24 +53,62 @@ $workbook->getProperties()->setCreator("FlipPost")
 
 //соответствие заголовков и полей
 $fields['№ Накладной'] = 'wb_no';
-$fields['Дата'] = 'date_in';
-$fields['ORG'] = 'org';
-$fields['Отправитель'] = 's_co';
-$fields['DEST'] = 'dest';
-$fields['Получатель'] = 'r_co';
 $fields['Заказ'] = 'ord_no';
-$fields['Вес'] = 'wt';
+$fields['Дата'] = 'date_in';
+
+
+$fields['Отправитель'] = 's_co';
+$fields['Контактное лицо '] = 's_name';
+$fields['ORG'] = 'org';
+$fields['Адрес '] = 's_adr';
+$fields['Телефон '] = 's_tel';
+$fields['EMAIL '] = 's_mail';
+$fields['Примечание '] = 's_ref';
+
+$fields['Получатель'] = 'r_co';
+$fields['Контактное лицо'] = 'r_name';
+$fields['DEST'] = 'dest';
+$fields['Адрес'] = 'r_adr';
+$fields['Телефон'] = 'r_tel';
+$fields['EMAIL'] = 'r_mail';
+$fields['Примечание'] = 'r_ref';
+
+$fields['Сумма страховки'] = 'ord_no';
+$fields['Вид оплаты'] = 'metpaym';
+$fields['Оплатил'] = 'payr';
+
+$fields['Число мест'] = 'pcs';
+$fields['Тип груза'] = 'type';
+$fields['Вес'] = 'inssum';
 $fields['V вес'] = 'vol_wt';
 
-$rowNo = 1;
+$fields['Описание'] = 'descr';
+
+
+
+$rowNo = 2;
 $startColNo = 0;
 foreach ($fields as $f => $value) {
+    if($value == 's_co') {
+
+        $worksheet->mergeCellsByColumnAndRow($startColNo, $rowNo - 1, $startColNo + 6, $rowNo - 1);
+        $worksheet->setCellValueByColumnAndRow($startColNo, $rowNo - 1, "Отправитель");
+        setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).'1', $titleStyle);
+    }
+
+    if($value == 'r_co') {
+        $worksheet->mergeCellsByColumnAndRow($startColNo, $rowNo - 1, $startColNo + 6, $rowNo - 1);
+        $worksheet->setCellValueByColumnAndRow($startColNo, $rowNo - 1, "Получатель");
+        setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).'1', $titleStyle);
+    }
+
 	setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
+
     $worksheet->getColumnDimensionByColumn($startColNo)->setAutoSize(true);
 	$worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $f);
 }
 
-$rowNo = 2;
+$rowNo = 3;
 
 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
         $startColNo = 0;
@@ -88,7 +126,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 $sharedStyle1 = new PHPExcel_Style();
 $lastRow = $rowNo-1;
 $sharedStyle1->applyFromArray($rowStyle);
-$worksheet->setSharedStyle($sharedStyle1, "A3:AB{$lastRow}");
+$worksheet->setSharedStyle($sharedStyle1, "A3:BB{$lastRow}");
 
 //Отдаем на скачивание
 // Redirect output to a client’s web browser (Excel5)
