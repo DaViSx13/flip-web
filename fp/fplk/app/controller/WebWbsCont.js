@@ -61,10 +61,20 @@ Ext.define('fplk.controller.WebWbsCont', {
 			},
 			'usewebwbtplwin button[action=setwb]' : {
 				click : this.setWBTpl
-			}
+			},
+			'webwbstool button[action=exp]' : {
+				click : this.exportExcel
+			},
 		});
 	},
 
+	exportExcel: function() {
+
+		var dateFrom = this.getDateFromPeriodFilter()[0];
+		var dateTo = this.getDateFromPeriodFilter()[1];
+
+		window.location.href = 'srv/getLKWbsXLS.php?bdate=' + dateFrom + '&edate=' + dateTo;
+	},
 
 	/**
 	 * Получает введенный период.

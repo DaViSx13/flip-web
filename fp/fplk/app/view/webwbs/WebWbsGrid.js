@@ -3,6 +3,9 @@ Ext.define('fplk.view.webwbs.WebWbsGrid', {
 	alias : 'widget.webwbsgrid',
 	autoScroll : true,
 	//requires : ['fplk.view.mainform.TotalWb'],
+	viewConfig : {
+		enableTextSelection: true
+	},
 	store : 'WebWbSt',
 	columns : [{
 			text : '№ Накладной',

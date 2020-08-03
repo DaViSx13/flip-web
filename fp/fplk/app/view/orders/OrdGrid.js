@@ -3,6 +3,9 @@ Ext.define('fplk.view.orders.OrdGrid', {
 	alias : 'widget.ordgrid',
 	requires : ['fplk.view.orders.OrdTool', 'fplk.view.orders.OrdTotal'],
 	store : 'OrdsSt',
+	viewConfig: {
+		enableTextSelection: true
+	},
 	columns : [{
 			xtype : 'gridcolumn',
 			width : 60,

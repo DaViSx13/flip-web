@@ -17,7 +17,8 @@ Ext.define('fplk.view.wbs.WbsGrid', {
 		pruneRemoved : false
 	},
 	viewConfig : {
-		trackOver : false
+		trackOver : false,
+		enableTextSelection: true
 	},
 	initComponent : function () {
 		this.columns = [{

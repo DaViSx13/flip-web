@@ -7,6 +7,10 @@ Ext.define('fplk.view.webwbs.WebWbsTool', {
 			text : 'Печать веб накладной',			
 			action : 'printwb',
 			iconCls : 'webwbprint'
+		},'-', {
+			text : 'Печать веб накладной',
+			action : 'exp',
+			iconCls : 'tariffs'
 		},
 	'->', '-', {
 			xtype : 'combomonth'

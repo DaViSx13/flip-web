@@ -1,0 +1,112 @@
+<?php
+require_once dirname(__FILE__) . '/Excel/PHPExcel.php';
+require_once "secureCheck.php";
+include 'dbConnect.php';
+require_once "CellStyle.php";
+
+function setCellStyle($sheet, $cell, $arrstyle){	
+	$sheet->getStyle($cell)->applyFromArray($arrstyle);
+}
+
+set_time_limit(300);
+
+$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
+if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
+$bdate = $_REQUEST['bdate'];
+$edate = $_REQUEST['edate'];
+
+
+
+$query = "exec wwwLKgetWebWbs @from='{$bdate}', @to='{$edate}', @clientID={$ag}";
+
+
+$qry = <<<EOD
+
+BEGIN TRY
+
+{$query};
+
+END TRY
+BEGIN CATCH
+	DECLARE @ErrorMessage NVARCHAR(4000);	
+	SELECT @ErrorMessage = 'E1: '+ ERROR_MESSAGE()
+	RAISERROR (@ErrorMessage, -- Message text.
+               16, -- Severity.
+               1 -- State.
+               );
+END CATCH
+EOD;
+
+$result=mssql_query($qry);
+
+// Creating a workbook
+$workbook = new PHPExcel();
+$workbook->setActiveSheetIndex(0);
+
+$worksheet = $workbook->getActiveSheet();
+$worksheet->setTitle('Флиппост');
+$workbook->getProperties()->setCreator("FlipPost")
+							 ->setLastModifiedBy("FlipPost")							 
+							 ->setSubject("Office Document")
+							 ->setDescription("Document for MSOffice XLS.")							 
+							 ->setCategory("Office Document");
+
+//соответствие заголовков и полей
+$fields['№ Накладной'] = 'wb_no';
+$fields['Дата'] = 'date_in';
+$fields['ORG'] = 'org';
+$fields['Отправитель'] = 's_co';
+$fields['DEST'] = 'dest';
+$fields['Получатель'] = 'r_co';
+$fields['Заказ'] = 'ord_no';
+$fields['Вес'] = 'wt';
+$fields['V вес'] = 'vol_wt';
+
+$rowNo = 1;
+$startColNo = 0;
+foreach ($fields as $f => $value) {
+	setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
+    $worksheet->getColumnDimensionByColumn($startColNo)->setAutoSize(true);
+	$worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $f);
+}
+
+$rowNo = 2;
+
+while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
+        $startColNo = 0;
+		foreach ($fields as $f => $value) {
+            if ($value == 'date_in') {
+                $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);
+            } else {
+                $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]));
+            }
+		}
+
+		$rowNo++;
+}
+
+$sharedStyle1 = new PHPExcel_Style();
+$lastRow = $rowNo-1;
+$sharedStyle1->applyFromArray($rowStyle);
+$worksheet->setSharedStyle($sharedStyle1, "A3:AB{$lastRow}");
+
+//Отдаем на скачивание
+// Redirect output to a client’s web browser (Excel5)
+header('Content-Type: application/vnd.ms-excel');
+header("Content-Disposition:attachment;filename=\"отправки Флиппост.xls\"");
+header('Cache-Control: max-age=0');
+// If you're serving to IE 9, then the following may be needed
+header('Cache-Control: max-age=1');
+
+// If you're serving to IE over SSL, then the following may be needed
+header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header ('Pragma: public'); // HTTP/1.0
+
+//PHPExcel_Calculation::getInstance($workbook)->cyclicFormulaCount = 1;
+$objWriter = PHPExcel_IOFactory::createWriter($workbook, 'Excel5');
+$objWriter->save('php://output');
+exit;
+
+?>
