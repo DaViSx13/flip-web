@@ -75,7 +75,7 @@ $fields['Примечание'] = 'r_ref';
 
 $fields['Сумма страховки'] = 'ord_no';
 $fields['Вид оплаты'] = 'metpaym';
-$fields['Оплатил'] = 'payr';
+$fields['Платильщик'] = 'payr';
 
 $fields['Число мест'] = 'pcs';
 $fields['Тип груза'] = 'type';
@@ -112,11 +112,27 @@ $rowNo = 3;
 
 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
         $startColNo = 0;
+
 		foreach ($fields as $f => $value) {
-            if ($value == 'date_in') {
-                $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);
-            } else {
-                $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]));
+            switch ($value) {
+                default:
+                    $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]));
+                    break;
+                case 'date_in':
+                    $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);
+                    break;
+                case 'metpaym':
+                    $val = ($row[$value]== 'INV') ? "По счету" : "Наличными";
+                    $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $val);
+                    break;
+                case 'type':
+                    $val = ($row[$value] == 1) ? "Не документ" : "Документ";
+                    $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $val);
+                    break;
+                case 'payr':
+                    $val = ($row[$value] == 1) ? "Отправитель" : "Получатель";
+                    $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $val);
+                    break;
             }
 		}
 
