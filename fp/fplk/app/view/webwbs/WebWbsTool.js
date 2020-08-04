@@ -8,7 +8,7 @@ Ext.define('fplk.view.webwbs.WebWbsTool', {
 			action : 'printwb',
 			iconCls : 'webwbprint'
 		},'-', {
-			text : 'Экспорт в эксель',
+			text : 'Экспорт в Excel',
 			action : 'exp',
 			iconCls : 'tariffs'
 		},
