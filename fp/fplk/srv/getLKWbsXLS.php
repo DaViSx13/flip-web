@@ -126,7 +126,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
                     $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $val);
                     break;
                 case 'type':
-                    $val = ($row[$value] == 1) ? "Не документ" : "Документ";
+                    $val = ($row[$value] != 1) ? "Не документ" : "Документ";
                     $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, $val);
                     break;
                 case 'payr':
