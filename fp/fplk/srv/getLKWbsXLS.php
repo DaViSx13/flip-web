@@ -116,10 +116,16 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 		foreach ($fields as $f => $value) {
             switch ($value) {
                 default:
-                    $worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]));
+                    $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);
+                    break;
+                case 'ord_no': case 'ord_no': case 'pcs':case 'inssum': case 'vol_wt':
+                    $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_NUMERIC);
                     break;
                 case 'date_in':
-                    $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);
+                    $time = strtotime($row[$value]);
+                    $newformat = date('d.m.Y', $time);
+
+                    $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $newformat), PHPExcel_Cell_DataType::TYPE_STRING);
                     break;
                 case 'metpaym':
                     $val = ($row[$value]== 'INV') ? "По счету" : "Наличными";
