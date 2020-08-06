@@ -64,7 +64,7 @@ Ext.define('fplk.controller.WebWbsCont', {
 			},
 			'webwbstool button[action=exp]' : {
 				click : this.exportExcel
-			},
+			}
 		});
 	},
 
