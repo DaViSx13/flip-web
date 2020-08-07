@@ -40,6 +40,12 @@ Ext.define('fplk.model.WbsMod', {
 			name : 'r_co',
 			type : 'string'
 		}, {
+			name : 's_adr',
+			type : 'string'
+		}, {
+			name : 'r_adr',
+			type : 'string'
+		}, {
 			name : 'pcs',
 			type : 'int'
 		}, {
