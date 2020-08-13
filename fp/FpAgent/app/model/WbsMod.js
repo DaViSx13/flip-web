@@ -112,6 +112,12 @@ Ext.define('FPAgent.model.WbsMod', {
 		}, {
 			name : 's_ref',
 			type : 'string'
+		}, {
+			name : 's_city',
+			type : 'string'
+		}, {
+			name : 'r_city',
+			type : 'string'
 		}
 	]
 });

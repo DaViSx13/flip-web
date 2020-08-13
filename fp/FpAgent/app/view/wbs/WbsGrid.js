@@ -65,9 +65,17 @@ Ext.define('FPAgent.view.wbs.WbsGrid', {
 				width : 50,
 				dataIndex : 'org'
 			}, {
+				text : 'Город отправителя',
+				width : 120,
+				dataIndex : 's_city'
+			}, {
 				text : 'DEST',
 				width : 50,
 				dataIndex : 'dest'
+			}, {
+				text : 'Город получателя',
+				width : 120,
+				dataIndex : 'r_city'
 			}, {
 				text : FPAgent.lib.Translate.tr("WbsGrid.t_srv"),//'Услуга',
 				width : 45,
