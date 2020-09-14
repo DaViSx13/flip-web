@@ -274,6 +274,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			,@Inssum = $inssum
 			,@Metpaym = $metpaym
 			,@Payr = $payr
+            ,@wbsource = 'webLK'
 			";
 			break;	
 		case 'GetClientWbs':

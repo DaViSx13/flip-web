@@ -245,7 +245,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			,@WT = $wt
 			,@VOL_WT = $vol_wt
 			,@PCS = $pcs
-			,@T_PAC = $t_pac";
+			,@T_PAC = $t_pac
+            ,@wbsource = 'webClient'";
 			break;	
 		case 'GetClientWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
