@@ -58,17 +58,17 @@ Ext.define('fplk.view.wbs.WbsGrid', {
 				width : 50,
 				dataIndex : 'org'
 			}, {
-				text : 'Адрес отправителя',
+				text : 'Город отправителя',
 				width : 120,
-				dataIndex : 's_adr'
+				dataIndex : 's_city'
 			}, {
 				text : 'DEST',
 				width : 50,
 				dataIndex : 'dest'
 			}, {
-				text : 'Адрес получателя',
+				text : 'Город получателя',
 				width : 120,
-				dataIndex : 'r_adr'
+				dataIndex : 'r_city'
 			}, {
 				text : 'Отправитель',
 				flex : 1,

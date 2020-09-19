@@ -18,7 +18,7 @@ Ext.define('fplk.view.mainform.ComboMonth', {
 		format: 'd.m.Y',
 		width: 110,
 		value: Ext.Date.add(new Date(), Ext.Date.DAY, -7),
-		maxValue: new Date()
+		maxValue: Ext.Date.add(new Date(), Ext.Date.MONTH, 1)
 	}, {
 		xtype: 'datefield',
 		width: 110,
@@ -27,7 +27,7 @@ Ext.define('fplk.view.mainform.ComboMonth', {
 		anchor: '100%',
 		name: 'toDate',
 		value: new Date(),
-		maxValue: new Date()
+		maxValue: Ext.Date.add(new Date(), Ext.Date.MONTH, 1)
 	}, {
 		xtype: 'button',
 		margin: "0 0 0 10",
