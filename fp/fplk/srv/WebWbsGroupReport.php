@@ -4,21 +4,32 @@
 
     $wbno = $_REQUEST['wbNo'];
 
+// Боевой сервер
+// TODO Расскоментировать перед выставлением
+/*
     $url = 'http://jasperadmin:jasperadmin@10.10.10.6:8080' +
         '/jasperserver' +
         '/rest_v2' +
         '/reports' +
         '/flippost' +
         '/reports' +
-        '/wbreportGROUP.pdf'.$wbno;
+        '/wbreportGROUP.pdf?wbNo='.$wbno;
+*/
+    // Локальный сервер
+    $url = 'http://jasperadmin:jasperadmin@192.168.56.5:8081' .
+        '/jasperserver'.
+        '/rest_v2'.
+        '/reports'.
+        '/flippost'.
+        '/reports'.
+        '/wbreportGROUP.pdf?wbNo='.$wbno;
     $ch = curl_init($url);
     $fh = fopen('php://temp', 'w');
     curl_setopt($ch, CURLOPT_FILE, $fh);
     curl_exec($ch);
     curl_close($ch);
     rewind($fh);
-    $rName = 'Накладная_'.$wbno.'.pdf';
     header ("Content-Type: application/pdf");
-    header ("Content-Disposition: inline;  ;filename=\"$rName\"");
+    header ("Content-Disposition: inline;  ;filename=Накладные.pdf");
     fpassthru($fh);
     fclose($fh);
