@@ -4,7 +4,7 @@
 
     $wbno = $_REQUEST['wbNo'];
 
-    $url = 'http://jasperadmin:jasperadmin@localhost:8081' +
+    $url = 'http://jasperadmin:jasperadmin@10.10.10.6:8080' +
         '/jasperserver' +
         '/rest_v2' +
         '/reports' +
