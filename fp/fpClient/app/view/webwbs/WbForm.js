@@ -144,46 +144,119 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 				}
 			]
 		},  {
-			xtype : 'fieldset',
-			height : 150,
-			width : 360,
-			title : 'Информация о грузе',
-			x : 10,
-			y : 390,
-			defaults : {
-				anchor : '100%'
+		xtype: 'fieldset',
+		height: 190,
+		width: 740,
+		title: 'Дополнительная информация',
+		x: 10,
+		y: 390,
+		defaults: {
+			anchor: '100%'
+		},
+		layout: {
+			type: 'hbox',
+			align: 'stretch',
+			defaultMargins: {
+				top: -4,
+				right: 5,
+				bottom: -8,
+				left: 0
+			}
+		},
+		items: [{
+			xtype: 'fieldset',
+			title: 'Информация о грузе',
+			flex: 1,
+			defaults: {
+				anchor: '100%'
 			},
-			layout : 'anchor',
-			items : [{
-					xtype : 'combobox',
-					name : 'type',
-					displayField : 'Name',
-					valueField : 'lowName',
-					allowBlank : false,
-					forceSelection : true,
-					editable : false,
-					fieldLabel : 'Тип груза',
-					store : 'TypeSt',
-					queryMode : 'local'
-				}, {
-					xtype : 'numberfield',
-					name : 'pcs',
-					minValue : 0,
-					fieldLabel : 'Число мест',
-					allowBlank : true
-				}, {
-					xtype : 'numberfield',
-					name : 'wt',
-					minValue : 0,
-					fieldLabel : 'Вес',
-					allowBlank : true
-				}, {
-					xtype : 'numberfield',
-					name : 'vol_wt',
-					minValue : 0,
-					fieldLabel : 'Объемный вес'
-				}
+			layout: 'anchor',
+			items: [{
+				xtype: 'combobox',
+				name: 'type',
+				displayField: 'Name',
+				valueField: 'lowName',
+				allowBlank: false,
+				forceSelection: true,
+				editable: false,
+				fieldLabel: 'Тип груза',
+				store: 'TypeSt',
+				queryMode: 'local'
+			}, {
+				xtype: 'numberfield',
+				name: 'pcs',
+				minValue: 0,
+				fieldLabel: 'Число мест',
+				allowBlank: true
+			}, {
+				xtype: 'numberfield',
+				name: 'wt',
+				minValue: 0.1,
+				step: 0.1,
+				fieldLabel: 'Вес',
+				allowBlank: true
+			}, {
+				xtype: 'numberfield',
+				name: 'vol_wt',
+				minValue: 0,
+				fieldLabel: 'Объемный вес'
+			}
+			]
+		}, {
+			xtype: 'fieldset',
+			title: 'Информация по оплате',
+			flex: 1,
+			defaults: {
+				anchor: '100%'
+			},
+			layout: 'anchor',
+			items: [{
+				fieldLabel: 'Плательщик',
+				xtype: 'radiofield',
+				boxLabel: 'Отправитель',
+				name: 'payr',
+				inputValue: 1,
+				checked: true
+			}, {
+				fieldLabel: '          ',
+				labelSeparator: '',
+				xtype: 'radiofield',
+				boxLabel: 'Получатель',
+				name: 'payr',
+				inputValue: 2
+			}, {
+				fieldLabel: 'Вид оплаты',
+				xtype: 'radiofield',
+				boxLabel: 'По счету',
+				name: 'metpaym',
+				inputValue: 'INV',
+				checked: true
+			}, {
+				fieldLabel: '          ',
+				labelSeparator: '',
+				xtype: 'radiofield',
+				boxLabel: 'Наличными',
+				name: 'metpaym',
+				inputValue: 'CSH'
+			}]
+		}, {
+			xtype: 'fieldset',
+			title: 'Описание содержимого',
+			flex: 1,
+			defaults: {
+				anchor: '100%'
+			},
+			layout: 'fit',
+			items: [{
+				name: 'descr',
+				xtype: 'textareafield',
+				maxLength: 500,
+				labelAlign: 'top',
+				anchor: '100%'
+			}
 			]
 		}
+		]
+	}
 	]
 });

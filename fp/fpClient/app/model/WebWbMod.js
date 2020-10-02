@@ -95,19 +95,15 @@ Ext.define('FPClient.model.WebWbMod', {
 		},*/ {
 			name : 'pcs',
 			type : 'int'
-		}/*, {
-			name : 'holidaydel',
-			type : 'string'
-		}, {
-			name : 'timing',
-			dateFormat : 'Y-m-d H:i:s',
-			type : 'date'
-		}, {
-			name : 't_del',
-			type : 'string'
-		}, {
-			name : 'ins',
-			type : 'float'
-		}*/
+		},  {
+		name : 'descr',
+		type : 'string'
+	}, {
+		name : 'payr',
+		type : 'int'
+	}, {
+		name : 'metpaym',
+		type : 'string'
+	}
 	]
 });

@@ -6,7 +6,7 @@ Ext.define('FPClient.view.webwbs.WbWin', {
 	title : 'Новая веб накладная',
 	layout : 'vbox',
 	autoShow : true,
-	height : 620,
+	height : 650,
 	width : 770,
 	resizable : false,
 	modal : true,
