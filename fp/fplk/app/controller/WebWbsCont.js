@@ -317,6 +317,16 @@ Ext.define('fplk.controller.WebWbsCont', {
 			targetWebNums += record.data.wb_no + ","
 		});
 
+		targetWebNums = targetWebNums.substring(0, targetWebNums.length - 1);
+		if(targetWebNums.split(',').length > 50) {
+			Ext.Msg.alert('Превышение количества веб накладных', 'Выберите меньшее количество веб накладных для печати');
+			return;
+		}
+
+		if(targetWebNums.split(',').length == 1) {
+			targetWebNums += ","
+		}
+		
 		if(targetWebNums.length == 0) {
 			Ext.Msg.alert('Не выбрана веб накладная', 'Выберите одну или несколько записей в таблице');
 			return;
@@ -325,7 +335,7 @@ Ext.define('fplk.controller.WebWbsCont', {
 			window.location.href +
 			'srv' +
 			'/WebWbsGroupReport.php' +
-			'?wbNo=' + targetWebNums.substring(0, targetWebNums.length - 1), "_blank");
+			'?wbNo=' + targetWebNums, "_blank");
 	},
 
 	loadWebWbs : function () {
