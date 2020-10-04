@@ -123,8 +123,6 @@ Ext.define('fplk.controller.WebWbsCont', {
 			form.down('textfield[name=pcs]').setValue(sm.getSelection()[0].get('packs'));
 			form.down('textfield[name=wt]').setValue(sm.getSelection()[0].get('wt'));
 			form.down('textfield[name=vol_wt]').setValue(sm.getSelection()[0].get('volwt'));
-			//form.down('radiofield[name=payr]').setRawValue(1);
-			//form.down('radiofield[name=metpaym]').setRawValue(1);
 			
 			form.down('combocity[name=dest]').focus(false, true);
 			
