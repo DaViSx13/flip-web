@@ -322,10 +322,6 @@ Ext.define('fplk.controller.WebWbsCont', {
 			Ext.Msg.alert('Превышение количества веб накладных', 'Выберите меньшее количество веб накладных для печати');
 			return;
 		}
-
-		if(targetWebNums.split(',').length == 1) {
-			targetWebNums += ","
-		}
 		
 		if(targetWebNums.length == 0) {
 			Ext.Msg.alert('Не выбрана веб накладная', 'Выберите одну или несколько записей в таблице');

@@ -1,7 +1,7 @@
 USE [ALERT_F]
 GO
 
-/****** Object:  StoredProcedure [dbo].[wwwGetWebWbs]    Script Date: 09/20/2020 00:00:07 ******/
+/****** Object:  StoredProcedure [dbo].[wwwGetWebWbs]    Script Date: 10/04/2020 22:39:44 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,7 +14,7 @@ GO
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE [dbo].[wwwGetWebWbs]
-	@wb_no [varchar](500)
+	@wb_no [varchar](5000)
 AS
 BEGIN
 /*wwwGetWebWb*/
