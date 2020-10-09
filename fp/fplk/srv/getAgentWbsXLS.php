@@ -9,11 +9,11 @@ function setCellStyle($sheet, $cell, $arrstyle){
 	$sheet->getStyle($cell)->applyFromArray($arrstyle);
 }
 
-$ag = isset($_REQUEST['newAgent']) ? $_REQUEST['newAgent'] : $_SESSION['xAgentID']; 
+$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];} 
 $filter = $_REQUEST['filter'];
 
-$query = "exec wwwGetAgentWbs @period='$_REQUEST[newPeriod]', @agentID={$ag}, @dir='{$filter}'";
+$query = "exec wwwLKgetWbs @from='$_REQUEST[from]', @to='$_REQUEST[to]', @clientID={$ag}, @dir='{$filter}'";
 $result=mssql_query($query);
 
 // Creating a workbook
@@ -39,7 +39,7 @@ $fields['Отправитель'] = 's_co';
 $fields['Получатель'] = 'r_co';
 $fields['Вес'] = 'wt';
 $fields['Об.вес'] = 'vol_wt';
-
+/*
 $fields['баз.'] = 'tar_flip_b';
 $fields['доп.'] = 'tar_flip_a';
 $fields['Всего'] = 'tar_flip_t';
@@ -49,6 +49,7 @@ $fields[' баз.'] = 'tar_ag_b';
 $fields[' доп.'] = 'tar_ag_a';
 $fields[' Всего'] = 'tar_ag_t';
 $fields[' прим.'] = 'rem_ag';
+*/
 
 $rowNo = 1;
 $startColNo = 1;
@@ -65,7 +66,7 @@ function cellsToMergeByColsRow($start = -1, $end = -1, $row = -1){
 
 //пишем заголовки
 
-$startColNo = array_search('tar_flip_b', array_values($fields));
+/*$startColNo = array_search('tar_flip_b', array_values($fields));
 $worksheet->setCellValueByColumnAndRow($startColNo, $rowNo, 'тариф Флип');
 $worksheet->mergeCells(cellsToMergeByColsRow($startColNo,$startColNo+3,$rowNo));
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+1).$rowNo, $titleStyle);
@@ -81,7 +82,7 @@ setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+2).$ro
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo+3).$rowNo, $titleStyle);
 setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $titleStyle);
 
-$rowNo++;
+$rowNo++;*/
 
 $startColNo = 0;
 foreach ($fields as $f => $value) {

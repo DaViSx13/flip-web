@@ -337,8 +337,8 @@ Ext.define('fplk.controller.WbsCont', {
 			var t_dir = 'out';
 			break;
 		}
-		var peroid = this.getDateFromPeriodFilter();
-		window.location.href = 'srv/getAgentWbsXLS.php?from=' + period[0] + '&to=' + peroid[1] + '&filter=' + t_dir;
+		var period = this.getDateFromPeriodFilter();
+		window.location.href = 'srv/getAgentWbsXLS.php?from=' + period[0] + '&to=' + period[1] + '&filter=' + t_dir;
 	},
 	loadWBsWin : function (btn) {
 		//console.log('import');
