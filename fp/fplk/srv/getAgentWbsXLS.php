@@ -33,7 +33,6 @@ $fields['Получил'] = 'rcpn';
 $fields['Подтв.'] = 'p_d_in_txt';
 $fields['ORG'] = 'org';
 $fields['DEST'] = 'dest';
-$fields['Услуга'] = 't_srv';
 $fields['Отправитель'] = 's_co';
 $fields['Получатель'] = 'r_co';
 $fields['Мест'] = 'pcs';
