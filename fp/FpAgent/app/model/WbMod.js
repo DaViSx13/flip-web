@@ -26,6 +26,9 @@ Ext.define('FPAgent.model.WbMod', {
 			name : 's_co'
 		}, {
 			name : 'r_co'
-		}
-	]
+		}, {
+			name : 'address'
+		}, {
+			name : 'r_city'
+		}]
 });

@@ -54,9 +54,13 @@ Ext.define('FPAgent.view.mainform.MnfGrid', {
 			text : FPAgent.lib.Translate.tr("MnfGrid.descr"),//'Перевозчик',
 			dataIndex : 'descr',
 			flex : 1
-		},{
+		}, {
 			text : FPAgent.lib.Translate.tr("MnfGrid.masterwbno"),
 			dataIndex : 'mawb',
+			width : 130
+		}, {
+			text : FPAgent.lib.Translate.tr("MnfGrid.infrems"),
+			dataIndex : 'infrems',
 			width : 130
 		}
 	],

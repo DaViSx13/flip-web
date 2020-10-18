@@ -1547,7 +1547,19 @@
         "stringID":  "MnfGrid.masterwbno",
         "ru":  "Мастер накладная",
         "en":  "Master waybill"
-    }
+    }, {
+            "stringID":  "MnfGrid.infrems",
+            "ru":  "Описание",
+            "en":  "Description"
+    }, {
+            "stringID":  "WbGrid.address",
+            "ru":  "Адрес получателя",
+            "en":  "Recipient address"
+	}, {
+            "stringID":  "WbGrid.r_city",
+            "ru":  "Город получателя",
+            "en":  "Recipient city"
+        }
 ]
 
 }, function () {

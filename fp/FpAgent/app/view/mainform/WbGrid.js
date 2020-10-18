@@ -31,6 +31,14 @@ Ext.define('FPAgent.view.mainform.WbGrid', {
 			dataIndex : 'r_co',
 			flex : 1
 		}, {
+			text : FPAgent.lib.Translate.tr("WbGrid.address"),//'Аресс получателя',
+			dataIndex : 'address',
+			width : 200
+		}, {
+			text : FPAgent.lib.Translate.tr("WbGrid.r_city"),//'Город получателя',
+			dataIndex : 'r_city',
+			width : 200
+		}, {
 			text : FPAgent.lib.Translate.tr("WbGrid.shpcs"),//'Мест',
 			xtype : 'numbercolumn',
 			format : '0',
@@ -48,8 +56,7 @@ Ext.define('FPAgent.view.mainform.WbGrid', {
 			format : '0.00',
 			dataIndex : 'shvol_wt',
 			width : 50
-		}
-	],
+		}],
 	dockedItems : [{
 			xtype : 'totalwb',
 			dock : 'bottom'

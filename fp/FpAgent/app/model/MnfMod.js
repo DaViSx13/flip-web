@@ -33,6 +33,8 @@ Ext.define('FPAgent.model.MnfMod', {
 			name : 'descr'
 		}, {
 			name : 'mawb'
+		}, {
+			name : 'infrems'
 		}
 	]
 });
