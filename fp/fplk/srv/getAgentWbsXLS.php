@@ -34,7 +34,9 @@ $fields['Подтв.'] = 'p_d_in_txt';
 $fields['ORG'] = 'org';
 $fields['DEST'] = 'dest';
 $fields['Отправитель'] = 's_co';
+$fields['Адрес отпрвителя'] = 'S_Adr';
 $fields['Получатель'] = 'r_co';
+$fields['Адрес получателя'] = 'R_Adr';
 $fields['Мест'] = 'pcs';
 $fields['Вес'] = 'wt';
 $fields['Об.вес'] = 'vol_wt';
@@ -61,9 +63,20 @@ foreach ($fields as $f => $value) {
 
 $rowNo++;
 
+$rowcount = mssql_num_rows($result);
+if($rowcount == 0) {
+    $worksheet->setCellValueByColumnAndRow(1, 2, "Нет данных");
+    //Отдаем на скачивание
+    header("Content-Type:application/vnd.ms-excel");
+    header("Content-Disposition:attachment;filename=\"отправки Флиппост.xls\"");
+
+    $objWriter = new PHPExcel_Writer_Excel5($workbook);
+    $objWriter->save('php://output');
+    return;
+}
+
 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
-	//пишем данные
-	if($filter == 'all' || $row['dir'] == $filter ){
+	if($filter == 'all' || $row['dir'] == $filter ) {
 		$startColNo = 0;
 		foreach ($fields as $f => $value) {
 			setCellStyle($worksheet, PHPExcel_Cell::stringFromColumnIndex($startColNo).$rowNo, $rowStyle);            
@@ -72,7 +85,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 			} else {
 				$worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]));
 			}
-		};
+		}
 		$rowNo++;
 	}
 }
