@@ -29,15 +29,16 @@ Ext.define('fplk.view.wbs.WbsTool', {
 			]
 		}, {
 			xtype : 'buttongroup',
-			hidden: true,
 			items : [{
 					text : 'Внести ПОД',
 					iconCls : 'newpod',
-					action : 'pod'
+					action : 'pod',
+					hidden: true
 				}, {
 					text : 'Новая ИС',
 					iconCls : 'newex',
-					action : 'ex'
+					action : 'ex',
+					hidden: true
 				}, {
 					text : 'Экспорт в Excel',
 					iconCls : 'excel',
@@ -45,7 +46,8 @@ Ext.define('fplk.view.wbs.WbsTool', {
 				}, {
 					text : 'Импорт ПОД',
 					iconCls : 'import',
-					action : 'import'
+					action : 'import',
+					hidden: true
 				}
 			]
 		}, '-', {

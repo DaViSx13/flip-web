@@ -2,6 +2,7 @@ Ext.define('fplk.view.webwbs.WebWbsGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.webwbsgrid',
 	autoScroll : true,
+	multiSelect: true,
 	//requires : ['fplk.view.mainform.TotalWb'],
 	viewConfig : {
 		enableTextSelection: true

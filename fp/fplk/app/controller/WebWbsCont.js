@@ -310,14 +310,28 @@ Ext.define('fplk.controller.WebWbsCont', {
 			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
 		}
 	},
-	printWB : function (btn) {		
-	
-	var sm = this.getWebWbsGrid().getSelectionModel();
-		if (sm.getCount() > 0) {			
-			window.open('srv/report.php?wbno='+sm.getSelection()[0].get('wb_no'));
-		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите запись в таблице');
+	printWB : function () {
+		var targetWebNums = "";
+		var sm = this.getWebWbsGrid().getSelectionModel().getSelection();
+		Ext.Array.each(sm, function(record) {
+			targetWebNums += record.data.wb_no + ","
+		});
+
+		targetWebNums = targetWebNums.substring(0, targetWebNums.length - 1);
+		if(targetWebNums.split(',').length > 50) {
+			Ext.Msg.alert('Превышение количества веб накладных', 'Выберите меньшее количество веб накладных для печати');
+			return;
 		}
+		
+		if(targetWebNums.length == 0) {
+			Ext.Msg.alert('Не выбрана веб накладная', 'Выберите одну или несколько записей в таблице');
+			return;
+		}
+		window.open(
+			window.location.href +
+			'srv' +
+			'/WebWbsGroupReport.php' +
+			'?wbNo=' + targetWebNums, "_blank");
 	},
 
 	loadWebWbs : function () {
