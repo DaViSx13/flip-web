@@ -215,8 +215,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 							xtype: 'radiofield',
 							boxLabel: 'Отправитель',
 							name: 'payr',
-							inputValue: 1,
-							checked: true
+							inputValue: 1
 						}, {
 							fieldLabel: '          ',
 							labelSeparator: '',
@@ -229,8 +228,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 							xtype: 'radiofield',
 							boxLabel: 'По счету',
 							name: 'metpaym',
-							inputValue: 'INV',
-							checked: true
+							inputValue: 'INV'
 						}, {
 							fieldLabel: '          ',
 							labelSeparator: '',
