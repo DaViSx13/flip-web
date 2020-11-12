@@ -39,7 +39,7 @@ ALTER procedure [dbo].[wwwClientSetWb]
 	@T_PAC int,
 	@Descr varchar(500) = null,
 	@Inssum float = 0,
-	@Metpaym varchar(3) = 'NaN',
+	@Metpaym varchar(3) = null,
 	@Payr int = 0,
   @wbsource varchar(50) = 'web',
 	@agentID int = null
