@@ -7,6 +7,24 @@ Ext.define('fplk.view.orders.OrdGrid', {
 		enableTextSelection: true
 	},
 	columns : [{
+		xtype: 'actioncolumn',
+		text: 'ИС',
+		name: 'exaction',
+		width: 40,
+		dataIndex: 'is_ex',
+		items: [{
+				getClass: function (v, meta, rec) {
+					if (rec.get('isex') > 0) {
+						this.items[0].tooltip = 'Посмотреть ИС';
+						return 'ex-col';
+					}
+				},
+				handler: function (grid, rowIndex, colIndex, node, e, record) {
+					var action = 'exaction';
+					this.fireEvent('itemclick', this, action, grid, rowIndex, colIndex, record, node);
+				}
+		}]
+		},{
 			xtype : 'gridcolumn',
 			width : 60,
 			dataIndex : 'rordnum',
