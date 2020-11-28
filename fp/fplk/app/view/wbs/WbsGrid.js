@@ -44,7 +44,7 @@ Ext.define('fplk.view.wbs.WbsGrid', {
 				dataIndex : 'wb_no'
 			}, {
 				text : 'Принято',
-				dataIndex : 'd_acc',
+				dataIndex : 'orderdate',
 				xtype : 'datecolumn',
 				format : 'd.m.Y'
 			}, {
