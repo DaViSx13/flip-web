@@ -18,3 +18,5 @@ Flight::route('GET /wb/@wb',['wbController','getWBPDF']);
 Flight::route('GET /tarifs/@org/@dest/@wt(/@cargotype)',['tarifsController','getTarifs']);
 
 Flight::route('POST /catapulto',['catapultoController','getCatapultoTarif']);
+
+Flight::route('POST /createOrder',['wbController','createWb']);
