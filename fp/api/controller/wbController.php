@@ -24,9 +24,8 @@ class wbController{
   }
 
     public static function createWb() {
-      /*$token1 = $_SERVER["HTTP_TOKEN"];
-
-      $token = Flight::checkToken($token1);*/
+      $token = $_SERVER["HTTP_TOKEN"];
+      $token = Flight::checkToken($token);
 
 
        $wbNo = self::getField("wbNo", true);
@@ -76,8 +75,8 @@ class wbController{
        $rMail = self::getField("rMail", "true");
        self::checkStringField($rMail, "rMail", 200);
 
-       $userIN = self::getField("userIN", true);
-       self::checkStringField($userIN, "userIN", 50);
+      /* $userIN = self::getField("userIN", true);
+       self::checkStringField($userIN, "userIN", 50);*/
 
        $wt = self::getField("wt", true);
        self::checkNumberValue($wt, "wt");
@@ -111,7 +110,10 @@ class wbController{
         self::checkStringField($webSource, "webSource", 3);
         self::checkRange($webSource, "webSource", array("web", "dic_agent"));
 
-       $agentID = self::getFieldWithDefault("agentID", null);
+        $token = current($token);
+        $userin = $token['auser'];
+        $ag = $token['agentid'];
+
         $sql = "exec wwwClientSetWb
        	    @ID = null,
             @Wb_No = '$wbNo',
@@ -130,7 +132,7 @@ class wbController{
             @R_Adr = '$rAdr',
             @R_Ref = '$rRef',
             @R_Mail = '$rMail',
-            @User_IN = '$userIN',
+            @User_IN = '$userin',
             @WT = $wt,
             @VOL_WT = $volWt,
             @PCS = $pcs,
@@ -140,7 +142,7 @@ class wbController{
             @Metpaym = '$metPaym',
             @Payr = $payer,
             @wbsource = '$webSource',
-            @agentID = '$agentID'";
+            @agentID = '$ag'";
        $response = new Response();
        $sql = Flight::utf8_to_win1251($sql);
        $sql = stripslashes($sql);
