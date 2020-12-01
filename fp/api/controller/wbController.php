@@ -23,6 +23,10 @@ class wbController{
    echo Flight::json($response);
   }
 
+    /**
+     * Создание нкладной.
+     * @throws Exception Ошибка создания
+     */
     public static function createWb() {
       $token = $_SERVER["HTTP_TOKEN"];
       $token = Flight::checkToken($token);
