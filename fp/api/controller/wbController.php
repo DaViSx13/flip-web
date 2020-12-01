@@ -27,38 +27,95 @@ class wbController{
       /*$token1 = $_SERVER["HTTP_TOKEN"];
 
       $token = Flight::checkToken($token1);*/
-       $wbNo = self::getField("wbNo", "true");
 
-       $orgNo = self::getField("orgNo", "true");
-       $sCityID = self::getField("sCityID", "true");
-       $sName = self::getField("sName", "true");
-       $sTel = self::getField("sTel", "true");
-       $sCo = self::getField("sCo", "true");
-       $sAdr = self::getField("sAрf", "true");
-       $sMail = self::getField("sMail", "true");
-       $rCityID = self::getField("rCityID", "true");
-       $rName = self::getField("rName", "true");
-       $rTel = self::getField("rTel", "true");
-       $rCo = self::getField("rCo", "true");
-       $rAdr = self::getField("rAdr", "true");
-       $rRef = self::getField("rRef", "true");
+
+       $wbNo = self::getField("wbNo", true);
+       self::checkStringField($wbNo, "wbNo", 50);
+
+       $sCityID = self::getField("sCityID", true);
+       self::checkNumberValue($sCityID, "sCityID");
+       cityController::checkCities($sCityID);
+
+       $sName = self::getField("sName", true);
+       self::checkStringField($sName, "sName", 50);
+
+       $sTel = self::getFieldWithDefault("sTel", "");
+       self::checkStringField($sTel, "sTel", 50);
+
+       $sCo = self::getFieldWithDefault("sCo", "");
+       self::checkStringField($sCo, "sCo", 90);
+
+       $sAdr = self::getField("sAdr", true);
+       self::checkStringField($sAdr, "sAdr", 200);
+
+       $sMail = self::getField("sMail", true);
+       self::checkStringField($sMail, "sMail", 200);
+
+       $sRef = self::getFieldWithDefault("sRef", "");
+       self::checkStringField($sRef, "sRef", 300);
+
+       $rCityID = self::getField("rCityID", true);
+       self::checkNumberValue($rCityID, "rCityID");
+       cityController::checkCities($rCityID);
+
+       $rName = self::getField("rName", true);
+       self::checkStringField($rName, "rName", 50);
+
+       $rTel = self::getFieldWithDefault("rTel", "");
+       self::checkStringField($rTel, "rTel", 50);
+
+       $rCo = self::getFieldWithDefault("rCo", "");
+       self::checkStringField($rCo, "rCo", 50);
+
+       $rAdr = self::getField("rAdr", true);
+       self::checkStringField($rAdr, "rAdr", 200);
+
+       $rRef = self::getFieldWithDefault("rRef", "");
+       self::checkStringField($rRef, "rRef", 300);
+
        $rMail = self::getField("rMail", "true");
-       $userIN = self::getField("userIN", "true");
-       $wt = self::getField("wt", "true");
-       $volWt = self::getField("volWt", "true");
-       $pcs = self::getField("pcs", "true");
-       $tPac = self::getField("tPac", "true");
-       $Descr = self::getFieldWithDefault("Descr", null);
-       $inSum = self::getFieldWithDefault("inSum", 0);
-       $metPaym = self::getFieldWithDefault("metPaym", null);
-       $payer = self::getFieldWithDefault("payer", 0);;
-       $webSource = self::getFieldWithDefault("webSource", 'web');
-       $agentID = self::getFieldWithDefault("agentID", null);
+       self::checkStringField($rMail, "rMail", 200);
 
-       $sql = "exec wwwClientSetWb
+       $userIN = self::getField("userIN", true);
+       self::checkStringField($userIN, "userIN", 50);
+
+       $wt = self::getField("wt", true);
+       self::checkNumberValue($wt, "wt");
+
+       $volWt = self::getField("volWt", true);
+       self::checkNumberValue($volWt, "wt");
+
+       $pcs = self::getField("pcs", true);
+       self::checkNumberValue($pcs, "pcs");
+
+       $tPac = self::getField("tPac", true);
+       self::checkNumberValue($tPac, "tPac");
+       self::checkRange($tPac, "tPac",  array(0, 1));
+
+       $Descr = self::getFieldWithDefault("Descr", "");
+       self::checkStringField($Descr, "Descr", 500);
+
+       $inSum = self::getFieldWithDefault("inSum", 0);
+       self::checkNumberValue($tPac, "inSum");
+       self::checkRange($tPac, "inSum", array(0, 1));
+
+       $metPaym = self::getFieldWithDefault("metPaym", 'NaN');
+       self::checkStringField($metPaym, "metPaym", 3);
+       self::checkRange($metPaym,"metPaym", array("NaN", "INV", "CSH"));
+
+       $payer = self::getFieldWithDefault("payer", 0);
+       self::checkNumberValue($payer, "payer");
+       self::checkRange($payer, "payer", array(0, 1, 2));
+
+       $webSource = self::getFieldWithDefault("webSource", 'web');
+        self::checkStringField($webSource, "webSource", 3);
+        self::checkRange($webSource, "webSource", array("web", "dic_agent"));
+
+       $agentID = self::getFieldWithDefault("agentID", null);
+        $sql = "exec wwwClientSetWb
        	    @ID = null,
             @Wb_No = '$wbNo',
-            @Ord_No = '$orgNo',
+            @Ord_No = 0,
             @S_City_ID = $sCityID,
             @S_Name = '$sName',
             @S_Tel = '$sTel',
@@ -93,6 +150,13 @@ class wbController{
        echo Flight::json($response);
   }
 
+    /**
+     * Получение значения из запроса.
+     * @param $fieldName string Наименование ключа
+     * @param $isSet string Проверка заполнен ли ключ
+     * @return mixed Значение из запроса
+     * @throws Exception Ошибка проверки
+     */
   private static function getField($fieldName, $isSet) {
        $result = Flight::request() -> data -> $fieldName;
        if($isSet & !isset($result))
@@ -101,11 +165,83 @@ class wbController{
         return $result;
   }
 
+    /**
+     * Получение значения из запроса
+     * со значением по умолчанию.
+     * @param $fieldName string Наименование ключа
+     * @param $default mixed Значение по умолчанию
+     * @return mixed Значение из запроса
+     */
   private static function getFieldWithDefault($fieldName, $default) {
       $result = Flight::request() -> data -> $fieldName;
       if(!isset($result))
         return $default;
       else
         return $result;
+  }
+
+    /**
+     * Проерка строчного значения.
+     * @param $field string Значение
+     * @param $fieldName string Наименование ключа
+     * @param $charCount integer Количество допустимых символов
+     * @throws Exception Ошибка проверки
+     */
+  private static function checkStringField($field, $fieldName, $charCount) {
+      $injectionSymbols = array(
+          "--",
+          "1=1",
+          "0=0",
+          "true",
+          "script>"
+      );
+
+     if (gettype($field) != "string")
+         throw new Exception(
+             "Значения ключа '$fieldName' не является строчным.
+                       Исправьте тело запроса и повторите попытку");
+
+     if (strlen($field) > $charCount)
+         throw new Exception(
+             "Количесво символов значения ключа '$fieldName' 
+                      превышает доустимое количество - '$charCount'. 
+                      Исправьте значение и повторите попытку");
+
+     foreach ($injectionSymbols as $item) {
+         if(strpos($field, $item) == true)
+             throw new Exception("В значении ключа '$fieldName' обнаружено недопустимое значение - '$item'");
+     }
+  }
+
+    /**
+     * Проверка числового значения.
+     * @param $field double Значение
+     * @param $fieldName string Наименование ключа
+     * @throws Exception Ошибка проверки
+     */
+  private function checkNumberValue($field, $fieldName) {
+      if (gettype($field) != "double")
+          if(gettype($field) != "integer")
+              throw new Exception(
+                  "Значения ключа '$fieldName' не является числом.
+                           Исправьте тело запроса и повторите попытку");
+  }
+
+    /**
+     * Проверка значения находится ли в списке допустимых.
+     * @param $field mixed Значение
+     * @param $fieldName string Наименование ключа
+     * @param $range array Область значения
+     * @throws Exception Ошибка проверки
+     */
+  private function checkRange($field, $fieldName, $range) {
+      $found = false;
+      foreach ($range as $item) {
+          if ($field == $item)
+              $found = true;
+      }
+
+      if (!$found)
+          throw new Exception("Значение($fieldName) не находится в списке допустимых");
   }
 }
