@@ -9,7 +9,7 @@ class ResponseCity
 class cityController{
 
     public static function getCities(){    
-    $sql = "exec wwwGetCity";
+    $sql = "/*--apitest--*/ exec wwwGetCity";
     $result = Flight::db()->query($sql);
 	$response = new ResponseCity();
 	$response->data = $result;

@@ -27,17 +27,17 @@ class wbController{
      * Создание нкладной.
      * @throws Exception Ошибка создания
      */
-    public static function createWb() {
-      $token = $_SERVER["HTTP_TOKEN"];
+    public static function createWb() {     
+	  $token = $_SERVER["HTTP_TOKEN"];
       $token = Flight::checkToken($token);
 
+       $wbNo = self::getField("wbno", true);
+       self::checkStringField($wbNo, "wbno", 50);
 
-       $wbNo = self::getField("wbNo", true);
-       self::checkStringField($wbNo, "wbNo", 50);
-
-       $sCityID = self::getField("sCityID", true);
-       self::checkNumberValue($sCityID, "sCityID");
+       $sCityID = self::getField("scityid", true);	   
+	   self::checkNumberValue($sCityID, "scityid");
        cityController::checkCities($sCityID);
+
 
        $sName = self::getField("sName", true);
        self::checkStringField($sName, "sName", 50);
@@ -102,23 +102,19 @@ class wbController{
        self::checkNumberValue($tPac, "inSum");
        self::checkRange($tPac, "inSum", array(0, 1));
 
-       $metPaym = self::getFieldWithDefault("metPaym", 'NaN');
-       self::checkStringField($metPaym, "metPaym", 3);
-       self::checkRange($metPaym,"metPaym", array("NaN", "INV", "CSH"));
+       $metPaym = self::getFieldWithDefault("metPaym", 'INV');
+       self::checkStringField($metPaym, "metPaym", 5);
+       self::checkRange($metPaym,"metPaym", array("INV", "CSH"));
 
        $payer = self::getFieldWithDefault("payer", 0);
        self::checkNumberValue($payer, "payer");
-       self::checkRange($payer, "payer", array(0, 1, 2));
-
-       $webSource = self::getFieldWithDefault("webSource", 'web');
-        self::checkStringField($webSource, "webSource", 3);
-        self::checkRange($webSource, "webSource", array("web", "dic_agent"));
+       self::checkRange($payer, "payer", array(0, 1, 2));       
 
         $token = current($token);
         $userin = $token['auser'];
         $ag = $token['agentid'];
 
-        $sql = "exec wwwClientSetWb
+        $sql = "/*--apitest--*/exec wwwClientSetWb
        	    @ID = null,
             @Wb_No = '$wbNo',
             @Ord_No = 0,
@@ -145,8 +141,8 @@ class wbController{
             @Inssum = $inSum,
             @Metpaym = '$metPaym',
             @Payr = $payer,
-            @wbsource = '$webSource',
-            @agentID = '$ag'";
+			@wbsource = 'api',            
+            @agentID = $ag";
        $response = new Response();
        $sql = Flight::utf8_to_win1251($sql);
        $sql = stripslashes($sql);
@@ -226,8 +222,8 @@ class wbController{
      * @throws Exception Ошибка проверки
      */
   private function checkNumberValue($field, $fieldName) {
-      if (gettype($field) != "double")
-          if(gettype($field) != "integer")
+	   if (strlen($field)==0 || (!is_int($field+0) || !is_numeric($field)))
+		if (strlen($field)==0 || (!is_float($field+0) || !is_numeric($field)))   
               throw new Exception(
                   "Значения ключа '$fieldName' не является числом.
                            Исправьте тело запроса и повторите попытку");
