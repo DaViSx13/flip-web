@@ -44,7 +44,9 @@ Ext.define('fplk.controller.TemplCont', {
 	  if(newValue.length == 0)
 	  	grid.getStore().clearFilter();
 	  else
-	  	grid.getStore().filter("templatename", newValue);
+	  	grid.getStore().filterBy(function (record) {
+	  		return record.get("templatename").toLowerCase().includes(newValue.toLowerCase());
+		})
 	},
 
 	dblclickTpl : function (gr, rec) {		
