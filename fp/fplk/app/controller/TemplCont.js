@@ -40,7 +40,6 @@ Ext.define('fplk.controller.TemplCont', {
 	 * @param newValue Новое значение
 	 */
 	searchByNameEvent : function(component, newValue) {
-		console.log(component.getValue())
 	  var grid = component.up("tabpanel").down("grid");
 	  if(newValue.length == 0)
 	  	grid.getStore().clearFilter();
