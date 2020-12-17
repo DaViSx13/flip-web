@@ -327,21 +327,18 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			this.setTpl();
 		}
 	},
+
 	saveWbno: function (btn) {
 		var me = this;
 		var win = btn.up('wbnowin');
 		var activetab = me.getOrdsPanel().hidden;
 		var form_wbno = win.down('wbnoform');
-		if (!activetab) {
-						var Action = 'SetWbno';
-					} else {
-						var Action = 'SetWbnoCli';
-					}		
+
 		if (form_wbno.getForm().isValid()) {
 			form_wbno.submit({
 				url: 'srv/data.php',
 				params: {
-					dbAct: Action//'SetWbno'
+					dbAct: "SetWbno"
 				},
 				submitEmptyText: false,
 				success: function (form, action) {
