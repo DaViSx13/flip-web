@@ -13,6 +13,9 @@ Ext.define('fplk.view.orders.TemplTool', {
 			text : 'Удалить',
 			iconCls : 'deldoc',
 			action : 'deltpl'
-		}
-	]
+		}, '-', {
+			xtype: 'textfield',
+			emptyText: "Наименование",
+			name: "filterByName"
+		}]
 });
