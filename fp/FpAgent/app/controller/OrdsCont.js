@@ -333,12 +333,16 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var win = btn.up('wbnowin');
 		var activetab = me.getOrdsPanel().hidden;
 		var form_wbno = win.down('wbnoform');
-
+		if (!activetab) {
+			var Action = 'SetWbno';
+		} else {
+			var Action = 'SetWbNoClient';
+		}
 		if (form_wbno.getForm().isValid()) {
 			form_wbno.submit({
 				url: 'srv/data.php',
 				params: {
-					dbAct: "SetWbno"
+					dbAct: Action
 				},
 				submitEmptyText: false,
 				success: function (form, action) {

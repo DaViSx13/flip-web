@@ -289,11 +289,11 @@ if (!isset($_REQUEST['dbAct'])) {
 			$wbno = isset($params['wbno']) ? $params['wbno'] : 'NULL';
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
-		case 'SetWbnoCli':
+		case 'SetWbNoClient':
 			$paging = false;
 			$rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
 			$wbno = isset($params['wbno']) ? $params['wbno'] : 'NULL';
-			$query = "exec wwwSetWbnoCli @rordnum={$rordnum}, @wbno='{$wbno}'";
+			$query = "exec wwwSetWbNoClient @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
 		case 'getAgTemplates':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
