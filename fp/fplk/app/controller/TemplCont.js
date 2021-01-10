@@ -27,9 +27,28 @@ Ext.define('fplk.controller.TemplCont', {
 			},
 			'templgrid > tableview' : {
 				itemdblclick : this.dblclickTpl
+			},
+			'textfield[name=filterByName]': {
+				"change" : this.searchByNameEvent
 			}
 		});
 	},
+
+	/**
+	 * Фильтрация по наименованию шаблонов.
+	 * @param component Поле наименование
+	 * @param newValue Новое значение
+	 */
+	searchByNameEvent : function(component, newValue) {
+	  var grid = component.up("tabpanel").down("grid");
+	  if(newValue.length == 0)
+	  	grid.getStore().clearFilter();
+	  else
+	  	grid.getStore().filterBy(function (record) {
+	  		return record.get("templatename").toLowerCase().includes(newValue.toLowerCase());
+		})
+	},
+
 	dblclickTpl : function (gr, rec) {		
 		this.clkEdit(this.getTemplTool().down('button[action=edittpl]'));
 	},

@@ -1,8 +1,37 @@
 Ext.define('fplk.controller.OrdsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin'],
-	models : ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod'/*, 'WebWbMod'*/],
-	stores : ['OrdsSt', 'aMonths', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'ClientSt'/*, 'WebWbSt'*/],
+	views : [
+			'orders.OrdGrid',
+			'orders.OrdWin',
+			'orders.WbNoWin',
+			'orders.WbNoForm',
+			'orders.OrdsPanel',
+			'orders.UseTemplWin',
+			'orders.UseTemplForm',
+			'orders.ViewWbWin',
+			'wbs.WbsGrid',
+			'orders.LoadOrdersWin',
+			'orders.OrdExWin',
+			'orders.OrdExGrid',
+			'orders.OrdExForm'],
+	models : [
+			'OrdsMod',
+			'OrderMod',
+			'CityMod',
+			'AgentsMod',
+			'OrdExMod'],
+	stores : [
+			'OrdsSt',
+			'aMonths',
+			'OrderSt',
+			'CityStOrg',
+			'CityStDes',
+			'TypeSt',
+			'AgentsSt',
+			'TemplSt',
+			'ViewWbSt',
+			'ClientSt',
+			'OrdExStore'],
 	refs : [/*{
 			ref : 'WbForm',
 			selector : 'wbform'
@@ -60,7 +89,10 @@ Ext.define('fplk.controller.OrdsCont', {
 		}, {
 			ref : 'UseTemplForm',
 			selector : 'usetemplform'
-		}
+		}, {
+		ref: 'OrdExGrid',
+		selector: 'ordexgrid'
+	}
 	],
 	init : function () {
 		this.control({
@@ -138,6 +170,9 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'loadorderswin button[action=imp]': {
 				click: this.importOrders
+			},
+			'ordgrid actioncolumn': {
+				itemclick: this.viewEx
 			}
 		});
 		this.getOrderStStore().on({
@@ -153,6 +188,36 @@ Ext.define('fplk.controller.OrdsCont', {
 			load : this.loadOrdersSt
 		});
 		this.getClientStStore().load();
+	},
+
+	/**
+	 * Показываются проблемы заказа.
+	 * @param column Текущая колонка таблицы
+	 * @param action Действие над таблицей
+	 * @param grid Текущая таблица
+	 * @param rowIndex Индекс строки
+	 * @param colIndex Индекс колонки
+	 * @param record Выбранная запись
+	 */
+	viewEx: function (column, action, grid, rowIndex, colIndex, record) {
+		this.viewExGrid(record.data['rordnum']);
+	},
+
+	/**
+	 * Выводит окно проблемм заказа
+	 * @param ex_rordnum ID заказа
+	 */
+	viewExGrid: function (ex_rordnum) {
+		if (ex_rordnum) {
+			Ext.widget('ordexwin').show();
+			this.getOrdExStoreStore().load({
+				params: {
+					rordnum: ex_rordnum
+				}
+			});
+		} else {
+			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
+		}
 	},
 
 	/**
@@ -732,7 +797,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					return;
 				}
 				for (var i = 0; i < jsonArrayDes.length; i++) {
-					if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+					if (jsonArrayDitemclickes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
 						dest.setValue(jsonArrayDes[i].data.code);
 						break;
 					}

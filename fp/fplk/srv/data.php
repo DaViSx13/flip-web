@@ -117,6 +117,10 @@ if (!isset($_REQUEST['dbAct'])) {
                 $query = "exec wwwLKgetWebWbs @from='$params[from]', @to='$params[to]', @clientID='{$ag}'";
             }
             break;
+        case 'GetOrdEx':
+            $Rordnum=$params['rordnum'] ? $params['rordnum'] : 0;
+            $query = "exec wwwLKgetOrdEx @ROrdNum=$Rordnum";
+            break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
