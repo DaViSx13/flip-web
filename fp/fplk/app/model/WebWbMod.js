@@ -107,6 +107,9 @@ Ext.define('fplk.model.WebWbMod', {
 		}, {
 			name : 'metpaym',
 			type : 'string'
-		}
-	]
+		}, {
+		name : 'orderdate',
+		dateFormat : 'Y-m-d H:i:s',
+		type : 'date'
+	}]
 });
