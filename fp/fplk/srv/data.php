@@ -119,7 +119,7 @@ if (!isset($_REQUEST['dbAct'])) {
             break;
         case 'GetOrdEx':
             $Rordnum=$params['rordnum'] ? $params['rordnum'] : 0;
-            $query = "exec wwwLKOrdEx @ROrdNum=$Rordnum";
+            $query = "exec wwwLKgetOrdEx @ROrdNum=$Rordnum";
             break;
 		case 'GetMnf':
 			$is_Ready = $params['is_Ready'];
