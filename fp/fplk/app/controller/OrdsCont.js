@@ -173,7 +173,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'ordgrid actioncolumn': {
 				itemclick: this.viewEx
-			},
+			}
 		});
 		this.getOrderStStore().on({
 			scope : this,
