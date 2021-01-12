@@ -16,7 +16,7 @@ Ext.define('fplk.view.webwbs.WebWbsGrid', {
 			text : 'Дата',
 			format : 'd.m.Y',
 			xtype : 'datecolumn',
-			dataIndex : 'date_in',
+			dataIndex : 'orderdate',
 			width : 150
 		}, {
 			text : 'ORG',

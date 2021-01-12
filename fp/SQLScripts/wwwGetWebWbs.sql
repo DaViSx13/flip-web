@@ -1,19 +1,16 @@
 USE [ALERT_F]
 GO
-
-/****** Object:  StoredProcedure [dbo].[wwwGetWebWbs]    Script Date: 10/04/2020 22:39:44 ******/
+/****** Object:  StoredProcedure [dbo].[wwwGetWebWbs]    Script Date: 11/28/2020 19:56:29 ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [dbo].[wwwGetWebWbs]
+ALTER PROCEDURE [dbo].[wwwGetWebWbs]
 	@wb_no [varchar](5000)
 AS
 BEGIN
@@ -24,7 +21,10 @@ WHERE Wb_No IN (select * from split(@wb_no, ','))
 IF @count >= 1
 BEGIN
 SELECT [Wb_No]	--  1
-      ,Date_IN as D_Acc
+	  ,
+	  D_Acc = (select RegOrders.DateIn from RegOrders where m.Ord_No = RegOrders.ROrdNum)
+      -- ,Date_IN 
+      , Ord_No
       ,[ORG]	--  3
       ,[DEST]    -- 4    
       ,[S_Name] --  5
@@ -86,13 +86,9 @@ SELECT [Wb_No]	--  1
 	  ,'' as acc
   FROM wwwClientWB m
   --left join Klient Kl1 on SCode=Kl1.CACC 
-  --left join Klient Kl2 on RCode=Kl2.CACC 
+  --left join Klient Kl2 on RCode=Kl2.CACC
   WHERE Wb_No IN (select * from split(@wb_no, ','))
  END
  ELSE
 	select 0 as wbstatus
 END
-
-GO
-
-
