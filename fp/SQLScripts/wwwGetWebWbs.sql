@@ -22,7 +22,7 @@ IF @count >= 1
 BEGIN
 SELECT [Wb_No]	--  1
 	  ,
-	  D_Acc = (select RegOrders.DateIn from RegOrders where m.Ord_No = RegOrders.OrderNo)
+	  D_Acc = (select RegOrders.DateIn from RegOrders where m.Ord_No = RegOrders.ROrdNum)
       -- ,Date_IN 
       , Ord_No
       ,[ORG]	--  3
