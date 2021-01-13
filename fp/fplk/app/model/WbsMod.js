@@ -90,9 +90,6 @@ Ext.define('fplk.model.WbsMod', {
 			name : 'req_tar_a'
 		}, {
 			name : 'req_rem'
-		}, {
-			name : 'orderdate',
-			dateFormat : 'Y-m-d H:i:s',
-			type : 'date'
-	}]
+		}
+	]
 });
