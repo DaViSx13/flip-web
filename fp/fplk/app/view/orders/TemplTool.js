@@ -17,5 +17,9 @@ Ext.define('fplk.view.orders.TemplTool', {
 			xtype: 'textfield',
 			emptyText: "Наименование",
 			name: "filterByName"
-		}]
+		}, '-', {
+         	text: "Импорт",
+         	iconCls : 'import',
+         	action: "importFromExcel"
+        }]
 });

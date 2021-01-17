@@ -3,14 +3,14 @@
 * Class tplStore
 *
 * @author:    a.nikitaev
-* @description: Õðàíèëèùå øàáëîíîâ èìïîðòà
-*	0 ïàðàìåòð ïðîöåäóðû, 1 òèï äàííûõ, 2 íîìåð ñòîëáöà, 3 ïóñòûå çíà÷åíèÿ, 4 äåôîëòíîå çíà÷åíèå
-*	constant - êîíñòàíòà çàäàþùàÿñÿ â ìîìåíò îïèñàíèÿ øàáëîíà, êëþ÷åâîå ñëîâî ïèøåòñÿ âìåñòî íîìåðà ñòîëáöà.
-*	Òèïû äàíûõ: str, int, float, time, date
+* @description: Ð¥Ñ€Ð°Ð½Ð¸Ð»Ð¸Ñ‰Ðµ ÑˆÐ°Ð±Ð»Ð¾Ð½Ð¾Ð² Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð°
+* 0 Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ Ð¿Ñ€Ð¾Ñ†ÐµÐ´ÑƒÑ€Ñ‹, 1 Ñ‚Ð¸Ð¿ Ð´Ð°Ð½Ð½Ñ‹Ñ…, 2 Ð½Ð¾Ð¼ÐµÑ€ ÑÑ‚Ð¾Ð»Ð±Ñ†Ð°, 3 Ð¿ÑƒÑÑ‚Ñ‹Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ, 4 Ð´ÐµÑ„Ð¾Ð»Ñ‚Ð½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ
+* constant - ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ð° Ð·Ð°Ð´Ð°ÑŽÑ‰Ð°ÑÑÑ Ð² Ð¼Ð¾Ð¼ÐµÐ½Ñ‚ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ ÑˆÐ°Ð±Ð»Ð¾Ð½Ð°, ÐºÐ»ÑŽÑ‡ÐµÐ²Ð¾Ðµ ÑÐ»Ð¾Ð²Ð¾ Ð¿Ð¸ÑˆÐµÑ‚ÑÑ Ð²Ð¼ÐµÑÑ‚Ð¾ Ð½Ð¾Ð¼ÐµÑ€Ð° ÑÑ‚Ð¾Ð»Ð±Ñ†Ð°.
+* Ð¢Ð¸Ð¿Ñ‹ Ð´Ð°Ð½Ñ‹Ñ…: str, int, float, time, date
 */
 class tplStore {
 	/*
-	* tpls ìàññèâ øàáëîíîâ èìïîðòà
+	* tpls ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	*/
 	var $tpls; 
 	function tplStore() {
@@ -74,7 +74,17 @@ class tplStore {
 												array('courdate', 'date', 17, 0, NULL),
 												array('courtimef', 'time', 18, 0, NULL),
 												array('courtimet', 'time', 19, 0, NULL)
-												)
+												),
+							'importTemplate' => array(
+							                    array('wwwImportLKsetTemplateGroup'),
+							                    array('TmplName', 'str', 0, 1),
+							                    array('clID', 'constant', $_SESSION['xClientID']),
+							                    array('Name', 'str', 1, 1),
+                                                array('City', 'str', 5, 1),
+                                                array('Adr', 'str', 4, 1),
+                                                array('ContName', 'str', 2, 1),
+                                                array('ContPhone', 'str', 3, 1),
+							)
 							);
 	}
 	function getTpl($tpl) {

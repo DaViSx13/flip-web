@@ -1,6 +1,6 @@
 Ext.define('fplk.controller.TemplCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.TemplForm', 'orders.TemplWin', 'orders.TemplGrid'],
+	views : ['orders.TemplForm', 'orders.TemplFormImport', 'orders.TemplWin', 'orders.TemplGrid', 'orders.TemplWinImport'],
 	models : ['TemplMod'],
 	stores : ['TemplSt', 'ClientSt'],
 	refs : [{
@@ -13,9 +13,18 @@ Ext.define('fplk.controller.TemplCont', {
 	],
 	init : function () {
 		this.control({
+		    'templwinimport button[action=excelTmlExcel]' : {
+		        click: this.getTemplateImportExcel
+		    },
+			'templwinimport button[action=import]' : {
+				click: this.importTemplate
+			},
 			'templtool button[action=newtpl]' : {
 				click : this.clkNew
 			},
+			'templtool button[action=importFromExcel]' : {
+            	click : this.importTemplates
+           	},
 			'templtool button[action=edittpl]' : {
 				click : this.clkEdit
 			},
@@ -32,6 +41,42 @@ Ext.define('fplk.controller.TemplCont', {
 				"change" : this.searchByNameEvent
 			}
 		});
+	},
+
+	importTemplate: function(button) {
+		var me = this;
+		var win = button.up('templwinimport');
+		var form_imp = win.down('templformimport');
+		if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
+			form_imp.submit({
+				url: 'srv/import/import.php',
+				params: {
+					act: 'importTemplate'
+				},
+				success: function (form, action) {
+
+					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+				},
+				failure: function (form, action) {
+					Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+				}
+			});
+		}
+	},
+
+	/**
+	 * Получение примера айла для заполнения ипорта шаблонов.
+	 */
+	getTemplateImportExcel: function() {
+	     window.open('srv/import/Example_import_Template.xlsx', '_blank');
+	},
+
+    /**
+	 * Импорт шаблонов из файлов.
+     */
+	importTemplates: function() {
+	    var win = Ext.widget('templwinimport');
+        win.show();
 	},
 
 	/**
