@@ -9,6 +9,12 @@ Ext.define('fplk.controller.TemplCont', {
 		}, {
 			ref : 'TemplTool',
 			selector : 'templtool'
+		}, {
+			ref : 'TemplWinImport',
+			selector : 'templwinimport'
+		}, {
+			ref : 'TemplFormImport',
+			selector : 'templformimport'
 		}
 	],
 	init : function () {
@@ -43,6 +49,9 @@ Ext.define('fplk.controller.TemplCont', {
 		});
 	},
 
+	/**
+	 * Импорт шаблонов.
+	 */
 	importTemplate: function(button) {
 		var me = this;
 		var win = button.up('templwinimport');
@@ -54,7 +63,8 @@ Ext.define('fplk.controller.TemplCont', {
 					act: 'importTemplate'
 				},
 				success: function (form, action) {
-
+					me.getTemplStStore().reload();
+					win.close();
 					Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
 				},
 				failure: function (form, action) {

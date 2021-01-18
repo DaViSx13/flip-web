@@ -6,7 +6,7 @@ Ext.define('fplk.view.orders.TemplWinImport', {
 	title : 'Импорт шаблонов',
 	layout : 'vbox',
 	autoShow : true,
-	height : 200,
+	height : 220,
 	width : 500,
 	resizable : false,
 	modal : true,
