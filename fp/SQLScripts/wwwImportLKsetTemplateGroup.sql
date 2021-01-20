@@ -67,7 +67,8 @@ insert into @resTable exec wwwLKsetTemplate
 			@DContMail=@ContMail,
 			@DESTRems=''
 select @result = 1	
-end					
+end
+GO					
 grant execute on [wwwImportLKsetTemplateGroup] to pod
 GO
 
