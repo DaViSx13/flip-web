@@ -160,7 +160,8 @@ Ext.define('fplk.controller.OrdsCont', {
 				click : this.setTpl
 			},
 			'usetemplform combobox' : {
-				keypress : this.pressTpl
+				keypress : this.pressTpl,
+				beforequery : this.templateQuery
 			},
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
@@ -188,6 +189,15 @@ Ext.define('fplk.controller.OrdsCont', {
 			load : this.loadOrdersSt
 		});
 		this.getClientStStore().load();
+	},
+
+	/**
+	 * Запрос с помощью регулярного выражения.
+	 * @param record Запрос
+	 */
+	templateQuery: function(record) {
+		record.query = new RegExp(record.query, 'i');
+		record.forceAll = true;
 	},
 
 	/**
