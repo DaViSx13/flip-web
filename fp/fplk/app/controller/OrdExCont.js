@@ -14,6 +14,7 @@ Ext.define('fplk.controller.OrdExCont', {
 		});
 	},
 	viewRem : function (mod, rec) {
+		console.log("DO");
 		if (rec[0]) {
 			this.getOrdExForm().getForm().loadRecord(rec[0]);
 		}

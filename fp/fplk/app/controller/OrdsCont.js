@@ -188,7 +188,15 @@ Ext.define('fplk.controller.OrdsCont', {
 			scope : this,
 			load : this.loadOrdersSt
 		});
+		this.getOrdExStoreStore().on({
+			scope : this,
+			load : this.loadOrdExStore
+		});
 		this.getClientStStore().load();
+	},
+
+	loadOrdExStore : function () {
+		this.getOrdExGrid().getSelectionModel().select(0);
 	},
 
 	/**
