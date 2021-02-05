@@ -12,7 +12,8 @@ $password = $_POST['password'];
 if ( !empty( $_POST['user'] )) {
     include_once "dbConnect.php";
    // echo '2';
-    $query = "exec wwwClientCheckUser @user='{$user}', @password='{$password}', @ip='$_SERVER[REMOTE_ADDR]' ";
+	$ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
+    $query = "exec wwwClientCheckUser @user='{$user}', @password='{$password}', @ip='{$ip}' ";
     $result=mssql_query($query);
     
     if( mssql_num_rows($result)==0 ) {
