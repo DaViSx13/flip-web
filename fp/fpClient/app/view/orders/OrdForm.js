@@ -151,7 +151,8 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					fieldLabel : 'Дата',
 					startDay : 1,					
 					format : 'd.m.Y',
-					value : new Date(),
+					minValue: (new Date().getHours() > 14) ? Ext.Date.add(new Date(), Ext.Date.DAY, 1): new Date(),
+					value : (new Date().getHours() > 14) ? Ext.Date.add(new Date(), Ext.Date.DAY, 1): new Date(),
 					allowBlank : false
 				}, {
 					xtype : 'fieldset',
