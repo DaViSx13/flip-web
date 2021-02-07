@@ -535,6 +535,14 @@ Ext.define('FPClient.controller.OrdsCont', {
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
 		var prtwb = form_ord.down('checkboxfield[name=webwbprint]');
+
+		var now = new Date();
+		var checkDate = new Date(now.getFullYear(), now.getMonth(), now.getDay(), 14, 0, 0);
+		if((now - checkDate) > 0) {
+			Ext.Msg.alert('Ошибка сохранения заказа', 'Все заказы должны создаваться до 14:00. Повторите попытку завтра.');
+			return;
+		}
+
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
