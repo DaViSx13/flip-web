@@ -540,11 +540,6 @@ Ext.define('FPClient.controller.OrdsCont', {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
 		}
-
-		var courFromDate = form_ord.down('textfield[name=courtimef]');
-		var courToDate = form_ord.down('textfield[name=courtimet]');
-		console.log(parseFloat(courToDate.getValue()));
-		return;
 		
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
