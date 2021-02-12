@@ -54,7 +54,7 @@ $workbook->getProperties()->setCreator("FlipPost")
 //соответствие заголовков и полей
 $fields['№ Накладной'] = 'wb_no';
 $fields['Заказ'] = 'ord_no';
-$fields['Дата'] = 'date_in';
+$fields['Дата'] = 'orderDate';
 
 
 $fields['Отправитель'] = 's_co';
