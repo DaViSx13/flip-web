@@ -1,9 +1,13 @@
 Ext.define('fplk.view.users.UsersGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.usersgrid',
-	requires : ['fplk.view.users.UsersTool'],
+	requires : ['fplk.view.users.UsersTool', 'Ext.grid.RowNumberer'],
 	store : 'UsersSt',
 	columns : [{
+		xtype: 'rownumberer',
+		resizable:true,
+		width: 30
+	} , {
 			xtype : 'actioncolumn',
 			text : 'Доступ',
 			align : 'center',
