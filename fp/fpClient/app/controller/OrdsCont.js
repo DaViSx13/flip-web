@@ -535,6 +535,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
 		var prtwb = form_ord.down('checkboxfield[name=webwbprint]');
+
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
