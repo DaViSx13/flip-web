@@ -69,9 +69,9 @@ class ExcelExport {
         header('Content-Type: application/vnd.ms-excel');
 
         if (!$isError)
-            header("Content-Disposition:attachment;filename=\"отправки Флиппост.xls\"");
+            header("Content-Disposition:attachment;filename=\"Шаблоны.xls\"");
         else
-            header("Content-Disposition:attachment;filename=\"ошибка Флиппост.xls\"");
+            header("Content-Disposition:attachment;filename=\"Шаблоны.xls\"");
         header('Cache-Control: max-age=0');
         header('Cache-Control: max-age=1');
 
