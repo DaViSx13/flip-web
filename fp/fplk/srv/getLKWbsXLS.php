@@ -121,7 +121,7 @@ while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
                 case 'ord_no': case 'ord_no': case 'pcs':case 'inssum': case 'vol_wt':
                     $worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_NUMERIC);
                     break;
-                case 'date_in':
+                case 'orderDate':
                     $time = strtotime($row[$value]);
                     $newformat = date('d.m.Y', $time);
 

@@ -234,7 +234,7 @@ Ext.define('fplk.controller.OrdsCont', {
 				}
 			});
 		} else {
-			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
+			Ext.Msg.alert('Запрещено!', 'Выберите заказ');
 		}
 	},
 
