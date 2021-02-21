@@ -31,6 +31,9 @@ Ext.define('fplk.controller.TemplCont', {
 			'templtool button[action=importFromExcel]' : {
             	click : this.importTemplates
            	},
+			'templtool button[action=export]' : {
+				click : this.exportTemplates
+			},
 			'templtool button[action=edittpl]' : {
 				click : this.clkEdit
 			},
@@ -47,6 +50,13 @@ Ext.define('fplk.controller.TemplCont', {
 				"change" : this.searchByNameEvent
 			}
 		});
+	},
+
+	/**
+	 * Экспорт шаблонов.
+	 */
+	exportTemplates: function() {
+		window.open('srv/export/exportTemplates.php', '_blank');
 	},
 
 	/**

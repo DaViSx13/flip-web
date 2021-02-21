@@ -21,5 +21,9 @@ Ext.define('fplk.view.orders.TemplTool', {
          	text: "Импорт",
          	iconCls : 'import',
          	action: "importFromExcel"
-        }]
+        }, '-', {
+			text : 'Экспорт в Excel',
+			iconCls : 'excel',
+			action : 'export'
+	}]
 });
