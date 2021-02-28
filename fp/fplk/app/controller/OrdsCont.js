@@ -31,7 +31,8 @@ Ext.define('fplk.controller.OrdsCont', {
 			'TemplSt',
 			'ViewWbSt',
 			'ClientSt',
-			'OrdExStore'],
+			'OrdExStore',
+			"AgentsSt"],
 	refs : [/*{
 			ref : 'WbForm',
 			selector : 'wbform'
@@ -243,7 +244,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	 * @returns {[*, *]} Период от и до
 	 */
 	getDateFromPeriodFilter: function() {
-		var panel = this.getOrdTool();
+		var panel = this.getMainPanel();
 		var fromDate = panel.down('datefield[name=fromDate]').getValue();
 		var toDate = panel.down('datefield[name=toDate]').getValue();
 		return [
@@ -305,7 +306,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	setCityByKLADR: function(component) {
 		var input = component.rawValue;
 		var kladr = null;
-		var targetComponent = null;
+		var targetComponent;
 		if(component.name === "orgIndex") {
 			targetComponent = component.up("window").down("ordform combocity[name=org]");
 		} else {
@@ -344,8 +345,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	setCityValueAndEvents: function(component, value) {
 
 		var store = component.store;
-		var cb = component;
-		cb.clearValue();
+		component.clearValue();
 		store.load({
 			params: {
 				dbAct: "GetCityByKLADR",
@@ -383,9 +383,9 @@ Ext.define('fplk.controller.OrdsCont', {
 	},
 	
 	loadOrdersWin: function (btn) {
-		var newloadwin = Ext.widget('loadorderswin').show();
+		Ext.widget('loadorderswin').show();
 	},
-	
+
 	importOrders: function (btn) {
 		var me = this;
 		var win = btn.up('loadorderswin');
@@ -590,6 +590,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		}
 	},
 	exportExcel : function (btn) {
+	    var me = this;;
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			window.location.href = 'srv/getOrderXLS.php?ordnum=' + sm.getSelection()[0].get('rordnum');
@@ -597,6 +598,12 @@ Ext.define('fplk.controller.OrdsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ для экспорта');
 		}
 	},
+
+	/**
+	 * Changing agents by admin.
+	 * @param comp Current comp
+	 * @param newValue Como agent selection value
+	 */
 	changeAgent : function (comp, newValue) {
 		var me = this;
 		if (comp.up('mainpanel').activeTab.title == 'Заказы') {
@@ -606,8 +613,8 @@ Ext.define('fplk.controller.OrdsCont', {
 					agent : newValue[0].data['partcode']
 				},
 				success : function () {
-					var period = this.getDateFromPeriodFilter();
-					this.loadOrdersByPeriod(period[0], period[1]);
+                    var period = me.getDateFromPeriodFilter();
+					me.loadOrdersByPeriod(period[0], period[1]);
 				},
 				failure : function (response) {
 					Ext.Msg.alert('Сервер недоступен!', response.statusText);

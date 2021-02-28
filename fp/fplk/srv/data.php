@@ -95,6 +95,10 @@ if (!isset($_REQUEST['dbAct'])) {
 	
     $response->msg = 'ok';
     switch ($dbAct) {
+        /*default :
+            echo 'pass';
+            return;
+        break;*/
         case 'dbTest':
             $query = "select '$params[test]' as test";
 			//$query = "select cast(null as varchar(10)) as test";
@@ -327,9 +331,9 @@ if (!isset($_REQUEST['dbAct'])) {
                 $query = "exec wwwLKGetWbsTotal @from='{$params['from']}', @to='{$params['to']}',  @clientID='{$ag}' ";
             }
 			break;
-		/*case 'GetAgents':
-			$query = "exec wwwLKgetClients";
-			break;*/
+		case 'GetAgents':
+			$query = "exec wwwLKGetUsersList";
+			break;
 		case 'SetWbno':
 			$paging = false;
 			$rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
@@ -399,9 +403,9 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'setActive':			
 			$query = "exec [wwwLKsetUserActive] @id={$params['id']}, @active={$params['active']}"; 
 			break;
-		/*case 'GetAgentsList':
-			$query = "exec wwwLKgetClientsList";
-			break;*/
+        case 'GetAgentsList':
+            $query = "exec wwwLKGetUsersList";
+            break;
 		case 'GetWb':
 			$query = "exec wwwGetWb @wb_no='{$params['wb_no']}'";
 			break;
@@ -413,7 +417,7 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getTarif':
             $weight = $params['weight'] ? $params['weight'] : 0.1;
             $planno = $_SESSION['xClientPlanNo'] ? $_SESSION['xClientPlanNo'] : 1;
-            $volwt = ($params['width']*$params['height']*$params['length'])/6000;
+            $volwt = ($params['width'] * $params['height']*$params['length']) / 6000;
             if ($weight<$volwt) $weight = $volwt;
             $query = "exec wwwAPIgetTarif @org='$params[org]', @dest = '$params[dest]', @wt = {$weight}, @planno = {$planno}, @t_pak='LE'";
             break;
@@ -428,26 +432,23 @@ if (!isset($_REQUEST['dbAct'])) {
         try {
 			if (!isSessionActive()){
 				throw new Exception('Сеанс завершен. Обновите страницу.');
-				};
-				
+				}
+
             include "dbConnect.php";
 			$result = mssql_query($query);
             if (is_resource($result) === TRUE) {
-
 				for($i = 0; $i < mssql_num_fields($result); $i++){
 					$response->fields[mssql_field_name($result, $i)] = mssql_field_type($result, $i);
 				}
 			
                 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
                     foreach ($row as $f => &$value) {
-						if((($response->fields[$f] == 'char')||($response->fields[$f] == 'text'))&&($value)){
+						if((($response->fields[$f] == 'char')||($response->fields[$f] == 'text'))&&($value)) {
 							$value = iconv("windows-1251", "UTF-8", $value);
 						}
                     }
-
-                    $response->data[] = array_change_key_case($row);
+                    $response -> data[] = array_change_key_case($row);
                 }
-
                 //$response->dvs = 'превед';
                 unset($response->fields);
 
@@ -489,7 +490,7 @@ if (!isset($_REQUEST['dbAct'])) {
 						$response->data = array_slice($response->data, $start, $limit);
 					}
 				}
-				
+
                 //mssql_free_result($result);
                 $response->success = true;
                 

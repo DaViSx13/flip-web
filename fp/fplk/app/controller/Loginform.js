@@ -26,8 +26,9 @@ Ext.define('fplk.controller.Loginform', {
 			this.doLogin(fild.up('loginform').down('button[action=login]'));
 		}
 	},
+
 	loadAdmPan : function () {
-		/*var me = this;
+		var me = this;
 		Ext.Ajax.request({
 			url : 'srv/data.php',
 			params : {
@@ -35,6 +36,7 @@ Ext.define('fplk.controller.Loginform', {
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
+				console.log(text)
 				if (text.success == true) {
 					me.getAdmTool().down('comboagent').store.add(text.data);
 					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
@@ -46,8 +48,9 @@ Ext.define('fplk.controller.Loginform', {
 			failure : function (response) {
 				Ext.Msg.alert('Сервер недоступен!', response.statusText);
 			}
-		});*/
+		});
 	},
+
 	onLaunch : function () {
 		var me = this;
 		Ext.Ajax.request({

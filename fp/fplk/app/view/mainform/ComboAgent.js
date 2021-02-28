@@ -2,7 +2,7 @@ Ext.define('fplk.view.mainform.ComboAgent', {
 	extend : 'Ext.form.ComboBox',
 	alias : 'widget.comboagent',
 	name : 'agents',
-	displayField : 'displayname',
+	displayField : 'partname',
 	valueField : 'partcode',
 	fieldLabel : 'Выберите Агента',
 	width : 350,

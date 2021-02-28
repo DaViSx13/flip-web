@@ -3,6 +3,10 @@ Ext.define('fplk.store.AgentsListSt', {
 	model : 'fplk.model.AgentsMod',
 	proxy : {
 		type : 'ajax',
+		sorters: [{
+			property: "partcode",
+			direction: "ASC"
+		}],
 		url : 'srv/data.php',
 		reader : {
 			type : 'json',

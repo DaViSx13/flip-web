@@ -1,9 +1,27 @@
 Ext.define('fplk.controller.WebWbsCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.OrdsPanel', 'webwbs.WebWbsGrid', 'mainform.MainPanel', 'mainform.NumYear', 'mainform.ComboMonth', 'webwbs.WebWbsTool', 'webwbs.WbWin', 'webwbs.WbForm', 'webwbs.WebWbsTotal', 'orders.UseWebWbTplWin', 'orders.UseTemplForm'],
-	models : ['WebWbMod', 'CityMod'],
-	stores : ['WebWbSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'TemplSt'],
-	refs : [ 
+	views : [
+				'orders.OrdsPanel',
+				'webwbs.WebWbsGrid',
+				'mainform.MainPanel',
+				'mainform.NumYear',
+				'mainform.ComboMonth',
+				'webwbs.WebWbsTool',
+				'webwbs.WbWin',
+				'webwbs.WbForm',
+				'webwbs.WebWbsTotal',
+				'orders.UseWebWbTplWin',
+				'orders.UseTemplForm'],
+	models : [
+				'WebWbMod',
+				'CityMod'],
+	stores : [
+				'WebWbSt',
+				'CityStOrg',
+				'CityStDes',
+				'TypeSt',
+				'TemplSt'],
+	refs : [
 		{
 			ref : 'WebWbsGrid',
 			selector : 'webwbsgrid'
@@ -34,7 +52,10 @@ Ext.define('fplk.controller.WebWbsCont', {
 		}, {
 			ref : 'OrdsPanel',
 			selector : 'ordspanel'
-		}
+		}, {
+			ref : 'AdmTool',
+			selector : 'admtool'
+		},
 	],
 	init : function () {
 		this.control({
@@ -46,6 +67,9 @@ Ext.define('fplk.controller.WebWbsCont', {
 			},
 			'webwbsgrid > tableview' : {
 				itemdblclick : this.dblclickWebWbsGr
+			},
+			'admtool comboagent' : {
+				select : this.changeAgent
 			},
 			'wbwin button[action=save]' : {
 				click : this.saveWebWb
@@ -66,6 +90,24 @@ Ext.define('fplk.controller.WebWbsCont', {
 				click : this.exportExcel
 			}
 		});
+	},
+
+	changeAgent: function(comp, newValue) {
+		var me = this;
+		if (comp.up('mainpanel').activeTab.title == 'Веб накладные') {
+			Ext.Ajax.request({
+				url : 'srv/change.php',
+				params : {
+					agent : newValue[0].data['partcode']
+				},
+				success : function () {
+					me.loadWebWbs();
+				},
+				failure : function (response) {
+					Ext.Msg.alert('Сервер недоступен!', response.statusText);
+				}
+			});
+		}
 	},
 
 	exportExcel: function() {
