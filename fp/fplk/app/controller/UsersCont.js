@@ -39,9 +39,22 @@ Ext.define('fplk.controller.UsersCont', {
 			},
 			'usersform > #changepass' : {
 				change : this.changePass
+			},
+			'admtool comboagent' : {
+				afterrender : this.hideComboAgent
 			}
 		});
 	},
+
+	/**
+	 * Hiding comboagent
+	 * @param comboAgent
+	 */
+	hideComboAgent : function(comboAgent) {
+		console.log("work");
+		comboAgent.hide();
+	},
+
 	changePass : function (cb, newValue, oldValue, eOpts) {
 		var f = this.getUsersForm();
 		if (newValue) {

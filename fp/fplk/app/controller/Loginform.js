@@ -36,7 +36,6 @@ Ext.define('fplk.controller.Loginform', {
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
-				console.log(text)
 				if (text.success == true) {
 					me.getAdmTool().down('comboagent').store.add(text.data);
 					me.getAdmTool().down('comboagent').up('buttongroup').setVisible(true);
