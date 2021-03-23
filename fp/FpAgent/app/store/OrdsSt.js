@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.OrdsSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'getAgOrders'
+			dbAct : 'getAgOrders',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

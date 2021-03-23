@@ -1,6 +1,6 @@
 <?php
 /*закрузка тарифов с сервера: для корректной работы на сервере должны быть файлы с тарифами TariffsFlipPost<номер тарифа в таблице Klient поле PlanNo>.xls*/
-session_name("AGENTSESSIONID");
+session_name($_REQUEST["se"]."AGENTSESSIONID");
 session_start();
 $agp = $_SESSION['xAgentPlanNo'];
 $file = ("tmpfolder/tarifs20171201_plan_{$agp}.xlsx");

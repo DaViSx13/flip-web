@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.OrderClientSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'viewregorder'
+			dbAct : 'viewregorder',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

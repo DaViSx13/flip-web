@@ -44,8 +44,6 @@ Ext.define('FPAgent.controller.Loginform', {
 		}		
 	},
 	toggleLang : function (btn, pressed) {
-		//console.log(btn.action);
-		//console.log(pressed);
 		var lang;
 		if (pressed) {
 			switch (btn.action) {
@@ -57,23 +55,25 @@ Ext.define('FPAgent.controller.Loginform', {
 				break;
 
 			}
-			//console.log(lang);
 			Ext.util.Cookies.set('myLang', lang);
 			window.location.reload();
 		}
 	},
+
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
 		if (keyCode == 13) {
 			this.doLogin(fild.up('loginform').down('button[action=login]'));
 		}
 	},
+
 	loadAdmPan : function () {
 		var me = this;
 		Ext.Ajax.request({
 			url : 'srv/data.php',
 			params : {
-				dbAct : 'GetAgents'
+				dbAct : 'GetAgents',
+				se : window.location.hash.replace("#", "")
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
@@ -95,6 +95,9 @@ Ext.define('FPAgent.controller.Loginform', {
 		var me = this;
 		Ext.Ajax.request({
 			url : 'srv/launch.php',
+			params : {
+				se : window.location.hash.replace("#", "")
+			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
 				if (text.success == true) {
@@ -123,11 +126,15 @@ Ext.define('FPAgent.controller.Loginform', {
 		if (form.isValid()) {
 			form.submit({
 				url : 'srv/login.php',
+				extraParams : {
+					se : window.location.hash.replace("#", "")
+				},
 				scope : this,
 				success : function (form, action) {
 					var aviewport = button.up('viewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('mainpanel'));
+					window.location.replace("#" + action.result.se);
 					if (action.result.msg == '-1') {
 						me.loadAdmPan();
 						aviewport.down('mainpanel').child('#users').tab.show();
@@ -139,7 +146,8 @@ Ext.define('FPAgent.controller.Loginform', {
 							params : {
 								dbAct : 'GetAgentWbs',
 								dir : 'ove',
-								newPeriod : ''
+								newPeriod : '',
+								se : window.location.hash.replace("#", "")
 							},
 							success : function (response) {
 								var text = Ext.decode(response.responseText);
@@ -161,6 +169,9 @@ Ext.define('FPAgent.controller.Loginform', {
 						run : function () {
 							Ext.Ajax.request({
 								url : 'srv/launch.php',
+								params : {
+									se : window.location.hash.replace("#", "")
+								},
 								success : function (response) {
 									var text = Ext.decode(response.responseText);
 									if (text.success == false) {
@@ -186,6 +197,9 @@ Ext.define('FPAgent.controller.Loginform', {
 		var me = this;
 		Ext.Ajax.request({
 			url : 'srv/logout.php',
+			params : {
+				se : window.location.hash.replace("#", "")
+			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
 				if (text.success == true) {

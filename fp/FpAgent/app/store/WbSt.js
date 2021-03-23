@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.WbSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetWbMnf'
+			dbAct : 'GetWbMnf',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

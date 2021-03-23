@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.TemplSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'getAgTemplates'
+			dbAct : 'getAgTemplates',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

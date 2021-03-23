@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.OrdExStore', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetOrdEx'
+			dbAct : 'GetOrdEx',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

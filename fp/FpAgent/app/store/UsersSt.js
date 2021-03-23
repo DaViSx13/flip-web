@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.UsersSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'getUsers'
+			dbAct : 'getUsers',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

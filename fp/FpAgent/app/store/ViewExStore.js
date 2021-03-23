@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.ViewExStore', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetWbEx'
+			dbAct : 'GetWbEx',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.OrderSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'editagorder'
+			dbAct : 'editagorder',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

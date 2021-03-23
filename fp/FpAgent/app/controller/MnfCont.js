@@ -118,7 +118,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
-					agent : newValue[0].data['partcode']
+					agent : newValue[0].data['partcode'],
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
@@ -158,7 +158,8 @@ Ext.define('FPAgent.controller.MnfCont', {
 		Ext.Ajax.request({
 			url : 'srv/data.php',
 			params : {
-				dbAct : 'GetToken'
+				dbAct : 'GetToken',
+				se : window.location.hash.replace("#", "")
 			},
 			success : function (response) {
 				var text = Ext.decode(response.responseText);
@@ -180,7 +181,8 @@ Ext.define('FPAgent.controller.MnfCont', {
 				Ext.Ajax.request({
 					url : 'srv/data.php',
 					params : {
-						dbAct : 'SetToken'
+						dbAct : 'SetToken',
+						se : window.location.hash.replace("#", "")
 					},
 					success : function (response) {
 						var text = Ext.decode(response.responseText);
@@ -201,7 +203,8 @@ Ext.define('FPAgent.controller.MnfCont', {
 		this.getMnfStStore().load({
 			params : {
 				period : y + m,
-				is_Ready : tab
+				is_Ready : tab,
+				se : window.location.hash.replace("#", "")
 			}
 		});
 	},
@@ -218,7 +221,8 @@ Ext.define('FPAgent.controller.MnfCont', {
 			params : {
 				from : start,
 				to: end,
-				is_Ready : tab
+				is_Ready : tab,
+				se : window.location.hash.replace("#", "")
 			}
 		});
 	},
@@ -316,7 +320,8 @@ Ext.define('FPAgent.controller.MnfCont', {
 		}
 		this.getWbStStore().load({
 			params : {
-				mnfRefNo : No
+				mnfRefNo : No,
+				se : window.location.hash.replace("#", "")
 			}
 		});
 	},

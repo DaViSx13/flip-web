@@ -14,7 +14,8 @@ Ext.define('FPAgent.store.WbsStore', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetAgentWbs'
+			dbAct : 'GetAgentWbs',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

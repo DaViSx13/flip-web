@@ -1,5 +1,5 @@
 <?php
-session_name("AGENTSESSIONID");
+session_name($_REQUEST["se"]."AGENTSESSIONID");
 session_start();
 
 include_once('Loader.php');

@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.ExCodeStore', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetExCodes'
+			dbAct : 'GetExCodes',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

@@ -294,7 +294,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			Ext.widget('ordexwin').show();
 			this.getOrdExStoreStore().load({
 				params: {
-					rordnum: ex_rordnum
+					rordnum: ex_rordnum,
+					se : window.location.hash.replace("#", "")
 				}
 			});
 		} else {
@@ -342,7 +343,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			form_wbno.submit({
 				url: 'srv/data.php',
 				params: {
-					dbAct: Action
+					dbAct: Action,
+					se : window.location.hash.replace("#", "")
 				},
 				submitEmptyText: false,
 				success: function (form, action) {
@@ -399,7 +401,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			if (sm.getSelection()[0].get('wb_no')) {
 				this.getViewWbStStore().load({
 					params: {
-						wb_no: sm.getSelection()[0].get('wb_no')
+						wb_no: sm.getSelection()[0].get('wb_no'),
+						se : window.location.hash.replace("#", "")
 					}
 				});
 			} else {
@@ -411,7 +414,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		if (sm.getSelection()[0].get('wb_no')) {
 			this.getViewWbStStore().load({
 				params: {
-					wb_no: sm.getSelection()[0].get('wb_no')
+					wb_no: sm.getSelection()[0].get('wb_no'),
+					se : window.location.hash.replace("#", "")
 				}
 			});
 		} else {
@@ -531,7 +535,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			Ext.Ajax.request({
 				url: 'srv/change.php',
 				params: {
-					agent: newValue[0].data['partcode']
+					agent: newValue[0].data['partcode'],
+					se : window.location.hash.replace("#", "")
 				},
 				success: function () {
 					var period = this.getDateFromPeriodFilter(false);
@@ -550,7 +555,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		this.getOrdsStStore().load({
 			params: {
 				startDate: startDate,
-				endDate: endDate
+				endDate: endDate,
+				se : window.location.hash.replace("#", "")
 			}
 		});
 	},
@@ -558,7 +564,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	loadOrds: function (y, m) {
 		this.getOrdsStStore().load({
 			params: {
-				newPeriod: y + m
+				newPeriod: y + m,
+				se : window.location.hash.replace("#", "")
 			}
 		});
 	},
@@ -567,7 +574,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		this.getOrdsClientStStore().load({
 			params: {
 				startDate: startDate,
-				endDate: endDate
+				endDate: endDate,
+				se : window.location.hash.replace("#", "")
 			}
 		});
 	},
@@ -694,7 +702,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				//Ext.create('FPAgent.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params: {
-							id: sm.getSelection()[0].get('rordnum')
+							id: sm.getSelection()[0].get('rordnum'),
+							se : window.location.hash.replace("#", "")
 						}
 					});
 				if (btn.action == 'view') {
@@ -721,7 +730,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				win.show();
 			var store_ord = this.getOrderClientStStore().load({
 					params: {
-						id: sm.getSelection()[0].get('rordnum')
+						id: sm.getSelection()[0].get('rordnum'),
+						se : window.location.hash.replace("#", "")
 					}
 				});
 
@@ -790,7 +800,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			form_ord.submit({
 				url: 'srv/data.php',
 				params: {
-					dbAct: 'saveagorder'
+					dbAct: 'saveagorder',
+					se : window.location.hash.replace("#", "")
 				},
 				submitEmptyText: false,
 				success: function (form, action) {					
@@ -800,7 +811,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 								url: 'srv/upload.php',
 								params: {
 									act: 'ins',
-									orderNum: action.result.data[0].rordnum
+									orderNum: action.result.data[0].rordnum,
+									se : window.location.hash.replace("#", "")
 								},
 								success: function (form, action) {
 									form.reset();
@@ -866,7 +878,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
 			params: {
-				query: cb_org.getValue()
+				query: cb_org.getValue(),
+				se : window.location.hash.replace("#", "")
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
@@ -905,7 +918,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var cb_org = form_ord.down('combocity[name=org]');
 		cb_org.store.load({
 			params: {
-				query: cb_org.getValue()
+				query: cb_org.getValue(),
+				se : window.location.hash.replace("#", "")
 			}
 		});
 		cb_org.select(rec[0].data['orgcode']);
@@ -913,7 +927,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params: {
-				query: cb_des.getValue()
+				query: cb_des.getValue(),
+				se : window.location.hash.replace("#", "")
 			}
 		});
 		cb_des.select(rec[0].data['destcode']);
