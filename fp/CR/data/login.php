@@ -10,7 +10,7 @@ $response = new Response();
 
 if (!empty($_POST['user'])) {
     include_once "dbConnect.php";
-	$query = "exec wwwCourCheckUser @user='{$_POST[user]}', @password='{$_POST[password]}' ";
+	$query = "exec wwwCourCheckUser @user='{$_POST['user']}', @password='{$_POST['password']}' ";
     $result=mssql_query($query);
 
     if( mssql_num_rows($result)==0 ) {
