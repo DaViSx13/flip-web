@@ -130,7 +130,11 @@ class ExcelExport {
             $lastRow = 2;
             while ($row = $resultSet = mssql_fetch_assoc($queryResult)) {
                 for ($i = 0; $i < count($this->_Headers); $i++) {
-                    $val = $row[$this->_Headers[$i][0]];
+                    $val = '';
+                    if(strpos($this->_Headers[$i][0], ',') === false)
+                        $val = $row[$this->_Headers[$i][0]];
+                    else
+                        $val = $row[trim(explode(',', $this->_Headers[$i][0])[0])].", ".$row[trim(explode(',', $this->_Headers[$i][0])[1])];
                     $excel->
                     getActiveSheet()->
                     getCellByColumnAndRow($i, $lastRow)->

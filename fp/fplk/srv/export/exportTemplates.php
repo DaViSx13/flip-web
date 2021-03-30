@@ -11,7 +11,7 @@ $excelHeaders = array(
     array("DContName", "Контактное лицо получателя"),
     array("DContPhone", "Телефон контактого лица получателя"),
     array("DAdr", "Адрес получателя"),
-    array("DEST", "Город доставки получателя"));
+    array("DEST, destState", "Город доставки получателя"));
 
 $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 
