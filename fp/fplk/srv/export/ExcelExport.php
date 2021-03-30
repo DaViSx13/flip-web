@@ -130,10 +130,11 @@ class ExcelExport {
             $lastRow = 2;
             while ($row = $resultSet = mssql_fetch_assoc($queryResult)) {
                 for ($i = 0; $i < count($this->_Headers); $i++) {
+                    $val = $row[$this->_Headers[$i][0]];
                     $excel->
                     getActiveSheet()->
                     getCellByColumnAndRow($i, $lastRow)->
-                    setValueExplicit(iconv('cp1251', 'utf-8', $row[$this->_Headers[$i][0]]));
+                    setValueExplicit(iconv('cp1251', 'utf-8', $val));
                     $excel-> getActiveSheet()->getStyleByColumnAndRow($i, 1)->applyFromArray($this->rowStyle);
                     $excel-> getActiveSheet()->getColumnDimensionByColumn($i)->setAutoSize(true);
                 }
