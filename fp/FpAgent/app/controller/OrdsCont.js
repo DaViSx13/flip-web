@@ -661,7 +661,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			var cb_org = form.down('combocity[name=org]');
 			cb_org.store.load({
 				params: {
-					query: cb_org.getValue()
+					query: cb_org.getValue()					
 				}
 			});
 			if (record.data['orgcode'] != 0)
@@ -669,7 +669,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
 				params: {
-					query: cb_des.getValue()
+					query: cb_des.getValue()					
 				}
 			});
 			if (record.data['destcode'] != 0)
@@ -852,7 +852,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			url: 'srv/upload.php',
 			params: {
 				orderNum: form_ord.down('textfield[name=rordnum]').getValue(),
-				act: 'del'
+				act: 'del',
+				se : window.location.hash.replace("#", "")
 			},
 			success: function (fp) {
 				jData = Ext.decode(fp.responseText);

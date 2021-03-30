@@ -16,7 +16,8 @@ Ext.define('FPAgent.model.CityMod', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetCity'
+			dbAct : 'GetCity',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });
