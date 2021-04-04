@@ -269,7 +269,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			form_imp.submit({
 				url: 'srv/import/import.php',
 				params: {
-					act: 'importOrders'
+					act: 'importOrders',
+					se : window.location.hash.replace("#", "")
 				},
 				success: function (form, action) {
 
