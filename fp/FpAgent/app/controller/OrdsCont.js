@@ -750,7 +750,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 	printWB: function (btn) {
 		var record = this.getViewWbStStore().findRecord('wb_no', this.getViewWbForm().down('displayfield[name=wb_no]').value);
-		window.open('srv/report.php?wbno=' + this.getViewWbForm().down('displayfield[name=wb_no]').value);
+		window.open('srv/report.php?se=' + window.location.hash.replace("#", "") + '&wbno=' + this.getViewWbForm().down('displayfield[name=wb_no]').value);
 	},
 
 	saveOrder: function (btn) {

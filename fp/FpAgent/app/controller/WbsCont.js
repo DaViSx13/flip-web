@@ -383,7 +383,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 		expfrom = FPAgent.lib.Miscutils.GetFormattedDate(expfrom.getRawValue())+' 00:00:00.000';
 		expto = FPAgent.lib.Miscutils.GetFormattedDate(expto.getRawValue())+' 23:59:59.000';		
 		
-		window.location.href = 'srv/getAgentWbsXLS.php?bdate=' + expfrom + '&edate=' + expto + '&filter=' + t_dir;	
+		window.location.href = 'srv/getAgentWbsXLS.php?se=' + window.location.hash.replace("#", "") + '&bdate=' + expfrom + '&edate=' + expto + '&filter=' + t_dir;
 		
 		winexp.close();
 		}

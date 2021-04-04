@@ -147,7 +147,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 		var sm = btn.up('mnfgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			
-		window.location.href = 'srv/exportMnf.php?mnfRefNo=' + sm.getSelection()[0].get('mnfrefno');
+		window.location.href = 'srv/exportMnf.php?se=' + window.location.hash.replace("#", "") + '&mnfRefNo=' + sm.getSelection()[0].get('mnfrefno');
 		
 		} else {
 			Ext.Msg.alert(FPAgent.lib.Translate.tr("UsersCont.SelectRecord")/*'Выберите запись'*/, FPAgent.lib.Translate.tr("UsersCont.RecordNotSelect")/*'Запись не выбрана'*/);
