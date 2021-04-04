@@ -105,7 +105,7 @@ class queryBuilder {
 							$val = $tpl[$j][4];
 						}
 					}
-                    $val = preg_replace('/[\'*]/', '"', $val);
+                    $val = preg_replace('/[\']/', '"', $val);
 					if (!is_null($val))
 					if ($this->initType($tpl[$j][1],$val, $cel) == false){											/* Проверка типа данных */						
 						break 2;
