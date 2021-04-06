@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.MnfSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetMnf'
+			dbAct : 'GetMnf',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

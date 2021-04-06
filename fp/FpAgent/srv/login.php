@@ -4,6 +4,7 @@ class Response
     public $success = false;
     public $msg = '';
 	public $username = '';
+	public $se = 0;
 }
 $response = new Response();
 //echo '1';
@@ -27,7 +28,8 @@ if ( !empty( $_POST['user'] )) {
 		   $response->msg='Доступ блокирован...';
 		   }
                 else {
-					session_name("AGENTSESSIONID");
+                    $currentSe = rand();
+                    session_name($currentSe."AGENTSESSIONID");
                    session_start();
 				   $_SESSION['xUser'] = $user;
                    $_SESSION['xAgentID'] = $row['agentid'];
@@ -36,6 +38,7 @@ if ( !empty( $_POST['user'] )) {
                    $response->success = true;
 				   $response->msg = $_SESSION['xAgentID']; 
 				   $response->username = $_SESSION['xAgentName'];
+				   $response->se = $currentSe;
                 }; 
         }; 
     }

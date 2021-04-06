@@ -46,7 +46,8 @@ Ext.define('FPAgent.controller.TemplCont', {
 				url : 'srv/data.php',
 				params : {
 					dbAct : 'DelAgTemplates',
-					id : sm.getSelection()[0].get('id')
+					id : sm.getSelection()[0].get('id'),
+					se : window.location.hash.replace("#", "")
 				},
 				success : function (response) {
 					jData = Ext.decode(response.responseText);
@@ -72,7 +73,8 @@ Ext.define('FPAgent.controller.TemplCont', {
 			var cb_org = form.down('combocity[name=org]');
 			cb_org.store.load({
 				params : {
-					query : cb_org.getValue()
+					query : cb_org.getValue(),
+					se : window.location.hash.replace("#", "")
 				}
 			});
 			if (record.data['orgcode'] != 0)
@@ -80,7 +82,8 @@ Ext.define('FPAgent.controller.TemplCont', {
 			var cb_des = form.down('combocity[name=dest]');
 			cb_des.store.load({
 				params : {
-					query : cb_des.getValue()
+					query : cb_des.getValue(),
+					se : window.location.hash.replace("#", "")
 				}
 			});
 			if (record.data['destcode'] != 0)
@@ -134,7 +137,8 @@ Ext.define('FPAgent.controller.TemplCont', {
 			form_ord.submit({
 				url : 'srv/data.php',
 				params : {
-					dbAct : 'SetAgTemplates'
+					dbAct : 'SetAgTemplates',
+					se : window.location.hash.replace("#", "")
 				},
 				submitEmptyText : false,
 				success : function (form, action) {

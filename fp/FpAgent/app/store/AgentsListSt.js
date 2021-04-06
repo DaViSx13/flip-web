@@ -9,7 +9,8 @@ Ext.define('FPAgent.store.AgentsListSt', {
 			root : 'data'
 		},
 		extraParams : {
-			dbAct : 'GetAgentsList'
+			dbAct : 'GetAgentsList',
+			se : window.location.hash.replace("#", "")
 		}
 	}
 });

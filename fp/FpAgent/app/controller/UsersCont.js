@@ -69,7 +69,8 @@ Ext.define('FPAgent.controller.UsersCont', {
 				params : {
 					dbAct : 'setActive',
 					active : sm.getSelection()[0].get('active'),
-					id : sm.getSelection()[0].get('id')
+					id : sm.getSelection()[0].get('id'),
+					se : window.location.hash.replace("#", "")
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
@@ -163,7 +164,8 @@ Ext.define('FPAgent.controller.UsersCont', {
 						form.submit({
 							url : 'srv/data.php',
 							params : {
-								dbAct : 'setUsers'
+								dbAct : 'setUsers',
+								se : window.location.hash.replace("#", "")
 							},
 							submitEmptyText : false,
 							success : function (form, action) {

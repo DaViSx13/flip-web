@@ -136,7 +136,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
-					agent : newValue[0].data['partcode']
+					agent : newValue[0].data['partcode'],
+					se : window.location.hash.replace("#", "")
 				},
 				success : function (response) {
 					//var text = Ext.decode(response.responseText);
@@ -214,7 +215,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 					dbAct : 'GetWbsTotal',
 					dir : t_dir,
 					from : tc.getPeriod()[0],
-					to: tc.getPeriod()[1]
+					to: tc.getPeriod()[1],
+					se : window.location.hash.replace("#", "")
 				},
 				success : function (response) {					
 					var text = Ext.decode(response.responseText);
@@ -259,7 +261,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			form_pod.submit({
 				url : 'srv/data.php',
 				params : {
-					dbAct : 'SetPOD'
+					dbAct : 'SetPOD',
+					se : window.location.hash.replace("#", "")
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
@@ -290,7 +293,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			form_ex.submit({
 				url : 'srv/data.php',
 				params : {
-					dbAct : 'NewEx'
+					dbAct : 'NewEx',
+					se : window.location.hash.replace("#", "")
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
@@ -318,7 +322,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			form_dop.submit({
 				url : 'srv/data.php',
 				params : {
-					dbAct : 'SetTar_a_ag'
+					dbAct : 'SetTar_a_ag',
+					se : window.location.hash.replace("#", "")
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
@@ -378,7 +383,7 @@ Ext.define('FPAgent.controller.WbsCont', {
 		expfrom = FPAgent.lib.Miscutils.GetFormattedDate(expfrom.getRawValue())+' 00:00:00.000';
 		expto = FPAgent.lib.Miscutils.GetFormattedDate(expto.getRawValue())+' 23:59:59.000';		
 		
-		window.location.href = 'srv/getAgentWbsXLS.php?bdate=' + expfrom + '&edate=' + expto + '&filter=' + t_dir;	
+		window.location.href = 'srv/getAgentWbsXLS.php?se=' + window.location.hash.replace("#", "") + '&bdate=' + expfrom + '&edate=' + expto + '&filter=' + t_dir;
 		
 		winexp.close();
 		}
@@ -394,7 +399,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			form_imp.submit({
 				url : 'srv/import/import.php',
 				params : {
-					act : 'importPod'
+					act : 'importPod',
+					se : window.location.hash.replace("#", "")
 				},
 				success : function (form, action) {
 					me.viewTotal();
@@ -413,7 +419,8 @@ Ext.define('FPAgent.controller.WbsCont', {
 			var viewex = Ext.widget('viewexwin').show();
 			this.getViewExStoreStore().load({
 				params : {
-					wb_no : ex_wb_no
+					wb_no : ex_wb_no,
+					se : window.location.hash.replace("#", "")
 				}
 			});
 		} else {

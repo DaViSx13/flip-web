@@ -2,7 +2,7 @@
 include "errorhandler.php";
 
 //завязка_
-session_name("AGENTSESSIONID");
+session_name($_REQUEST["se"]."AGENTSESSIONID");
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 //error_reporting(-1);
