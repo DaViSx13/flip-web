@@ -134,7 +134,13 @@ Ext.define('FPAgent.controller.Loginform', {
 					var aviewport = button.up('viewport');
 					aviewport.removeAll(true);
 					aviewport.add(Ext.widget('mainpanel'));
-					window.location.replace("#" + action.result.se);
+					
+					if (window.location.protocol == 'https:') {
+							//window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.hash;
+							window.location.replace('https://' + window.location.hostname + window.location.pathname + "#" + action.result.se);
+						} else {
+							window.location.replace("#" + action.result.se);	
+						}
 					if (action.result.msg == '-1') {
 						me.loadAdmPan();
 						aviewport.down('mainpanel').child('#users').tab.show();
