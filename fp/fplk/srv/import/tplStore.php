@@ -83,7 +83,7 @@ class tplStore {
                                                 array('City', 'str', 5, 1),
                                                 array('Adr', 'str', 4, 1),
                                                 array('ContName', 'str', 2, 1),
-                                                array('ContPhone', 'str', 3, 1),
+                                                array('ContPhone', 'str', 3, 0, NULL),
 							)
 							);
 	}
