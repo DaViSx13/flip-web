@@ -118,7 +118,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
-					agent : newValue[0].data['partcode'],
+					agent : newValue[0].data['partcode']
 				},
 				success : function (response) {
 					var text = Ext.decode(response.responseText);
