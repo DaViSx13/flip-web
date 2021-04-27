@@ -38,7 +38,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwSetPOD @wb_no='{$_POST[wb_no]}', @p_d_in='{$p_d_in}', @tdd='{$_POST[tdd]}', @rcpn='{$rcpn}', @user='{$_SESSION[CourLogin]}' ";
 			break;
 		case 'SetWB':			
-			$query = "exec wwwCourSetWB @wb_no='{$_POST[wb_no]}'";
+			$query = "exec wwwCourSetWB @wb_no='{$_POST[wb_no]}', @orderno = {$_POST[orderno]}";
 			break;	
 		case 'courLog':
 			$courId = $_SESSION[CourID];
