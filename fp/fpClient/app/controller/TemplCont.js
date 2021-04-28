@@ -2,7 +2,7 @@ Ext.define('FPClient.controller.TemplCont', {
 	extend : 'Ext.app.Controller',
 	views : ['orders.TemplForm', 'orders.TemplWin', 'orders.TemplGrid'],
 	models : ['TemplMod'],
-	stores : ['TemplSt', 'ClientSt'],
+	stores : ['TemplSt', 'ClientSt', 'CityStOrg', 'CityStDes',],
 	refs : [{
 			ref : 'TemplForm',
 			selector : 'templform'
@@ -115,25 +115,8 @@ Ext.define('FPClient.controller.TemplCont', {
 		var me = this;
 		var win = btn.up('templwin');
 		var form_ord = win.down('templform');
-		//var org = form_ord.down('combocity[name=org]');
+		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		/*if (org.value == null) {
-			var jsonArrayOrg = this.getCityStOrgStore().data.items;
-			if (jsonArrayOrg.length == 0) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-					org.setValue(jsonArrayOrg[i].data.code);
-					break;
-				};
-			};
-			if (org.value == null) {
-				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-				return;
-			};
-		}*/
 		if (dest.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {
@@ -148,6 +131,23 @@ Ext.define('FPClient.controller.TemplCont', {
 			};
 			if (dest.value == null) {
 				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			};
+		}
+		if (org.value == null) {
+			var jsonArrayOrg = this.getCityStOrgStore().data.items;
+			if (jsonArrayOrg.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			};
+			for (var i = 0; i < jsonArrayOrg.length; i++) {
+				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+					org.setValue(jsonArrayOrg[i].data.code);
+					break;
+				};
+			};
+			if (org.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
 				return;
 			};
 		}
