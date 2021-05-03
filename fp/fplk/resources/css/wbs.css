@@ -16,6 +16,9 @@
 .download {
 	 background: url(../../resources/images/download.png);
 }
+.payico {
+	background-image : url(../../resources/images/payico.png);
+}
 .overduebox {
 	background-image : url(../../resources/images/overdue.png);
 }

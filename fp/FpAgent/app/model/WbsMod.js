@@ -118,6 +118,9 @@ Ext.define('FPAgent.model.WbsMod', {
 		}, {
 			name : 'r_city',
 			type : 'string'
-		}
+		}, {
+		name: 'payr',
+		type: 'int'
+	}
 	]
 });

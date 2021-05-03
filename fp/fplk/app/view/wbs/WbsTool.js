@@ -4,7 +4,6 @@ Ext.define('fplk.view.wbs.WbsTool', {
 	requires : ['fplk.view.mainform.ComboMonth', 'fplk.view.mainform.NumYear', 'fplk.view.mainform.ComboAgent'],
 	items : [{
 			xtype : 'buttongroup',
-			hidden: true,
 			items : [{
 					text : 'Входящие',
 					enableToggle : true,
@@ -21,10 +20,10 @@ Ext.define('fplk.view.wbs.WbsTool', {
 					enableToggle : true,
 					action : 'all'
 				}, {
-					text : 'Просрочено',
-					iconCls : 'overduebox',
+					text : 'Платильщик',
+					iconCls : 'payico',
 					enableToggle : true,
-					action : 'overdue'
+					action : 'paycase'
 				}
 			]
 		}, {
