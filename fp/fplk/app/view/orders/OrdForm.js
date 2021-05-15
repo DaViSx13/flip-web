@@ -1,7 +1,7 @@
 Ext.define('fplk.view.orders.OrdForm', {
 	alias : 'widget.ordform',
 	extend : 'Ext.form.Panel',
-	requires : ['fplk.view.orders.ComboCity'],
+	requires : ['fplk.view.orders.ComboCity', 'fplk.view.other.UserInputField'],
 	layout : {
 		type : 'absolute'
 	},
@@ -44,7 +44,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					name : 'rordnum',
 					hidden : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'cname',
 					fieldLabel : 'Название клиента',
@@ -52,7 +52,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					labelAlign : 'top',
 					_allowBlank : false
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'address',
 					maxLength : 200,
@@ -60,7 +60,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					labelAlign : 'top',
 					_allowBlank : false
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 329,
 					name : 'contname',
 					fieldLabel : 'Контактное лицо',
@@ -69,13 +69,13 @@ Ext.define('fplk.view.orders.OrdForm', {
 					anchor : '100%',
 					_allowBlank : false
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					name : 'contmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
 					anchor : '100%'
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 84,
 					name : 'contphone',
 					fieldLabel : 'Телефон',
@@ -83,7 +83,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					anchor : '100%',
 					_allowBlank : false
 				}, {
-					xtype : 'textareafield',
+					xtype : 'userinputfield',
 					name : 'orgrems',
 					height : 85,
 					maxLength : 1000,
@@ -123,7 +123,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					flex: 1
 				}]
 			}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'dname',
 					fieldLabel : 'Название клиента',
@@ -131,7 +131,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'dadr',
 					maxLength : 200,
@@ -139,7 +139,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					labelAlign : 'top',
 					allowBlank : false
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 329,
 					name : 'dcontname',
 					maxLength : 50,
@@ -148,13 +148,13 @@ Ext.define('fplk.view.orders.OrdForm', {
 					anchor : '100%',
 					allowBlank : false
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					name : 'dcontmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
 					anchor : '100%'
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 84,
 					name : 'dcontphone',
 					fieldLabel : 'Телефон',
@@ -162,7 +162,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					anchor : '100%',
 					allowBlank : false
 				}, {
-					xtype : 'textareafield',
+					xtype : 'userinputfield',
 					name : 'destrems',
 					height : 85,
 					maxLength : 1000,

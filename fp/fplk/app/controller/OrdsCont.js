@@ -19,7 +19,8 @@ Ext.define('fplk.controller.OrdsCont', {
 			'OrderMod',
 			'CityMod',
 			'AgentsMod',
-			'OrdExMod'],
+			'OrdExMod',
+			'LocalQueries'],
 	stores : [
 			'OrdsSt',
 			'aMonths',
@@ -31,7 +32,8 @@ Ext.define('fplk.controller.OrdsCont', {
 			'TemplSt',
 			'ViewWbSt',
 			'ClientSt',
-			'OrdExStore'],
+			'OrdExStore',
+			'LocalQueries'],
 	refs : [/*{
 			ref : 'WbForm',
 			selector : 'wbform'
