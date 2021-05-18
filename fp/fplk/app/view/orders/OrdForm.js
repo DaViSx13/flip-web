@@ -83,7 +83,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					anchor : '100%',
 					_allowBlank : false
 				}, {
-					xtype : 'userinputfield',
+					xtype : 'textareafield',
 					name : 'orgrems',
 					height : 85,
 					maxLength : 1000,
@@ -162,7 +162,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					anchor : '100%',
 					allowBlank : false
 				}, {
-					xtype : 'userinputfield',
+					xtype : 'textareafield',
 					name : 'destrems',
 					height : 85,
 					maxLength : 1000,

@@ -7,7 +7,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 	},
 	bodyPadding : 10,
 	items : [{
-			xtype : 'textfield',
+			xtype : 'userinputfield',
 			width : 500,
 			name : 'templatename',
 			fieldLabel : 'Название шаблона',
@@ -34,7 +34,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					name : 'id',
 					hidden : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'cname',
 					fieldLabel : 'Название клиента',
@@ -42,7 +42,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					labelAlign : 'top',
 					allowBlank : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'address',
 					maxLength : 70,
@@ -50,7 +50,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					labelAlign : 'top',
 					allowBlank : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 329,
 					name : 'contname',
 					fieldLabel : 'Контактное лицо',
@@ -59,13 +59,13 @@ Ext.define('fplk.view.orders.TemplForm', {
 					anchor : '100%',
 					allowBlank : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					name : 'contmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
 					anchor : '100%'
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 84,
 					name : 'contphone',
 					fieldLabel : 'Телефон',
@@ -95,7 +95,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					allowBlank : true,
 					store : 'CityStDes'
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'dname',
 					fieldLabel : 'Название клиента',
@@ -103,7 +103,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					labelAlign : 'top',
 					allowBlank : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 337,
 					name : 'dadr',
 					maxLength : 70,
@@ -111,7 +111,7 @@ Ext.define('fplk.view.orders.TemplForm', {
 					labelAlign : 'top',
 					allowBlank : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 329,
 					name : 'dcontname',
 					maxLength : 50,
@@ -120,13 +120,13 @@ Ext.define('fplk.view.orders.TemplForm', {
 					anchor : '100%',
 					allowBlank : true
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					name : 'dcontmail',
 					fieldLabel : 'E-Mail',
 					labelAlign : 'top',
 					anchor : '100%'
 				}, {
-					xtype : 'textfield',
+					xtype : 'userinputfield',
 					width : 84,
 					name : 'dcontphone',
 					fieldLabel : 'Телефон',
