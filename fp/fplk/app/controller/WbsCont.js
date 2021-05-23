@@ -52,9 +52,6 @@ Ext.define('fplk.controller.WbsCont', {
 			'wbsgrid button[action=in]' : {
 				click : this.inWbs
 			},
-			'wbsgrid button[action=paycase]' : {
-				click : this.filterPayer
-			},
 			'wbsgrid button[action=pod]' : {
 				click : this.newPod
 			},
@@ -462,7 +459,6 @@ Ext.define('fplk.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
-		aTol.down('button[action=paycase]').toggle(false);
 		this.getWbsStoreStore().clearFilter();
 	},
 	outWbs : function (btn) {
@@ -470,27 +466,16 @@ Ext.define('fplk.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
-		aTol.down('button[action=paycase]').toggle(false);
 		this.getWbsStoreStore().clearFilter();
-		this.getWbsStoreStore().filter('dir', 'out')
+		this.getWbsStoreStore().filter('dir', 'other')
 	},
 	inWbs : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=out]').toggle(false);
-		aTol.down('button[action=paycase]').toggle(false);
 		this.getWbsStoreStore().clearFilter();
 		this.getWbsStoreStore().filter('dir', 'in')
-	},
-	filterPayer : function (btn) {
-		btn.toggle(true);
-		var aTol = btn.up('wbstool');
-		aTol.down('button[action=all]').toggle(false);
-		aTol.down('button[action=out]').toggle(false);
-		aTol.down('button[action=in]').toggle(false);
-		this.getWbsStoreStore().clearFilter();
-		this.getWbsStoreStore().filter('payr', 1)
 	},
 	newPod : function (btn) {
 		var sm = btn.up('wbsgrid').getSelectionModel();

@@ -10,7 +10,7 @@ Ext.define('fplk.view.wbs.WbsTool', {
 					iconCls : 'outbox',
 					action : 'out'
 				}, {
-					text : 'Исходящие',
+					text : 'Остальные',
 					action : 'in',
 					iconCls : 'inbox',
 					enableToggle : true
@@ -19,11 +19,6 @@ Ext.define('fplk.view.wbs.WbsTool', {
 					iconCls : 'allbox',
 					enableToggle : true,
 					action : 'all'
-				}, {
-					text : 'Платильщик',
-					iconCls : 'payico',
-					enableToggle : true,
-					action : 'paycase'
 				}
 			]
 		}, {
