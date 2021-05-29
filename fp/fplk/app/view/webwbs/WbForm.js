@@ -216,34 +216,39 @@ Ext.define('fplk.view.webwbs.WbForm', {
 							boxLabel: 'Отправитель',
 							name: 'payr',
 							inputValue: 1,
-							checked: true
+							checked: true,
+							readOnly:true
 						}, {
 							fieldLabel: '          ',
 							labelSeparator: '',
 							xtype: 'radiofield',
 							boxLabel: 'Получатель',
 							name: 'payr',
-							inputValue: 2
+							inputValue: 2,
+							readOnly:true
 						}, {
 							fieldLabel: 'Вид оплаты',
 							xtype: 'radiofield',
 							boxLabel: 'По счету',
 							name: 'metpaym',
 							inputValue: 'INV',
-							checked: true
+							checked: true,
+							readOnly:true
 						}, {
 							fieldLabel: '          ',
 							labelSeparator: '',
 							xtype: 'radiofield',
 							boxLabel: 'Наличными',
 							name: 'metpaym',
-							inputValue: 'CSH'							
+							inputValue: 'CSH',
+							readOnly:true
 						}, {
 							name: 'inssum',
 							xtype: 'numberfield',
 							minValue: 0,
 							value: 0,
-							fieldLabel: 'Сумма страховки'
+							fieldLabel: 'Сумма страховки',
+							readOnly:true
 						}
 					]
 				}, {

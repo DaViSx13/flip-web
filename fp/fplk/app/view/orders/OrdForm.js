@@ -173,8 +173,8 @@ Ext.define('fplk.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 90,
-			width : 360,
+			height : 150,
+			width : 243,
 			title : 'Дата приезда курьера',
 			x : 10,
 			y : 400,
@@ -192,7 +192,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					allowBlank : false
 				}, {
 					xtype : 'fieldset',
-					layout: 'hbox',
+					layout: 'vbox',
 					border: 0,
 					padding:  '1 1 1 1',					
 					items : [{
@@ -206,21 +206,67 @@ Ext.define('fplk.view.orders.OrdForm', {
 						xtype : 'textfield',
 						name : 'courtimet',
 						labelWidth:  60,
-						padding:  '0 0 0 30',
 						fieldLabel : 'Время до',
 						width : 150,
 						vtype: 'time'
 					}]
 				}
 			]
-		}, 
-		
+		}, {
+		xtype : 'fieldset',
+		height : 150,
+		width : 243,
+		title : 'Информация по оплате',
+		collapsed : true,
+		collapsible : true,
+		x : 255,
+		y : 400,
+		defaults : {
+			anchor : '100%'
+		},
+		items: [{
+			fieldLabel: 'Плательщик',
+			xtype: 'radiofield',
+			boxLabel: 'Отправитель',
+			name: 'fpayr',
+			inputValue: 1,
+			checked: true
+		}, {
+			fieldLabel: '          ',
+			labelSeparator: '',
+			xtype: 'radiofield',
+			boxLabel: 'Получатель',
+			name: 'fpayr',
+			inputValue: 2
+		}, {
+			fieldLabel: 'Вид оплаты',
+			xtype: 'radiofield',
+			boxLabel: 'По счету',
+			name: 'metpaym',
+			inputValue: 'INV',
+			checked: true
+		}, {
+			fieldLabel: '          ',
+			labelSeparator: '',
+			xtype: 'radiofield',
+			boxLabel: 'Наличными',
+			name: 'metpaym',
+			inputValue: 'CSH'
+		}, {
+			name: 'inssum',
+			xtype: 'numberfield',
+			minValue: 0,
+			value: 0,
+			fieldLabel: 'Сумма страховки'
+		}
+		]
+	},
 		{
 			xtype : 'fieldset',
 			height : 150,
-			width : 360,
+			width : 243,
 			title : 'Информация о грузе',
-			x : 390,
+			x : 500,
 			y : 400,
 			defaults : {
 				anchor : '100%'
@@ -258,20 +304,20 @@ Ext.define('fplk.view.orders.OrdForm', {
 					fieldLabel : 'Объемный вес'
 				}
 			]
-		}, {
+		}, /*{
 			xtype : 'label',
 			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
 			y : 495,
 			width : 360
-		}, {
+		},*/ {
 			xtype : 'checkboxfield',
 			boxLabel : 'Оформить веб накладную',
 			name : 'webwb',
 			inputValue: 1,
 			uncheckedValue: 0,
 			x : 10,
-			y : 550//,
+			y : 555//,
 			//width : 360
 		}
 	]
