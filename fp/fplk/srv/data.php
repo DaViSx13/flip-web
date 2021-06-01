@@ -219,7 +219,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@destIndex = $destIndex,
 			@orgIndex = $orgIndex,
             @fMetpaym = '$metpaym',
-            @fPayr int = $fPayer";
+            @fPayr = $fPayer";
 
 			break;
 		case 'SetWebWB':			
