@@ -247,8 +247,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 							xtype: 'numberfield',
 							minValue: 0,
 							value: 0,
-							fieldLabel: 'Сумма страховки',
-							readOnly:true
+							fieldLabel: 'Сумма страховки'
 						}
 					]
 				}, {

@@ -179,7 +179,6 @@ if (!isset($_REQUEST['dbAct'])) {
 			$webwb=$params['webwb'] ? $params['webwb'] : 0;
 			$orgIndex = isset($params['orgIndex']) & strlen($params['orgIndex']) > 0 ? $params['orgIndex'] : 0;
 			$destIndex = isset($params['destIndex'])  & strlen($params['destIndex']) > 0 ? $params['destIndex'] : 0;
-            $Issum = isset($params['inssum']) ? $params['inssum'] : 0;
             $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 1;
             $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'inv';
 			
@@ -219,7 +218,6 @@ if (!isset($_REQUEST['dbAct'])) {
 			@webwb=$webwb,
 			@destIndex = $destIndex,
 			@orgIndex = $orgIndex,
-			@fInssum float = $Issum,
             @fMetpaym = '$metpaym',
             @fPayr int = $fPayer";
 

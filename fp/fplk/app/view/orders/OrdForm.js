@@ -252,14 +252,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			boxLabel: 'Наличными',
 			name: 'metpaym',
 			inputValue: 'CSH'
-		}, {
-			name: 'inssum',
-			xtype: 'numberfield',
-			minValue: 0,
-			value: 0,
-			fieldLabel: 'Сумма страховки'
-		}
-		]
+		}]
 	},
 		{
 			xtype : 'fieldset',
