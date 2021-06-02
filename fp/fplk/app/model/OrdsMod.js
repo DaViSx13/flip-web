@@ -53,6 +53,11 @@ Ext.define('fplk.model.OrdsMod', {
 		}, {
 			name:'isex',
 			type: 'int'
+	}, {
+		name : 'fpayr',
+		type : 'int'
+	}, {
+		name : 'metpaym',
 	}
 	]
 });
