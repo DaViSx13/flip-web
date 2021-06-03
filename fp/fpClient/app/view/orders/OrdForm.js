@@ -136,8 +136,8 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 90,
-			width : 360,
+			height : 150,
+			width : 243,
 			title : 'Дата приезда курьера',
 			x : 10,
 			y : 390,
@@ -153,12 +153,13 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					format : 'd.m.Y',
 					minValue: (new Date().getHours() >= 14) ? Ext.Date.add(new Date(), Ext.Date.DAY, 1): new Date(),
 					value : (new Date().getHours() >= 14) ? Ext.Date.add(new Date(), Ext.Date.DAY, 1): new Date(),
-					allowBlank : false
+					allowBlank : false,
+					labelWidth: 60
 				}, {
 					xtype : 'fieldset',
-					layout: 'hbox',
+					layout: 'vbox',
 					border: 0,
-					padding:  '1 1 1 1',					
+					padding:  '1 1 1 1',
 					items : [
 					
 					{
@@ -166,13 +167,14 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					name : 'courtimef',
 					fieldLabel : 'Время с',
 					labelWidth:  60,
+					padding:  '5 0 0 0',
 					width : 150,
 					vtype: 'time'
 				}, {
 					xtype : 'textfield',
 					name : 'courtimet',
 					labelWidth:  60,
-					padding:  '0 0 0 30',
+					padding:  '5 0 0 0',
 					fieldLabel : 'Время до',
 					width : 150,
 					vtype: 'time'
@@ -182,14 +184,55 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					]
 				}
 			]
-		}, 
-		
+		},
+		, {
+			xtype : 'fieldset',
+			height : 150,
+			width : 243,
+			title : 'Информация по оплате',
+			collapsed : true,
+			collapsible : true,
+			x : 255,
+			y : 390,
+			defaults : {
+				anchor : '100%'
+			},
+			items: [{
+				fieldLabel: 'Плательщик',
+				xtype: 'radiofield',
+				boxLabel: 'Отправитель',
+				name: 'fpayr',
+				inputValue: 1,
+				checked: true
+			}, {
+				fieldLabel: '          ',
+				labelSeparator: '',
+				xtype: 'radiofield',
+				boxLabel: 'Получатель',
+				name: 'fpayr',
+				inputValue: 2
+			}, {
+				fieldLabel: 'Вид оплаты',
+				xtype: 'radiofield',
+				boxLabel: 'По счету',
+				name: 'metpaym',
+				inputValue: 'INV',
+				checked: true
+			}, {
+				fieldLabel: '          ',
+				labelSeparator: '',
+				xtype: 'radiofield',
+				boxLabel: 'Наличными',
+				name: 'metpaym',
+				inputValue: 'CSH'
+			}]
+		},
 		{
 			xtype : 'fieldset',
 			height : 150,
-			width : 360,
+			width : 243,
 			title : 'Информация о грузе',
-			x : 390,
+			x : 500,
 			y : 390,
 			defaults : {
 				anchor : '100%'
@@ -225,20 +268,20 @@ Ext.define('FPClient.view.orders.OrdForm', {
 					fieldLabel : 'Объемный вес'
 				}
 			]
-		}, {
+		},/* {
 			xtype : 'label',
 			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
 			x : 10,
 			y : 510,
 			width : 360
-		}, {
+		},*/ {
 			xtype : 'checkboxfield',
 			boxLabel : 'Оформить веб накладную',
 			name : 'webwb',
 			inputValue: 1,
 			uncheckedValue: 0,
 			x : 10,
-			y : 486
+			y : 550
 		}, {
 			xtype : 'checkboxfield',
 			boxLabel : 'Распечатать веб накладную',
@@ -247,7 +290,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 			uncheckedValue: 0,
 			disabled: true,
 			x : 190,
-			y : 486
+			y : 550
 			
 		}
 	]

@@ -216,7 +216,6 @@ Ext.define('fplk.view.webwbs.WbForm', {
 							boxLabel: 'Отправитель',
 							name: 'payr',
 							inputValue: 1,
-							checked: true,
 							readOnly:true
 						}, {
 							fieldLabel: '          ',
@@ -232,7 +231,6 @@ Ext.define('fplk.view.webwbs.WbForm', {
 							boxLabel: 'По счету',
 							name: 'metpaym',
 							inputValue: 'INV',
-							checked: true,
 							readOnly:true
 						}, {
 							fieldLabel: '          ',

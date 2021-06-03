@@ -95,7 +95,16 @@ Ext.define('FPClient.model.WebWbMod', {
 		},*/ {
 			name : 'pcs',
 			type : 'int'
-		}/*, {
+		}, {
+			name : 'inssum',
+			type : 'float'
+		}, {
+			name : 'payr',
+			type : 'int'
+		}, {
+			name : 'metpaym',
+			type : 'string'
+		},/*, {
 			name : 'holidaydel',
 			type : 'string'
 		}, {

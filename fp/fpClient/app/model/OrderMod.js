@@ -74,6 +74,10 @@ Ext.define('FPClient.model.OrderMod', {
 			name : 'fileowner'
 		}, {
 			name : 'status'
-		}
-	]
+		}, {
+			name : 'fpayr',
+			type : 'int'
+		}, {
+			name : 'metpaym',
+		}]
 });

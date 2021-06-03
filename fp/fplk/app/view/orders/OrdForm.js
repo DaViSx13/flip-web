@@ -189,7 +189,8 @@ Ext.define('fplk.view.orders.OrdForm', {
 					startDay : 1,
 					format : 'd.m.Y',
 					value : new Date(),
-					allowBlank : false
+					allowBlank : false,
+					labelWidth: 60
 				}, {
 					xtype : 'fieldset',
 					layout: 'vbox',
@@ -230,7 +231,6 @@ Ext.define('fplk.view.orders.OrdForm', {
 			boxLabel: 'Отправитель',
 			name: 'fpayr',
 			inputValue: 1,
-			checked: true
 		}, {
 			fieldLabel: '          ',
 			labelSeparator: '',
@@ -242,9 +242,9 @@ Ext.define('fplk.view.orders.OrdForm', {
 			fieldLabel: 'Вид оплаты',
 			xtype: 'radiofield',
 			boxLabel: 'По счету',
+			checked:true,
 			name: 'metpaym',
 			inputValue: 'INV',
-			checked: true
 		}, {
 			fieldLabel: '          ',
 			labelSeparator: '',
@@ -297,13 +297,13 @@ Ext.define('fplk.view.orders.OrdForm', {
 					fieldLabel : 'Объемный вес'
 				}
 			]
-		}, /*{
+		}, {
 			xtype : 'label',
-			text : '*по умолчанию оплата заказчиком (агентом, размещающим заказ), в случае другой оплаты - просьба указывать это в примечании (отправитель/получатель, сумма)',
-			x : 10,
-			y : 495,
+			text : '*по умолчанию Вы являетесь платильщиком',
+			x : 255,
+			y : 555,
 			width : 360
-		},*/ {
+		}, {
 			xtype : 'checkboxfield',
 			boxLabel : 'Оформить веб накладную',
 			name : 'webwb',

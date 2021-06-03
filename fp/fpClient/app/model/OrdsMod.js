@@ -46,6 +46,10 @@ Ext.define('FPClient.model.OrdsMod', {
 		}, {
 			name : 'org',
 			type : 'int'
-		}
-	]
+		}, {
+			name : 'fpayr',
+			type : 'int'
+		}, {
+			name : 'metpaym'
+		}]
 });

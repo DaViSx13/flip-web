@@ -159,7 +159,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];
 			$webwb=$params['webwb'] ? $params['webwb'] : 0;
-			
+            $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 1;
+            $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'inv';
+
 			if($courdate){
 				$d = explode('.', $courdate);
 				$courdate = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) );
@@ -192,7 +194,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			@Payr=$ag,
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum,
-			@webwb=$webwb";
+			@webwb=$webwb,
+			@fMetpaym = '$metpaym',
+            @fPayr = $fPayer";
 			break;
 		case 'SetWebWB':			
 			$id=$params['id'] ? $params['id'] : 0;
@@ -221,6 +225,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			$pcs=$params['pcs'] ? $params['pcs'] : 0;
 			$UserIn= $_SESSION['xUser'];
 			$ag=$_SESSION['xAgentID'];
+            $inssum = isset($params['inssum']) ? $params['inssum'] : 'null';
+            $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'null';
+            $payr = isset($params['payr']) ? $params['payr'] : 'null';
 			//$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 				
 			$query = "exec wwwClientSetWb
@@ -246,6 +253,9 @@ if (!isset($_REQUEST['dbAct'])) {
 			,@VOL_WT = $vol_wt
 			,@PCS = $pcs
 			,@T_PAC = $t_pac
+			,@Inssum = $inssum
+			,@Metpaym = '$metpaym'
+			,@Payr = $payr
             ,@wbsource = 'webClient'";
 			break;	
 		case 'GetClientWbs':

@@ -116,6 +116,8 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			form.down('textfield[name=pcs]').setValue(sm.getSelection()[0].get('packs'));
 			form.down('textfield[name=wt]').setValue(sm.getSelection()[0].get('wt'));
 			form.down('textfield[name=vol_wt]').setValue(sm.getSelection()[0].get('volwt'));
+			form.down('radiofield[name=payr]').setValue(sm.getSelection()[0].get('fpayer'));
+			form.down('radiofield[name=metpaym]').setValue(sm.getSelection()[0].get('metpaym'));
 			form.down('combocity[name=dest]').focus(false, true);
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
@@ -127,6 +129,7 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			var w = Ext.widget('wbwin');
 			w.setTitle('Редактирование веб накладной №:  ' + rec.get('wb_no'));
 			var f = this.getWbForm();
+			console.log(rec);
 			f.loadRecord(rec);
 			var cb_org = f.down('combocity[name=org]');
 			cb_org.store.load({
