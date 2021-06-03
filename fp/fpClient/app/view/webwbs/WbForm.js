@@ -201,7 +201,6 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 			boxLabel: 'Отправитель',
 			name: 'payr',
 			inputValue: 1,
-			checked: true,
 			readOnly:true
 		}, {
 			fieldLabel: '          ',
