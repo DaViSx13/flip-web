@@ -159,7 +159,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];
 			$webwb=$params['webwb'] ? $params['webwb'] : 0;
-            $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 1;
+            $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 3;
             $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'inv';
 
 			if($courdate){

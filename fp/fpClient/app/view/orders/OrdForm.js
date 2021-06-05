@@ -203,7 +203,6 @@ Ext.define('FPClient.view.orders.OrdForm', {
 				boxLabel: 'Отправитель',
 				name: 'fpayr',
 				inputValue: 1,
-				checked: true
 			}, {
 				fieldLabel: '          ',
 				labelSeparator: '',
