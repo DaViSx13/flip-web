@@ -241,6 +241,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					xtype : 'numberfield',
 					name : 'packs',
 					minValue : 0,
+					value : 1,
 					fieldLabel : 'Число мест',
 					allowBlank : false
 				}, {

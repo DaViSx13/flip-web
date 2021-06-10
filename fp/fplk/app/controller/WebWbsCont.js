@@ -120,8 +120,8 @@ Ext.define('fplk.controller.WebWbsCont', {
 			form.down('textfield[name=s_mail]').setValue(sm.getSelection()[0].get('s_mail'));
 			form.down('textfield[name=s_tel]').setValue(sm.getSelection()[0].get('s_tel'));
 			form.down('combobox[name=type]').setValue(sm.getSelection()[0].get('type'));
-			form.down('textfield[name=pcs]').setValue(sm.getSelection()[0].get('packs'));
-			form.down('textfield[name=wt]').setValue(sm.getSelection()[0].get('wt'));
+			form.down('textfield[name=pcs]').setValue(1);
+			form.down('textfield[name=wt]').setValue(0.1);
 			form.down('textfield[name=vol_wt]').setValue(sm.getSelection()[0].get('volwt'));
 			//form.down('radiofield[name=payr]').setRawValue(1);
 			//form.down('radiofield[name=metpaym]').setRawValue(1);
