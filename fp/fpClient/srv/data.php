@@ -226,8 +226,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			$UserIn= $_SESSION['xUser'];
 			$ag=$_SESSION['xAgentID'];
             $inssum = isset($params['inssum']) ? $params['inssum'] : 'null';
-            $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'null';
-            $payr = isset($params['payr']) ? $params['payr'] : 'null';
+            //$metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'null';
+            //$payr = isset($params['payr']) ? $params['payr'] : 'null';
 			//$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 				
 			$query = "exec wwwClientSetWb
@@ -254,8 +254,6 @@ if (!isset($_REQUEST['dbAct'])) {
 			,@PCS = $pcs
 			,@T_PAC = $t_pac
 			,@Inssum = $inssum
-			,@Metpaym = '$metpaym'
-			,@Payr = $payr
             ,@wbsource = 'webClient'";
 			break;	
 		case 'GetClientWbs':

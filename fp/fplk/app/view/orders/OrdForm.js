@@ -230,7 +230,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			xtype: 'radiofield',
 			boxLabel: 'Отправитель',
 			name: 'fpayr',
-			inputValue: 1,
+			inputValue: 1
 		}, {
 			fieldLabel: '          ',
 			labelSeparator: '',
@@ -244,7 +244,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			boxLabel: 'По счету',
 			checked:true,
 			name: 'metpaym',
-			inputValue: 'INV',
+			inputValue: 'INV'
 		}, {
 			fieldLabel: '          ',
 			labelSeparator: '',

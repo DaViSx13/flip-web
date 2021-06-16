@@ -129,7 +129,7 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			var w = Ext.widget('wbwin');
 			w.setTitle('Редактирование веб накладной №:  ' + rec.get('wb_no'));
 			var f = this.getWbForm();
-			console.log(rec);
+			
 			f.loadRecord(rec);
 			var cb_org = f.down('combocity[name=org]');
 			cb_org.store.load({

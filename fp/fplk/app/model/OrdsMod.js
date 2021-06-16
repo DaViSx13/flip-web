@@ -57,6 +57,6 @@ Ext.define('fplk.model.OrdsMod', {
 			name : 'fpayr',
 			type : 'int'
 		}, {
-			name : 'metpaym',
+			name : 'metpaym'
 		}]
 });

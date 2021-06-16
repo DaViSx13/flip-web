@@ -202,7 +202,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
 				xtype: 'radiofield',
 				boxLabel: 'Отправитель',
 				name: 'fpayr',
-				inputValue: 1,
+				inputValue: 1
 			}, {
 				fieldLabel: '          ',
 				labelSeparator: '',

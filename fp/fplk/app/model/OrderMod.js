@@ -79,6 +79,6 @@ Ext.define('fplk.model.OrderMod', {
 		} , {
 			name: 'DESTAdressIndex'
 		}, {
-			name : 'metpaym',
+			name : 'metpaym'
 		}]
 });

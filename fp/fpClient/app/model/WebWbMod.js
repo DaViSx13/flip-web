@@ -104,7 +104,7 @@ Ext.define('FPClient.model.WebWbMod', {
 		}, {
 			name : 'metpaym',
 			type : 'string'
-		},/*, {
+		}/*, {
 			name : 'holidaydel',
 			type : 'string'
 		}, {

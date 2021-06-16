@@ -253,8 +253,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			
 			$descr = isset($params['descr']) ? $params['descr'] : 'null';
 			$inssum = isset($params['inssum']) ? $params['inssum'] : 'null';
-			$metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'null';
-			$payr = isset($params['payr']) ? $params['payr'] : 'null';
+			//$metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'null';
+			//$payr = isset($params['payr']) ? $params['payr'] : 'null';
 			
 			$query = "exec wwwClientSetWb
 			 @ID = $id
@@ -280,9 +280,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			,@PCS = $pcs
 			,@T_PAC = $t_pac
 			,@Descr = '$descr'
-			,@Inssum = $inssum
-			,@Metpaym = $metpaym
-			,@Payr = $payr
+			,@Inssum = $inssum			
             ,@wbsource = 'webLK'
 			";
 			break;	
