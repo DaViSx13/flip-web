@@ -299,7 +299,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'label',
-			text : '*по умолчанию Вы являетесь платильщиком',
+			text : '*по умолчанию Вы являетесь плательщиком',
 			x : 255,
 			y : 555,
 			width : 360
