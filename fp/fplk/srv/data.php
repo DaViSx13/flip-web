@@ -181,6 +181,11 @@ if (!isset($_REQUEST['dbAct'])) {
 			$destIndex = isset($params['destIndex'])  & strlen($params['destIndex']) > 0 ? $params['destIndex'] : 0;
             $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 3;
             $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'inv';
+            $sberQuick = isset($params['sberquick']) ? $params['sberquick'] : 0;
+            $sberSize = isset($params['sbersize']) ? $params['sbersize'] : null;
+            $sberCost = isset($params['sbercost']) ? $params['sbercost'] : 0;
+            $sberProject = isset($params['sberproject']) ? $params['sberproject'] : null;
+            $sberSuit = isset($params['sbersuit']) ? $params['sbersuit'] : null;
 			
 			if($courdate){
 				$d = explode('.', $courdate);
@@ -219,7 +224,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			@destIndex = $destIndex,
 			@orgIndex = $orgIndex,
             @fMetpaym = '$metpaym',
-            @fPayr = $fPayer";
+            @fPayr = $fPayer,
+            @sberquick = $sberQuick,
+            @sbersize = '$sberSize',
+            @sbercost = $sberCost,
+            @sberproject = '$sberProject',
+            @sbersuit = '$sberSuit'";
 
 			break;
 		case 'SetWebWB':			

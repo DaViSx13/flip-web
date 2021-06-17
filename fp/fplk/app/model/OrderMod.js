@@ -82,6 +82,20 @@ Ext.define('fplk.model.OrderMod', {
 			name : 'metpaym'
 		}, {
 			name : 'fpayr'
-		}
-		]
+		}, {
+		name : 'sberquick',
+		type : 'int'
+	}, {
+		name : 'sbersize',
+		type : 'string'
+	}, {
+		name : 'sbercost',
+		type : 'float'
+	}, {
+		name : 'sberproject',
+		type : 'string'
+	}, {
+		name : 'sbersuit',
+		type : 'string'
+	}]
 });

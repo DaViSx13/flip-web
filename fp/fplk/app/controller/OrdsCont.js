@@ -3,6 +3,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	views : [
 			'orders.OrdGrid',
 			'orders.OrdWin',
+			'orders.OrdWinSber',
 			'orders.WbNoWin',
 			'orders.WbNoForm',
 			'orders.OrdsPanel',
@@ -27,6 +28,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			'CityStOrg',
 			'CityStDes',
 			'TypeSt',
+			'TypeStSber',
 			'AgentsSt',
 			'TemplSt',
 			'ViewWbSt',
@@ -38,6 +40,9 @@ Ext.define('fplk.controller.OrdsCont', {
 		},*/ {
 			ref : 'OrdForm',
 			selector : 'ordform'
+		}, {
+			ref : 'OrdFormSber',
+			selector : 'ordformsber'
 		}, {
 			ref : 'OrdTool',
 			selector : 'ordtool'
@@ -53,7 +58,10 @@ Ext.define('fplk.controller.OrdsCont', {
 		}, {
 			ref : 'OrdWin',
 			selector : 'ordwin'
-		}, {
+		},  {
+			ref : 'OrdWinSber',
+			selector : 'ordwinsber'
+		},{
 			ref : 'AdmTool',
 			selector : 'admtool'
 		}, {
@@ -105,6 +113,12 @@ Ext.define('fplk.controller.OrdsCont', {
 			'ordform textfield[name=orgIndex]' : {
 				change : this.setCityByKLADR
 			},
+			'ordformsber textfield[name=destIndex]' : {
+				change : this.setCityByKLADR
+			},
+			'ordformsber textfield[name=orgIndex]' : {
+				change : this.setCityByKLADR
+			},
 			'ordgrid button[action=new]' : {
 				click : this.openOrdWin
 			},			
@@ -118,6 +132,9 @@ Ext.define('fplk.controller.OrdsCont', {
 				click : this.editOrdWin
 			},
 			'ordwin button[action=save]' : {
+				click : this.saveOrder
+			},
+			'ordwinsber button[action=save]' : {
 				click : this.saveOrder
 			},
 			'ordtool > combomonth > button[name=periodRefresh]': {
@@ -307,9 +324,9 @@ Ext.define('fplk.controller.OrdsCont', {
 		var kladr = null;
 		var targetComponent = null;
 		if(component.name === "orgIndex") {
-			targetComponent = component.up("window").down("ordform combocity[name=org]");
+			targetComponent = component.up("window").down("combocity[name=org]");
 		} else {
-			targetComponent = component.up("window").down("ordform combocity[name=dest]");
+			targetComponent = component.up("window").down("combocity[name=dest]");
 		}
 
 		if (input.length === 6) {
@@ -360,7 +377,8 @@ Ext.define('fplk.controller.OrdsCont', {
 						"Ошибка запроса к базе данных");
 				} else {
 					if(record.length === 0) {
-						var win = component.up('ordwin');
+						var isSber = (this.getMainPanel().up('viewport').down('mainpanel').down('label').text.includes("Сбер Сервис"))
+						var win = (isSber) ? component.up('ordwinsber') : component.up('ordwin');
 						var index = (component.name === "org")
 							? win.down("textfield[name=orgIndex]")
 							: win.down("textfield[name=destIndex]");
@@ -652,17 +670,19 @@ Ext.define('fplk.controller.OrdsCont', {
 		this.getTemplStStore().load();
 	},
 	openOrdWin : function (btn) {
-		var edit = Ext.widget('ordwin');
+		var isSber = (btn.up('viewport').down('mainpanel').down('label').text.includes("Сбер Сервис"))
+		var edit = (isSber) ? Ext.widget('ordwinsber') : Ext.widget('ordwin');
 		edit.show();
+		var form = (isSber) ? edit.down('ordformsber') : edit.down('ordform');
 		//var form_lf = edit.down('loadfileform');
 		//form_lf.down('filefield[name=uploadFile]').setVisible(true);
-		edit.down('ordform').down('combocity[name=dest]').focus(false, true);
+		form.down('combocity[name=dest]').focus(false, true);
 		
-		var timeEdit = edit.down('ordform').down('textfield[name=courtimef]');
+		var timeEdit = form.down('textfield[name=courtimef]');
 		//timeEdit.setReadOnly(true);
 		timeEdit.setValue('10:00');
 		
-		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
+		var timeEdit = form.down('textfield[name=courtimet]');
 		//timeEdit.setReadOnly(true);
 		timeEdit.setValue('19:00');
 		if (this.getClientStStore().getCount() > 0){
@@ -743,11 +763,13 @@ Ext.define('fplk.controller.OrdsCont', {
 		}
 		this.editOrdWin(vbut);
 	},
+
 	editOrdWin: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
-				var win = Ext.create('fplk.view.orders.OrdWin').show();
+				var isSber = this.getMainPanel().down('label').text.includes("Сбер Сервис");
+				var win = (isSber) ? Ext.create('fplk.view.orders.OrdWinSber').show() : Ext.create('fplk.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params: {
 							id: sm.getSelection()[0].get('rordnum')
@@ -770,7 +792,6 @@ Ext.define('fplk.controller.OrdsCont', {
 		}
 	},
 
-
 	/**
 	 * Сохраняет заказ.
 	 * Если введен индекс,
@@ -783,6 +804,125 @@ Ext.define('fplk.controller.OrdsCont', {
 	 * @param btn Кнопка сохранить.
 	 */
 	saveOrder : function (btn) {
+		var isSber = this.getMainPanel().down('label').text.includes("Сбер Сервис");
+		if(isSber)
+			this.saveSberOrder(btn)
+		else
+			this.saveOrdinalOrder(btn)
+	
+	},
+
+	saveSberOrder: function(btn) {
+		var me = this;
+		var win = btn.up('ordwinsber');
+		var indexOrg = win.down("textfield[name=orgIndex]");
+		var indexDest = win.down("textfield[name=destIndex]");
+		var form_ord = win.down('ordformsber');
+		var org = form_ord.down('combocity[name=org]');
+		var dest = form_ord.down('combocity[name=dest]');
+		if (indexDest.rawValue.length != 0) {
+			if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null) {
+				Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
+				return;
+			}
+		}
+
+		if (indexOrg.rawValue.length != 0) {
+			if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null) {
+				Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
+				return;
+			}
+		}
+		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
+			form_ord.down('textfield[name=rordnum]').setValue(null);
+			form_ord.down('datefield[name=courdate]').setValue(new Date());
+		}
+
+		if (dest.value == null) {
+			var jsonArrayDes = this.getCityStDesStore().data.items;
+			if (jsonArrayDes.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			}
+			for (var i = 0; i < jsonArrayDes.length; i++) {
+				if (jsonArrayDitemclickes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+					dest.setValue(jsonArrayDes[i].data.code);
+					break;
+				}
+			}
+			if (dest.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			}
+		}
+
+		if (org.value == null) {
+			var jsonArrayOrg = this.getCityStOrgStore().data.items;
+			if (jsonArrayOrg.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			}
+			for (var i = 0; i < jsonArrayOrg.length; i++) {
+				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+					org.setValue(jsonArrayOrg[i].data.code);
+					break;
+				}
+			}
+			if (org.value == null) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			}
+		}
+
+
+		if (form_ord.getForm().isValid()) {
+			form_ord.submit({
+				url: 'srv/data.php',
+				async: false,
+				params: {
+					dbAct: 'saveagorder'
+				},
+				submitEmptyText: false,
+				success: function (form, action) {
+					/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
+                        if (form_lf.getForm().isValid()) {
+                            form_lf.submit({
+                                url : 'srv/upload.php',
+                                params : {
+                                    act : 'ins',
+                                    orderNum : action.result.data[0].rordnum
+                                },
+                                success : function (form, action) {
+                                    form.reset();
+                                    me.getOrdForm().up('ordwin').close();
+                                    me.loadOrdGr();
+                                    Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+                                },
+                                failure : function (form, action) {
+                                    form.reset();
+                                    me.getOrdForm().up('ordwin').close();
+                                    me.loadOrdGr();
+                                    Ext.Msg.alert('Файл не сохранен!', action.result.msg);
+                                }
+                            });
+                        }
+                    } else {*/
+					form.reset();
+					me.getOrdFormSber().up('ordwinsber').close();
+					me.loadOrdGr();
+					Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
+					//}
+				},
+				failure: function (form, action) {
+					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
+				}
+			});
+		} else Ext.Msg.alert(
+			'Не все поля заполнены',
+			'Откорректируйте информацию')
+	},
+
+	saveOrdinalOrder: function(btn) {
 		var me = this;
 		var win = btn.up('ordwin');
 		var indexOrg = win.down("textfield[name=orgIndex]");
@@ -791,108 +931,108 @@ Ext.define('fplk.controller.OrdsCont', {
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
 		if (indexDest.rawValue.length != 0){
-		if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null){
-			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
-			return;
+			if (indexDest.rawValue.match(/\d\d\d\d\d\d/) == null){
+				Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс получателя"');
+				return;
+			}
 		}
-		}
-		
+
 		if (indexOrg.rawValue.length != 0) {
 			if (indexOrg.rawValue.match(/\d\d\d\d\d\d/) == null){
-			Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
-			return;
-		}
+				Ext.Msg.alert('Ошибка индекса', 'Не верный формат индекса в поле "Индекс отправителя"');
+				return;
+			}
 		}
 		if (win.down('button[action=save]').getText() == 'Повторить заказ') {
 			form_ord.down('textfield[name=rordnum]').setValue(null);
 			form_ord.down('datefield[name=courdate]').setValue(new Date());
 		}
 
+		if (dest.value == null) {
+			var jsonArrayDes = this.getCityStDesStore().data.items;
+			if (jsonArrayDes.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			}
+			for (var i = 0; i < jsonArrayDes.length; i++) {
+				if (jsonArrayDitemclickes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+					dest.setValue(jsonArrayDes[i].data.code);
+					break;
+				}
+			}
 			if (dest.value == null) {
-				var jsonArrayDes = this.getCityStDesStore().data.items;
-				if (jsonArrayDes.length == 0) {
-					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-					return;
-				}
-				for (var i = 0; i < jsonArrayDes.length; i++) {
-					if (jsonArrayDitemclickes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
-						dest.setValue(jsonArrayDes[i].data.code);
-						break;
-					}
-				}
-				if (dest.value == null) {
-					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-					return;
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+				return;
+			}
+		}
+
+		if (org.value == null) {
+			var jsonArrayOrg = this.getCityStOrgStore().data.items;
+			if (jsonArrayOrg.length == 0) {
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
+			}
+			for (var i = 0; i < jsonArrayOrg.length; i++) {
+				if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+					org.setValue(jsonArrayOrg[i].data.code);
+					break;
 				}
 			}
-
 			if (org.value == null) {
-				var jsonArrayOrg = this.getCityStOrgStore().data.items;
-				if (jsonArrayOrg.length == 0) {
-					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-					return;
-				}
-				for (var i = 0; i < jsonArrayOrg.length; i++) {
-					if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-						org.setValue(jsonArrayOrg[i].data.code);
-						break;
-					}
-				}
-				if (org.value == null) {
-					Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-					return;
-				}
+				Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+				return;
 			}
+		}
 
-		
-			if (form_ord.getForm().isValid()) {
-				form_ord.submit({
-					url : 'srv/data.php',
-					async : false,
-					params : {
-						dbAct : 'saveagorder'
-					},
-					submitEmptyText : false,
-					success : function (form, action) {
-						/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
-                            if (form_lf.getForm().isValid()) {
-                                form_lf.submit({
-                                    url : 'srv/upload.php',
-                                    params : {
-                                        act : 'ins',
-                                        orderNum : action.result.data[0].rordnum
-                                    },
-                                    success : function (form, action) {
-                                        form.reset();
-                                        me.getOrdForm().up('ordwin').close();
-                                        me.loadOrdGr();
-                                        Ext.Msg.alert('Заказ сохранен!', action.result.msg);
-                                    },
-                                    failure : function (form, action) {
-                                        form.reset();
-                                        me.getOrdForm().up('ordwin').close();
-                                        me.loadOrdGr();
-                                        Ext.Msg.alert('Файл не сохранен!', action.result.msg);
-                                    }
-                                });
-                            }
-                        } else {*/
-						form.reset();
-						me.getOrdForm().up('ordwin').close();
-						me.loadOrdGr();
-						Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
-						//}
-					},
-					failure : function (form, action) {
-						Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
-					}
-				});
-			}
-			else Ext.Msg.alert(
-				'Не все поля заполнены',
-				'Откорректируйте информацию')
-	
-	},	
+
+		if (form_ord.getForm().isValid()) {
+			form_ord.submit({
+				url : 'srv/data.php',
+				async : false,
+				params : {
+					dbAct : 'saveagorder'
+				},
+				submitEmptyText : false,
+				success : function (form, action) {
+					/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
+                        if (form_lf.getForm().isValid()) {
+                            form_lf.submit({
+                                url : 'srv/upload.php',
+                                params : {
+                                    act : 'ins',
+                                    orderNum : action.result.data[0].rordnum
+                                },
+                                success : function (form, action) {
+                                    form.reset();
+                                    me.getOrdForm().up('ordwin').close();
+                                    me.loadOrdGr();
+                                    Ext.Msg.alert('Заказ сохранен!', action.result.msg);
+                                },
+                                failure : function (form, action) {
+                                    form.reset();
+                                    me.getOrdForm().up('ordwin').close();
+                                    me.loadOrdGr();
+                                    Ext.Msg.alert('Файл не сохранен!', action.result.msg);
+                                }
+                            });
+                        }
+                    } else {*/
+					form.reset();
+					me.getOrdForm().up('ordwin').close();
+					me.loadOrdGr();
+					Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
+					//}
+				},
+				failure : function (form, action) {
+					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
+				}
+			});
+		}
+		else Ext.Msg.alert(
+			'Не все поля заполнены',
+			'Откорректируйте информацию')
+	},
+
 	monthChange : function (comp, newz, oldz) {
 		var aTol = comp.up('ordtool');
 		var ye = aTol.down('numyear').value;
@@ -923,25 +1063,17 @@ Ext.define('fplk.controller.OrdsCont', {
 			}
 		});
 	},
-	loadOrdStore : function (st, rec, suc) {
-		var edi = this.getOrdWin();
-		var form_ord = edi.down('ordform');
-		var form_lf = edi.down('loadfileform');
-		/*if (rec[0].data.autorfilename) {
-			form_lf.down('filefield[name=uploadFile]').setVisible(false);
-			form_lf.down('label[name=urlf]').setVisible(true);
-			if (rec[0].data.fileowner == 1 && rec[0].data.status == 'заявлен') {
-				form_lf.down('button[action=delete]').show();
-			}
-			form_lf.down('label[name=urlf]').setText('<a href="srv/downloadfile.php?fn=' + rec[0].data.realfilename + '"   target="_blank">Скачать прикрепленный файл: ' + rec[0].data.autorfilename + '</a>', false);
-		} else {
-			if (rec[0].data.fileowner == 1 && rec[0].data.status == 'заявлен') {
-				form_lf.down('filefield[name=uploadFile]').setVisible(true);
-			}
-			form_lf.down('label[name=urlf]').setVisible(false);
-			form_lf.down('button[action=delete]').hide();
-		}*/
+	loadOrdStore : function (st, rec) {
+		var isSber = this.getMainPanel().down('label').text.includes("Сбер Сервис");
+		if(isSber)
+			this.loadOrdStoreSber(st, rec)
+		else
+			this.loadOrdStoreOrdinal(st, rec)
+	},
 
+	loadOrdStoreSber: function(st, rec) {
+		var edi = this.getOrdWinSber();
+		var form_ord = edi.down('ordformsber');
 		form_ord.loadRecord(rec[0]);
 
 		form_ord.down("textfield[name = destIndex]").setRawValue(rec[0].raw['destzip']);
@@ -953,17 +1085,42 @@ Ext.define('fplk.controller.OrdsCont', {
 				query : cb_org.getValue()
 			}
 		});
-		cb_org.select(rec[0].data['orgcode']);		
+		cb_org.select(rec[0].data['orgcode']);
 		var cb_des = form_ord.down('combocity[name=dest]');
 		cb_des.store.load({
 			params : {
 				query : cb_des.getValue()
 			}
-		});		
+		});
 		cb_des.select(rec[0].data['destcode']);
 		form_ord.down('combocity[name=org]').focus(false, true);
-		
 	},
+
+	loadOrdStoreOrdinal: function(st, rec) {
+		var edi = this.getOrdWin();
+		var form_ord = edi.down('ordform');
+		form_ord.loadRecord(rec[0]);
+
+		form_ord.down("textfield[name = destIndex]").setRawValue(rec[0].raw['destzip']);
+		form_ord.down("textfield[name = orgIndex]").setRawValue(rec[0].raw['orgzip']);
+		edi.setTitle('Заказ № ' + rec[0].data['rordnum']);
+		var cb_org = form_ord.down('combocity[name=org]');
+		cb_org.store.load({
+			params : {
+				query : cb_org.getValue()
+			}
+		});
+		cb_org.select(rec[0].data['orgcode']);
+		var cb_des = form_ord.down('combocity[name=dest]');
+		cb_des.store.load({
+			params : {
+				query : cb_des.getValue()
+			}
+		});
+		cb_des.select(rec[0].data['destcode']);
+		form_ord.down('combocity[name=org]').focus(false, true);
+	},
+
 	loadOrdersSt : function (st, rec, suc) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText('Количество заказов: ' + st.getCount());
