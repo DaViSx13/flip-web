@@ -723,8 +723,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			tplform.up('usetemplwin').close();
 			var isSber = this.getMainPanel().up('viewport').down('mainpanel').down('label').text.includes("СБЕРБАНК-СЕРВИС")
 			var win = (isSber) ? Ext.widget('ordwinsber') : Ext.widget('ordwin');
-			edit.show();
-			var form = (isSber) ? edit.down('ordformsber') : edit.down('ordform');
+			var form = (isSber) ? win.down('ordformsber') : win.down('ordform');
 			
 			var timeEdit = form.down('textfield[name=courtimef]');
 			
