@@ -377,7 +377,7 @@ Ext.define('fplk.controller.OrdsCont', {
 						"Ошибка запроса к базе данных");
 				} else {
 					if(record.length === 0) {
-						var isSber = (this.getMainPanel().up('viewport').down('mainpanel').down('label').text.includes("Сбер Сервис"))
+						var isSber = (this.getMainPanel().up('viewport').down('mainpanel').down('label').text.includes("СБЕРБАНК-СЕРВИС"))
 						var win = (isSber) ? component.up('ordwinsber') : component.up('ordwin');
 						var index = (component.name === "org")
 							? win.down("textfield[name=orgIndex]")
@@ -670,7 +670,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		this.getTemplStStore().load();
 	},
 	openOrdWin : function (btn) {
-		var isSber = (btn.up('viewport').down('mainpanel').down('label').text.includes("Сбер Сервис"))
+		var isSber = (btn.up('viewport').down('mainpanel').down('label').text.includes("СБЕРБАНК-СЕРВИС"))
 		var edit = (isSber) ? Ext.widget('ordwinsber') : Ext.widget('ordwin');
 		edit.show();
 		var form = (isSber) ? edit.down('ordformsber') : edit.down('ordform');
@@ -768,7 +768,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
-				var isSber = this.getMainPanel().down('label').text.includes("Сбер Сервис");
+				var isSber = this.getMainPanel().down('label').text.includes("СБЕРБАНК-СЕРВИС");
 				var win = (isSber) ? Ext.create('fplk.view.orders.OrdWinSber').show() : Ext.create('fplk.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params: {
@@ -804,7 +804,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	 * @param btn Кнопка сохранить.
 	 */
 	saveOrder : function (btn) {
-		var isSber = this.getMainPanel().down('label').text.includes("Сбер Сервис");
+		var isSber = this.getMainPanel().down('label').text.includes("СБЕРБАНК-СЕРВИС");
 		if(isSber)
 			this.saveSberOrder(btn)
 		else
@@ -1064,7 +1064,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		});
 	},
 	loadOrdStore : function (st, rec) {
-		var isSber = this.getMainPanel().down('label').text.includes("Сбер Сервис");
+		var isSber = this.getMainPanel().down('label').text.includes("СБЕРБАНК-СЕРВИС");
 		if(isSber)
 			this.loadOrdStoreSber(st, rec)
 		else
