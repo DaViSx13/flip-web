@@ -5,7 +5,7 @@ Ext.define('fplk.store.TypeStSber', {
 			Name : 'Документы',
 			lowName : 1
 		}, {
-			Name : 'Габаритный груз',
+			Name : 'Негабаритный груз',
 			lowName : 0
 		}, {
 			Name : 'Опасный груз',
