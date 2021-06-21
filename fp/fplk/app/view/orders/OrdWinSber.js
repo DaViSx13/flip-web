@@ -6,7 +6,7 @@ Ext.define('fplk.view.orders.OrdWinSber', {
 	title : 'Новый заказ',
 	layout : 'vbox',
 	autoShow : true,
-	height : 810,
+	height : 790,
 	width : 770,
 	resizable : false,
 	modal : true,

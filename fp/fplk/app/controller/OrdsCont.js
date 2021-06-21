@@ -721,8 +721,10 @@ Ext.define('fplk.controller.OrdsCont', {
 			var record = this.getTemplStStore().findRecord('id', tplform.down('combobox[name=tplname]').getValue());
 			tplform.getForm().reset();
 			tplform.up('usetemplwin').close();
-			var win = Ext.widget('ordwin');
-			var form = win.down('ordform');
+			var isSber = this.getMainPanel().up('viewport').down('mainpanel').down('label').text.includes("СБЕРБАНК-СЕРВИС")
+			var win = (isSber) ? Ext.widget('ordwinsber') : Ext.widget('ordwin');
+			edit.show();
+			var form = (isSber) ? edit.down('ordformsber') : edit.down('ordform');
 			
 			var timeEdit = form.down('textfield[name=courtimef]');
 			
