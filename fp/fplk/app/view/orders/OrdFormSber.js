@@ -338,8 +338,8 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					width : 550
 				}, {
 					xtype : 'numberfield',
-					minValue : 0.1,
-					value : 0.1,
+					minValue : 0,
+					value : 0,
 					step: 0.1,
 					name : 'sbercost',
 					fieldLabel : 'Объявленная ценность',

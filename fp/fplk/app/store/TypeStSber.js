@@ -10,6 +10,9 @@ Ext.define('fplk.store.TypeStSber', {
 		}, {
 			Name : 'Опасный груз',
 			lowName : 2
+		}, {
+			Name : 'Груз',
+			lowName : 3
 		}
 	]
 });
