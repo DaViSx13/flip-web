@@ -186,7 +186,14 @@ if (!isset($_REQUEST['dbAct'])) {
             $sberCost = isset($params['sbercost']) ? $params['sbercost'] : 0;
             $sberProject = isset($params['sberproject']) ? $params['sberproject'] : null;
             $sberSuit = isset($params['sbersuit']) ? $params['sbersuit'] : null;
-			
+            $sberType = -1;
+            if(isset($params['sbertype'])) {
+                $type = ($params['sbertype'] == 1) ? 1 : 0;
+                $sberType = $params['sbertype'];
+            }
+            else
+                $type = $params['type'];
+
 			if($courdate){
 				$d = explode('.', $courdate);
 				$courdate = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) );
@@ -209,7 +216,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@DContPhone='$DContPhone',
 			@DContMail='$params[dcontmail]',
 			@DESTRems='$DESTRems',
-			@Type=$params[type],
+			@Type=$type,
 			@Packs=$params[packs],
 			@Wt=$params[wt],
 			@VolWt=$VolWt,
@@ -229,8 +236,8 @@ if (!isset($_REQUEST['dbAct'])) {
             @sbersize = '$sberSize',
             @sbercost = $sberCost,
             @sberproject = '$sberProject',
-            @sbersuit = '$sberSuit'";
-
+            @sbersuit = '$sberSuit',
+            @sbertype= $sberType";
 			break;
 		case 'SetWebWB':			
 			$id=$params['id'] ? $params['id'] : 0;

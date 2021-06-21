@@ -73,5 +73,8 @@ Ext.define('fplk.model.OrdsMod', {
 	}, {
 		name : 'sbersuit',
 		type : 'string'
+	}, {
+		name : 'sbertype',
+		type : 'string'
 	}]
 });

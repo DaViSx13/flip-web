@@ -171,13 +171,45 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					anchor : '100%'
 				}
 			]
-		}, {
+		},
+		{
+			xtype : 'fieldset',
+			height : 80,
+			width : 740,
+			x : 10,
+			y : 390,
+			defaults : {
+				anchor : '100%',
+			},
+			layout : 'anchor',
+			items : [{
+				xtype : 'panel',
+				border: false,
+				width: 740,
+				defaults: {
+					margin: '0 10 0 0'
+				},
+				layout: 'hbox',
+				items: [{
+					xtype : 'textfield',
+					name : 'sberproject',
+					fieldLabel : 'Проект',
+					labelAlign : 'top',
+					width : '50%'
+				}, {
+					xtype : 'textfield',
+					name : 'sbersuit',
+					fieldLabel : 'Подразделение',
+					labelAlign : 'top',
+					width : '50%'
+				}]
+			}]},{
 			xtype : 'fieldset',
 			height : 150,
 			width : 243,
 			title : 'Дата приезда курьера',
 			x : 10,
-			y : 385,
+			y : 470,
 			defaults : {
 				anchor : '100%'
 			},
@@ -227,7 +259,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 		collapsed : true,
 		collapsible : true,
 		x : 255,
-		y : 385,
+		y : 470,
 		defaults : {
 			anchor : '100%'
 		},
@@ -266,14 +298,14 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 			width : 250,
 			title : 'Информация о грузе',
 			x : 500,
-			y : 385,
+			y : 470,
 			defaults : {
 				anchor : '100%'
 			},
 			layout : 'anchor',
 			items : [{
 					xtype : 'combobox',
-					name : 'type',
+					name : 'sbertype',
 					displayField : 'Name',
 					valueField : 'lowName',
 					allowBlank : false,
@@ -306,9 +338,8 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 			xtype : 'fieldset',
 			height : 80,
 			width : 740,
-			title : 'Дополнительно',
 			x : 10,
-			y : 535,
+			y : 620,
 			defaults : {
 				anchor : '100%',
 			},
@@ -326,7 +357,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					name : 'sbersize',
 					fieldLabel : 'Габариты груза',
 					labelAlign : 'top',
-					width : 150
+					width : 550
 				}, {
 					xtype : 'numberfield',
 					minValue : 0.1,
@@ -336,25 +367,13 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					fieldLabel : 'Объявленная ценность',
 					labelAlign : 'top',
 					width : 150
-				}, {
-					xtype : 'textfield',
-					name : 'sberproject',
-					fieldLabel : 'Проект',
-					labelAlign : 'top',
-					width : 150
-				}, {
-					xtype : 'textfield',
-					name : 'sbersuit',
-					fieldLabel : 'Подразделение',
-					labelAlign : 'top',
-					width : 150
 				}]
 			}]},
 		{
 			xtype : 'label',
 			html : '*по умолчанию <br> Вы являетесь плательщиком',
 			x : 255,
-			y : 620,
+			y : 705,
 			width : 360
 		}, {
 			xtype : 'checkboxfield',
@@ -363,7 +382,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 			inputValue: 1,
 			uncheckedValue: 0,
 			x : 10,
-			y : 620//,
+			y : 705//,
 			//width : 360
 		}
 	]
