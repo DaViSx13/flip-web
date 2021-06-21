@@ -171,18 +171,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					anchor : '100%'
 				}
 			]
-		},
-		{
-			xtype : 'fieldset',
-			height : 80,
-			width : 740,
-			x : 10,
-			y : 390,
-			defaults : {
-				anchor : '100%',
-			},
-			layout : 'anchor',
-			items : [{
+		}, {
 				xtype : 'panel',
 				border: false,
 				width: 740,
@@ -203,7 +192,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					labelAlign : 'top',
 					width : '50%'
 				}]
-			}]},{
+			}, {
 			xtype : 'fieldset',
 			height : 150,
 			width : 243,
@@ -335,16 +324,6 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					fieldLabel : 'Объемный вес'
 				}]
 		}, {
-			xtype : 'fieldset',
-			height : 80,
-			width : 740,
-			x : 10,
-			y : 620,
-			defaults : {
-				anchor : '100%',
-			},
-			layout : 'anchor',
-			items : [{
 				xtype : 'panel',
 				border: false,
 				width: 740,
@@ -360,15 +339,15 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					width : 550
 				}, {
 					xtype : 'numberfield',
-					minValue : 0.1,
-					value : 0.1,
+					minValue : 0,
+					value : 0,
 					step: 0.1,
 					name : 'sbercost',
 					fieldLabel : 'Объявленная ценность',
 					labelAlign : 'top',
 					width : 150
 				}]
-			}]},
+			},
 		{
 			xtype : 'label',
 			html : '*по умолчанию <br> Вы являетесь плательщиком',
