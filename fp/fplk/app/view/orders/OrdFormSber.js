@@ -87,7 +87,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					width : 337,
 					name : 'sberproject',
 					fieldLabel : 'Проект',
-					labelAlign : 'top',
+					labelAlign : 'top'
 				}, {
 					xtype : 'textareafield',
 					name : 'orgrems',
@@ -171,7 +171,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 					name : 'sbersuit',
 					width : 337,
 					fieldLabel : 'Подразделение',
-					labelAlign : 'top',
+					labelAlign : 'top'
 				}, {
 					xtype : 'textareafield',
 					name : 'destrems',
@@ -319,7 +319,7 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 			x : 10,
 			y : 595,
 			defaults : {
-				anchor : '100%',
+				anchor : '100%'
 			},
 			layout : 'anchor',
 			items : [{
