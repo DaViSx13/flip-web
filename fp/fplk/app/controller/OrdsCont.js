@@ -322,12 +322,9 @@ Ext.define('fplk.controller.OrdsCont', {
 	setCityByKLADR: function(component) {
 		var input = component.rawValue;
 		var kladr = null;
-		var targetComponent = null;
-		if(component.name === "orgIndex") {
-			targetComponent = component.up("window").down("combocity[name=org]");
-		} else {
-			targetComponent = component.up("window").down("combocity[name=dest]");
-		}
+		var targetComponent = (component.name === "orgIndex")
+			? component.up("window").down("combocity[name=org]")
+			: component.up("window").down("combocity[name=dest]");
 
 		if (input.length === 6) {
 			if (input.match(/\d\d\d\d\d\d/) != null) {
@@ -361,8 +358,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	setCityValueAndEvents: function(component, value) {
 
 		var store = component.store;
-		var cb = component;
-		cb.clearValue();
+		component.clearValue();
 		store.load({
 			params: {
 				dbAct: "GetCityByKLADR",
@@ -377,7 +373,7 @@ Ext.define('fplk.controller.OrdsCont', {
 						"Ошибка запроса к базе данных");
 				} else {
 					if(record.length === 0) {
-						var isSber = (this.getMainPanel().up('viewport').down('mainpanel').down('label').text.includes("СБЕРБАНК-СЕРВИС"))
+						var isSber = (this.getMainPanel().up('viewport').down('mainpanel').down('label').text.indexOf("СБЕРБАНК-СЕРВИС") > -1)
 						var win = (isSber) ? component.up('ordwinsber') : component.up('ordwin');
 						var index = (component.name === "org")
 							? win.down("textfield[name=orgIndex]")
@@ -400,8 +396,8 @@ Ext.define('fplk.controller.OrdsCont', {
 		window.open('srv/report.php?wbno=' + frm.down('displayfield[name=wb_no]').value+'&iswb=1');
 	},
 	
-	loadOrdersWin: function (btn) {
-		var newloadwin = Ext.widget('loadorderswin').show();
+	loadOrdersWin: function () {
+		Ext.widget('loadorderswin').show();
 	},
 	
 	importOrders: function (btn) {
@@ -448,12 +444,13 @@ Ext.define('fplk.controller.OrdsCont', {
 			this.saveWbno(fild.up('wbnoform').up('wbnowin').down('button[action=save]'));
 		}
 	},
+
 	pressTpl : function (fild, e) {
 		var keyCode = e.getKey();
-		if (keyCode == 13) {
+		if (keyCode === 13)
 			this.setTpl();
-		}
 	},
+
 	saveWbno : function (btn) {
 		var me = this;
 		var win = btn.up('wbnowin');
@@ -465,7 +462,7 @@ Ext.define('fplk.controller.OrdsCont', {
 					dbAct : 'SetWbno'
 				},
 				submitEmptyText : false,
-				success : function (form, action) {
+				success : function (form) {
 					form.reset();
 					win.close();
 					me.loadOrdGr();
@@ -503,7 +500,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
 		}
 	},
-	dblclickWbsGr : function (gr, rec) {
+	dblclickWbsGr : function (gr) {
 		var sm = gr.getSelectionModel();
 		if (sm.getSelection()[0].get('wb_no')) {
 			this.getViewWbStStore().load({
@@ -517,7 +514,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	},
 	loadViewWbSt : function (st, rec, suc) {
 		if (suc) {
-			if (rec[0].data.wbstatus == 0) {
+			if (rec[0].data.wbstatus === 0) {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbEmpty")/*'Накладная не введена в систему!'*/);
 			} else {
 				var win = Ext.widget('viewwbwin');
@@ -616,8 +613,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		}
 	},
 	changeAgent : function (comp, newValue) {
-		var me = this;
-		if (comp.up('mainpanel').activeTab.title == 'Заказы') {
+		if (comp.up('mainpanel').activeTab.title === 'Заказы') {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
@@ -655,9 +651,9 @@ Ext.define('fplk.controller.OrdsCont', {
 		});
 	},
 
-	loadOrdGr : function (Pan) {
+	loadOrdGr : function () {
 		var adTol = this.getAdmTool();
-		if (adTol.down('label').text == 'WEB Администратор') {
+		if (adTol.down('label').text === 'WEB Администратор') {
 			adTol.down('buttongroup[itemId=admgroup]').setVisible(true);
 		}
 		var btnList = adTol.down('button[action=list]');
@@ -670,7 +666,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		this.getTemplStStore().load();
 	},
 	openOrdWin : function (btn) {
-		var isSber = (btn.up('viewport').down('mainpanel').down('label').text.includes("СБЕРБАНК-СЕРВИС"))
+		var isSber = (btn.up('viewport').down('mainpanel').down('label').text.indexOf("СБЕРБАНК-СЕРВИС") > -1)
 		var edit = (isSber) ? Ext.widget('ordwinsber') : Ext.widget('ordwin');
 		edit.show();
 		var form = (isSber) ? edit.down('ordformsber') : edit.down('ordform');
@@ -721,7 +717,7 @@ Ext.define('fplk.controller.OrdsCont', {
 			var record = this.getTemplStStore().findRecord('id', tplform.down('combobox[name=tplname]').getValue());
 			tplform.getForm().reset();
 			tplform.up('usetemplwin').close();
-			var isSber = this.getMainPanel().up('viewport').down('mainpanel').down('label').text.includes("СБЕРБАНК-СЕРВИС")
+			var isSber = this.getMainPanel().up('viewport').down('mainpanel').down('label').text.indexOf("СБЕРБАНК-СЕРВИС") > -1
 			var win = (isSber) ? Ext.widget('ordwinsber') : Ext.widget('ordwin');
 			var form = (isSber) ? win.down('ordformsber') : win.down('ordform');
 			
@@ -769,7 +765,7 @@ Ext.define('fplk.controller.OrdsCont', {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if (sm.getCount() > 0) {
 			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
-				var isSber = this.getMainPanel().down('label').text.includes("СБЕРБАНК-СЕРВИС");
+				var isSber = this.getMainPanel().down('label').text.indexOf("СБЕРБАНК-СЕРВИС") > -1;
 				var win = (isSber) ? Ext.create('fplk.view.orders.OrdWinSber').show() : Ext.create('fplk.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
 						params: {
@@ -805,7 +801,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	 * @param btn Кнопка сохранить.
 	 */
 	saveOrder : function (btn) {
-		var isSber = this.getMainPanel().down('label').text.includes("СБЕРБАНК-СЕРВИС");
+		var isSber = this.getMainPanel().down('label').text.indexOf("СБЕРБАНК-СЕРВИС") > -1;
 		if(isSber)
 			this.saveSberOrder(btn)
 		else
@@ -813,6 +809,10 @@ Ext.define('fplk.controller.OrdsCont', {
 	
 	},
 
+	/**
+	 * Сохраняет заказ от СБЕР-СЕРВИС(SBS)
+	 * @param btn Кнопка "Сохранить"
+	 */
 	saveSberOrder: function(btn) {
 		var me = this;
 		var win = btn.up('ordwinsber');
@@ -874,10 +874,42 @@ Ext.define('fplk.controller.OrdsCont', {
 				return;
 			}
 		}
+		this.checkOrderPayer(form_ord, me)
 
+	},
 
-		if (form_ord.getForm().isValid()) {
-			form_ord.submit({
+	/**
+	 * Проверяет и выводит сообщение о проверки платильщика
+	 * @param form Текущая форма
+	 * @param object Объект
+	 */
+	checkOrderPayer: function(form, object) {
+		if(form.getValues()['fpayr'] !== undefined) {
+			Ext.Msg.confirm(
+				'Подтверждение',
+				'Заказ оплачивает Ваша компания?',
+				function (btn) {
+					if(btn === 'yes') {
+						form.down('fieldset[title=Информация по оплате]').down('radiofield[name=fpayr]').setValue(false);
+						object.saveOrderRequest(form, object);
+					} else {
+						object.saveOrderRequest(form, object);
+					}
+				});
+		} else {
+			object.saveOrderRequest(form, object);
+			return;
+		}
+	},
+
+	/**
+	 * Отправляет запрос на сохранение формы.
+	 * @param form Текущая форма
+	 * @param object Текущий объект
+	 */
+	saveOrderRequest: function(form, object) {
+		if (form.getForm().isValid()) {
+			form.submit({
 				url: 'srv/data.php',
 				async: false,
 				params: {
@@ -885,34 +917,11 @@ Ext.define('fplk.controller.OrdsCont', {
 				},
 				submitEmptyText: false,
 				success: function (form, action) {
-					/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
-                        if (form_lf.getForm().isValid()) {
-                            form_lf.submit({
-                                url : 'srv/upload.php',
-                                params : {
-                                    act : 'ins',
-                                    orderNum : action.result.data[0].rordnum
-                                },
-                                success : function (form, action) {
-                                    form.reset();
-                                    me.getOrdForm().up('ordwin').close();
-                                    me.loadOrdGr();
-                                    Ext.Msg.alert('Заказ сохранен!', action.result.msg);
-                                },
-                                failure : function (form, action) {
-                                    form.reset();
-                                    me.getOrdForm().up('ordwin').close();
-                                    me.loadOrdGr();
-                                    Ext.Msg.alert('Файл не сохранен!', action.result.msg);
-                                }
-                            });
-                        }
-                    } else {*/
 					form.reset();
-					me.getOrdFormSber().up('ordwinsber').close();
-					me.loadOrdGr();
+					form.owner.up('window').close()
+					object.loadOrdGr();
+
 					Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
-					//}
 				},
 				failure: function (form, action) {
 					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
@@ -923,6 +932,10 @@ Ext.define('fplk.controller.OrdsCont', {
 			'Откорректируйте информацию')
 	},
 
+	/**
+	 * Сохраняет заказы
+	 * @param btn Кнопка "Сохранить"
+	 */
 	saveOrdinalOrder: function(btn) {
 		var me = this;
 		var win = btn.up('ordwin');
@@ -984,62 +997,15 @@ Ext.define('fplk.controller.OrdsCont', {
 				return;
 			}
 		}
-
-
-		if (form_ord.getForm().isValid()) {
-			form_ord.submit({
-				url : 'srv/data.php',
-				async : false,
-				params : {
-					dbAct : 'saveagorder'
-				},
-				submitEmptyText : false,
-				success : function (form, action) {
-					/*if (action.result.data[0].rordnum && form_lf.down('filefield[name=uploadFile]').getValue()) {
-                        if (form_lf.getForm().isValid()) {
-                            form_lf.submit({
-                                url : 'srv/upload.php',
-                                params : {
-                                    act : 'ins',
-                                    orderNum : action.result.data[0].rordnum
-                                },
-                                success : function (form, action) {
-                                    form.reset();
-                                    me.getOrdForm().up('ordwin').close();
-                                    me.loadOrdGr();
-                                    Ext.Msg.alert('Заказ сохранен!', action.result.msg);
-                                },
-                                failure : function (form, action) {
-                                    form.reset();
-                                    me.getOrdForm().up('ordwin').close();
-                                    me.loadOrdGr();
-                                    Ext.Msg.alert('Файл не сохранен!', action.result.msg);
-                                }
-                            });
-                        }
-                    } else {*/
-					form.reset();
-					me.getOrdForm().up('ordwin').close();
-					me.loadOrdGr();
-					Ext.Msg.alert('Сохранение заказа', 'Заказ успешно сохранен: ' + action.result.msg);
-					//}
-				},
-				failure : function (form, action) {
-					Ext.Msg.alert('Заказ не сохранен!', action.result.msg);
-				}
-			});
-		}
-		else Ext.Msg.alert(
-			'Не все поля заполнены',
-			'Откорректируйте информацию')
+		this.checkOrderPayer(form_ord, me);
 	},
 
-	monthChange : function (comp, newz, oldz) {
+	monthChange : function (comp, newz) {
 		var aTol = comp.up('ordtool');
 		var ye = aTol.down('numyear').value;
 		this.loadOrds(ye, newz);
 	},
-	yearChange : function (comp, newz, oldz) {
+	yearChange : function (comp, newz) {
 		var aTol = comp.up('ordtool');
 		var mo = aTol.down('combomonth').value;
 		this.loadOrds(newz, mo);
@@ -1059,13 +1025,13 @@ Ext.define('fplk.controller.OrdsCont', {
 				form_lf.down('button[action=delete]').hide();
 				form_lf.down('filefield[name=uploadFile]').show();
 			},
-			failure : function (response) {
+			failure : function () {
 				Ext.Msg.alert('error!');
 			}
 		});
 	},
 	loadOrdStore : function (st, rec) {
-		var isSber = this.getMainPanel().down('label').text.includes("СБЕРБАНК-СЕРВИС");
+		var isSber = this.getMainPanel().down('label').text.indexOf("СБЕРБАНК-СЕРВИС") > -1;
 		if(isSber)
 			this.loadOrdStoreSber(st, rec)
 		else
@@ -1122,7 +1088,11 @@ Ext.define('fplk.controller.OrdsCont', {
 		form_ord.down('combocity[name=org]').focus(false, true);
 	},
 
-	loadOrdersSt : function (st, rec, suc) {
+	/**
+	 * Загрузка хранилица заказа
+	 * @param st Текущее хранилище
+	 */
+	loadOrdersSt : function (st) {
 		var tt = this.getOrdTotal();
 		tt.down('label').setText('Количество заказов: ' + st.getCount());
 	}
