@@ -255,6 +255,14 @@ Ext.define('fplk.view.orders.OrdFormSber', {
 			name: 'fpayr',
 			inputValue: 2
 		}, {
+			fieldLabel: '          ',
+			labelSeparator: '',
+			xtype: 'radiofield',
+			boxLabel: 'Остальное',
+			hidden: true,
+			name: 'fpayr',
+			inputValue: 3
+		}, {
 			fieldLabel: 'Вид оплаты',
 			xtype: 'radiofield',
 			boxLabel: 'По счету',

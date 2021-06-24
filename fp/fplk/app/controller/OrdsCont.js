@@ -890,7 +890,10 @@ Ext.define('fplk.controller.OrdsCont', {
 				'Заказ оплачивает Ваша компания?',
 				function (btn) {
 					if(btn === 'yes') {
-						form.down('fieldset[title=Информация по оплате]').down('radiofield[name=fpayr]').setValue(false);
+						var model = form.getValues();
+						model['fpayr'] = 3;
+						model['address'] = 'aaaa';
+						form.getForm().setValues(model)
 						object.saveOrderRequest(form, object);
 					} else {
 						object.saveOrderRequest(form, object);
