@@ -891,8 +891,7 @@ Ext.define('fplk.controller.OrdsCont', {
 				function (btn) {
 					if(btn === 'yes') {
 						var model = form.getValues();
-						model['fpayr'] = 3;
-						model['address'] = 'aaaa';
+						model['fpayr'] = 3;						
 						form.getForm().setValues(model)
 						object.saveOrderRequest(form, object);
 					} else {
