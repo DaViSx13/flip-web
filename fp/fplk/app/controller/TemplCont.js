@@ -110,7 +110,14 @@ Ext.define('fplk.controller.TemplCont', {
 	  	grid.getStore().clearFilter();
 	  else
 	  	grid.getStore().filterBy(function (record) {
-	  		return record.get("templatename").toLowerCase().includes(newValue.toLowerCase());
+	  		var found = false;
+			for(var i in record.getData()) {
+				if(record.get(i) != null)
+					found = record.get(i).toString().toLowerCase().includes(newValue.toLowerCase());
+				if(found)
+					break;
+			}
+	  		return found;
 		})
 	},
 
