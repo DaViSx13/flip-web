@@ -884,7 +884,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	 * @param object Объект
 	 */
 	checkOrderPayer: function(form, object) {
-		if(form.getValues()['fpayr'] !== undefined) {
+		if(form.getValues()['fpayr'] !== undefined && form.getValues()['fpayr'] !== 3) {
 			Ext.Msg.confirm(
 				'Подтверждение',
 				'Заказ оплачивает Ваша компания?',
