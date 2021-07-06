@@ -52,9 +52,6 @@ Ext.define('fplk.controller.WbsCont', {
 			'wbsgrid button[action=in]' : {
 				click : this.inWbs
 			},
-			'wbsgrid button[action=overdue]' : {
-				click : this.overdueWbs
-			},
 			'wbsgrid button[action=pod]' : {
 				click : this.newPod
 			},
@@ -202,7 +199,7 @@ Ext.define('fplk.controller.WbsCont', {
 			case this.getWbsTool().down('button[action=out]').pressed:
 				var t_dir = 'out';
 				break;
-			case this.getWbsTool().down('button[action=overdue]').pressed:
+			case this.getWbsTool().down('button[action=paycase]').pressed:
 				var t_dir = 'ove';
 				break;
 			}
@@ -438,7 +435,7 @@ Ext.define('fplk.controller.WbsCont', {
 		case this.getWbsTool().down('button[action=out]').pressed:
 			store.getProxy().setExtraParam('dir', 'out');
 			break;
-		case this.getWbsTool().down('button[action=overdue]').pressed:
+		case this.getWbsTool().down('button[action=paycase]').pressed:
 			store.getProxy().setExtraParam('dir', 'ove');
 			break;
 		}
@@ -462,36 +459,23 @@ Ext.define('fplk.controller.WbsCont', {
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=out]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
-		aTol.down('button[action=overdue]').toggle(false);
-		this.loadWbs();
-		this.viewTotal();
+		this.getWbsStoreStore().clearFilter();
 	},
 	outWbs : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=in]').toggle(false);
-		aTol.down('button[action=overdue]').toggle(false);
-		this.loadWbs();
-		this.viewTotal();
+		this.getWbsStoreStore().clearFilter();
+		this.getWbsStoreStore().filter('dir', 'other')
 	},
 	inWbs : function (btn) {
 		btn.toggle(true);
 		var aTol = btn.up('wbstool');
 		aTol.down('button[action=all]').toggle(false);
 		aTol.down('button[action=out]').toggle(false);
-		aTol.down('button[action=overdue]').toggle(false);
-		this.loadWbs();
-		this.viewTotal();
-	},
-	overdueWbs : function (btn) {
-		btn.toggle(true);
-		var aTol = btn.up('wbstool');
-		aTol.down('button[action=all]').toggle(false);
-		aTol.down('button[action=out]').toggle(false);
-		aTol.down('button[action=in]').toggle(false);
-		this.loadWbs();
-		this.viewTotal();
+		this.getWbsStoreStore().clearFilter();
+		this.getWbsStoreStore().filter('dir', 'in')
 	},
 	newPod : function (btn) {
 		var sm = btn.up('wbsgrid').getSelectionModel();

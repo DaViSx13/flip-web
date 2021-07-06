@@ -4,14 +4,13 @@ Ext.define('fplk.view.wbs.WbsTool', {
 	requires : ['fplk.view.mainform.ComboMonth', 'fplk.view.mainform.NumYear', 'fplk.view.mainform.ComboAgent'],
 	items : [{
 			xtype : 'buttongroup',
-			hidden: true,
 			items : [{
 					text : 'Входящие',
 					enableToggle : true,
 					iconCls : 'outbox',
 					action : 'out'
 				}, {
-					text : 'Исходящие',
+					text : 'Остальные',
 					action : 'in',
 					iconCls : 'inbox',
 					enableToggle : true
@@ -20,11 +19,6 @@ Ext.define('fplk.view.wbs.WbsTool', {
 					iconCls : 'allbox',
 					enableToggle : true,
 					action : 'all'
-				}, {
-					text : 'Просрочено',
-					iconCls : 'overduebox',
-					enableToggle : true,
-					action : 'overdue'
 				}
 			]
 		}, {
