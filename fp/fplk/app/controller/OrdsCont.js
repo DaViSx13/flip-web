@@ -180,7 +180,8 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'usetemplform combobox' : {
 				keypress : this.pressTpl,
-				beforequery : this.templateQuery
+				beforequery : this.templateQuery,
+				afterquery : this.afterTemplateQuery
 			},
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
@@ -218,13 +219,33 @@ Ext.define('fplk.controller.OrdsCont', {
 		this.getOrdExGrid().getSelectionModel().select(0);
 	},
 
+	afterTemplateQuery: function(query) {
+
+	},
+
 	/**
 	 * Запрос с помощью регулярного выражения.
 	 * @param record Запрос
 	 */
-	templateQuery: function(record) {
-		record.query = new RegExp(record.query, 'i');
-		record.forceAll = true;
+	templateQuery: function(query) {
+
+		query.combo.getStore().each(function(record) {
+			if(record.get('templatename').indexOf(']* ') > -1)
+				record.set('templatename', record.get('templatename').split(']* ')[1])
+		})
+		query.combo.getStore().each(function (record) {
+			for(var i in record.getData()) {
+				var found = false;
+				if(record.get(i) != null)
+					found = record.get(i).toString().toLowerCase().includes(query.combo.getRawValue().toLowerCase());
+				if(found) {
+					record.set('templatename', '*[' + record.get(i) + ']* ' + record.get('templatename'));
+					break;
+				}
+			}
+		})
+		query.query = new RegExp(query.query, 'i');
+		query.forceAll = true;
 	},
 
 	/**
