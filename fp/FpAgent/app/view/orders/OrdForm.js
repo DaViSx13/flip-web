@@ -29,7 +29,14 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					fieldLabel : FPAgent.lib.Translate.tr("OrdGrid.cname"),//'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
-					allowBlank : false
+					allowBlank : false,
+				listeners:{
+					afterrender:function(cmp){
+						cmp.inputEl.set({
+							autocomplete:'on'
+						});
+					}
+				}
 				}, {
 					xtype : 'textfield',
 					width : 337,

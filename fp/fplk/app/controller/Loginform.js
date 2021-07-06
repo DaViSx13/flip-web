@@ -1,7 +1,7 @@
 Ext.define('fplk.controller.Loginform', {
 	extend : 'Ext.app.Controller',
 	views : ['mainform.Loginform', 'mainform.MainPanel', 'mainform.Loginformcontainer', 'Viewport'],
-	stores : ['WbsStore', 'ClientSt'],
+	stores : ['WbsStore', 'ClientSt', 'LocalQueries'],
 	refs : [{
 			ref : 'AdmTool',
 			selector : 'admtool'
@@ -20,6 +20,7 @@ Ext.define('fplk.controller.Loginform', {
 			}
 		});
 	},
+
 	pressEnter : function (fild, e) {
 		var keyCode = e.getKey();
 		if (keyCode == 13) {
