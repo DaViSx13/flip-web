@@ -118,7 +118,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					labelAlign: 'top',
 					anchor: '100%',
 					allowBlank: false
-				}, {
+				},{
 					xtype: 'userinputfield',
 					name: 'r_mail',
 					fieldLabel: 'E-Mail',

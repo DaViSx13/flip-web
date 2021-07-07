@@ -253,7 +253,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$s_co=$params['s_co'];
 			$s_adr=$params['s_adr'];
 			$s_ref=$params['s_ref'];
-			$s_mail=$params['s_mail'];
+			$s_mail=isset($params['s_mail']) ? $params['s_mail'] : null;
 			//$dest=$params['dest'];
 			$r_city_id=$params['dest'];//$params['r_city'];
 			$r_name=$params['r_name'];
@@ -261,8 +261,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$r_co=$params['r_co'];
 			$r_adr=$params['r_adr'];
 			$r_ref=$params['r_ref'];
-			$r_mail=$params['r_mail'];
-			
+			$r_mail=isset($params['r_mail']) ? $params['r_mail'] : null;			
 			$t_pac=isset($params['type']) ? $params['type'] : 0;
 			$vol_wt=$params['vol_wt'] ? $params['vol_wt'] : 0;	
 			$wt=$params['wt'] ? $params['wt'] : 0;
