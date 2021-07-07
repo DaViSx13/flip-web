@@ -1,7 +1,7 @@
 Ext.define('fplk.view.webwbs.WbForm', {
 	alias: 'widget.wbform',
 	extend: 'Ext.form.Panel',
-	requires: ['fplk.view.orders.ComboCity'],
+	requires: ['fplk.view.orders.ComboCity', 'fplk.view.other.UserInputField'],
 	layout: {
 		type: 'absolute'
 	},
@@ -32,7 +32,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					store: 'CityStOrg',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					width: 337,
 					name: 's_co',
 					fieldLabel: 'Название клиента',
@@ -40,7 +40,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					labelAlign: 'top',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					width: 337,
 					name: 's_adr',
 					maxLength: 200,
@@ -48,7 +48,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					labelAlign: 'top',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					width: 329,
 					name: 's_name',
 					fieldLabel: 'Контактное лицо',
@@ -57,7 +57,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					anchor: '100%',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					name: 's_mail',
 					fieldLabel: 'E-Mail',
 					labelAlign: 'top',
@@ -94,7 +94,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					store: 'CityStDes',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					width: 337,
 					name: 'r_co',
 					fieldLabel: 'Название клиента',
@@ -102,7 +102,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					labelAlign: 'top',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					width: 337,
 					name: 'r_adr',
 					maxLength: 200,
@@ -110,7 +110,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					labelAlign: 'top',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					width: 329,
 					name: 'r_name',
 					maxLength: 50,
@@ -119,7 +119,7 @@ Ext.define('fplk.view.webwbs.WbForm', {
 					anchor: '100%',
 					allowBlank: false
 				}, {
-					xtype: 'textfield',
+					xtype: 'userinputfield',
 					name: 'r_mail',
 					fieldLabel: 'E-Mail',
 					labelAlign: 'top',
