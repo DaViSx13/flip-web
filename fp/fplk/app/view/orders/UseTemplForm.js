@@ -17,7 +17,7 @@ Ext.define('fplk.view.orders.UseTemplForm', {
 			valueField : 'id',
 			forceSelection : true,
 			allowBlank : false,
-			width : 185			
+			width : 485			
 		}
 	]
 });

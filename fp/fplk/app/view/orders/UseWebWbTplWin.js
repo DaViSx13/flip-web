@@ -7,7 +7,7 @@ Ext.define('fplk.view.orders.UseWebWbTplWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 96,
-	width : 210,
+	width : 510,
 	closable : false,
 	resizable : false,
 	modal : true,

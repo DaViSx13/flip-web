@@ -181,12 +181,14 @@ if (!isset($_REQUEST['dbAct'])) {
 			$destIndex = isset($params['destIndex'])  & strlen($params['destIndex']) > 0 ? $params['destIndex'] : 0;
             $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 3;
             $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'inv';
+			$dcontmail = isset($params['dcontmail']) ? $params['dcontmail'] : null;
             $sberQuick = isset($params['sberquick']) ? $params['sberquick'] : 0;
             $sberSize = isset($params['sbersize']) ? $params['sbersize'] : null;
             $sberCost = isset($params['sbercost']) ? $params['sbercost'] : 0;
             $sberProject = isset($params['sberproject']) ? $params['sberproject'] : null;
             $sberSuit = isset($params['sbersuit']) ? $params['sbersuit'] : null;
             $sberType = -1;
+			
             if(isset($params['sbertype'])) {
                 $type = ($params['sbertype'] == 1) ? 1 : 0;
                 $sberType = $params['sbertype'];
@@ -214,7 +216,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@DAdr='$DAdr',
 			@DContName='$DContName',
 			@DContPhone='$DContPhone',
-			@DContMail='$params[dcontmail]',
+			@DContMail='$dcontmail',
 			@DESTRems='$DESTRems',
 			@Type=$type,
 			@Packs=$params[packs],
