@@ -174,14 +174,15 @@ if (!isset($_REQUEST['dbAct'])) {
 			$courdate=$params['courdate'];
 			$courtimef=$params['courtimef'];
 			$courtimet=$params['courtimet'];
-			$ContPhone=$params['contphone'];
-			$DContPhone=$params['dcontphone'];
+			$ContPhone=$params['contphone'] ? $params['dcontphone'] : null;
+			$DContPhone=$params['dcontphone'] ? $params['dcontphone'] : null;
 			$webwb=$params['webwb'] ? $params['webwb'] : 0;
 			$orgIndex = isset($params['orgIndex']) & strlen($params['orgIndex']) > 0 ? $params['orgIndex'] : 0;
 			$destIndex = isset($params['destIndex'])  & strlen($params['destIndex']) > 0 ? $params['destIndex'] : 0;
             $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 3;
             $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'inv';
 			$dcontmail = isset($params['dcontmail']) ? $params['dcontmail'] : null;
+			$contmail = isset($params['contmail']) ? $params['contmail'] : null;
             $sberQuick = isset($params['sberquick']) ? $params['sberquick'] : 0;
             $sberSize = isset($params['sbersize']) ? $params['sbersize'] : null;
             $sberCost = isset($params['sbercost']) ? $params['sbercost'] : 0;
@@ -209,7 +210,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@Address='$Address',
 			@ContName='$ContName',
 			@ContPhone='$ContPhone',
-			@ContMail='$params[contmail]',
+			@ContMail='$contmail',
 			@OrgRems='$OrgRems',
 			@DEST=$params[dest],
 			@DName='$DName',
