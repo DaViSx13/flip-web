@@ -50,7 +50,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					fieldLabel : 'Название клиента',
 					maxLength : 60,
 					labelAlign : 'top',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'userinputfield',
 					width : 337,
@@ -58,7 +58,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					maxLength : 200,
 					fieldLabel : 'Адрес',
 					labelAlign : 'top',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'userinputfield',
 					width : 329,
@@ -67,7 +67,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					maxLength : 50,
 					labelAlign : 'top',
 					anchor : '100%',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'userinputfield',
 					name : 'contmail',
@@ -81,7 +81,7 @@ Ext.define('fplk.view.orders.OrdForm', {
 					fieldLabel : 'Телефон',
 					labelAlign : 'top',
 					anchor : '100%',
-					_allowBlank : false
+					allowBlank : false
 				}, {
 					xtype : 'userinputfield',
 					name : 'orgrems',
