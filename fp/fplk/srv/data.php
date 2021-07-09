@@ -174,7 +174,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$courdate=$params['courdate'];
 			$courtimef=$params['courtimef'];
 			$courtimet=$params['courtimet'];
-			$ContPhone=$params['contphone'] ? $params['dcontphone'] : null;
+			$ContPhone=$params['contphone'] ? $params['contphone'] : null;
 			$DContPhone=$params['dcontphone'] ? $params['dcontphone'] : null;
 			$webwb=$params['webwb'] ? $params['webwb'] : 0;
 			$orgIndex = isset($params['orgIndex']) & strlen($params['orgIndex']) > 0 ? $params['orgIndex'] : 0;
