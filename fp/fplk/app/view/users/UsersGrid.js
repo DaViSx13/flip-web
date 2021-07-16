@@ -4,10 +4,10 @@ Ext.define('fplk.view.users.UsersGrid', {
 	requires : ['fplk.view.users.UsersTool', 'Ext.grid.RowNumberer'],
 	store : 'UsersSt',
 	columns : [{
-		xtype: 'rownumberer',
-		resizable:true,
-		width: 30
-	} , {
+			xtype: 'rownumberer',
+			resizable:true,
+			width: 30
+		}, {
 			xtype : 'actioncolumn',
 			text : 'Доступ',
 			align : 'center',

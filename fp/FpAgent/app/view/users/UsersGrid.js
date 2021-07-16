@@ -4,6 +4,10 @@ Ext.define('FPAgent.view.users.UsersGrid', {
 	requires : ['FPAgent.view.users.UsersTool'],
 	store : 'UsersSt',
 	columns : [{
+			xtype: 'rownumberer',
+			resizable:true,
+			width: 30
+		},{
 			text : FPAgent.lib.Translate.tr("UsersGrid.auser"),//'Логин',
 			dataIndex : 'auser',
 			flex : 1

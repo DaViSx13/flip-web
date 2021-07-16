@@ -4,6 +4,10 @@ Ext.define('FPClient.view.users.UsersGrid', {
 	requires : ['FPClient.view.users.UsersTool'],
 	store : 'UsersSt',
 	columns : [{
+			xtype: 'rownumberer',
+			resizable:true,
+			width: 30
+		},{
 			xtype : 'actioncolumn',
 			text : 'Доступ',
 			align : 'center',

@@ -23,7 +23,10 @@ Ext.define('fplk.view.other.UserInputField', {
 						})
 						field.getStore().sync();
 					}
+				} else {
+					field.setValue("");
 				}
+
 			}
 		},
 		focus: {
