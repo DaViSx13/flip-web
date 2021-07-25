@@ -3,27 +3,26 @@ Ext.define('fplk.view.orders.WbNoWin', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.wbnowin',
 	requires : ['fplk.view.orders.WbNoForm'],
-	title : 'Введите № накладной',
+	title : 'Список накладных',
 	layout : 'fit',
 	autoShow : true,
-	height : 95,
-	width : 180,
+	height : 300,
+	width : 400,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
 		this.items = [{
-				xtype : 'wbnoform'
-			}
+			xtype : 'wbnoform'
+		}
 		];
 		this.buttons = [{
-				text : 'Сохранить',
-				action : 'save'
-			}, {
-				text : 'Отмена',
-				scope : this,
-				handler : this.close
-			}
-		];
+			text	: 'Сохранить',
+			action	: 'syncData'
+		}, {
+			text 	: 'Отмена',
+			scope 	: this,
+			handler : this.close
+		}];
 		this.callParent(arguments);
 	}
 });

@@ -21,7 +21,8 @@ Ext.define('fplk.controller.OrdsCont', {
 			'CityMod',
 			'AgentsMod',
 			'OrdExMod',
-			'LocalQueries'],
+			'LocalQueries',
+			'WbNoMod'],
 	stores : [
 			'OrdsSt',
 			'aMonths',
@@ -35,7 +36,8 @@ Ext.define('fplk.controller.OrdsCont', {
 			'ViewWbSt',
 			'ClientSt',
 			'OrdExStore',
-			'LocalQueries'],
+			'LocalQueries',
+			'WbNoSt'],
 	refs : [/*{
 			ref : 'WbForm',
 			selector : 'wbform'
@@ -194,7 +196,13 @@ Ext.define('fplk.controller.OrdsCont', {
 			},
 			'ordgrid actioncolumn': {
 				itemclick: this.viewEx
-			}
+			},
+			'wbnoform button[action=addRecord]': {
+				click: this.addWebNoRecord
+			},
+			'wbnowin button[action=syncData]': {
+				click: this.syncWebNoData
+			},
 		});
 		this.getOrderStStore().on({
 			scope : this,
@@ -213,6 +221,25 @@ Ext.define('fplk.controller.OrdsCont', {
 			load : this.loadOrdExStore
 		});
 		this.getClientStStore().load();
+	},
+
+	syncWebNoData: function(button) {
+		console.log("Синхранизация");
+	},
+
+	/**
+	 * Добавляет в грид пустую модель
+	 * для дальнейшего ввода данных.
+	 * @param button Кнопка 'Добавить'
+	 */
+	addWebNoRecord: function(button) {
+		let win = button.up('window');
+		let grid = win.down("grid");
+		let store = grid.getStore();
+		let gridModel = store.model;
+		store.insert(0, new gridModel());
+		let editor = grid.getPlugin('editRow');
+		editor.startEdit(0,1);
 	},
 
 	loadOrdExStore : function () {
@@ -511,18 +538,21 @@ Ext.define('fplk.controller.OrdsCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
-	viewWb : function (btn) {
+	/**
+	 * Открытие формы 'Накладные'.
+	 * Если не выделить строку в таблице
+	 * Выйдет сообщение об этом.
+	 * @param btn Кнопка 'Накладные'
+	 */
+	viewWb: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
-		if (sm.getSelection()[0].get('wb_no')) {
-			this.getViewWbStStore().load({
-				params : {
-					wb_no : sm.getSelection()[0].get('wb_no')
-				}
-			});
+		if(sm.getCount() > 0) {
+			Ext.widget('wbnowin');
 		} else {
-			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
+			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
 	},
+
 	dblclickWbsGr : function (gr) {
 		var sm = gr.getSelectionModel();
 		if (sm.getSelection()[0].get('wb_no')) {
