@@ -440,6 +440,8 @@ if (!isset($_REQUEST['dbAct'])) {
             if ($weight<$volwt) $weight = $volwt;
             $query = "exec wwwAPIgetTarif @org='$params[org]', @dest = '$params[dest]', @wt = {$weight}, @planno = {$planno}, @t_pak='LE'";
             break;
+        case 'getWebWbsGroup':
+            $query = "exec wwwLKgetWebWbsGROUP @order = $params[order]";
     }
 
     if (!isset($query) || strlen($query) == 0) {

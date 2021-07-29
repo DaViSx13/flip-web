@@ -27,7 +27,7 @@ Ext.define('fplk.view.orders.WbNoForm', {
 			header		: '№'
 		}, {
 			header		: 'Номер накладной',
-			dataIndex	: 'wbNum',
+			dataIndex	: 'wbnum',
 			width		: '60%',
 			editor		: {
 				xtype 		: 'textfield',

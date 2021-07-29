@@ -224,7 +224,51 @@ Ext.define('fplk.controller.OrdsCont', {
 	},
 
 	syncWebNoData: function(button) {
-		console.log("Синхранизация");
+		var window = button.up('window');
+		var ord = window.name;
+		var store = window.down('grid').getStore();
+		var newRecords = store.getNewRecords();
+		if (newRecords.length > 0) {
+			for (var i = 0; i <  newRecords.length; i++)
+				this.createWebNo(ord, newRecords[i]);
+		}
+		var hasDirty = false;
+		for(var i = 0; i < store.getRange(); i++) {
+			if(store.getRange()[i].dirty == true) {
+				hasDirty = true;
+			}
+		}
+
+		if (!hasDirty) {
+			store.load({
+				params: {
+					order: ord
+				}
+			})
+			window.close();
+		}
+	},
+
+	createWebNo: function(order, sm) {
+		Ext.Ajax.request({
+			url : 'srv/data.php',
+			method: 'POST',
+			async: false,
+			params : {
+				dbAct : 'SetWbno',
+				rordnum: order,
+				wbno: sm.data.wbnum
+			},
+			success: function () {
+				sm.commit();
+			},
+			failure: function (response, action) {
+				Ext.Msg.alert(
+					'Ошибка сохранения',
+					'Заказ [' + sm.data.wbnum + '] не был сохранен. ' + action.result.msg);
+
+			}
+		});
 	},
 
 	/**
@@ -547,7 +591,14 @@ Ext.define('fplk.controller.OrdsCont', {
 	viewWb: function (btn) {
 		var sm = btn.up('ordgrid').getSelectionModel();
 		if(sm.getCount() > 0) {
-			Ext.widget('wbnowin');
+			this.getWbNoStStore().load({
+				params: {
+					order: sm.selected.items[0].data.rordnum
+				}
+			});
+			var widget = Ext.widget('wbnowin');
+			widget.name = sm.selected.items[0].data.rordnum;
+			console.log(widget)
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}

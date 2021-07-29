@@ -76,5 +76,8 @@ Ext.define('fplk.model.OrdsMod', {
 	}, {
 		name : 'sbertype',
 		type : 'string'
+	}, {
+		name: 'webwbscount',
+		type: 'int'
 	}]
 });

@@ -87,8 +87,8 @@ Ext.define('fplk.view.orders.OrdGrid', {
 		}, {
 			xtype : 'gridcolumn',
 			width : 70,
-			dataIndex : 'wb_no',
-			text : '№ накл.'
+			dataIndex : 'webwbscount',
+			text : 'Количество накладных'
 		}
 	],
 	dockedItems : [{
