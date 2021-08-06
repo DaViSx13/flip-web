@@ -137,14 +137,13 @@ Ext.define('fplk.controller.WbsCont', {
 	},
 	changeAgent : function (comp, newValue) {
 		var me = this;
-		if (comp.up('mainpanel').activeTab.title == 'Накладные') {
+		if (comp.up('mainpanel').activeTab.title === 'Накладные') {
 			Ext.Ajax.request({
 				url : 'srv/change.php',
 				params : {
 					agent : newValue[0].data['partcode']
 				},
-				success : function (response) {
-					var text = Ext.decode(response.responseText);
+				success : function () {
 					me.loadWbs();
 					me.viewTotal();
 				},
@@ -154,6 +153,7 @@ Ext.define('fplk.controller.WbsCont', {
 			});
 		}
 	},
+
 	filterGrid : function () {
 		if (this.getWbFilter().getValue()) {
 			this.getWbsStoreStore().clearFilter(true);
@@ -177,7 +177,7 @@ Ext.define('fplk.controller.WbsCont', {
 			Ext.Msg.alert('Запрещено!', 'Для этой накладной нельзя редактировать Доп. тариф');
 		}
 	},
-	showDop : function (gridview, el, rowIndex, colIndex, e, rec, rowEl) {
+	showDop : function (gridview, el, rowIndex, colIndex, e, rec) {
 		if (!rec.data['req_tar_a']) {
 			this.insertNewDop(rec.data['wb_no'], rec.data['dtd_txt'], rec.data['tar_ag_id'], rec.data['req_tar_a']);
 		} else {
@@ -187,20 +187,21 @@ Ext.define('fplk.controller.WbsCont', {
 
 	viewTotal : function () {
 		var tc = this;
-		var twt = tc.getWbsTotal();
-		if (this.getWbsStoreStore().filters.length == 0) {
+		var twt = this.getWbsTotal();
+		var t_dir = '';
+		if (this.getWbsStoreStore().filters.length === 0) {
 			switch (true) {
 			case this.getWbsTool().down('button[action=all]').pressed:
-				var t_dir = 'all';
+				t_dir = 'all';
 				break;
 			case this.getWbsTool().down('button[action=in]').pressed:
-				var t_dir = 'in';
+				t_dir = 'in';
 				break;
 			case this.getWbsTool().down('button[action=out]').pressed:
-				var t_dir = 'out';
+				t_dir = 'out';
 				break;
 			case this.getWbsTool().down('button[action=paycase]').pressed:
-				var t_dir = 'ove';
+				t_dir = 'ove';
 				break;
 			}
 			Ext.Ajax.request({
@@ -236,7 +237,7 @@ Ext.define('fplk.controller.WbsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					if (action.result.success == true) {
+					if (action.result.success === true) {
 						Ext.Msg.alert('ПОД сохранено!', action.result.msg);
 						var rec_pod = me.getWbsStoreStore().findRecord('wb_no', form_pod.getValues()['wb_no']);
 						rec_pod.set('dod_txt', form_pod.getValues()['p_d_in'] + ' ' + form_pod.getValues()['tdd']);
@@ -267,7 +268,7 @@ Ext.define('fplk.controller.WbsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					if (action.result.success == true) {
+					if (action.result.success === true) {
 						Ext.Msg.alert('Происшествие сохранено!', action.result.msg);
 						var rec_ex = me.getWbsStoreStore().findRecord('wb_no', form_ex.getValues()['wb_no']);
 						rec_ex.set('is_ex', 1);
@@ -295,7 +296,7 @@ Ext.define('fplk.controller.WbsCont', {
 				},
 				submitEmptyText : false,
 				success : function (form, action) {
-					if (action.result.success == true) {
+					if (action.result.success === true) {
 						Ext.Msg.alert('Доп. тариф сохранен!', action.result.msg);
 						var rec_dop = me.getWbsStoreStore().findRecord('wb_no', form_dop.getValues()['wb_no']);
 						rec_dop.set('req_tar_a', form_dop.getValues()['tar_a_ag']);
@@ -322,25 +323,24 @@ Ext.define('fplk.controller.WbsCont', {
 		} else {}
 
 	},
-	exportExcel : function (btn) {
+	exportExcel : function () {
+		var t_dir = '';
 		switch (true) {
 		case this.getWbsTool().down('button[action=all]').pressed:
-			var t_dir = 'all';
+			t_dir = 'all';
 			break;
 		case this.getWbsTool().down('button[action=in]').pressed:
-			var t_dir = 'in';
+			t_dir = 'in';
 			break;
 		case this.getWbsTool().down('button[action=out]').pressed:
-			var t_dir = 'out';
+			t_dir = 'out';
 			break;
 		}
 		var period = this.getDateFromPeriodFilter();
 		window.location.href = 'srv/getAgentWbsXLS.php?from=' + period[0] + '&to=' + period[1] + '&filter=' + t_dir;
 	},
-	loadWBsWin : function (btn) {
-		//console.log('import');
-		var newloadwin = Ext.widget('loadwbwin').show();
-		//console.log(newloadwin.down('loadwbform'));
+	loadWBsWin : function () {
+		Ext.widget('loadwbwin').show();
 	},
 	importWBs : function (btn) {
 	var me = this;
@@ -386,7 +386,7 @@ Ext.define('fplk.controller.WbsCont', {
 	
 	viewExGrid : function (ex_wb_no) {
 		if (ex_wb_no) {
-			var viewex = Ext.widget('viewexwin').show();
+			Ext.widget('viewexwin').show();
 			this.getViewExStoreStore().load({
 				params : {
 					wb_no : ex_wb_no
@@ -396,14 +396,14 @@ Ext.define('fplk.controller.WbsCont', {
 			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
 		}
 	},
-	viewEx : function (column, action, grid, rowIndex, colIndex, record, node) {
+	viewEx : function (column, action, grid, rowIndex, colIndex, record) {
 		this.viewExGrid(record.data['wb_no']);
 	},
 	loadWbs : function () {
 		this.getWbsStoreStore().load();
 	},
 	insertNewPod : function (p_wb_no, p_dtd_txt, p_dir, p_d_in_txt) {
-		if (p_wb_no && p_dtd_txt && p_dir == 'out' && !p_d_in_txt) {
+		if (p_wb_no && p_dtd_txt && p_dir === 'out' && !p_d_in_txt) {
 			var newpod = Ext.widget('newpodwin').show();
 			var formpod = newpod.down('newpodform');
 			formpod.down('textfield[name=wb_no]').setValue(p_wb_no);
@@ -421,7 +421,7 @@ Ext.define('fplk.controller.WbsCont', {
 			Ext.Msg.alert('Запрещено!', 'Выберите накладную');
 		}
 	},
-	beforeprefetchWbsStore : function (store, operation) {
+	beforeprefetchWbsStore : function (store) {
 		var period = this.getDateFromPeriodFilter();
 		store.getProxy().setExtraParam('from', period[0]);
 		store.getProxy().setExtraParam('to', period[1]);
@@ -440,15 +440,15 @@ Ext.define('fplk.controller.WbsCont', {
 			break;
 		}
 	},
-	beforeloadWbsStore : function (store, operation) {
+	beforeloadWbsStore : function (store) {
 		var period = this.getDateFromPeriodFilter();
 		store.getProxy().setExtraParam('from', period[0]);
 		store.getProxy().setExtraParam('to', period[1]);
 	},
-	loadWbsGrid : function (comp) {
+	loadWbsGrid : function () {
 		var aTol = this.getWbsTool();
 		this.allWbs(aTol.down('button[action=all]'));
-		if (this.getAdmTool().down('label').text == 'WEB Администратор'){
+		if (this.getAdmTool().down('label').text === 'WEB Администратор'){
 		this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(true);
 		}
 		this.getAdmTool().down('button[action=list]').setVisible(false);

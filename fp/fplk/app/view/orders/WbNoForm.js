@@ -3,7 +3,7 @@ Ext.define('fplk.view.orders.WbNoForm', {
 	extend : 'Ext.form.Panel',
 	requires : ['Ext.grid.plugin.RowEditing',
 		'Ext.grid.RowNumberer'],
-	width  : 400,
+	width  : 300,
 	height : 300,
 	layout : 'fit',
 	bodyPadding : 5,
@@ -13,7 +13,7 @@ Ext.define('fplk.view.orders.WbNoForm', {
 		store	: 'WbNoSt',
 		plugins:[{
 			ptype			:'rowediting',
-			clicksToEdit	: 2,
+			clicksToEdit	: 0,
 			pluginId		: "editRow"
 		}],
 		tbar:[{
@@ -24,31 +24,17 @@ Ext.define('fplk.view.orders.WbNoForm', {
 		}],
 		columns: [{
 			xtype		: 'rownumberer',
-			header		: '№'
+			header		: '№',
+			width		: '20%'
 		}, {
 			header		: 'Номер накладной',
 			dataIndex	: 'wbnum',
-			width		: '60%',
+			width		: '79%',
 			editor		: {
 				xtype 		: 'textfield',
 				autoBlank	: false
 			}
-		}, {
-			header		: 'Стоимость',
-			dataIndex	: 'cost',
-			flex		: 1
-		}, {
-			xtype		: 'actioncolumn',
-			width		: '5%',
-			items		: [{
-				xtype	: 'button',
-				icon 	: 'resources/images/exit.gif',
-				text	: 'Удалить',
-				handler 	: function (grid, rowIndex) {
-					let store = grid.getStore();
-					store.removeAt(rowIndex);
-				}
-			}]
 		}]
 	}]
 });
+

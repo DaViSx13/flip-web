@@ -441,7 +441,7 @@ if (!isset($_REQUEST['dbAct'])) {
             $query = "exec wwwAPIgetTarif @org='$params[org]', @dest = '$params[dest]', @wt = {$weight}, @planno = {$planno}, @t_pak='LE'";
             break;
         case 'getWebWbsGroup':
-            $query = "exec wwwLKgetWebWbsGROUP @order = $params[order]";
+            $query = "exec wwwLKgetWbsGROUP @order = $params[order]";
     }
 
     if (!isset($query) || strlen($query) == 0) {

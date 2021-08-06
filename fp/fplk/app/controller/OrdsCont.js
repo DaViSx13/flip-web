@@ -203,6 +203,9 @@ Ext.define('fplk.controller.OrdsCont', {
 			'wbnowin button[action=syncData]': {
 				click: this.syncWebNoData
 			},
+			'wbnowin button[action=showWb]' : {
+				click: this.viewWbFromGroup
+			}
 		});
 		this.getOrderStStore().on({
 			scope : this,
@@ -221,6 +224,21 @@ Ext.define('fplk.controller.OrdsCont', {
 			load : this.loadOrdExStore
 		});
 		this.getClientStStore().load();
+	},
+
+	viewWbFromGroup: function(button) {
+		var grid = button.up('window').down('grid');
+
+		var sm = grid.getSelectionModel();
+		if (sm.selected.length !== 0) {
+			this.getViewWbStStore().load({
+				params : {
+					wb_no : sm.getSelection()[0].get('wbnum')
+				}
+			});
+		} else {
+			Ext.Msg.alert('Внимание!', 'Выберите заказ с введенным номером накладной!');
+		}
 	},
 
 	syncWebNoData: function(button) {
@@ -598,7 +616,6 @@ Ext.define('fplk.controller.OrdsCont', {
 			});
 			var widget = Ext.widget('wbnowin');
 			widget.name = sm.selected.items[0].data.rordnum;
-			console.log(widget)
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите заказ');
 		}
@@ -619,7 +636,7 @@ Ext.define('fplk.controller.OrdsCont', {
 	loadViewWbSt : function (st, rec, suc) {
 		if (suc) {
 			if (rec[0].data.wbstatus === 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert")/*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.WbEmpty")/*'Накладная не введена в систему!'*/);
+				Ext.Msg.alert('Внимание!', 'Накладная не введена в систему!');
 			} else {
 				var win = Ext.widget('viewwbwin');
 				var form = win.down('viewwbform');
@@ -705,7 +722,7 @@ Ext.define('fplk.controller.OrdsCont', {
 				win.show();
 			}
 		} else {
-			Ext.Msg.alert(FPAgent.lib.Translate.tr("Error")/*'Ошибка!'*/, FPAgent.lib.Translate.tr("ServerdDown")/*'Ошибка связи с сервером!'*/);
+			Ext.Msg.alert('Ошибка!', 'Ошибка связи с сервером!');
 		}
 	},
 	exportExcel : function (btn) {

@@ -7,7 +7,7 @@ Ext.define('fplk.view.orders.WbNoWin', {
 	layout : 'fit',
 	autoShow : true,
 	height : 300,
-	width : 400,
+	width : 300,
 	resizable : false,
 	modal : true,
 	initComponent : function () {
@@ -16,8 +16,9 @@ Ext.define('fplk.view.orders.WbNoWin', {
 		}
 		];
 		this.buttons = [{
-			text	: 'Сохранить',
-			action	: 'syncData'
+			xtype	: 'button',
+            text	: 'Просмотр накладной',
+			action	: 'showWb'
 		}, {
 			text 	: 'Отмена',
 			scope 	: this,
