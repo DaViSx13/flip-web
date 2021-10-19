@@ -102,13 +102,13 @@ class wbController{
        self::checkNumberValue($tPac, "inSum");
        self::checkRange($tPac, "inSum", array(0, 1));
 
-       $metPaym = self::getFieldWithDefault("metPaym", 'INV');
+       /*$metPaym = self::getFieldWithDefault("metPaym", 'INV');
        self::checkStringField($metPaym, "metPaym", 5);
        self::checkRange($metPaym,"metPaym", array("INV", "CSH"));
 
        $payer = self::getFieldWithDefault("payer", 0);
        self::checkNumberValue($payer, "payer");
-       self::checkRange($payer, "payer", array(0, 1, 2));       
+       self::checkRange($payer, "payer", array(0, 1, 2)); */      
 
         $token = current($token);
         $userin = $token['auser'];
@@ -139,8 +139,6 @@ class wbController{
             @T_PAC = $tPac,
             @Descr = '$Descr',
             @Inssum = $inSum,
-            @Metpaym = '$metPaym',
-            @Payr = $payer,
 			@wbsource = 'api',            
             @agentID = $ag";
        $response = new Response();
