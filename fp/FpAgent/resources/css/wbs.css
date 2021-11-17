@@ -1,3 +1,15 @@
+.x-boundlist-item img.chkCombo {
+	background-image: url(../../resources/images/unchecked.gif);
+	height : 16px;
+	width : 16px;
+	cursor : pointer;
+}
+.x-boundlist-selected img.chkCombo{
+	background-image: url(../../resources/images/checked.gif);
+	height : 16px;
+	width : 16px;
+	cursor : pointer;
+}
 .exit-user {
 	background-image : url(../../resources/images/exit.gif);
 }

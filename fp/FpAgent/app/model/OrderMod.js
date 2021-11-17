@@ -74,6 +74,8 @@ Ext.define('FPAgent.model.OrderMod', {
 			name : 'fileowner'
 		}, {
 			name : 'status'
-		}
+		}, {
+			name : 'cat'
+	}
 	]
 });

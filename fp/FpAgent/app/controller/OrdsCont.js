@@ -1,8 +1,43 @@
 Ext.define('FPAgent.controller.OrdsCont', {
 	extend: 'Ext.app.Controller',
-	views: ['orders.OrdGrid', 'orders.OrdClientGrid', 'orders.OrdWin', 'orders.WbNoWin', 'orders.WbNoForm', 'orders.OrdsPanel', 'orders.OrdsClientPanel', 'orders.UseTemplWin', 'orders.UseTemplForm', 'orders.ViewWbWin', 'wbs.WbsGrid', 'orders.LoadOrdersWin', 'mainform.WbGrid', 'orders.OrdExWin', 'orders.OrdExGrid', 'orders.OrdExForm'],
-	models: ['OrdsMod', 'OrderMod', 'CityMod', 'AgentsMod', 'OrdExMod'],
-	stores: ['OrdsSt', 'OrdsClientSt', 'aMonths', 'OrderClientSt', 'OrderSt', 'CityStOrg', 'CityStDes', 'TypeSt', 'AgentsSt', 'TemplSt', 'ViewWbSt', 'OrdExStore'],
+	views: [
+		'orders.OrdGrid',
+		'orders.OrdClientGrid',
+		'orders.OrdWin',
+		'orders.WbNoWin',
+		'orders.WbNoForm',
+		'orders.OrdsPanel',
+		'orders.OrdsClientPanel',
+		'orders.UseTemplWin',
+		'orders.UseTemplForm',
+		'orders.ViewWbWin',
+		'wbs.WbsGrid',
+		'orders.LoadOrdersWin',
+		'mainform.WbGrid',
+		'orders.OrdExWin',
+		'orders.OrdExGrid',
+		'orders.OrdExForm'],
+	models: [
+		'OrdsMod',
+		'OrderMod',
+		'CityMod',
+		'AgentsMod',
+		'OrdExMod',
+	],
+	stores: [
+		'OrdsSt',
+		'OrdsClientSt',
+		'aMonths',
+		'OrderClientSt',
+		'OrderSt',
+		'CityStOrg',
+		'CityStDes',
+		'TypeSt',
+		'AgentsSt',
+		'TemplSt',
+		'ViewWbSt',
+		'OrdExStore',
+		'SortTypeSt'],
 	refs: [{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -692,22 +727,48 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var vbut = tt.down('button[action=view]');
 		this.showClientOrdWin(gr);
 	},
-	editOrdWin: function (btn) {
 
-		var sm = btn.up('ordgrid').getSelectionModel();
+	/**
+	 * Конвертирует бинарную маску в значения поля 'Категория'
+	 * @param orderStore - Хранилище заказа
+	 * @param ordWindow - Окно формы заказа
+	 */
+	convertOrderCategory: function (orderStore, ordWindow) {
+		if(orderStore.first() !== undefined && orderStore.first().get("cat") !== null) {
+			var values = orderStore.first().get("cat").toString(2);
+			var result = [];
+			var j = 0;
+			for (var i = 0; i < values.length; i++) {
+				if(values[i] === '1') {
+					result[j] = i;
+					j++;
+				}
+			}
+			ordWindow.down("combobox[name='sortType']").setValue(result);
+		}
+	},
 
-		if (sm.getCount() > 0) {
-			if ((sm.getSelection()[0].get('status') == 'заявлен' && btn.action == 'edit') || (btn.action == 'view')) {
+	/**
+	 * Загрузка формы заказа.
+	 * @param selectedModel Выбранная строка таблицы заказа
+	 * @param button Кнопка
+	 * @param me Текущий элемент
+	 */
+	loadOrderForm: function(selectedModel, button, me) {
+		if (selectedModel.getCount() > 0) {
+			if ((selectedModel.getSelection()[0].get('status') == 'заявлен' && button.action == 'edit') || (button.action == 'view')) {
 				var win = Ext.widget('ordwin');
-				win.show();
-				//Ext.create('FPAgent.view.orders.OrdWin').show();
 				var store_ord = this.getOrderStStore().load({
-						params: {
-							id: sm.getSelection()[0].get('rordnum'),
-							se : window.location.hash.replace("#", "")
-						}
-					});
-				if (btn.action == 'view') {
+					params: {
+						id: selectedModel.getSelection()[0].get('rordnum'),
+						se : window.location.hash.replace("#", "")
+					},
+					callback: function() {
+						me.convertOrderCategory(store_ord, win);
+					}
+				});
+				win.show();
+				if (button.action == 'view') {
 					win.down('button[action=save]').setVisible(false);
 				} else {
 					win.down('button[action=save]').setVisible(true);
@@ -716,13 +777,24 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess") /*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.ErrorOrderEdit") /*'Редактировать можно только заявленные заказы'*/);
 			}
 		} else {
-			if (btn.action == 'edit') {
+			if (button.action == 'edit') {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit") /*'Выберите заказ для редактирования'*/);
 			} else {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderView") /*'Выберите заказ для просмотра'*/);
 			}
 		}
 	},
+
+	/**
+	 * Редактирование заказа.
+	 * @param btn - Кнопка
+	 */
+	editOrdWin: function (btn) {
+		var sm = btn.up('ordgrid').getSelectionModel();
+		this.loadOrderForm(sm, btn, this);
+
+	},
+
 	showClientOrdWin: function (grid) {
 		var sm = grid.getSelectionModel();
 
@@ -753,14 +825,12 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		window.open('srv/report.php?se=' + window.location.hash.replace("#", "") + '&wbno=' + this.getViewWbForm().down('displayfield[name=wb_no]').value);
 	},
 
-	saveOrder: function (btn) {
-		var me = this;
-		var win = btn.up('ordwin');
-		var form_ord = win.down('ordform');
-		var form_lf = win.down('loadfileform');
-		var org = form_ord.down('combocity[name=org]');
-		var dest = form_ord.down('combocity[name=dest]');
-		if (org.value == null) {
+	/**
+	 * Проверка пункта отправления.
+	 * @param orgField Поле пункта отправления
+	 */
+	checkOrg: function (orgField) {
+		if (orgField.value == null) {
 			var jsonArrayOrg = this.getCityStOrgStore().data.items;
 			if (jsonArrayOrg.length == 0) {
 				Ext.Msg.alert(
@@ -770,16 +840,23 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			};
 			for (var i = 0; i < jsonArrayOrg.length; i++) {
 				if (jsonArrayOrg[i].get('fname') == Ext.String.trim(org.getRawValue())) {
-					org.setValue(jsonArrayOrg[i].data.code);
+					orgField.setValue(jsonArrayOrg[i].data.code);
 					break;
 				};
 			};
-			if (org.value == null) {
+			if (orgField.value == null) {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
-		if (dest.value == null) {
+	},
+
+	/**
+	 * Проверка пункта назначения.
+	 * @param destField Поле пукта назначения
+	 */
+	checkDest: function (destField) {
+		if (destField.value == null) {
 			var jsonArrayDes = this.getCityStDesStore().data.items;
 			if (jsonArrayDes.length == 0) {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
@@ -787,22 +864,53 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			};
 			for (var i = 0; i < jsonArrayDes.length; i++) {
 				if (jsonArrayDes[i].get('fname') == Ext.String.trim(dest.getRawValue())) {
-					dest.setValue(jsonArrayDes[i].data.code);
+					destField.setValue(jsonArrayDes[i].data.code);
 					break;
 				};
 			};
-			if (dest.value == null) {
+			if (destField.value == null) {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
 				return;
 			};
 		}
+	},
+
+	/**
+	 * Получает маску выбранных категорий
+	 * @param orderForm - Форма заказа
+	 */
+	getOrderCategory: function (orderForm) {
+		var values = orderForm.down('combobox[name=sortType]').getValue();
+		var result = ['0', '0', '0'];
+		Ext.Array.forEach(values, function (value) {
+			result[value] = '1'
+		});
+
+		return result.join('');
+
+	},
+
+	/**
+	 * Сохранения заказа.
+	 * @param btn Кнопка 'Сохранить'
+	 */
+	saveOrder: function (btn) {
+		var me = this;
+		var win = btn.up('ordwin');
+		var form_ord = win.down('ordform');
+		var form_lf = win.down('loadfileform');
+		var org = form_ord.down('combocity[name=org]');
+		var dest = form_ord.down('combocity[name=dest]');
+		this.checkOrg(org);
+		this.checkDest(dest);
 		if (form_ord.getForm().isValid()) {
 			btn.disable();
 			form_ord.submit({
 				url: 'srv/data.php',
 				params: {
 					dbAct: 'saveagorder',
-					se : window.location.hash.replace("#", "")
+					se : window.location.hash.replace("#", ""),
+					cat: parseInt(me.getOrderCategory(form_ord), 2)
 				},
 				submitEmptyText: false,
 				success: function (form, action) {					

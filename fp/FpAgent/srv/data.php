@@ -184,6 +184,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$courtimet=$params['courtimet'];
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];
+            $cat = ($params['cat'] == 0) ? 'null' : $params['cat'];
 
 			if($courdate){
 				$d = explode('.', $courdate);
@@ -214,7 +215,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
 			@UserIn=$UserIn,
-			@RordNum=$Rordnum";
+			@RordNum=$Rordnum,
+			@cat = $cat";
 			break;
 		case 'GetAgentWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];

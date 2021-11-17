@@ -7,9 +7,6 @@ Ext.define('FPAgent.store.TypeSt', {
 		}, {
 			Name : 'Не документ',
 			lowName : 0
-		}, {
-			Name : 'Опасный груз',
-			lowName : 3
 		}
 	]
 });

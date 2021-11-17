@@ -5,7 +5,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 	layout : {
 		type : 'absolute'
 	},
-	bodyPadding : 10,
+	bodyPadding : '10 10 0 10',
 	items : [{
 			xtype : 'fieldset',
 			id : 'fs1',
@@ -173,7 +173,6 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 150,
 			width : 360,
 			title : FPAgent.lib.Translate.tr("OrdGrid.fs.cargo"),//'Информация о грузе',
 			x : 390,
@@ -194,6 +193,23 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					store : 'TypeSt',
 					queryMode : 'local'
 				}, {
+					xtype : 'combobox',
+					name : 'sortType',
+					displayField : 'Name',
+					valueField : 'lowName',
+					multiSelect: true,
+					forceSelection : true,
+					editable : false,
+					fieldLabel : 'Категория',
+					store : 'SortTypeSt',
+					queryMode : 'local',
+					triggerAction: 'all',
+					listConfig : {
+						getInnerTpl : function(displayField) {
+							return '<div class="x-combo-list-item"><img src="" class="chkCombo-default-icon chkCombo" /> {'+ displayField +'}</div>';
+						}
+					}
+				},{
 					xtype : 'numberfield',
 					name : 'packs',
 					minValue : 0,
