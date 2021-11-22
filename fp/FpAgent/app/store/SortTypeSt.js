@@ -4,12 +4,12 @@ Ext.define('FPAgent.store.SortTypeSt', {
 	autoLoad: true,
 	data : [{
 		Name : 'Обрешетка',
-		lowName : 0
+		lowName : 2
 	}, {
 		Name : 'Спец перевозка',
 		lowName : 1
 	}, {
 		Name: 'Дополнительная упаковка',
-		lowName: 2
+		lowName: 0
 	}]
 });
