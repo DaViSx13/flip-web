@@ -1,13 +1,17 @@
 .x-boundlist-item img.chkCombo {
-	background-image: url(../../resources/images/unchecked.gif);
-	height : 16px;
-	width : 16px;
+	background: transparent url(../../resources/images/unchecked.gif);
+	background-position:center;
+	background-repeat:no-repeat;
+	width: 7%;
+	height: 7%;
 	cursor : pointer;
 }
 .x-boundlist-selected img.chkCombo{
-	background-image: url(../../resources/images/checked.gif);
-	height : 16px;
-	width : 16px;
+	background: transparent url(../../resources/images/checked.gif);
+	background-position:center;
+	background-repeat:no-repeat;
+	width: 7%;
+	height: 7%;
 	cursor : pointer;
 }
 .exit-user {
