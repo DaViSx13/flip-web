@@ -206,7 +206,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
 					triggerAction: 'all',
 					listConfig : {
 						getInnerTpl : function(displayField) {
-							return '<div class="x-combo-list-item"><img src="" class="chkCombo-default-icon chkCombo" /> {'+ displayField +'}</div>';
+							return '<div class="x-combo-list-item"><img src="' + Ext.BLANK_IMAGE_URL + '" class="chkCombo-default-icon chkCombo" /> {'+ displayField +'}</div>';
 						}
 					}
 				},{
