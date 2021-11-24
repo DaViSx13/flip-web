@@ -22,7 +22,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		'OrderMod',
 		'CityMod',
 		'AgentsMod',
-		'OrdExMod',
+		'OrdExMod'
 	],
 	stores: [
 		'OrdsSt',
