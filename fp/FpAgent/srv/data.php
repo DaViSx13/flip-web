@@ -184,7 +184,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$courtimet=$params['courtimet'];
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];
-            $cat = ($params['cat'] == 0) ? 'null' : $params['cat'];
+            $cat = isset($params['cat']) ? $params['cat'] : 0;
 
 			if($courdate){
 				$d = explode('.', $courdate);
