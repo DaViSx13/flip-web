@@ -26,6 +26,12 @@ class ExcelExport {
     private $_Query;
 
     /**
+     * @var string DB query.
+     */
+    private $_OutPutName = 'Шаблоны.xls';
+
+
+    /**
      * @var array Data rows style.
      */
     private $rowStyle = array(
@@ -62,6 +68,14 @@ class ExcelExport {
     }
 
     /**
+     * Sets output file name.
+     * @param $fileName File name
+     */
+    public function setFileName($fileName) {
+        $this->_OutPutName = $fileName;
+    }
+
+    /**
      * @param $workbook PHPExcel Excel book.
      * @param $isError boolean is error message
      */
@@ -69,9 +83,9 @@ class ExcelExport {
         header('Content-Type: application/vnd.ms-excel');
 
         if (!$isError)
-            header("Content-Disposition:attachment;filename=\"Шаблоны.xls\"");
+            header("Content-Disposition:attachment;filename=\"{$this->_OutPutName}\"");
         else
-            header("Content-Disposition:attachment;filename=\"Шаблоны.xls\"");
+            header("Content-Disposition:attachment;filename=\"{$this->_OutPutName}\"");
         header('Cache-Control: max-age=0');
         header('Cache-Control: max-age=1');
 
