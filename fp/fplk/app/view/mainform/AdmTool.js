@@ -32,21 +32,21 @@ Ext.define('fplk.view.mainform.AdmTool', {
 			enableToggle : true,
 			xtype : 'button'
 		},' ',
-		'->'/*,
+		'->',/*
 		{
 			tooltip : 'Пакетный расчет',
 			text : 'Пакетный расчет',
 			iconCls : 'calc',
 			action : 'showGroupClac',
 			xtype : 'button'
-		},
+		},*/
 		{
 			tooltip : "Тарифы",
 			text : "Тарифы",
 			iconCls : 'tariffs',
 			action : 'tariffs',
 			xtype : 'button'
-		},' '*/, {
+		},' ', {
 			xtype : 'label',
 			text : 'UserName'
 		},
