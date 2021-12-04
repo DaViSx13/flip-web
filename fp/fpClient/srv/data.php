@@ -166,7 +166,9 @@ if (!isset($_REQUEST['dbAct'])) {
 				$d = explode('.', $courdate);
 				$courdate = strftime('%Y%m%d', mktime(0,0,0, $d[1], $d[0], $d[2]) );
 			}
-			
+			if(strtotime($courdate) < strtotime(date('Ymd'))){
+				throw new Exception('Дата приезда курьера должна содержать дату больше или равной текущей!');
+			}
 			if (!isset($params['org'])) $params['org'] = -1; //магия
 			
 			$query = "exec wwwSaveAgOrders

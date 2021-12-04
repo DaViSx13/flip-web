@@ -239,6 +239,16 @@ class catapultoController{
 	
 	$courdate = $params['delivery_date'];//<YYYYMMDD> "2019-06-05"	
 	$courdate = substr($courdate,0,4).substr($courdate,5,2).substr($courdate,8,2);
+	
+	if(strtotime($courdate) < strtotime(date('Ymd'))){
+		
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 2020;
+		$err->note = 'не правильная дата создания';
+		$response->error = $err;
+		return $response;
+	}
 	$courtimef = '';
 	$courtimet = '';
 	$ag = 875;/*УДАЧНЫЙ ВЫБОР ООО*/
