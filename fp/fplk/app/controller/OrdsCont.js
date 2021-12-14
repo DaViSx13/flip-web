@@ -379,14 +379,21 @@ Ext.define('fplk.controller.OrdsCont', {
 	 * @param value Искомое значение
 	 */
 	setCityValueAndEvents: function(component, value) {
-
+		var city = '';
+		var region = '';
+		Ext.Array.each(value, function(record) {
+			if(record.contentType === "region")
+				region = record.name;
+			if(record.contentType === "city")
+				city = record.name;
+		});
 		var store = component.store;
 		component.clearValue();
 		store.load({
 			params: {
 				dbAct: "GetCityByKLADR",
-				city: value[value.length - 2].name,
-				region: value[0].name
+				city: city,
+				region: region
 			},
 			scope: this,
 			callback: function(record, operation, success) {
