@@ -50,8 +50,8 @@
     },
     {
         "stringID":  "Loginform.title",
-        "ru":  "Вход в ФлипПост WEB",
-        "en":  "Login in FlipPost WEB"
+        "ru":  "Вход в ФлипПост.Агент",
+        "en":  "Login in FlipPost.Agent"
     },
     {
         "stringID":  "OrdGrid.status",
