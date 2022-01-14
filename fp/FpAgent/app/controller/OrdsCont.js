@@ -834,24 +834,29 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 */
 	checkOrg: function (orgField) {
 		if (orgField.value == null) {
-			var jsonArrayOrg = this.getCityStOrgStore().data.items;
-			if (jsonArrayOrg.length == 0) {
+			var store = orgField.getStore();
+			if(store.find('fname', orgField.getValue(), 0, true, true) == -1) {
+				Ext.Msg.alert(
+						FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/,
+						FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/
+					);
+				return -1;
+			};
+			
+			var record = store.findRecord('fname', orgField.getValue(), 0, true, true);
+			if(record !== null)
+				orgField.setValue(record);
+
+			if (orgField.value == null) {
 				Ext.Msg.alert(
 					FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/,
-					FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
-				return;
-			};
-			for (var i = 0; i < jsonArrayOrg.length; i++) {
-				if (jsonArrayOrg[i].get('fname') == Ext.String.trim(org.getRawValue())) {
-					orgField.setValue(jsonArrayOrg[i].data.code);
-					break;
-				};
-			};
-			if (orgField.value == null) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/);
-				return;
+					FPAgent.lib.Translate.tr("OrdsCont.CitySenderError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/
+				);
+				return -1;
 			};
 		}
+		
+		return 0;
 	},
 
 	/**
@@ -860,22 +865,30 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 */
 	checkDest: function (destField) {
 		if (destField.value == null) {
-			var jsonArrayDes = this.getCityStDesStore().data.items;
-			if (jsonArrayDes.length == 0) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
-				return;
+			var store = destField.getStore();
+			if(store.find('fname', destField.getValue(), 0, true, true) == -1) {
+				Ext.Msg.alert(
+						FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/,
+						FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/
+					);
+				return -1;
 			};
-			for (var i = 0; i < jsonArrayDes.length; i++) {
-				if (jsonArrayDes[i].get('fname') == Ext.String.trim(dest.getRawValue())) {
-					destField.setValue(jsonArrayDes[i].data.code);
-					break;
-				};
-			};
+			
+			var record = store.findRecord('fname', destField.getValue(), 0, true, true);
+			if(record !== null)
+				destField.setValue(record);
+
 			if (destField.value == null) {
-				Ext.Msg.alert(FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/, FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Получателя! Выберите город из выпадающего списка.'*/);
-				return;
+				Ext.Msg.alert(
+					FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/,
+					FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/
+				);
+				return -1;
 			};
 		}
+		
+		return 0;
+	
 	},
 
 	/**
@@ -904,8 +917,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');
-		this.checkOrg(org);
-		this.checkDest(dest);
+		if (this.checkOrg(org) === -1)
+			return;
+	    if (this.checkDest(dest) === -1)
+			return;
+		
 		if (form_ord.getForm().isValid()) {
 			btn.disable();
 			form_ord.submit({
