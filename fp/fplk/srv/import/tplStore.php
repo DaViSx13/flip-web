@@ -84,6 +84,13 @@ class tplStore {
                                                 array('Adr', 'str', 4, 1),
                                                 array('ContName', 'str', 2, 1),
                                                 array('ContPhone', 'str', 3, 0, NULL),
+												array('ContMail', 'str', 6, 0, NULL),
+												array('SenderName', 'str', 7, 0, NULL),
+												array('SenderAdress', 'str', 8, 0, NULL),
+												array('SenderCity', 'str', 9, 0, NULL),
+												array('SenderContact', 'str', 10, 0, NULL),
+												array('SenderPhone', 'str', 11, 0, NULL),
+												array('SenderMail', 'str', 12, 0, NULL)
 							)
 							);
 	}
