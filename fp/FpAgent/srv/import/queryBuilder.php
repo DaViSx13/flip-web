@@ -110,9 +110,7 @@ class queryBuilder {
 						break 2;
 					}					
 					if(($tpl[$j][1] == 'date' || $tpl[$j][1] == 'str' || $tpl[$j][1] == 'time') && !is_null($val)){ /* Типы данных с кавычками */
-						$val = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $val); 
-						$val = preg_replace('/[\x00-\x1F\x7F]/', '', $val); 
-						$val = preg_replace('/[\x00-\x1F\x7F]/u', '', $val);
+						
 						$this->value[$i]=$this->value[$i].' @'.$tpl[$j][0]."='".$val."',";
 					} else {
 						if (is_null($val)){																			/* Пустое значение */
