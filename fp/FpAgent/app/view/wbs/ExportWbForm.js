@@ -17,6 +17,7 @@ Ext.define('FPAgent.view.wbs.ExportWbForm', {
 		format: 'd.m.Y',
         maxValue: new Date(),  // limited to the current date or prior
 		value: new Date(),
+		minValue: new Date(2021, 0, 1),
 		validator:    function(value){
                                 
                                 //store the START_VALIDITY_DATE to compare it with the END_VALIDITY_DATE
