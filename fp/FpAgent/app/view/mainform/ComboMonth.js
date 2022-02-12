@@ -19,7 +19,7 @@ Ext.define('FPAgent.view.mainform.ComboMonth', {
 		width: 110,
 		value: Ext.Date.add(new Date(), Ext.Date.DAY, -7),
 		maxValue: Ext.Date.add(new Date(), Ext.Date.MONTH, 1),
-		minValue: new Date(2021, 1, 1)
+		minValue: new Date(2021, 0, 1)
 	}, {
 		xtype: 'datefield',
 		width: 110,
