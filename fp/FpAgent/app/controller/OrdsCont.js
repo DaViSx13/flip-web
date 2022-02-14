@@ -261,12 +261,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 */
 	getDateFromPeriodFilter: function(isClient) {
 		if (isClient)
-		var panel = this.getOrdClientTool();
+			var panel = this.getOrdClientTool();
 		else
-		var panel = this.getOrdTool();
-	
-		var fromDate = panel.down('datefield[name=fromDate]').getValue();
-		var toDate = panel.down('datefield[name=toDate]').getValue();
+			var panel = this.getOrdTool();	
+		
+		var fromDate = panel.down('datefield[name=fromDate]').getValue();		
+		var toDate = panel.down('datefield[name=toDate]').getValue();	
+		
 		return [
 			Ext.Date.format(fromDate, 'Ymd'),
 			Ext.Date.format(toDate, 'Ymd')];

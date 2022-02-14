@@ -19,7 +19,18 @@ Ext.define('FPAgent.view.mainform.ComboMonth', {
 		width: 110,
 		value: Ext.Date.add(new Date(), Ext.Date.DAY, -7),
 		maxValue: Ext.Date.add(new Date(), Ext.Date.MONTH, 1),
-		minValue: new Date(2021, 0, 1)
+		minValue: new Date(2021, 0, 1),
+		listeners: {
+				blur: function(component) {
+					var min = component.getValue();
+					var limitDate = new Date(2021, 0, 1);
+					if(min < limitDate) {
+						min = limitDate;
+						component.setValue(min);
+					}
+					component.up('panel[name=periodPanel]').down('datefield[name=toDate]').setMinValue(min);					
+				}
+		}
 	}, {
 		xtype: 'datefield',
 		width: 110,
@@ -28,7 +39,15 @@ Ext.define('FPAgent.view.mainform.ComboMonth', {
 		anchor: '100%',
 		name: 'toDate',
 		value: new Date(),
-		maxValue: Ext.Date.add(new Date(), Ext.Date.MONTH, 1)
+		maxValue: Ext.Date.add(new Date(), Ext.Date.MONTH, 1),
+		minValue: new Date(2021, 0, 1),
+		listeners: {
+				blur: function(component) {
+					var min = component.up('panel[name=periodPanel]').down('datefield[name=fromDate]').getValue();
+					if(min > component.getValue())
+						component.setValue(min);				
+				}
+		}
 	}, {
 		xtype: 'button',
 		margin: "0 0 0 5",

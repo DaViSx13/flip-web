@@ -20,6 +20,9 @@ Ext.define('FPAgent.view.wbs.ExportWbForm', {
 		minValue: new Date(2021, 0, 1),
 		validator:    function(value){
                                 
+								if(value < new Date(2021, 0, 1))
+									return false;
+								
                                 //store the START_VALIDITY_DATE to compare it with the END_VALIDITY_DATE
                                 startValidityDate=value;
                                 if(typeof endValidityDate !== 'undefined'){
