@@ -41,14 +41,15 @@ if (!isset($_REQUEST['dbAct'])) {
             $query = "exec wwwAPIgetCities @country='$_REQUEST[country]', @state = '$_REQUEST[state]', @city = '$_REQUEST[city]'";
             break;
         case 'getTarif':
-			$fromSite = isset($_REQUEST['fromSite']) ? 1 : 0;
+			$fromSite = isset($_REQUEST['fromSite']) ? 1 : 0; //спец. расчет для калькулятора на сайте
+			$CACC = $_REQUEST['CACC'] ? $_REQUEST['CACC'] : '';
 			$weight = $_REQUEST['weight'] ? $_REQUEST['weight'] : 0.1;
 			//$weight = $_REQUEST['weight'];
 			if (!is_numeric($weight)) 
 				{ $errMsg = 'weight - не число!!!';	
 				} 
 				else {
-				$query = "exec wwwAPIgetTarif @org='$_REQUEST[org]', @dest = '$_REQUEST[dest]', @wt = {$weight}, @fromSite={$fromSite}";
+				$query = "exec wwwAPIgetTarif @org='$_REQUEST[org]', @dest = '$_REQUEST[dest]', @wt = {$weight}, @fromSite={$fromSite}, @CACC='{$CACC}'";
 				}
             break;
         case 'getWb':
