@@ -19,12 +19,16 @@ Ext.define('fplk.view.orders.TemplForm', {
 		}, {
 			xtype : 'fieldset',
 			id : 'fs1',
-			height : 390,
+			height : 410,
 			width : 360,
 			title : 'Отправитель',
 			x : 10,
 			y : 40,
 			items : [{
+				xtype: "templatecombobox",
+				name: 'fromTemplates',
+				width: 337
+			}, {
 					xtype : 'combocity',
 					name : 'org',
 					allowBlank : true,
@@ -84,12 +88,16 @@ Ext.define('fplk.view.orders.TemplForm', {
 			]
 		}, {
 			xtype : 'fieldset',
-			height : 390,
+			height : 410,
 			width : 360,
 			title : 'Получатель',
 			x : 390,
 			y : 40,
 			items : [{
+				xtype: "templatecombobox",
+				name: 'toTemlates',
+				width: 337
+			},{
 					xtype : 'combocity',
 					name : 'dest',
 					allowBlank : true,

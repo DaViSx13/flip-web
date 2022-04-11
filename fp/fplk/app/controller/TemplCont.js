@@ -1,6 +1,6 @@
 Ext.define('fplk.controller.TemplCont', {
 	extend : 'Ext.app.Controller',
-	views : ['orders.TemplForm', 'orders.TemplFormImport', 'orders.TemplWin', 'orders.TemplGrid', 'orders.TemplWinImport'],
+	views : ['orders.TemplForm', 'orders.TemplFormImport', 'orders.TemplWin', 'orders.TemplGrid', 'orders.TemplWinImport', 'other.TemplateCombobox'],
 	models : ['TemplMod'],
 	stores : ['TemplSt', 'ClientSt'],
 	refs : [{
@@ -15,6 +15,9 @@ Ext.define('fplk.controller.TemplCont', {
 		}, {
 			ref : 'TemplFormImport',
 			selector : 'templformimport'
+		}, {
+			ref : 'TemplateCombobox',
+			selector : 'templatecombobox'
 		}
 	],
 	init : function () {
@@ -48,8 +51,93 @@ Ext.define('fplk.controller.TemplCont', {
 			},
 			'textfield[name=filterByName]': {
 				"change" : this.searchByNameEvent
+			},
+			'templatecombobox[name=fromTemplates]':{
+				select : this.fillFromFieldset
+			},
+			'templatecombobox[name=toTemlates]':{
+				select : this.fillToFieldset
 			}
 		});
+	},
+	
+	/**
+	 * Заполнение полей получателя из шаблона.
+	 *
+	 * @param component Поле 'Из шаблона'
+	 * @param records Выбранное значение
+	 */
+	fillFromFieldset:function(component, records) {
+		if(records === null || records === undefined) {
+			Ext.Msg.alert('Ошибка данных!', 'Не удалось заполнить данные из шаблона, т.к. значение поля "Из шаблона" равна "null"');
+			return;
+		}
+		if(records.length == 0) {
+			Ext.Msg.alert('Ошибка данных!', 'Не удалось заполнить данные из шаблона, т.к. значение поля "Из шаблона" не было выбрано');
+			return;
+		}
+		
+		var data = records[0].data;
+		var city = component.up('fieldset').down('combocity[name=org]');
+		var orgStore = city.getStore();
+		
+		orgStore.load({
+			scope:this,
+			callback: function(records) {
+				Ext.Array.each(records, function(record) {
+					if(record.data.code === data.orgcode) {
+						city.select(record);
+						return;
+					}
+				});
+			}
+		});
+		
+		component.up('fieldset').down('textfield[name=cname]').setValue(data.cname);
+		component.up('fieldset').down('textfield[name=address]').setValue(data.address);
+		component.up('fieldset').down('textfield[name=contname]').setValue(data.contname);
+		component.up('fieldset').down('textfield[name=contmail]').setValue(data.contmail);
+		component.up('fieldset').down('textfield[name=contphone]').setValue(data.contphone);
+
+	},
+	
+	/**
+	 * Заполнение полей отправителя из шаблона.
+	 *
+	 * @param component Поле 'Из шаблона'
+	 * @param records Выбранное значение
+	 */
+	fillToFieldset:function(component, records) {
+		if(records === null || records === undefined) {
+			Ext.Msg.alert('Ошибка данных!', 'Не удалось заполнить данные из шаблона, т.к. значение поля "Из шаблона" равна "null"');
+			return;
+		}
+		if(records.length == 0) {
+			Ext.Msg.alert('Ошибка данных!', 'Не удалось заполнить данные из шаблона, т.к. значение поля "Из шаблона" не было выбрано');
+			return;
+		}
+		
+		var data = records[0].data;
+		var city = component.up('fieldset').down('combocity[name=dest]');
+		var destStore = city.getStore();
+		
+		destStore.load({
+			scope:this,
+			callback: function(records) {
+				Ext.Array.each(records, function(record) {
+					if(record.data.code === data.destcode) {
+						city.select(record);
+						return;
+					}
+				});
+			}
+		});
+		
+		component.up('fieldset').down('textfield[name=dname]').setValue(data.dname);
+		component.up('fieldset').down('textfield[name=dadr]').setValue(data.dadr);
+		component.up('fieldset').down('textfield[name=dcontname]').setValue(data.dcontname);
+		component.up('fieldset').down('textfield[name=dcontmail]').setValue(data.dcontmail);
+		component.up('fieldset').down('textfield[name=dcontphone]').setValue(data.dcontphone);
 	},
 
 	/**

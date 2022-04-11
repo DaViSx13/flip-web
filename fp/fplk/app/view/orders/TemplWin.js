@@ -6,7 +6,7 @@ Ext.define('fplk.view.orders.TemplWin', {
 	title : 'Новый шаблон',
 	layout : 'vbox',
 	autoShow : true,
-	height : 500,
+	height : 520,
 	width : 770,
 	resizable : false,
 	modal : true,

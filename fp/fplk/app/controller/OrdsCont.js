@@ -14,7 +14,8 @@ Ext.define('fplk.controller.OrdsCont', {
 			'orders.LoadOrdersWin',
 			'orders.OrdExWin',
 			'orders.OrdExGrid',
-			'orders.OrdExForm'],
+			'orders.OrdExForm',
+			'other.TemplateCombobox'],
 	models : [
 			'OrdsMod',
 			'OrderMod',
