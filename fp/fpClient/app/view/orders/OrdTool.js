@@ -36,6 +36,10 @@ Ext.define('FPClient.view.orders.OrdTool', {
 			text : 'Ввод веб накладной',
 			iconCls : 'webwb',
 			action : 'wbnew'
+		}, {
+			text : 'Импорт из Excel',
+			iconCls : 'import',
+			action : 'import'
 		}, '->', '-', {
 			xtype : 'combomonth'
 		}
