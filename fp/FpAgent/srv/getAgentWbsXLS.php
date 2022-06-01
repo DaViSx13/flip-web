@@ -132,17 +132,29 @@ foreach ($fields as $f => $value) {
 };
 
 $rowNo++;
+$excludeCaracters = array(
+	"+" => "plus",
+	"-" => "minus",
+	"=" => "equal",
+	"/" => "divide",
+	"*" => "multiply"
+);
 
 while ($row = mssql_fetch_array($result, MSSQL_ASSOC)) {
 	//пишем данные
 	if($filter == 'all' || $row['dir'] == $filter ){
 		$startColNo = 0;
-		
-		foreach ($fields as $f => $value) {		
+		foreach ($fields as $f => $value) {
+			$tempValue = $row[$value];
+			if(strlen($tempValue) > 0) {
+				if(array_key_exists($tempValue[0], $excludeCaracters)) {
+					$tempValue = $excludeCaracters[$tempValue[0]] . substr($tempValue, 1);
+				}
+			}
 			if ($value == 'wb_no') {
-				$worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]), PHPExcel_Cell_DataType::TYPE_STRING);	
+				$worksheet->setCellValueExplicitByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $tempValue), PHPExcel_Cell_DataType::TYPE_STRING);	
 			} else {
-				$worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $row[$value]));
+				$worksheet->setCellValueByColumnAndRow($startColNo++, $rowNo, iconv("windows-1251", "UTF-8", $tempValue));
 			}
 		};
 		$rowNo++;
