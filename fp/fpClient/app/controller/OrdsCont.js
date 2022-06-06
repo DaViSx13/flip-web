@@ -167,7 +167,7 @@ Ext.define('FPClient.controller.OrdsCont', {
 			},
 			'loadorderswin button[action=imp]': {
 				click: this.importOrders
-			},
+			}
 		});
 		this.getOrderStStore().on({
 			scope: this,
