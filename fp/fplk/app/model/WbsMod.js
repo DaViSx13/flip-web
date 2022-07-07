@@ -90,6 +90,9 @@ Ext.define('fplk.model.WbsMod', {
 			name : 'req_tar_a'
 		}, {
 			name : 'req_rem'
+		}, {
+			name : 'inssum',
+			type : 'float'
 		}
 	]
 });

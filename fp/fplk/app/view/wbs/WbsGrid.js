@@ -95,6 +95,11 @@ Ext.define('fplk.view.wbs.WbsGrid', {
 				xtype : 'numbercolumn',
 				format : '0.00',
 				dataIndex : 'vol_wt'
+			}, {
+				text: 'Страховка',
+				width: 60,
+				dataIndex : 'inssum',
+				format : '0.00'
 			}
 		];
 		this.dockedItems = [{
