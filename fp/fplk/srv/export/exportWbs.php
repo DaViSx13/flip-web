@@ -28,6 +28,8 @@ $excelHeaders = array(
     array("pcs", "Мест"),
     array("wt", "Вес"),
     array("vol_wt", "Об.вес"),
+	
+	array("inssum", "Страховка"),
 
     array("invID", "Номер счета"),
     array("descr", "Примечание"),
