@@ -486,11 +486,11 @@ Ext.define('FPClient.controller.OrdsCont', {
 		edit.down('ordform').down('combocity[name=dest]').focus(false, true);
 
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimef]');
-		timeEdit.setReadOnly(true);
+		//timeEdit.setReadOnly(true);
 		timeEdit.setValue('10:00');
 
 		var timeEdit = edit.down('ordform').down('textfield[name=courtimet]');
-		timeEdit.setReadOnly(true);
+		//timeEdit.setReadOnly(true);
 		timeEdit.setValue('19:00');
 
 		//auto sender begin
