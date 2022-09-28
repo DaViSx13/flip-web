@@ -30,7 +30,7 @@ if( !empty($wbno)  ){
 	/* если есть номер накладной, то запрос в АПИ */
 	//print "запрос в АПИ \n";
 	
-	$result_str = get_plex_info($wbno);;
+	$result_str = get_plex_info($wbno);
 	
 } else {
 	$result_str = 'ОШИБКА=не заданы параметры';
@@ -63,9 +63,18 @@ function get_plex_info($wbno){
 			foreach ($data->documents[0]->checkpoints as $item) {
 
 				if( stripos($item->point, "Доставлено") !== false ){
-					$res_str = $res_str . 'wbno=' . $wbno . EOL;
-					$res_str = $res_str . 'RCPN=' . trim(str_replace(["Доставлено", ".",",","_", "  "], "", $item->point) ) . EOL;
-					$res_str = $res_str . 'DOD=' . $item->onDate . EOL;
+					//$item->onDate = "12313123";
+					$dt = date_create_from_format("d.m.Y G:i" ,$item->onDate);
+					if($dt === FALSE){
+						$res_str = "ОШИБКА=странный формат даты [$item->onDate]";
+					}else{
+						$date = date_format($dt, "Ymd H:i:s");
+						//var_dump($date);
+					
+						$res_str = $res_str . 'wbno=' . $wbno . EOL;
+						$res_str = $res_str . 'RCPN=' . trim(str_replace(["Доставлено", ".",",","_", "  "], "", $item->point) ) . EOL;
+						$res_str = $res_str . 'DOD=' . $date . EOL;
+					}
 				}
 				else{
 					//print('Нет инфо о доставке');
