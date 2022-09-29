@@ -30,7 +30,7 @@ if( !empty($wbno)  ){
 	/* если есть номер накладной, то запрос в АПИ */
 	//print "запрос в АПИ \n";
 	
-	$result_str = get_plex_info($wbno);;
+	$result_str = get_plex_info($wbno);
 	
 } else {
 	$result_str = 'ОШИБКА=не заданы параметры';
@@ -55,28 +55,26 @@ function get_plex_info($wbno){
 		$res_str = 'ОШИБКА=' . $response;
 	}else{
 		$data = $result->data; //array
-		if(count($data) == 0){
+		if(count($data->documents) == 0){
 			$res_str = 'ОШИБКА=Пустой ответ - накладная не найдена';
-		}elseif($data[0]->error){
-			$res_str = 'ОШИБКА=' . json_encode($data[0], JSON_UNESCAPED_UNICODE);
+		}elseif($data->documents[0]->error){
+			$res_str = 'ОШИБКА=' . json_encode($data->documents[0], JSON_UNESCAPED_UNICODE);
 		}else{
-			foreach ($data as $item) {
+			foreach ($data->documents[0]->checkpoints as $item) {
 
-/* какая то хрень с русскими символами и preg_match
-//				if( preg_match("/(Доставлено. )(.*)/i", $item->status, $matches) ){
-				if( preg_match("/(Доставлено)[^а-яА-Яa-zA-Z]*([а-яА-Яa-zA-Z]+)/i", $item->status, $matches) ){
-					//print('$matches');
-					//print_r($item->status);
-					print_r($matches);
-					$res_str = $res_str . 'wbno=' . $wbno . EOL;
-					$res_str = $res_str . 'RCPN=' . $matches[2] . EOL;
-					$res_str = $res_str . 'DOD=' . $item->date . EOL;
-				}
-*/
-				if( stripos($item->status, "Доставлено") !== false ){
-					$res_str = $res_str . 'wbno=' . $wbno . EOL;
-					$res_str = $res_str . 'RCPN=' . trim(str_replace(["Доставлено", ".",",","_", "  "], "", $item->status) ) . EOL;
-					$res_str = $res_str . 'DOD=' . $item->date . EOL;
+				if( stripos($item->point, "Доставлено") !== false ){
+					//$item->onDate = "12313123";
+					$dt = date_create_from_format("d.m.Y G:i" ,$item->onDate);
+					if($dt === FALSE){
+						$res_str = "ОШИБКА=странный формат даты [$item->onDate]";
+					}else{
+						$date = date_format($dt, "Ymd H:i:s");
+						//var_dump($date);
+					
+						$res_str = $res_str . 'wbno=' . $wbno . EOL;
+						$res_str = $res_str . 'RCPN=' . trim(str_replace(["Доставлено", ".",",","_", "  "], "", $item->point) ) . EOL;
+						$res_str = $res_str . 'DOD=' . $date . EOL;
+					}
 				}
 				else{
 					//print('Нет инфо о доставке');
@@ -86,58 +84,24 @@ function get_plex_info($wbno){
 		
 	};
 
-	
-
-	return $res_str;
-	
-	
-	
-	//print $result->faultcode;
-	if($result->faultcode){
-		//$res_str = 'ОШИБКА=' . $response;
-		$res_str = 'ОШИБКА=' . json_encode($response, JSON_UNESCAPED_UNICODE);
-		//return $res_str;
-	}
-	else{
-		$hr = $result->OperationHistoryData->historyRecord;
-		if( $hr ){
-			if( is_array($hr) ){
-				$last = end( $hr );
-			}else {
-				$last = $hr;
-			}
-
-			$OperDate = $last->OperationParameters->OperDate;
-			//print "\nOperDate={$OperDate}\n";
-			if($OperDate <>''){
-				//преобразуем дату в нужный формат у учетом пояса
-				$date = date_create_from_format("Y-m-d\TH:i:s.uP", $OperDate);
-				$OperDate = strftime('%F %T', $date->getTimestamp());
-			}
-
-			$res_str = "OperAttrName=" . $last->OperationParameters->OperAttr->Name . EOL
-					. "OperAttrId=" . $last->OperationParameters->OperAttr->Id . EOL
-					. "OperTypeName=" . $last->OperationParameters->OperType->Name . EOL
-					. "OperTypeId=" . $last->OperationParameters->OperType->Id . EOL
-					. "OperDate=" . $OperDate// . EOL
-			;
-		};
-	}
 	return $res_str;
 }
 
 
 function get_plex_response($wbno){
 
-	$url = 'http://exdel.gbl24.ru/api/getstatus/read.php';
-	$token = '906D8861-55DB-4316-B4A0-A62DD3DECA06';
-	//{"data":[{"error":"100","message":"Неверный Token!!"}]}  
+	$url = 'https://api.gbl24.ru/api/v1/tracking';
+    $headers = array(
+      'Authorization: Basic '. base64_encode("plex:GApbbW")
+    );
+
 	//var_dump($url);
-	$options = array();
+	$options = array(
+		CURLOPT_HTTPHEADER => $headers,
+	);
 
 	$get = array(
-		'documents' => $wbno,
-		'TOKEN' => $token
+		'documents' => $wbno
 	);
 	
 	try{
@@ -171,7 +135,9 @@ function curl_get($url, array $get = NULL, array $options = array())
         CURLOPT_URL => $url. (strpos($url, '?') === FALSE ? '?' : ''). http_build_query($get), 
         CURLOPT_HEADER => 0, 
         CURLOPT_RETURNTRANSFER => TRUE, 
-        CURLOPT_TIMEOUT => 10 
+        CURLOPT_TIMEOUT => 10,
+		CURLOPT_SSL_VERIFYPEER => FALSE,
+		CURLOPT_SSL_VERIFYHOST => FALSE
 		//, CURLOPT_FAILONERROR => true
     ); 
     
