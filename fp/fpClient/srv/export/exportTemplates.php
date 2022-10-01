@@ -16,7 +16,7 @@ $excelHeaders = array(
 	
 	array("CName", "Название компании отправителя"),
 	array("Address", "Адрес отправителя"),
-	array("ORG", "Город отправления"),
+	array("ORG, orgSate", "Город отправления"),
 	array("ContName", "Контактное лицо отправителя"),
 	array("ContPhone", "Телефон контактного лица отправителя"),
 	array("ContMail", "Email отправителя")
@@ -24,7 +24,7 @@ $excelHeaders = array(
 
 $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xClientID'];
 
-$t = new ExcelExport($excelHeaders, "exec wwwLKgetTemplates @clientID='{$ag}'");
+$t = new ExcelExport($excelHeaders, "exec wwwClientGetTemplates @clientID='{$ag}'");
 $t->export();
 
 

@@ -77,7 +77,7 @@ class tplStore {
 												array('courtimet', 'time', 19, 0, NULL)
 												),
 							'importTemplate' => array(
-							                    array('wwwImportLKsetTemplateGroup'),
+							                    array('wwwClientSetTemplatesGroup'),
 							                    array('TmplName', 'str', 0, 1),
 							                    array('clID', 'constant', $_SESSION['xUser']),
 							                    array('Name', 'str', 1, 1),
