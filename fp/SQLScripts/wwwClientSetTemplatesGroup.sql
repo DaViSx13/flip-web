@@ -101,5 +101,5 @@ insert into @resTable exec wwwClientSetTemplate
 			@DESTRems		=	''
 select @result = 1
 end
-
+GO
 GRANT EXECUTE on wwwClientSetTemplatesGroup to pod
