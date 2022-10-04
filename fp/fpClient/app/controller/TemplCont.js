@@ -41,8 +41,34 @@ Ext.define('FPClient.controller.TemplCont', {
             },
             'templwinimport button[action=import]' : {
                 click: this.importTemplate
+            },
+            'textfield[name=filterByName]': {
+                "change" : this.searchByNameEvent
             }
         });
+    },
+
+
+    /**
+     * Фильтрация по наименованию шаблонов.
+     * @param component Поле наименование
+     * @param newValue Новое значение
+     */
+    searchByNameEvent : function(component, newValue) {
+        var grid = component.up("tabpanel").down("grid");
+        if(newValue.length == 0)
+            grid.getStore().clearFilter();
+        else
+            grid.getStore().filterBy(function (record) {
+                var found = false;
+                for(var i in record.getData()) {
+                    if(record.get(i) != null)
+                        found = record.get(i).toString().toLowerCase().includes(newValue.toLowerCase());
+                    if(found)
+                        break;
+                }
+                return found;
+            })
     },
 
     /**
