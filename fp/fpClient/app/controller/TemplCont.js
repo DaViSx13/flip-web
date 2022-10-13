@@ -1,8 +1,15 @@
 Ext.define('FPClient.controller.TemplCont', {
     extend: 'Ext.app.Controller',
-    views: ['orders.TemplForm', 'orders.TemplWin', 'orders.TemplGrid', 'orders.TemplFormImport', 'orders.TemplWinImport'],
+    views: [
+            'orders.TemplForm',
+            'orders.TemplWin',
+            'orders.TemplGrid',
+            'orders.TemplFormImport',
+            'orders.TemplWinImport'],
     models: ['TemplMod'],
-    stores: ['TemplSt', 'ClientSt'],
+    stores: [
+            'TemplSt',
+            'ClientSt'],
     refs: [{
         ref: 'TemplForm',
         selector: 'templform'
@@ -56,7 +63,7 @@ Ext.define('FPClient.controller.TemplCont', {
      */
     searchByNameEvent : function(component, newValue) {
         var grid = component.up("tabpanel").down("grid");
-        if(newValue.length == 0)
+        if(newValue.length === 0)
             grid.getStore().clearFilter();
         else
             grid.getStore().filterBy(function (record) {
@@ -90,35 +97,43 @@ Ext.define('FPClient.controller.TemplCont', {
      * Импорт шаблонов.
      */
     importTemplate: function (button) {
-        var me = this;
         var win = button.up('templwinimport');
         var form_imp = win.down('templformimport');
         if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
             form_imp.submit({
-                url: 'srv/import/import.php',
+                url: 'srv/import_2/import.php',
+                waitMsg: 'Обработка файла...',
                 params: {
                     act: 'importTemplate'
                 },
-                success: function (form, action) {
-                    me.getTemplStStore().reload();
-                    win.close();
-                    Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+                success: function (result, answer) {
+                    if(answer.result.success) {
+                        window.open(window.location.href + '/srv/import_2/file_get.php?file=' + answer.result.message, '_blank');
+                        Ext.Msg.alert(
+                            'Результат импорта',
+                            'Данные успешно обработаны. Подробный результат импорта находятся в загружаемом файле!',
+                            function () {
+                                win.close();
+                            });
+                    } else {
+                        Ext.Msg.alert(
+                            'Ошибка!',
+                            'Не удалось импортировать данные. Сообщение - ' + answer.result.message);
+                    }
                 },
-                failure: function (form, action) {
-                    Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+                failure: function (result, answer) {
+                    Ext.Msg.alert('Ошибка!', 'Не удалось импортировать данные. Сообщение - ' + answer.result.message);
                 }
             });
         }
-    }
-    ,
+    },
 
     /**
      * Получение примера айла для заполнения импорта шаблонов.
      */
     getTemplateImportExcel: function () {
-        window.open('srv/import/Example_import_Template.xlsx', '_blank');
-    }
-    ,
+        window.open('srv/import_2/templates/Example_import_Template.xlsx', '_blank');
+    },
 
     dblclickTpl: function (gr, rec) {
         this.clkEdit(this.getTemplTool().down('button[action=edittpl]'));
