@@ -36,8 +36,8 @@ Ext.define('FPAgent.view.wbs.NewPodForm', {
 			width : 233,
 			fieldLabel : FPAgent.lib.Translate.tr("NewPodForm.rcpn"),//'Получатель',
 			allowBlank : false,
-			maxLength: 15,
-			maxLengthText: '15 символов макс.',
+			maxLength: 50,
+			maxLengthText: '50 символов макс.',
 			enforceMaxLength: true
 		}
 	]
