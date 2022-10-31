@@ -110,7 +110,7 @@ Ext.define('FPClient.controller.TemplCont', {
                 },
                 success: function (result, answer) {
                     if (answer.result.success) {
-                        me.templateImportSuccess(answer.result.message, win);
+                        me.templateImportSuccess(answer.result.message, win, answer.result.hasIssues);
                     } else {
                         me.templateImportFailure(answer.result.message);
                     }
@@ -137,10 +137,13 @@ Ext.define('FPClient.controller.TemplCont', {
      * @param message URL файла-отчета обработки
      * @param msgWindow Окно сообщения-подтверждения
      */
-    templateImportSuccess: function (message, msgWindow) {
+    templateImportSuccess: function (message, msgWindow, hasIssue = false) {
+        var boxText = (hasIssue)
+            ? 'Имеются проблемы с импортом. Нажмите "Скачать", чтобы посмотреть результат'
+            : 'Данные успешно обработаны. Нажмите "Скачать", чтобы посмотреть результат';
         Ext.Msg.show({
             title: 'Результат импорта',
-            msg: 'Данные успешно обработаны. Нажмите "Скачать", чтобы посмотреть результат',
+            msg: boxText,
             buttons: Ext.Msg.OKCANCEL,
             buttonText: {
                 ok: "Скачать",
@@ -148,7 +151,6 @@ Ext.define('FPClient.controller.TemplCont', {
             },
             fn: function (button) {
                 if(button === 'ok') {
-                    console.log()
                     window.open(window.location.href + 'srv/import_2/file_get.php?file=' + message, '_blank');
                 }
                 msgWindow.close();

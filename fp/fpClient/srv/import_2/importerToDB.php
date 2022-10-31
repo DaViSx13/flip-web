@@ -88,6 +88,7 @@ class importerToDB
         $worksheet = $excel->getActiveSheet();
         $lastColumn = 0;
         $lastRow = 2;
+        $hasIssue = false;
         for($i = 1; $i < 100; $i++) {
             $val = $worksheet->getCellByColumnAndRow($i)->getValue();
             if($val === null || $val === '') {
@@ -102,6 +103,8 @@ class importerToDB
         foreach ($data as $index) {
             $stat = ''.iconv("windows-1251", "UTF-8", $index['stat']);
             $mess = ''.iconv("windows-1251", "UTF-8", $index['mess']);
+            if($stat === 'Не обработан')
+                $hasIssue = true;
             $worksheet->getCellByColumnAndRow($lastColumn, $lastRow)->setValue($stat);
             $worksheet->getCellByColumnAndRow($lastColumn + 1, $lastRow)->setValue($mess);
             $lastRow++;
@@ -112,7 +115,7 @@ class importerToDB
             $objWriter = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
 
             $objWriter->save($this -> generatedFolder.'/'.$dir);
-            $this -> sendToClient($dir, false);
+            $this -> sendToClient($dir, false, $hasIssue);
         } catch (Exception $ex) {
             $this -> sendToClient($ex->getMessage(), true);
         }
@@ -131,8 +134,10 @@ class importerToDB
      * @param $message string Сообщение
      *
      * @param $isError bool Ошибка?
+     *
+     * @param bool $hasIssues Есть ли проблемы с импортом
      */
-    private function sendToClient($message, $isError)
+    private function sendToClient($message, $isError, $hasIssues = false)
     {
             $responseJson = new Response();
             if($isError)
@@ -141,6 +146,7 @@ class importerToDB
                 $responseJson -> success = true;
 
             $responseJson -> message = $message;
+            $responseJson -> hasIssues = $hasIssues;
             echo json_encode($responseJson);
     }
 

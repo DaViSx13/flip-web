@@ -12,7 +12,8 @@ class queryBuilder {
 	var $value;
 	var $query;
 	var $error;
-	var $builded;			
+	var $builded;
+
 	function queryBuilder($file, $tpl, $ext) {				/* На входе ссылка на валидный файл Excel и на массив-шаблон мапинга столбцов и параметров процедуры */	
 		$this->builded			= false;
 		$this->worksheetTitle 	= '';
@@ -56,7 +57,7 @@ class queryBuilder {
 						$isEmptyCount = $isEmptyCount+1;
 					}
 			}
-			if($isEmptyCount != $nTpl-1){
+			if($isEmptyCount != $nTpl-1) {
 			for ($j = 1; $j < $nTpl; $j++) {
 					if($isTable <= $nTpl){ 																			/* Формируем строку создания временной таблицы согласно шаблона*/
 						$table = $table.$tpl[$j][0].' ';
@@ -93,24 +94,33 @@ class queryBuilder {
 							$lastrow = $lastrow.' @'.$tpl[$j][0]."=NULL,";											/* Формируем последний вызов процедуры с пустыми параметрами */
 						}																		
 					}					
-				if(preg_match("/^[0-9-]+$/", $tpl[$j][2]) && strcmp($tpl[$j][1], 'constant') != 0){					/* Проверим является ли 3 элемент шаблона целым числом(номер столбца) */
+				if(preg_match("/^[0-9-]+$/", $tpl[$j][2]) && strcmp($tpl[$j][1], 'constant') != 0) {					/* Проверим является ли 3 элемент шаблона целым числом(номер столбца) */
 					$val = $sheet->getCellByColumnAndRow($tpl[$j][2], $i+1)->getValue();							/* Начинаем с i = 2, чтобы отсеч заголовки таблицы */
 					$cel = $sheet->getCellByColumnAndRow($tpl[$j][2], $i+1);
 					if( is_string($val) ) $val = trim($val);				 
-					if(is_null($val) || strlen($val)==0){															/* Проверка на пустую ячейку */					
+					if(is_null($val) || strlen($val)==0) {															/* Проверка на пустую ячейку */
 						if ($tpl[$j][3] == 1){																		/* Если обязательное поле пустое, то заканчиваем строить отчет */
-							if(isset($this->value[$i]))	unset($this->value[$i]);											
-								$this->builded = false;	
-								$this->error = 'Нет обязательных данных в ячейке: '.$cel->getCoordinate().'!';			/* Если нет ни одной строки, значит таблица пустая */
-							break 2;						
+							if(isset($this->value[$i]))	unset($this->value[$i]);
+							    $coordinate = $cel -> getCoordinate();
+							    $procedure = $this->getFormattedErrorMessage('Нет обязательных данных в ячейке: "'.$coordinate.'"!');
+                                $all_query =
+                                    $all_query .
+                                    $procedure;
+								//$this->builded = false;
+								//$this->error = 'Нет обязательных данных в ячейке: '.$cel->getCoordinate().'!';			/* Если нет ни одной строки, значит таблица пустая */
+                            continue 2;
+
 						} else {																					/* Если поле не обязательное то присваиваем значение по умолчанию */
 							$val = $tpl[$j][4];
 						}
 					}
                     $val = preg_replace('/[\']/', '"', $val);
 					if (!is_null($val))
-					if ($this->initType($tpl[$j][1],$val, $cel) == false){											/* Проверка типа данных */						
-						break 2;
+					if ($this->initType($tpl[$j][1],$val, $cel) == false) {											/* Проверка типа данных */
+						$coordinate = $cel -> getCoordinate();
+					    $procedure = $this->getFormattedErrorMessage('Не верный тип данных в ячейке: "'.$coordinate.'"!');
+					    $all_query = $all_query.$procedure;
+					    continue 2;
 					}					
 					if(($tpl[$j][1] == 'date' || $tpl[$j][1] == 'str' || $tpl[$j][1] == 'time') && !is_null($val)){ /* Типы данных с кавычками */
 						$this->value[$i]=$this->value[$i].' @'.$tpl[$j][0]."='".$val."',";
@@ -285,5 +295,14 @@ class queryBuilder {
 		}
 					
 	}
+
+    /**
+     * Добавляет сообщение об ошибке.
+     * @param $errorMessage string Сообщение
+     * @return string Форматированное сообщение
+     */
+	function getFormattedErrorMessage($errorMessage) {
+        return "insert into @resultTable(stat, mess) values('Не обработан', '".$errorMessage."');";
+    }
 }
 ?>
