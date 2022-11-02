@@ -1,8 +1,15 @@
 Ext.define('FPClient.controller.TemplCont', {
     extend: 'Ext.app.Controller',
-    views: ['orders.TemplForm', 'orders.TemplWin', 'orders.TemplGrid', 'orders.TemplFormImport', 'orders.TemplWinImport'],
+    views: [
+        'orders.TemplForm',
+        'orders.TemplWin',
+        'orders.TemplGrid',
+        'orders.TemplFormImport',
+        'orders.TemplWinImport'],
     models: ['TemplMod'],
-    stores: ['TemplSt', 'ClientSt'],
+    stores: [
+        'TemplSt',
+        'ClientSt'],
     refs: [{
         ref: 'TemplForm',
         selector: 'templform'
@@ -36,26 +43,52 @@ Ext.define('FPClient.controller.TemplCont', {
             'templtool button[action = importFromExcel]': {
                 click: this.importTemplates
             },
-            'templtool button[action=export]' : {
-                click : this.exportTemplates
+            'templtool button[action=export]': {
+                click: this.exportTemplates
             },
-            'templwinimport button[action=import]' : {
+            'templwinimport button[action=import]': {
                 click: this.importTemplate
+            },
+            'textfield[name=filterByName]': {
+                "change": this.searchByNameEvent
             }
         });
+    },
+
+
+    /**
+     * Фильтрация по наименованию шаблонов.
+     * @param component Поле наименование
+     * @param newValue Новое значение
+     */
+    searchByNameEvent: function (component, newValue) {
+        var grid = component.up("tabpanel").down("grid");
+        if (newValue.length === 0)
+            grid.getStore().clearFilter();
+        else
+            grid.getStore().filterBy(function (record) {
+                var found = false;
+                for (var i in record.getData()) {
+                    if (record.get(i) != null)
+                        found = record.get(i).toString().toLowerCase().includes(newValue.toLowerCase());
+                    if (found)
+                        break;
+                }
+                return found;
+            })
     },
 
     /**
      * Экспорт шаблонов.
      */
-    exportTemplates: function() {
+    exportTemplates: function () {
         window.open('srv/export/exportTemplates.php', '_blank');
     },
 
     /**
      * Импорт шаблонов из файлов.
      */
-    importTemplates: function() {
+    importTemplates: function () {
         var win = Ext.widget('templwinimport');
         win.show();
     },
@@ -69,30 +102,71 @@ Ext.define('FPClient.controller.TemplCont', {
         var form_imp = win.down('templformimport');
         if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
             form_imp.submit({
-                url: 'srv/import/import.php',
+                url: 'srv/import_2/import.php',
+                waitMsg: 'Обработка файла...',
+                async: false,
                 params: {
                     act: 'importTemplate'
                 },
-                success: function (form, action) {
-                    me.getTemplStStore().reload();
-                    win.close();
-                    Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+                success: function (result, answer) {
+                    if (answer.result.success) {
+                        me.templateImportSuccess(answer.result.message, win, answer.result.hasIssues);
+                    } else {
+                        me.templateImportFailure(answer.result.message);
+                    }
                 },
-                failure: function (form, action) {
-                    Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+                failure: function (result, answer) {
+                    me.templateImportFailure(answer.result.message);
                 }
             });
         }
-    }
-    ,
+    },
+
+    /**
+     * Ошибка ипорта шаблонов.
+     * @param message Сообщения об ошибке.
+     */
+    templateImportFailure: function (message) {
+        Ext.Msg.alert(
+            'Ошибка!',
+            'Не удалось импортировать данные. Сообщение - ' + message);
+    },
+
+    /**
+     * Подтверждение импорта шаблонов.
+     * @param message URL файла-отчета обработки
+     * @param msgWindow Окно сообщения-подтверждения
+     */
+    templateImportSuccess: function (message, msgWindow, hasIssue) {
+         var boxText = '';
+		if (hasIssue)
+            boxText = 'Имеются проблемы с импортом. Нажмите "Скачать", чтобы посмотреть результат';
+		else
+            boxText = 'Данные успешно обработаны. Нажмите "Скачать", чтобы посмотреть результат';
+		
+        Ext.Msg.show({
+            title: 'Результат импорта',
+            msg: boxText,
+            buttons: Ext.Msg.OKCANCEL,
+            buttonText: {
+                ok: "Скачать",
+                cancel: "Закрыть"
+            },
+            fn: function (button) {
+                if(button === 'ok') {
+                    window.open(window.location.href + 'srv/import_2/file_get.php?file=' + message, '_blank');
+                }
+                msgWindow.close();
+            }
+        });
+    },
 
     /**
      * Получение примера айла для заполнения импорта шаблонов.
      */
     getTemplateImportExcel: function () {
-        window.open('srv/import/Example_import_Template.xlsx', '_blank');
-    }
-    ,
+        window.open('srv/import_2/templates/Example_import_Template.xlsx', '_blank');
+    },
 
     dblclickTpl: function (gr, rec) {
         this.clkEdit(this.getTemplTool().down('button[action=edittpl]'));

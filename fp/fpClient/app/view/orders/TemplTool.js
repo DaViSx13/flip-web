@@ -10,6 +10,10 @@ Ext.define('FPClient.view.orders.TemplTool', {
         iconCls: 'editdoc',
         action: 'edittpl'
     }, '-', {
+        xtype: 'textfield',
+        emptyText: "Наименование",
+        name: "filterByName"
+    }, '-', {
         text: 'Удалить',
         iconCls: 'deldoc',
         action: 'deltpl'
