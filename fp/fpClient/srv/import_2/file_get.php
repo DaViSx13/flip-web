@@ -1,6 +1,6 @@
 <?php
 $file = $_GET['file'];
-$dir = '../import_2/generated/'.$file;
+$dir = '../tmpfolder/'.$file;
 
 header('Content-Type: application/vnd.ms-excel');
 
