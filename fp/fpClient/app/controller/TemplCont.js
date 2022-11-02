@@ -137,10 +137,13 @@ Ext.define('FPClient.controller.TemplCont', {
      * @param message URL файла-отчета обработки
      * @param msgWindow Окно сообщения-подтверждения
      */
-    templateImportSuccess: function (message, msgWindow, hasIssue = false) {
-        var boxText = (hasIssue)
-            ? 'Имеются проблемы с импортом. Нажмите "Скачать", чтобы посмотреть результат'
-            : 'Данные успешно обработаны. Нажмите "Скачать", чтобы посмотреть результат';
+    templateImportSuccess: function (message, msgWindow, hasIssue) {
+         var boxText = '';
+		if (hasIssue)
+            boxText = 'Имеются проблемы с импортом. Нажмите "Скачать", чтобы посмотреть результат';
+		else
+            boxText = 'Данные успешно обработаны. Нажмите "Скачать", чтобы посмотреть результат';
+		
         Ext.Msg.show({
             title: 'Результат импорта',
             msg: boxText,
