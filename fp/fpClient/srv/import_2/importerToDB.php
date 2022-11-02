@@ -29,7 +29,7 @@ class importerToDB
     /**
      * @var string путь к сгенерированным отчетам.
      */
-    var $generatedFolder = '../import_2/generated';
+    var $generatedFolder = '../tmpfolder';
 
     /**
      * Конструктор.
@@ -111,7 +111,7 @@ class importerToDB
         }
 
         try {
-            $dir = date('m_d_Y_h_i_s', time()).'_'.rand(1000, 10000).'-import.xls';
+            $dir = 'template-'.date('m_d_Y_h_i_s', time()).'_'.rand(1000, 10000).'-import.xls';
             $objWriter = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
 
             $objWriter->save($this -> generatedFolder.'/'.$dir);
@@ -159,8 +159,10 @@ class importerToDB
 
         $files = scandir($this -> generatedFolder);
         foreach ($files as $file) {
-            if((time() - filectime($file)) > (60 * 15)) {
-                unlink($this -> generatedFolder.'/'.$file);
+            $now = time() - filectime($file);
+            if(abs($now) < (60 * 15)) {
+                if(strpos(basename($file, ".xls"), "template") === 0)
+                    unlink($this -> generatedFolder.'/'.$file);
             }
         }
     }
