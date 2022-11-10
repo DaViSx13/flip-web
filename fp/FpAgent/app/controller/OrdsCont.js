@@ -37,7 +37,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		'TemplSt',
 		'ViewWbSt',
 		'OrdExStore',
-		'SortTypeSt'],
+		'SortTypeSt',
+		'SortSubTypeSt'],
 	refs: [{
 			ref: 'OrdForm',
 			selector: 'ordform'
@@ -159,6 +160,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			'ordwin button[action=save]': {
 				click: this.saveOrder
 			},
+			'ordwin combobox[name=sortType]': {
+				change: this.changeOrdType
+			},
 			'viewwbwin button[action=printWB]': {
 				click: this.printWB
 			},
@@ -253,6 +257,38 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			scope: this,
 			load: this.loadViewExStore
 		});
+	},
+
+	/**
+	 * Изменяет состояние поля "Подкатегория".
+	 * Если будет выбран пункт "Спец. Груз" - поле включается,
+	 * Если удалить из выбранных вышеописанный пункт - поле очищается и выключается.
+	 * @param sortType Поле категория
+	 */
+	changeOrdType: function (sortType) {
+		if(Ext.Array.contains(sortType.getValue(), 1))
+			this.enableSubTypeField(sortType);
+		else
+			this.disableSubTypeField(sortType);
+	},
+
+	/**
+	 * Выключает подкатегорию.
+	 * @param sortType Поле категория
+	 */
+	disableSubTypeField: function (sortType) {
+		var field = sortType.next('combobox[name=subtype]');
+		field.clearValue();
+		field.setDisabled(true);
+	},
+
+	/**
+	 * Включает подкатегорию.
+	 * @param sortType Поле категория
+	 */
+	enableSubTypeField: function (sortType) {
+		var field = sortType.next('combobox[name=subtype]');
+		field.setDisabled(false);
 	},
 
 	/**
