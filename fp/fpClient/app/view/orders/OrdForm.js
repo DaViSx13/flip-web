@@ -227,7 +227,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
     },
         {
             xtype: 'fieldset',
-            height: 170,
+            height: 200,
             width: 243,
             title: 'Информация о грузе',
             x: 500,
@@ -237,6 +237,17 @@ Ext.define('FPClient.view.orders.OrdForm', {
             },
             layout: 'anchor',
             items: [{
+                xtype: 'combobox',
+                name: 'type',
+                displayField: 'Name',
+                valueField: 'lowName',
+                allowBlank: false,
+                forceSelection: true,
+                editable: false,
+                fieldLabel: 'Тип груза',
+                store: 'TypeSt',
+                queryMode: 'local'
+            }, {
                 xtype: 'combobox',
                 name: 'sortType',
                 displayField: 'Name',
