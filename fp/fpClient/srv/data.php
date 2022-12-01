@@ -161,6 +161,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			$webwb=$params['webwb'] ? $params['webwb'] : 0;
             $fPayer = isset($params['fpayr']) ? $params['fpayr'] : 3;
             $metpaym = isset($params['metpaym']) ? $params['metpaym'] : 'inv';
+            $cat = isset($params['cat']) ? $params['cat'] : 0;
+            $sub = isset($params['subtype']) ? "'".$params['subtype']."'" : "null";
 
 			if($courdate){
 				$d = explode('.', $courdate);
@@ -198,7 +200,10 @@ if (!isset($_REQUEST['dbAct'])) {
 			@RordNum=$Rordnum,
 			@webwb=$webwb,
 			@fMetpaym = '$metpaym',
-            @fPayr = $fPayer";
+            @fPayr = $fPayer,
+            @cat = $cat,
+			@subcategory = '$sub'";
+
 			break;
 		case 'SetWebWB':			
 			$id=$params['id'] ? $params['id'] : 0;
