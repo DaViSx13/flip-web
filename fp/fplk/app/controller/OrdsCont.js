@@ -247,7 +247,7 @@ Ext.define('fplk.controller.OrdsCont', {
      * @param sortType Поле категория
      */
     disableSubTypeField: function (sortType) {
-        var field = sortType.next('combobox[name=subtype]');
+        var field = sortType.next('combobox[name=subcategory]');
         field.clearValue();
         field.setDisabled(true);
     },
@@ -257,7 +257,7 @@ Ext.define('fplk.controller.OrdsCont', {
      * @param sortType Поле категория
      */
     enableSubTypeField: function (sortType) {
-        var field = sortType.next('combobox[name=subtype]');
+        var field = sortType.next('combobox[name=subcategory]');
         field.setDisabled(false);
     },
 
@@ -870,8 +870,10 @@ Ext.define('fplk.controller.OrdsCont', {
         if (orderStore.first() !== undefined && orderStore.first().get("category") !== null) {
             var values = orderStore.first().get("category").toString(2);
 
-            if (values.length < 3)
+            while (values.length < 3)
                 values = '0' + values;
+
+            console.log(values);
             var result = [];
             var j = 0;
             for (var i = 0; i < values.length; i++) {
@@ -896,6 +898,8 @@ Ext.define('fplk.controller.OrdsCont', {
             result[value] = '1'
         });
 
+        console.log(result.join(''));
+        console.log(parseInt(result.join(''), 2));
         return result.join('');
 
     },
