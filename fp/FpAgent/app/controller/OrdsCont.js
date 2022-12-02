@@ -773,7 +773,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		if(orderStore.first() !== undefined && orderStore.first().get("cat") !== null) {
 			var values = orderStore.first().get("cat").toString(2);
 			
-			if(values.length < 3) 
+			while(values.length < 3)
 				values = '0' + values;
 			var result = [];
 			var j = 0;
