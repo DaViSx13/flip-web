@@ -40,7 +40,9 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'SetWB':
 			$pcs_in = $_POST[pcs_in];
 			$pcs_in = $pcs_in ? $pcs_in : 0;
-			$query = "exec wwwCourSetWB @wb_no='{$_POST[wb_no]}', @orderno = {$_POST[orderno]}, @user='{$_SESSION[CourLogin]}', @pcs_in = {$pcs_in}";
+			$orderno = $_POST[orderno];
+			$orderno = $orderno ? $orderno : 0;
+			$query = "exec wwwCourSetWB @wb_no='{$_POST[wb_no]}', @orderno = {$orderno}, @user='{$_SESSION[CourLogin]}', @pcs_in = {$pcs_in}";
 			break;	
 		case 'courLog':
 			$courId = $_SESSION[CourID];
