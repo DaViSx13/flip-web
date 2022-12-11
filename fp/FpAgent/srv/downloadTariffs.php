@@ -3,8 +3,8 @@
 session_name($_REQUEST["se"]."AGENTSESSIONID");
 session_start();
 $agp = $_SESSION['xAgentPlanNo'];
-$file = ("tmpfolder/tarifs20171201_plan_{$agp}.xlsx");
-$rName='Тарифы ФлипПост с 01.12.2017.xlsx';
+$file = ("tmpfolder/tariffsflippost20221201_plan_{$agp}.xlsx");
+$rName='Тарифы ФлипПост с 01.12.2022.xlsx';
 header ("Content-Type: application/octet-stream");
 header ("Accept-Ranges: bytes");
 header ("Content-Length: ".filesize($file)); 
