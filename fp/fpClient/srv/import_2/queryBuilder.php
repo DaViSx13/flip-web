@@ -257,6 +257,7 @@ class queryBuilder {
 	}
 	function initString($type, &$value, $cell, &$error) {
 		if($type == 'str' && !is_null($value)) {
+            $value = preg_replace("/[^\x{0410}-\x{044f}A-z\d \/,.!?@#\(\)\{\}\[\]\*\-\+\n\r \":']/u", "", $value);
 			$value = preg_replace('|\s+|', ' ', $value);
 			charset_x_win($value); 																	/* из a.charset.php преобразование в нормальную кодировку */
 			return true;
