@@ -230,7 +230,8 @@ class orderController{
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
 			@UserIn='$userin',
-			@RordNum=$rordnum";	
+			@RordNum=$rordnum
+			@isAPI=1";	
 		$sql = Flight::utf8_to_win1251($sql);
         $sql = stripslashes($sql);
 		$result = Flight::db()->query($sql);  
