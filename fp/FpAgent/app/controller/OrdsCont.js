@@ -943,6 +943,24 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	},
 
 	/**
+	 * Проверка формы перед отправкой.
+	 * @param form Форма сохранени/редактирования заказа
+	 * @returns {boolean} Результат проверки
+	 */
+	checkFormBeforeRequest: function (form) {
+		var subCategory = form.down('combobox[name=subtype]');
+		if(subCategory.disabled === false) {
+			if(subCategory.value === null || subCategory.value.length === 0) {
+				Ext.Msg.alert('Заказ не сохранен!', 'Заполните поле "Подкатегория"');
+				return false;
+			}
+		}
+
+		return true;
+	},
+
+
+	/**
 	 * Сохранения заказа.
 	 * @param btn Кнопка 'Сохранить'
 	 */
@@ -950,6 +968,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var me = this;
 		var win = btn.up('ordwin');
 		var form_ord = win.down('ordform');
+
+		if(!me.checkFormBeforeRequest(form_ord)) {
+			return;
+		}
+
 		var form_lf = win.down('loadfileform');
 		var org = form_ord.down('combocity[name=org]');
 		var dest = form_ord.down('combocity[name=dest]');

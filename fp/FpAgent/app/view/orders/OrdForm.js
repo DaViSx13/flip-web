@@ -226,6 +226,7 @@ Ext.define('FPAgent.view.orders.OrdForm', {
                 displayField: 'Name',
                 queryMode: 'local',
                 disabled: true,
+                editable: false,
                 fieldCls: 'smallComboText',
                 store: 'SortSubTypeSt',
             },
