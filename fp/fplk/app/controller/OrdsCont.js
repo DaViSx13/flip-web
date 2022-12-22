@@ -259,6 +259,7 @@ Ext.define('fplk.controller.OrdsCont', {
     enableSubTypeField: function (sortType) {
         var field = sortType.next('combobox[name=subcategory]');
         field.setDisabled(false);
+        field.allowBlank = true;
     },
 
     /**
@@ -1020,12 +1021,32 @@ Ext.define('fplk.controller.OrdsCont', {
     },
 
     /**
+     * Проверка формы перед отправкой.
+     * @param form Форма сохранени/редактирования заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkFormBeforeRequest: function (form) {
+        var subCategory = form.down('combobox[name=subcategory]');
+        if(subCategory.disabled === false) {
+            if(subCategory.value === null || subCategory.value.length === 0) {
+                Ext.Msg.alert('Заказ не сохранен!', 'Заполните поле "Подкатегория"');
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    /**
      * Отправляет запрос на сохранение формы.
      * @param form Текущая форма
      * @param object Текущий объект
      */
     saveOrderRequest: function (form, object) {
         var me = this;
+        if(!me.checkFormBeforeRequest(form))
+            return;
+
         if (form.getForm().isValid()) {
             form.submit({
                 url: 'srv/data.php',

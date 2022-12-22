@@ -216,7 +216,7 @@ Ext.define('fplk.view.orders.OrdForm', {
     }, {
         xtype: 'fieldset',
         height: 150,
-        width: 230,
+        width: 220,
         title: 'Информация по оплате',
         collapsed: true,
         collapsible: true,
@@ -265,9 +265,9 @@ Ext.define('fplk.view.orders.OrdForm', {
         {
             xtype: 'fieldset',
             height: 200,
-            width: 320,
+            width: 330,
             title: 'Информация о грузе',
-            x: 430,
+            x: 420,
             y: 400,
             defaults: {
                 anchor: '100%'
@@ -287,7 +287,7 @@ Ext.define('fplk.view.orders.OrdForm', {
             }, {
                 xtype: 'fieldset',
                 border: false,
-                width: 360,
+                width: 330,
                 margin: 0,
                 padding: '0px 0px 5px 0px',
                 layout: 'hbox',
@@ -320,7 +320,7 @@ Ext.define('fplk.view.orders.OrdForm', {
                         queryMode: 'local',
                         disabled: true,
                         fieldCls: 'smallComboText',
-                        store: 'SortSubTypeSt',
+                        store: 'SortSubTypeSt'
                     }
                 ]
             }, {
