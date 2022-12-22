@@ -273,7 +273,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
                 queryMode: 'local',
                 disabled: true,
                 editable: false,
-                store: 'SortSubTypeSt',
+                store: 'SortSubTypeSt'
             }, {
                 xtype: 'numberfield',
                 name: 'packs',

@@ -3,10 +3,10 @@ Ext.define('FPClient.store.SortSubTypeSt', {
 	model : 'FPClient.model.SubTypeMod',
 	autoLoad: true,
 	data : [{
-		Name : 'Опасный груз',
+		Name : 'Опасный груз'
 	}, {
-		Name : 'Авиа',
+		Name : 'Авиа'
 	}, {
-		Name: 'ЖД',
+		Name: 'ЖД'
 	}]
 });

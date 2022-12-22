@@ -104,6 +104,6 @@ Ext.define('fplk.model.OrderMod', {
         name: 'category',
         type: 'int'
     }, {
-        name: 'subcategory',
+        name: 'subcategory'
     }]
 });

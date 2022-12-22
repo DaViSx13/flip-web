@@ -3,10 +3,10 @@ Ext.define('fplk.store.SortSubTypeSt', {
 	model : 'fplk.model.SubTypeMod',
 	autoLoad: true,
 	data : [{
-		Name : 'Опасный груз',
+		Name : 'Опасный груз'
 	}, {
-		Name : 'Авиа',
+		Name : 'Авиа'
 	}, {
-		Name: 'ЖД',
+		Name: 'ЖД'
 	}]
 });
