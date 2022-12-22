@@ -285,27 +285,44 @@ Ext.define('fplk.view.orders.OrdForm', {
                 store: 'TypeSt',
                 queryMode: 'local'
             }, {
-                xtype: 'combobox',
-                name: 'sortType',
-                displayField: 'Name',
-                valueField: 'lowName',
-                multiSelect: true,
-                forceSelection: true,
-                editable: false,
-                fieldLabel: 'Категория',
-                store: 'SortTypeSt',
-                queryMode: 'local',
-                triggerAction: 'all'
-            }, {
-                xtype: 'combobox',
-                fieldLabel: 'Подкатегория',
-                flex: 1,
-                name: 'subcategory',
-                displayField: 'Name',
-                queryMode: 'local',
-                disabled: true,
-                fieldCls: 'smallComboText',
-                store: 'SortSubTypeSt',
+                xtype: 'fieldset',
+                border: false,
+                width: 360,
+                margin: 0,
+                padding: '0px 0px 5px 0px',
+                layout: 'hbox',
+                items: [
+                    {
+                        xtype: 'combobox',
+                        name: 'sortType',
+                        width: 240,
+                        displayField: 'Name',
+                        valueField: 'lowName',
+                        multiSelect: true,
+                        forceSelection: true,
+                        editable: false,
+                        fieldLabel: 'Категория',
+                        store: 'SortTypeSt',
+                        queryMode: 'local',
+                        triggerAction: 'all',
+                        fieldCls: 'smallComboText',
+                        listConfig: {
+                            getInnerTpl: function (displayField) {
+                                return '<div class="x-combo-list-item"><img src="' + Ext.BLANK_IMAGE_URL + '" class="chkCombo-default-icon chkCombo"/> <span class="smallComboField">{' + displayField + '}<span></div>';
+                            }
+                        }
+                    }, {
+                        xtype: 'combobox',
+                        flex: 1,
+                        name: 'subcategory',
+                        margin: '0% 0% 0% 5%',
+                        displayField: 'Name',
+                        queryMode: 'local',
+                        disabled: true,
+                        fieldCls: 'smallComboText',
+                        store: 'SortSubTypeSt',
+                    }
+                ]
             }, {
                 xtype: 'numberfield',
                 name: 'packs',
