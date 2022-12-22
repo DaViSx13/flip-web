@@ -248,44 +248,32 @@ Ext.define('FPClient.view.orders.OrdForm', {
                 store: 'TypeSt',
                 queryMode: 'local'
             }, {
-                xtype: 'fieldset',
-                border: false,
-                width: 330,
-                margin: 0,
-                padding: '0px 0px 5px 0px',
-                layout: 'hbox',
-                items: [
-                    {
-                        xtype: 'combobox',
-                        width: 240,
-                        name: 'sortType',
-                        displayField: 'Name',
-                        valueField: 'lowName',
-                        multiSelect: true,
-                        forceSelection: true,
-                        editable: false,
-                        fieldLabel: 'Категория',
-                        store: 'SortTypeSt',
-                        queryMode: 'local',
-                        triggerAction: 'all',
-                        listConfig: {
-                            getInnerTpl: function (displayField) {
-                                return '<div class="x-combo-list-item"><img src="' + Ext.BLANK_IMAGE_URL + '" class="chkCombo-default-icon chkCombo"/> <span class="smallComboField">{' + displayField + '}<span></div>';
-                            }
-                        }
-                    }, {
-                        xtype: 'combobox',
-                        margin: '0% 0% 0% 5%',
-                        flex: 1,
-                        name: 'subtype',
-                        displayField: 'Name',
-                        queryMode: 'local',
-                        disabled: true,
-                        editable: false,
-                        fieldCls: 'smallComboText',
-                        store: 'SortSubTypeSt',
+                xtype: 'combobox',
+                name: 'sortType',
+                displayField: 'Name',
+                valueField: 'lowName',
+                multiSelect: true,
+                forceSelection: true,
+                editable: false,
+                fieldLabel: 'Категория',
+                store: 'SortTypeSt',
+                queryMode: 'local',
+                triggerAction: 'all',
+                listConfig: {
+                    getInnerTpl: function (displayField) {
+                        return '<div class="x-combo-list-item"><img src="' + Ext.BLANK_IMAGE_URL + '" class="chkCombo-default-icon chkCombo"/> <span>{' + displayField + '}<span></div>';
                     }
-                ]
+                }
+            }, {
+                xtype: 'combobox',
+                flex: 1,
+                fieldLabel: 'Подкатегория',
+                name: 'subtype',
+                displayField: 'Name',
+                queryMode: 'local',
+                disabled: true,
+                editable: false,
+                store: 'SortSubTypeSt',
             }, {
                 xtype: 'numberfield',
                 name: 'packs',
