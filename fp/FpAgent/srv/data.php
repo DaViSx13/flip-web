@@ -185,6 +185,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			$ContPhone=$params['contphone'];
 			$DContPhone=$params['dcontphone'];
             $cat = isset($params['cat']) ? $params['cat'] : 0;
+            $sub = isset($params['subtype']) ? "'".$params['subtype']."'" : "null";
 
 			if($courdate){
 				$d = explode('.', $courdate);
@@ -219,7 +220,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			@Payr=$ag,
 			@UserIn=$UserIn,
 			@RordNum=$Rordnum,
-			@cat = $cat";
+			@cat = $cat,
+			@subcategory = $sub";
 			break;
 		case 'GetAgentWbs':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
