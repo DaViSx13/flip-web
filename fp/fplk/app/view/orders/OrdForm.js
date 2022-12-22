@@ -174,7 +174,7 @@ Ext.define('fplk.view.orders.OrdForm', {
     }, {
         xtype: 'fieldset',
         height: 150,
-        width: 243,
+        width: 175,
         title: 'Дата приезда курьера',
         x: 10,
         y: 400,
@@ -216,11 +216,11 @@ Ext.define('fplk.view.orders.OrdForm', {
     }, {
         xtype: 'fieldset',
         height: 150,
-        width: 243,
+        width: 230,
         title: 'Информация по оплате',
         collapsed: true,
         collapsible: true,
-        x: 255,
+        x: 195,
         y: 400,
         defaults: {
             anchor: '100%'
@@ -265,9 +265,9 @@ Ext.define('fplk.view.orders.OrdForm', {
         {
             xtype: 'fieldset',
             height: 200,
-            width: 243,
+            width: 320,
             title: 'Информация о грузе',
-            x: 500,
+            x: 430,
             y: 400,
             defaults: {
                 anchor: '100%'
