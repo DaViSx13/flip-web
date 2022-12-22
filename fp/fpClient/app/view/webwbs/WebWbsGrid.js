@@ -2,6 +2,7 @@ Ext.define('FPClient.view.webwbs.WebWbsGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.webwbsgrid',
 	autoScroll : true,
+	multiSelect: true,
 	//requires : ['FPClient.view.mainform.TotalWb'],
 	store : 'WebWbSt',
 	columns : [{

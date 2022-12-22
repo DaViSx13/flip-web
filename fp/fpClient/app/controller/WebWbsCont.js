@@ -46,6 +46,9 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			'ordgrid button[action=wbnew]': {
 				click: this.openWbWin
 			},
+			'webwbstool button[action=printwb2]': {
+				click: this.printWBNew
+			},
 			'webwbstool button[action=printwb]': {
 				click: this.printWB
 			},
@@ -222,19 +225,90 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			Ext.Msg.alert('Не все поля заполнены', 'Откорректируйте информацию')
 		}
 	},
+
+	/**
+	 * Гркпповая печать 'Веб накладных'.
+	 *
+	 * Событие: *** Нажатие кнопки 'Печать Веб накладной' ***
+	 */
+	printWBNew: function () {
+		var model = this.getWebWbsGrid().getSelectionModel().getSelection();
+		if(!this.printWBNewCheck(model))
+			return;
+
+		var nums = this.printWBNewConcatWBNums(model);
+		if(nums.length === 0) {
+			Ext.Msg.alert("Ошибка!!!", "Не удалось сформировать список 'Веб накладных' для печати!");
+			return;
+		}
+
+		window.open(
+			window.location.href +
+			'srv' +
+			'/report2.php' +
+			'?wbNo=' + nums, "_blank");
+	},
+
+	/**
+	 * Объединяет номера 'Веб накладных' в список.
+	 * @param model Выбранные строки таблицы
+	 * @returns {string} Список омеров 'Веб накладных' через запятую
+	 */
+	printWBNewConcatWBNums: function (model) {
+		var targetWebNums = "";
+		Ext.Array.each(model, function(record) {
+			console.log(record);
+
+			targetWebNums += record.data.wb_no + ","
+		});
+
+		if(targetWebNums.length > 0)
+			return targetWebNums.substring(0,targetWebNums.length -1);
+		else
+			return targetWebNums;
+	},
+
+	/**
+	 * Проверка перед печатью 'Веб накладных'.
+	 * @param model Выбранные строки таблицы
+	 * @returns {boolean} Результат проверки
+	 */
+	printWBNewCheck: function(model) {
+		if(model.length === 0) {
+			Ext.Msg.alert("Внимание!!!", "Для печати 'Веб накладных' выберите запись в таблице!");
+			return false;
+		}
+		if(model.length > 50) {
+			Ext.Msg.alert("Внимание!!!", "Количество 'Веб накладных' для печати не должно привышать 50!");
+			return false;
+		}
+
+		return true;
+	},
+
+	/**
+	 * Отправка запроса на получение накладной.
+	 * @param wbno Номер накладной
+	 * @deprecated
+	 */
 	printWebWB: function (wbno) {		
 		if (wbno != '') {			
 			window.open('srv/report.php?wbno=' + wbno);
 		}
 	},
-	printWB: function (btn) {
+
+	/**
+	 * Получение веб накладной.
+	 * @deprecated
+	 */
+	printWB: function () {
 		var sm = this.getWebWbsGrid().getSelectionModel();
 		if (sm.getCount() > 0) {
 			this.printWebWB(sm.getSelection()[0].get('wb_no'));
 		} else {
 			Ext.Msg.alert('Внимание!', 'Выберите запись в таблице');
 		}
-	},	
+	},
 	loadWebWbs: function () {
 		var me = this;
 		this.getWebWbStStore().load({

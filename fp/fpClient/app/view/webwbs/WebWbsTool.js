@@ -5,7 +5,7 @@ Ext.define('FPClient.view.webwbs.WebWbsTool', {
 	items : [
 		{
 			text : 'Печать веб накладной',			
-			action : 'printwb',
+			action : 'printwb2',
 			iconCls : 'webwbprint'
 		},
 	'->', '-', {
