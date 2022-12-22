@@ -319,6 +319,7 @@ Ext.define('fplk.view.orders.OrdForm', {
                         displayField: 'Name',
                         queryMode: 'local',
                         disabled: true,
+                        editable: false,
                         fieldCls: 'smallComboText',
                         store: 'SortSubTypeSt'
                     }
@@ -347,7 +348,7 @@ Ext.define('fplk.view.orders.OrdForm', {
         }, {
             xtype: 'label',
             html: '<p style="font-size: 8px">*по умолчанию Вы являетесь плательщиком</p>',
-            x: 255,
+            x: 200,
             y: 555,
             width: 340
         }, {

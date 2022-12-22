@@ -677,63 +677,86 @@ Ext.define('FPClient.controller.OrdsCont', {
 
     },
 
+    /**
+     * Проверка формы перед отправкой.
+     * @param form Форма сохранени/редактирования заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkFormBeforeRequest: function (form) {
+        var org = form.down('combocity[name=org]');
+        var dest = form.down('combocity[name=dest]');
 
+        if (dest.value == null) {
+            var jsonArrayDes = this.getCityStDesStore().data.items;
+            if (jsonArrayDes.length === 0) {
+                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+                return false;
+            }
+
+            for (var i = 0; i < jsonArrayDes.length; i++) {
+                if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
+                    dest.setValue(jsonArrayDes[i].data.code);
+                    break;
+                }
+            }
+
+            if (dest.value == null) {
+                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+                return false;
+            }
+        }
+
+        if (org.value == null) {
+            var jsonArrayOrg = this.getCityStOrgStore().data.items;
+            if (jsonArrayOrg.length === 0) {
+                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+                return false;
+            }
+
+            for (var i = 0; i < jsonArrayOrg.length; i++) {
+                if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+                    org.setValue(jsonArrayOrg[i].data.code);
+                    break;
+                }
+            }
+
+            if (org.value == null) {
+                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
+                return false;
+            }
+        }
+
+        var subCategory = form.down('combobox[name=subtype]');
+        if(!subCategory.isDisabled()) {
+            if(subCategory.value === null || subCategory.value.length === 0) {
+                Ext.Msg.alert('Заказ не сохранен!', 'Заполните поле "Подкатегория"');
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    /**
+     * Сохранение заказа.
+     * @param btn Кнопка "Сохранить"
+     */
     saveOrder: function (btn) {
         var me = this;
         var win = btn.up('ordwin');
         var form_ord = win.down('ordform');
         var form_lf = win.down('loadfileform');
-        var org = form_ord.down('combocity[name=org]');
-        var dest = form_ord.down('combocity[name=dest]');
         var prtwb = form_ord.down('checkboxfield[name=webwbprint]');
+
+        if(!me.checkFormBeforeRequest(form_ord))
+            return;
 
         if (win.down('button[action=save]').getText() == 'Повторить заказ') {
             form_ord.down('textfield[name=rordnum]').setValue(null);
             form_ord.down('datefield[name=courdate]').setValue(new Date());
         }
 
-        if (dest.value == null) {
-            var jsonArrayDes = this.getCityStDesStore().data.items;
-            if (jsonArrayDes.length == 0) {
-                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-                return;
-            }
-            ;
-            for (var i = 0; i < jsonArrayDes.length; i++) {
-                if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
-                    dest.setValue(jsonArrayDes[i].data.code);
-                    break;
-                }
-                ;
-            }
-            ;
-            if (dest.value == null) {
-                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-                return;
-            }
-            ;
-        }
-        if (org.value == null) {
-            var jsonArrayOrg = this.getCityStOrgStore().data.items;
-            if (jsonArrayOrg.length == 0) {
-                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-                return;
-            }
-            ;
-            for (var i = 0; i < jsonArrayOrg.length; i++) {
-                if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
-                    org.setValue(jsonArrayOrg[i].data.code);
-                    break;
-                }
-                ;
-            }
-            ;
-            if (org.value == null) {
-                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Отправителя! Выберите город из выпадающего списка.');
-                return;
-            }
-            ;
-        }
+
         if (form_ord.getForm().isValid()) {
             form_ord.submit({
                 url: 'srv/data.php',

@@ -137,7 +137,7 @@ Ext.define('FPClient.view.orders.OrdForm', {
     }, {
         xtype: 'fieldset',
         height: 150,
-        width: 243,
+        width: 175,
         title: 'Дата приезда курьера',
         x: 10,
         y: 390,
@@ -187,11 +187,11 @@ Ext.define('FPClient.view.orders.OrdForm', {
     }, {
         xtype: 'fieldset',
         height: 150,
-        width: 243,
+        width: 220,
         title: 'Информация по оплате',
         collapsed: true,
         collapsible: true,
-        x: 255,
+        x: 195,
         y: 390,
         defaults: {
             anchor: '100%'
@@ -228,9 +228,9 @@ Ext.define('FPClient.view.orders.OrdForm', {
         {
             xtype: 'fieldset',
             height: 200,
-            width: 243,
+            width: 330,
             title: 'Информация о грузе',
-            x: 500,
+            x: 420,
             y: 390,
             defaults: {
                 anchor: '100%'
@@ -248,27 +248,44 @@ Ext.define('FPClient.view.orders.OrdForm', {
                 store: 'TypeSt',
                 queryMode: 'local'
             }, {
-                xtype: 'combobox',
-                name: 'sortType',
-                displayField: 'Name',
-                valueField: 'lowName',
-                multiSelect: true,
-                forceSelection: true,
-                editable: false,
-                fieldLabel: 'Категория',
-                store: 'SortTypeSt',
-                queryMode: 'local',
-                triggerAction: 'all'
-            }, {
-                xtype: 'combobox',
-                fieldLabel: 'Подкатегория',
-                flex: 1,
-                name: 'subtype',
-                displayField: 'Name',
-                queryMode: 'local',
-                disabled: true,
-                fieldCls: 'smallComboText',
-                store: 'SortSubTypeSt',
+                xtype: 'fieldset',
+                border: false,
+                width: 330,
+                margin: 0,
+                padding: '0px 0px 5px 0px',
+                layout: 'hbox',
+                items: [
+                    {
+                        xtype: 'combobox',
+                        width: 240,
+                        name: 'sortType',
+                        displayField: 'Name',
+                        valueField: 'lowName',
+                        multiSelect: true,
+                        forceSelection: true,
+                        editable: false,
+                        fieldLabel: 'Категория',
+                        store: 'SortTypeSt',
+                        queryMode: 'local',
+                        triggerAction: 'all',
+                        listConfig: {
+                            getInnerTpl: function (displayField) {
+                                return '<div class="x-combo-list-item"><img src="' + Ext.BLANK_IMAGE_URL + '" class="chkCombo-default-icon chkCombo"/> <span class="smallComboField">{' + displayField + '}<span></div>';
+                            }
+                        }
+                    }, {
+                        xtype: 'combobox',
+                        margin: '0% 0% 0% 5%',
+                        flex: 1,
+                        name: 'subtype',
+                        displayField: 'Name',
+                        queryMode: 'local',
+                        disabled: true,
+                        editable: false,
+                        fieldCls: 'smallComboText',
+                        store: 'SortSubTypeSt',
+                    }
+                ]
             }, {
                 xtype: 'numberfield',
                 name: 'packs',

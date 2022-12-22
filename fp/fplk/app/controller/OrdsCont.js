@@ -874,7 +874,6 @@ Ext.define('fplk.controller.OrdsCont', {
             while (values.length < 3)
                 values = '0' + values;
 
-            console.log(values);
             var result = [];
             var j = 0;
             for (var i = 0; i < values.length; i++) {
@@ -899,8 +898,6 @@ Ext.define('fplk.controller.OrdsCont', {
             result[value] = '1'
         });
 
-        console.log(result.join(''));
-        console.log(parseInt(result.join(''), 2));
         return result.join('');
 
     },
