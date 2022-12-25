@@ -14,6 +14,14 @@
 	height: 7%;
 	cursor : pointer;
 }
+.smallComboField {
+	font-size: 9px;
+	margin-left: 3px
+}
+.smallComboText {
+	font-size: 10px !important;
+}
+
 .exit-user {
 	background-image : url(../../resources/images/exit.gif);
 }

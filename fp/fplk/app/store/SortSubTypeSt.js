@@ -1,6 +1,6 @@
-Ext.define('FPClient.store.SortSubTypeSt', {
+Ext.define('fplk.store.SortSubTypeSt', {
 	extend : 'Ext.data.Store',
-	model : 'FPClient.model.SubTypeMod',
+	model : 'fplk.model.SubTypeMod',
 	autoLoad: true,
 	data : [{
 		Name : 'Опасный груз'

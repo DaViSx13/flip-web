@@ -202,7 +202,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@fMetpaym = '$metpaym',
             @fPayr = $fPayer,
             @cat = $cat,
-			@subcategory = '$sub'";
+			@subcategory = $sub";
 
 			break;
 		case 'SetWebWB':			

@@ -206,6 +206,8 @@ if (!isset($_REQUEST['dbAct'])) {
 			}
 			
 			if (!isset($params['org'])) $params['org'] = -1; //магия
+            $cat = isset($params['cat']) ? $params['cat'] : 0;
+            $sub = isset($params['subcategory']) ? "'".$params['subcategory']."'" : "null";
 			
 			$query = "exec wwwLKsetOrder
 			@ORG=$params[org],
@@ -243,7 +245,10 @@ if (!isset($_REQUEST['dbAct'])) {
             @sbercost = $sberCost,
             @sberproject = '$sberProject',
             @sbersuit = '$sberSuit',
-            @sbertype= $sberType";
+            @sbertype= $sberType,
+            @ordCategory = $cat,
+			@subCategory = $sub";
+
 			break;
 		case 'SetWebWB':			
 			$id=$params['id'] ? $params['id'] : 0;
