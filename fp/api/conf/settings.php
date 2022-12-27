@@ -39,7 +39,14 @@ Flight::map('error', function(Exception $ex){
 }
 $erresp = new ErResp();
     // Handle error
-	$erresp->message = $ex->getMessage();
+	$msg = $ex->getMessage();
+	
+	if (strpos($msg, "RouteDenied") !== false)	
+	{
+	$msg = "Запрещено создание отправки в направлении:".str_ireplace("(severity 16)", "" ,str_ireplace( "RouteDenied", "",stristr($msg, "RouteDenied")));	
+	}
+
+	$erresp->message = $msg;
     echo Flight::json($erresp);
 });
 
