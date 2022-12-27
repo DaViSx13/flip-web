@@ -76,6 +76,8 @@ Ext.define('FPAgent.model.OrderMod', {
 			name : 'status'
 		}, {
 			name : 'cat'
+	}, {
+		name: 'subtype'
 	}
 	]
 });

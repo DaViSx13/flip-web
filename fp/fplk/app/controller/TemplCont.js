@@ -203,6 +203,7 @@ Ext.define('fplk.controller.TemplCont', {
 			Ext.Msg.alert('Внимание!', 'Выберите шаблон для редактирования');
 		}
 	},
+
 	saveTempl : function (btn) {
 		var me = this;
 		var win = btn.up('templwin');
