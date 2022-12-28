@@ -37,8 +37,19 @@ if (!isset($_REQUEST['dbAct'])) {
         case 'getStates':
             $query = "exec wwwAPIgetStates @country='$_REQUEST[country]'";
             break;
-        case 'getCities':
-            $query = "exec wwwAPIgetCities @country='$_REQUEST[country]', @state = '$_REQUEST[state]', @city = '$_REQUEST[city]'";
+        case 'getCities':			
+			include "constants.php";			
+			if (array_key_exists($_REQUEST[city], $constantCities_)) {				
+				$response->success = true;
+				$response->data[] = $constantCities_[$_REQUEST[city]];
+				if (extension_loaded('mbstring')) {
+					echo my_json_encode($response);
+				} else {
+					echo json_encode($response);
+				}
+				exit;
+			}            
+			$query = "/*www.flippost.com*/ exec wwwAPIgetCities @country='$_REQUEST[country]', @state = '$_REQUEST[state]', @city = '$_REQUEST[city]'";
             break;
         case 'getTarif':
 			$fromSite = isset($_REQUEST['fromSite']) ? 1 : 0; //спец. расчет для калькулятора на сайте
