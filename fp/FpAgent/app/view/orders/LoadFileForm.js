@@ -1,7 +1,7 @@
 Ext.define('FPAgent.view.orders.LoadFileForm', {
 	alias : 'widget.loadfileform',
 	extend : 'Ext.form.Panel',
-	width : 758,
+	width : 760,
 	height : 38,
 	layout : {
 		type : 'hbox'

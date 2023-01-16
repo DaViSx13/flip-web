@@ -6,7 +6,7 @@ Ext.define('FPAgent.view.orders.OrdWin', {
 	title : FPAgent.lib.Translate.tr("OrdWin.title"),//'Новый заказ',
 	layout : 'vbox',
 	autoShow : true,
-	height : 668,
+	height : 690,
 	width : 770,
 	resizable : false,
 	modal : true,
