@@ -6,7 +6,7 @@ use FlipPost\ExcelExport;
 
 
 $excelHeaders = array(
-    array('is_ex', 'Исключение'),
+    array('is_ex_exp', 'Исключение'),
     array('wb_no', '№ Накладной'),
     array('OrderNo', '№ Заказа'),
     array('d_acc_txt', 'Принято'),
