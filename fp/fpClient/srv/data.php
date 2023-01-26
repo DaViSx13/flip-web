@@ -196,7 +196,7 @@ if (!isset($_REQUEST['dbAct'])) {
 			@CourTimeF='$courtimef',
 			@CourTimeT='$courtimet',
 			@Payr=$ag,
-			@UserIn=$UserIn,
+			@UserIn='$UserIn',
 			@RordNum=$Rordnum,
 			@webwb=$webwb,
 			@fMetpaym = '$metpaym',
