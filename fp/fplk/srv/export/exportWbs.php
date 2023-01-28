@@ -6,11 +6,12 @@ use FlipPost\ExcelExport;
 
 
 $excelHeaders = array(
+    array('is_ex_exp', 'Исключение'),
     array('wb_no', '№ Накладной'),
+    array('OrderNo', '№ Заказа'),
     array('d_acc_txt', 'Принято'),
     array('dod_txt', 'Доставлено'),
     array('rcpn', 'Получил'),
-    array('p_d_in_txt', 'Подтв.'),
     array('p_d_in_txt', 'Подтв.'),
 
     array('org', 'ORG'),
@@ -28,8 +29,10 @@ $excelHeaders = array(
     array("pcs", "Мест"),
     array("wt", "Вес"),
     array("vol_wt", "Об.вес"),
-	
-	array("INSSUM", "Страховка"),
+
+    array("dtd", "РДД"),
+
+    array("INSSUM", "Страховка"),
 
     array("invID", "Номер счета"),
     array("descr", "Примечание"),
