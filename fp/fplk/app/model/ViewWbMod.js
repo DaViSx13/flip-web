@@ -110,6 +110,9 @@ Ext.define('fplk.model.ViewWbMod', {
 		}, {
 			name : 'descr',
 			type : 'string'
+		}, {
+			name : 'inssum',
+			type : 'float'
 		}
 	]
 });
