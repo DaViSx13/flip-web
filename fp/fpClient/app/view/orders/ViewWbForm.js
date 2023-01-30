@@ -344,7 +344,7 @@ Ext.define('FPClient.view.orders.ViewWbForm', {
     }, {
         xtype: 'displayfield',
         width: 50,
-        x: 435,
+        x: 555,
         y: 210,
         name: 'inssum',
         readOnly: true
