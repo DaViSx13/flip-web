@@ -7,6 +7,10 @@ Ext.define('FPClient.view.webwbs.WebWbsTool', {
 			text : 'Печать веб накладной',			
 			action : 'printwb',
 			iconCls : 'webwbprint'
+		},'-', {
+			text : 'Экспорт в Excel',
+			action : 'exportWebWbsExcel',
+			iconCls : 'excel'
 		},
 	'->', '-', {
 			xtype : 'combomonth'

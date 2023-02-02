@@ -49,10 +49,21 @@ Ext.define('FPClient.controller.WebWbsCont', {
 			'webwbstool button[action=printwb]': {
 				click: this.printWB
 			},
+			'webwbstool button[action=exportWebWbsExcel]': {
+				click: this.exportExcel
+			},
 			'admtool comboagent': {
 				select: this.changeAgent
 			}
 		});
+	},
+
+	/**
+	 * Экспорт накладных в Эксель
+	 */
+	exportExcel : function () {
+		var period = this.getDateFromPeriodFilter();
+		window.location.href = 'srv/export/exportWebWbs.php?from=' + period[0] + '&to=' + period[1];
 	},
 
 	/**
