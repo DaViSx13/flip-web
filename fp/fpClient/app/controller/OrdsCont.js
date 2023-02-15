@@ -572,11 +572,9 @@ Ext.define('FPClient.controller.OrdsCont', {
             var form = win.down('ordform');
 
             var timeEdit = form.down('textfield[name=courtimef]');
-            timeEdit.setReadOnly(true);
             timeEdit.setValue('10:00');
 
             var timeEdit = form.down('textfield[name=courtimet]');
-            timeEdit.setReadOnly(true);
             timeEdit.setValue('19:00');
 
             form.loadRecord(record);
@@ -678,34 +676,12 @@ Ext.define('FPClient.controller.OrdsCont', {
     },
 
     /**
-     * Проверка формы перед отправкой.
-     * @param form Форма сохранени/редактирования заказа
+     * Проверка адреса отправителя
+     * @param form Форма создания заказа
      * @returns {boolean} Результат проверки
      */
-    checkFormBeforeRequest: function (form) {
+    checkOrderCityORG: function (form) {
         var org = form.down('combocity[name=org]');
-        var dest = form.down('combocity[name=dest]');
-
-        if (dest.value == null) {
-            var jsonArrayDes = this.getCityStDesStore().data.items;
-            if (jsonArrayDes.length === 0) {
-                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-                return false;
-            }
-
-            for (var i = 0; i < jsonArrayDes.length; i++) {
-                if (jsonArrayDes[i].get('fname') == Ext.util.Format.trim(dest.getValue())) {
-                    dest.setValue(jsonArrayDes[i].data.code);
-                    break;
-                }
-            }
-
-            if (dest.value == null) {
-                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
-                return false;
-            }
-        }
-
         if (org.value == null) {
             var jsonArrayOrg = this.getCityStOrgStore().data.items;
             if (jsonArrayOrg.length === 0) {
@@ -714,7 +690,7 @@ Ext.define('FPClient.controller.OrdsCont', {
             }
 
             for (var i = 0; i < jsonArrayOrg.length; i++) {
-                if (jsonArrayOrg[i].get('fname') == Ext.util.Format.trim(org.getValue())) {
+                if (jsonArrayOrg[i].get('fname') === Ext.util.Format.trim(org.getValue())) {
                     org.setValue(jsonArrayOrg[i].data.code);
                     break;
                 }
@@ -726,6 +702,46 @@ Ext.define('FPClient.controller.OrdsCont', {
             }
         }
 
+        return true;
+    },
+
+    /**
+     * Проверяет город получателя.
+     * @param form Форма Создания заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkOrderCityDEST: function (form) {
+        var dest = form.down('combocity[name=dest]');
+
+        if (dest.value == null) {
+            var jsonArrayDes = this.getCityStDesStore().data.items;
+            if (jsonArrayDes.length === 0) {
+                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+                return false;
+            }
+
+            for (var i = 0; i < jsonArrayDes.length; i++) {
+                if (jsonArrayDes[i].get('fname') === Ext.util.Format.trim(dest.getValue())) {
+                    dest.setValue(jsonArrayDes[i].data.code);
+                    break;
+                }
+            }
+
+            if (dest.value == null) {
+                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город Получателя! Выберите город из выпадающего списка.');
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    /**
+     * Проверяет поле "Подкатегория"
+     * @param form Форма создания заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkOrderSubType: function (form) {
         var subCategory = form.down('combobox[name=subtype]');
         if(!subCategory.isDisabled()) {
             if(subCategory.value === null || subCategory.value.length === 0) {
@@ -735,6 +751,70 @@ Ext.define('FPClient.controller.OrdsCont', {
         }
 
         return true;
+    },
+
+    /**
+     * Проверка полей "Время прибытия с" и "Время прибытия по".
+     * @param form Форма создания заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkOrderCourierTime: function (form) {
+        var date = form.down("textfield[name=courdate]").getValue();
+
+        var timeFromVal = form.down("textfield[name=courtimef]").getValue();
+        var timeToVal = form.down("textfield[name=courtimet]").getValue();
+
+        if(timeFromVal.indexOf(":") === -1) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
+            return false;
+        }
+
+        if(timeFromVal.length !== 5 ) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
+            return false;
+        }
+
+        if(timeToVal.indexOf(":") === -1) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
+            return false;
+        }
+
+        if(timeToVal.length !== 5 ) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
+            return false;
+        }
+
+        var timeFrom = timeFromVal.split(":");
+        var timeTo = timeToVal.split(":");
+
+        var dateFrom = date.setHours(timeFrom[0], timeFrom[1], 0, 0);
+        var dateTo = date.setHours(timeTo[0], timeTo[1], 0, 0);
+        var result = dateTo > dateFrom;
+
+        if (!result)
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" должно быть меньше "Время до"');
+
+        return result;
+
+    },
+
+    /**
+     * Проверка формы перед отправкой.
+     * @param form Форма сохранени/редактирования заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkFormBeforeRequest: function (form) {
+        if(!this.checkOrderCityORG(form))
+            return false;
+
+        if(!this.checkOrderCityDEST(form))
+            return false;
+
+        if(!this.checkOrderSubType(form))
+            return false;
+
+
+        return this.checkOrderCourierTime(form);
     },
 
     /**
@@ -751,9 +831,8 @@ Ext.define('FPClient.controller.OrdsCont', {
         if(!me.checkFormBeforeRequest(form_ord))
             return;
 
-        if (win.down('button[action=save]').getText() == 'Повторить заказ') {
+        if (win.down('button[action=save]').getText() === 'Повторить заказ') {
             form_ord.down('textfield[name=rordnum]').setValue(null);
-            form_ord.down('datefield[name=courdate]').setValue(new Date());
         }
 
 
