@@ -712,7 +712,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			Ext.Msg.alert(FPAgent.lib.Translate.tr("DenyAccess") /*'Запрещено!'*/, FPAgent.lib.Translate.tr("OrdsCont.TemplateEmpty") /*'У Вас нет шаблонов!'*/);
 		}
 	},
-	setTpl: function (btn) {
+
+	/**
+	 * Создает заказ из шаблона.
+	 */
+	setTpl: function () {
 		var tplform = this.getUseTemplForm();
 		if (tplform.getForm().isValid()) {
 			var record = this.getTemplStStore().findRecord('id', tplform.down('combobox[name=tplname]').getValue());
@@ -721,11 +725,9 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			var win = Ext.widget('ordwin');
 
 			var timeEdit = win.down('ordform').down('textfield[name=courtimef]');
-			timeEdit.setReadOnly(true);
 			timeEdit.setValue('10:00');
 
 			var timeEdit = win.down('ordform').down('textfield[name=courtimet]');
-			timeEdit.setReadOnly(true);
 			timeEdit.setValue('19:00');
 
 			var form = win.down('ordform');
@@ -902,13 +904,13 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	checkDest: function (destField) {
 		if (destField.value == null) {
 			var store = destField.getStore();
-			if(store.find('fname', destField.getValue(), 0, true, true) == -1) {
+			if(store.find('fname', destField.getValue(), 0, true, true) === -1) {
 				Ext.Msg.alert(
 						FPAgent.lib.Translate.tr("OrdsCont.CityError") /*'Ошибка ввода города'*/,
 						FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/
 					);
 				return -1;
-			};
+			}
 			
 			var record = store.findRecord('fname', destField.getValue(), 0, true, true);
 			if(record !== null)
@@ -920,7 +922,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 					FPAgent.lib.Translate.tr("OrdsCont.CityRecipientError") /*'Неверно введен город Отправителя! Выберите город из выпадающего списка.'*/
 				);
 				return -1;
-			};
+			}
 		}
 		
 		return 0;
@@ -948,6 +950,17 @@ Ext.define('FPAgent.controller.OrdsCont', {
 	 * @returns {boolean} Результат проверки
 	 */
 	checkFormBeforeRequest: function (form) {
+		if(!this.checkOrderSubType(form))
+			return false;
+		return this.checkOrderCourierTime(form);
+	},
+
+	/**
+	 * Проверка заполнения поля "Подкатегория"
+	 * @param form Форма создания заказа
+	 * @returns {boolean} Результат проверки
+	 */
+	checkOrderSubType: function (form) {
 		var subCategory = form.down('combobox[name=subtype]');
 		if(subCategory.disabled === false) {
 			if(subCategory.value === null || subCategory.value.length === 0) {
@@ -957,6 +970,50 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 
 		return true;
+	},
+
+	/**
+	 * Проверка полей "Время прибытия с" и "Время прибытия по".
+	 * @param form Форма создания заказа
+	 * @returns {boolean} Результат проверки
+	 */
+	checkOrderCourierTime: function (form) {
+		var date = form.down("textfield[name=courdate]").getValue();
+
+		var timeFromVal = form.down("textfield[name=courtimef]").getValue();
+		var timeToVal = form.down("textfield[name=courtimet]").getValue();
+
+		if(timeFromVal.indexOf(":") === -1) {
+			Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
+			return false;
+		}
+
+		if(timeFromVal.length !== 5 ) {
+			Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
+			return false;
+		}
+
+		if(timeToVal.indexOf(":") === -1) {
+			Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
+			return false;
+		}
+
+		if(timeToVal.length !== 5 ) {
+			Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
+			return false;
+		}
+
+		var timeFrom = timeFromVal.split(":");
+		var timeTo = timeToVal.split(":");
+
+		var dateFrom = date.setHours(timeFrom[0], timeFrom[1], 0, 0);
+		var dateTo = date.setHours(timeTo[0], timeTo[1], 0, 0);
+		var result = dateTo > dateFrom;
+
+		if (!result)
+			Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" должно быть меньше "Время до"');
+
+		return result;
 	},
 
 

@@ -1023,6 +1023,17 @@ Ext.define('fplk.controller.OrdsCont', {
      * @returns {boolean} Результат проверки
      */
     checkFormBeforeRequest: function (form) {
+        if(!this.checkOrderSubType(form))
+            return false;
+        return this.checkOrderCourierTime(form);
+    },
+
+    /**
+     * Проверка заполнения поля "Подкатегория"
+     * @param form Форма создания заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkOrderSubType: function (form) {
         var subCategory = form.down('combobox[name=subcategory]');
         if(subCategory.disabled === false) {
             if(subCategory.value === null || subCategory.value.length === 0) {
@@ -1032,6 +1043,50 @@ Ext.define('fplk.controller.OrdsCont', {
         }
 
         return true;
+    },
+
+    /**
+     * Проверка полей "Время прибытия с" и "Время прибытия по".
+     * @param form Форма создания заказа
+     * @returns {boolean} Результат проверки
+     */
+    checkOrderCourierTime: function (form) {
+        var date = form.down("textfield[name=courdate]").getValue();
+
+        var timeFromVal = form.down("textfield[name=courtimef]").getValue();
+        var timeToVal = form.down("textfield[name=courtimet]").getValue();
+
+        if(timeFromVal.indexOf(":") === -1) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
+            return false;
+        }
+
+        if(timeFromVal.length !== 5 ) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
+            return false;
+        }
+
+        if(timeToVal.indexOf(":") === -1) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
+            return false;
+        }
+
+        if(timeToVal.length !== 5 ) {
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
+            return false;
+        }
+
+        var timeFrom = timeFromVal.split(":");
+        var timeTo = timeToVal.split(":");
+
+        var dateFrom = date.setHours(timeFrom[0], timeFrom[1], 0, 0);
+        var dateTo = date.setHours(timeTo[0], timeTo[1], 0, 0);
+        var result = dateTo > dateFrom;
+
+        if (!result)
+            Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" должно быть меньше "Время до"');
+
+        return result;
     },
 
     /**
