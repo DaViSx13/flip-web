@@ -328,21 +328,15 @@ Ext.define('FPClient.controller.WbsCont', {
 		} else {}
 
 	},
-	exportExcel : function (btn) {
-		switch (true) {
-		case this.getWbsTool().down('button[action=all]').pressed:
-			var t_dir = 'all';
-			break;
-		case this.getWbsTool().down('button[action=in]').pressed:
-			var t_dir = 'in';
-			break;
-		case this.getWbsTool().down('button[action=out]').pressed:
-			var t_dir = 'out';
-			break;
-		}
-		var peroid = this.getDateFromPeriodFilter();
-		window.location.href = 'srv/getAgentWbsXLS.php?from=' + period[0] + '&to=' + peroid[1] + '&filter=' + t_dir;
+
+	/**
+	 * Экспорт накладных в Эксель
+	 */
+	exportExcel : function () {
+		var period = this.getDateFromPeriodFilter();
+		window.location.href = 'srv/export/exportWbs.php?from=' + period[0] + '&to=' + period[1] + '&filter=all';
 	},
+
 	loadWBsWin : function (btn) {
 		//console.log('import');
 		var newloadwin = Ext.widget('loadwbwin').show();
