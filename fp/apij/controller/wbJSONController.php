@@ -32,7 +32,7 @@ class wbJSONController{
 		$sender_location_address = $sender["location"]["address"];
 		self::checkStringField($sender_location_address, "sender location address", 50);
 		$sender_location_zip = $sender["location"]["zip"];
-		self::checkNumberValue($sender_location_zip, "sender location zip");
+		self::checkStringField($sender_location_zip, "sender location zip", 9);
 		
 		$receiver = self::getField("receiver", true);
 	   		
@@ -45,7 +45,7 @@ class wbJSONController{
 		$receiver_location_address = $receiver["location"]["address"];
 		self::checkStringField($receiver_location_address, "receiver location address", 50);
 		$receiver_location_zip = $receiver["location"]["zip"];
-		self::checkNumberValue($receiver_location_zip, "receiver location zip");
+		self::checkStringField($receiver_location_zip, "receiver location zip", 9);
 		
 		$payer = self::getField("payer", true);
 	   
@@ -60,9 +60,9 @@ class wbJSONController{
 		$payer_location_сity = $payer["location"]["сity"];
 		self::checkStringField($payer_location_сity, "payer location сity", 50);
 		$payer_location_address = $payer["location"]["address"];
-		self::checkStringField($payer_location_address, "payer location address", 50);
+		self::checkStringField($payer_location_address, "payer location address", 100);
 		$payer_location_zip = $payer["location"]["zip"];
-		self::checkNumberValue($payer_location_zip, "payer location zip");
+		self::checkStringField($payer_location_zip, "payer location zip", 9);
        
 
      /*  $sTel = self::getFieldWithDefault("sTel", "");
@@ -115,11 +115,15 @@ class wbJSONController{
 
        $payType = self::getField("payType", true);
        self::checkStringField($payType, "payType", 3);
-	   self::checkRange($payType,"payType", array("INV", "CSH"));
+	   self::checkRange($payType,"payType", array("inv", "csh"));
        
 		$payerType = self::getField("payerType", true);
 		self::checkNumberValue($payerType, "payerType");
 		self::checkRange($payerType, "payerType", array(1, 2, 3));
+		
+		$packType = self::getField("packType", true);
+		self::checkStringField($packType, "packType", 2);
+	    self::checkRange($packType,"packType", array("pl", "le"));
 		
 		$waybillDate = self::getField("waybillDate", true);
        self::checkStringField($waybillDate, "waybillDate", 50);
@@ -174,6 +178,7 @@ class wbJSONController{
 			@packs = $packs,
 			@payType = '$payType',
 			@payerType = $payerType,
+			@packType = '$packType',
 			@waybillDate = '$waybillDate',
 			@description = '$description',
 			@senderComment = '$senderComment'
