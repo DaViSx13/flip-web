@@ -19,53 +19,62 @@ class wbJSONController{
 
 		$sender = self::getField("sender", true);
 	   
-		self::checkStringField($sender["name"], "sender name", 20);
-		self::checkStringField($sender["company"], "sender company", 40);
-		self::checkStringField($sender["phone"], "sender phone", 50);
+		$sender_name = str_ireplace("'", "''", $sender["name"]);
+		self::checkStringField($sender_name, "sender name", 20);
+		$sender_company = str_ireplace("'", "''", $sender["company"]);
+		self::checkStringField($sender_company, "sender company", 40);
+		$sender_phone = str_ireplace("'", "''", $sender["phone"]);
+		self::checkStringField($sender_phone, "sender phone", 50);
 		
-		$sender_location_country = $sender["location"]["country"];
+		$sender_location_country = str_ireplace("'", "''", $sender["location"]["country"]);
 		self::checkStringField($sender_location_country, "sender location country", 50);
-		$sender_location_state = $sender["location"]["state"];
+		$sender_location_state = str_ireplace("'", "''", $sender["location"]["state"]);
 		self::checkStringField($sender_location_state, "sender location state", 50);
-		$sender_location_сity = $sender["location"]["сity"];
+		$sender_location_сity = str_ireplace("'", "''", $sender["location"]["сity"]);
 		self::checkStringField($sender_location_сity, "sender location сity", 50);
-		$sender_location_address = $sender["location"]["address"];
+		$sender_location_address = str_ireplace("'", "''", $sender["location"]["address"]);
 		self::checkStringField($sender_location_address, "sender location address", 100);
-		$sender_location_zip = $sender["location"]["zip"];
+		$sender_location_zip = str_ireplace("'", "''", $sender["location"]["zip"]);
 		self::checkStringField($sender_location_zip, "sender location zip", 9);
 		
 		$receiver = self::getField("receiver", true);
 		
-		self::checkStringField($receiver["name"], "receiver name", 20);
+		$receiver_name = str_ireplace("'", "''", $receiver["name"]);
+		self::checkStringField($receiver_name, "receiver name", 20);
+		$receiver_company = str_ireplace("'", "''", $receiver["company"]);
 		self::checkStringField($receiver["company"], "receiver company", 40);
-		self::checkStringField($receiver["phone"], "receiver phone", 50);
+		$receiver_phone = str_ireplace("'", "''", $receiver["phone"]);
+		self::checkStringField($receiver_phone, "receiver phone", 50);
 	   		
-		$receiver_location_country = $receiver["location"]["country"];
+		$receiver_location_country = str_ireplace("'", "''", $receiver["location"]["country"]);
 		self::checkStringField($receiver_location_country, "receiver location country", 50);
-		$receiver_location_state = $receiver["location"]["state"];
+		$receiver_location_state = str_ireplace("'", "''", $receiver["location"]["state"]);
 		self::checkStringField($receiver_location_state, "receiver location state", 50);
-		$receiver_location_сity = $receiver["location"]["сity"];
+		$receiver_location_сity = str_ireplace("'", "''", $receiver["location"]["сity"]);
 		self::checkStringField($receiver_location_сity, "receiver location сity", 50);
-		$receiver_location_address = $receiver["location"]["address"];
+		$receiver_location_address = str_ireplace("'", "''", $receiver["location"]["address"]);
 		self::checkStringField($receiver_location_address, "receiver location address", 100);
-		$receiver_location_zip = $receiver["location"]["zip"];
+		$receiver_location_zip = str_ireplace("'", "''", $receiver["location"]["zip"]);
 		self::checkStringField($receiver_location_zip, "receiver location zip", 9);
 		
 		$payer = self::getField("payer", true);
 	   
-		self::checkStringField($payer["name"], "payer name", 20);
-		self::checkStringField($payer["company"], "payer company", 40);
-		self::checkStringField($payer["phone"], "payer phone", 50);
+		$payer_name = str_ireplace("'", "''", $payer["name"]);
+		self::checkStringField($payer_name, "payer name", 20);
+		$payer_company = str_ireplace("'", "''", $payer["company"]);
+		self::checkStringField($payer_company, "payer company", 40);
+		$payer_phone = str_ireplace("'", "''", $payer["phone"]);
+		self::checkStringField($payer_phone, "payer phone", 50);
 		
-		$payer_location_country = $payer["location"]["country"];
+		$payer_location_country = str_ireplace("'", "''", $payer["location"]["country"]);
 		self::checkStringField($payer_location_country, "payer location country", 50);
-		$payer_location_state = $payer["location"]["state"];
+		$payer_location_state = str_ireplace("'", "''", $payer["location"]["state"]);
 		self::checkStringField($payer_location_state, "payer location state", 50);
-		$payer_location_сity = $payer["location"]["сity"];
+		$payer_location_сity = str_ireplace("'", "''", $payer["location"]["сity"]);
 		self::checkStringField($payer_location_сity, "payer location сity", 50);
-		$payer_location_address = $payer["location"]["address"];
+		$payer_location_address = str_ireplace("'", "''", $payer["location"]["address"]);
 		self::checkStringField($payer_location_address, "payer location address", 100);
-		$payer_location_zip = $payer["location"]["zip"];
+		$payer_location_zip = str_ireplace("'", "''", $payer["location"]["zip"]);
 		self::checkStringField($payer_location_zip, "payer location zip", 9);
        
 
@@ -94,10 +103,10 @@ class wbJSONController{
 		$waybillDate = self::getField("waybillDate", true);
        self::checkStringField($waybillDate, "waybillDate", 8);
 		
-       $description = self::getFieldWithDefault("description", "");
+       $description = str_ireplace("'", "''", self::getFieldWithDefault("description", ""));
        self::checkStringField($description, "description", 500);
 
-       $senderComment = self::getFieldWithDefault("senderComment", "");
+       $senderComment = str_ireplace("'", "''", self::getFieldWithDefault("senderComment", ""));
        self::checkStringField($senderComment, "senderComment", 300);
        //self::checkRange($tPac, "inSum", array(0, 1));
 
@@ -115,25 +124,25 @@ class wbJSONController{
 */
         $sql = "/*--apijson--*/exec wwwAPIJSON
        	    @waybillNumber = '$waybillNumber',
-            @s_name = '$sender[name]',
-            @s_company = '$sender[company]',
-			@s_phone = '$sender[phone]',
+            @s_name = '$sender_name',
+            @s_company = '$sender_company',
+			@s_phone = '$sender_phone',
 			@s_l_country = '$sender_location_country',
 			@s_l_state = '$sender_location_state',
 			@s_l_city = '$sender_location_сity',
 			@s_l_address = '$sender_location_address',
 			@s_l_zip = '$sender_location_zip',
-			@r_name = '$receiver[name]',
-            @r_company = '$receiver[company]',
-			@r_phone = '$receiver[phone]',
+			@r_name = '$receiver_name',
+            @r_company = '$receiver_company',
+			@r_phone = '$receiver_phone',
 			@r_l_country = '$receiver_location_country',
 			@r_l_state = '$receiver_location_state',
 			@r_l_city = '$receiver_location_сity',
 			@r_l_address = '$receiver_location_address',
 			@r_l_zip = '$receiver_location_zip',
-			@p_name = '$payer[name]',
-            @p_company = '$payer[company]',
-			@p_phone = '$payer[phone]',
+			@p_name = '$payer_name',
+            @p_company = '$payer_company',
+			@p_phone = '$payer_phone',
 			@p_l_country = '$payer_location_country',
 			@p_l_state = '$payer_location_state',
 			@p_l_city = '$payer_location_сity',
