@@ -19,8 +19,8 @@ class wbJSONController{
 
 		$sender = self::getField("sender", true);
 	   
-		self::checkStringField($sender["name"], "sender name", 50);
-		self::checkStringField($sender["company"], "sender company", 50);
+		self::checkStringField($sender["name"], "sender name", 20);
+		self::checkStringField($sender["company"], "sender company", 40);
 		self::checkStringField($sender["phone"], "sender phone", 50);
 		
 		$sender_location_country = $sender["location"]["country"];
@@ -30,11 +30,15 @@ class wbJSONController{
 		$sender_location_сity = $sender["location"]["сity"];
 		self::checkStringField($sender_location_сity, "sender location сity", 50);
 		$sender_location_address = $sender["location"]["address"];
-		self::checkStringField($sender_location_address, "sender location address", 50);
+		self::checkStringField($sender_location_address, "sender location address", 100);
 		$sender_location_zip = $sender["location"]["zip"];
 		self::checkStringField($sender_location_zip, "sender location zip", 9);
 		
 		$receiver = self::getField("receiver", true);
+		
+		self::checkStringField($receiver["name"], "receiver name", 20);
+		self::checkStringField($receiver["company"], "receiver company", 40);
+		self::checkStringField($receiver["phone"], "receiver phone", 50);
 	   		
 		$receiver_location_country = $receiver["location"]["country"];
 		self::checkStringField($receiver_location_country, "receiver location country", 50);
@@ -43,14 +47,14 @@ class wbJSONController{
 		$receiver_location_сity = $receiver["location"]["сity"];
 		self::checkStringField($receiver_location_сity, "receiver location сity", 50);
 		$receiver_location_address = $receiver["location"]["address"];
-		self::checkStringField($receiver_location_address, "receiver location address", 50);
+		self::checkStringField($receiver_location_address, "receiver location address", 100);
 		$receiver_location_zip = $receiver["location"]["zip"];
 		self::checkStringField($receiver_location_zip, "receiver location zip", 9);
 		
 		$payer = self::getField("payer", true);
 	   
-		self::checkStringField($payer["name"], "payer name", 50);
-		self::checkStringField($payer["company"], "payer company", 50);
+		self::checkStringField($payer["name"], "payer name", 20);
+		self::checkStringField($payer["company"], "payer company", 40);
 		self::checkStringField($payer["phone"], "payer phone", 50);
 		
 		$payer_location_country = $payer["location"]["country"];
@@ -65,44 +69,6 @@ class wbJSONController{
 		self::checkStringField($payer_location_zip, "payer location zip", 9);
        
 
-     /*  $sTel = self::getFieldWithDefault("sTel", "");
-       self::checkStringField($sTel, "sTel", 50);
-
-       $sCo = self::getFieldWithDefault("sCo", "");
-       self::checkStringField($sCo, "sCo", 90);
-
-       $sAdr = self::getField("sAdr", true);
-       self::checkStringField($sAdr, "sAdr", 200);
-
-       $sMail = self::getField("sMail", true);
-       self::checkStringField($sMail, "sMail", 200);
-
-       $sRef = self::getFieldWithDefault("sRef", "");
-       self::checkStringField($sRef, "sRef", 300);
-
-       $rCityID = self::getField("rCityID", true);
-       self::checkNumberValue($rCityID, "rCityID");
-       cityController::checkCities($rCityID);
-
-       $rName = self::getField("rName", true);
-       self::checkStringField($rName, "rName", 50);
-
-       $rTel = self::getFieldWithDefault("rTel", "");
-       self::checkStringField($rTel, "rTel", 50);
-
-       $rCo = self::getFieldWithDefault("rCo", "");
-       self::checkStringField($rCo, "rCo", 50);
-
-       $rAdr = self::getField("rAdr", true);
-       self::checkStringField($rAdr, "rAdr", 200);
-
-       $rRef = self::getFieldWithDefault("rRef", "");
-       self::checkStringField($rRef, "rRef", 300);
-
-       $rMail = self::getField("rMail", "true");
-       self::checkStringField($rMail, "rMail", 200);
-
-       */
 
        $weight = self::getField("weight", true);
        self::checkNumberValue($weight, "weight");
@@ -126,13 +92,13 @@ class wbJSONController{
 	    self::checkRange($packType,"packType", array("pl", "le"));
 		
 		$waybillDate = self::getField("waybillDate", true);
-       self::checkStringField($waybillDate, "waybillDate", 50);
+       self::checkStringField($waybillDate, "waybillDate", 8);
 		
        $description = self::getFieldWithDefault("description", "");
        self::checkStringField($description, "description", 500);
 
        $senderComment = self::getFieldWithDefault("senderComment", "");
-       self::checkStringField($senderComment, "senderComment", 500);
+       self::checkStringField($senderComment, "senderComment", 300);
        //self::checkRange($tPac, "inSum", array(0, 1));
 
        /*$metPaym = self::getFieldWithDefault("metPaym", 'INV');
@@ -184,29 +150,7 @@ class wbJSONController{
 			@senderComment = '$senderComment'
 			";
             
-		/*	@S_City_ID = $sCityID,
-            @S_Name = '$sName',
-            @S_Tel = '$sTel',
-            @S_Co = '$sCo',
-            @S_Adr = '$sAdr',
-            @S_Ref = '$sRef',
-            @S_Mail = '$sMail',
-            @R_City_ID = $rCityID,
-            @R_Name = '$rName',
-            @R_Tel = '$rTel',
-            @R_Co = '$rCo',
-            @R_Adr = '$rAdr',
-            @R_Ref = '$rRef',
-            @R_Mail = '$rMail',
-            @User_IN = '$userin',
-            @WT = $wt,
-            @VOL_WT = $volWt,
-            @PCS = $pcs,
-            @T_PAC = $tPac,
-            @Descr = '$Descr',
-            @Inssum = $inSum,
-			@wbsource = 'api',            
-            @agentID = $ag";*/
+
        $response = new Response();
        $sql = Flight::utf8_to_win1251($sql);
        $sql = stripslashes($sql);
