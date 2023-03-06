@@ -42,9 +42,9 @@
 	"weight": 0.1,
 	"volumeWeight": 0.2,
 	"packs": 2,
-	"payType": "CSH",
+	"payType": "csh",
 	"payerType": 3,
-	
+	"packType": "le",
 	"waybillDate": "20230201",	
 	
 	"senderComment": "comment",

@@ -1,5 +1,5 @@
 <?php
-Flight::route('GET /orders/@First/@Last',['orderController','getOrders']);
+/*Flight::route('GET /orders/@First/@Last',['orderController','getOrders']);
 
 Flight::route('POST /orders(/@ID)',['orderController','createOrder']);
 
@@ -19,6 +19,6 @@ Flight::route('GET /tarifs/@org/@dest/@wt(/@cargotype)',['tarifsController','get
 
 Flight::route('POST /catapulto',['catapultoController','getCatapultoTarif']);
 
-Flight::route('POST /wb',['wbController','createWb']);
+Flight::route('POST /wb',['wbController','createWb']);*/
 
 Flight::route('POST /wbs',['wbJSONController','createWb']);
