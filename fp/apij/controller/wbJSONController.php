@@ -19,7 +19,7 @@ class wbJSONController{
 
 		$sender = self::getField("sender", true);
 	   
-		$sender_name = str_ireplace("'", "''", $sender["name"]);
+		$sender_name = str_ireplace("'", "''", $sender["name"]);		
 		self::checkStringField($sender_name, "sender name", 20);
 		$sender_company = str_ireplace("'", "''", $sender["company"]);
 		self::checkStringField($sender_company, "sender company", 40);
@@ -219,7 +219,7 @@ class wbJSONController{
          throw new Exception(
              "Значения ключа '$fieldName' не является строчным");
 
-     if (strlen($field) > $charCount)
+  if (mb_strlen($field,'UTF-8')> $charCount)
          throw new Exception(
              "Количесво символов значения ключа '$fieldName' превышает доустимое количество - '$charCount'");
 
