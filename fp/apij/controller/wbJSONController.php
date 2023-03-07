@@ -98,7 +98,7 @@ class wbJSONController{
 		
 		$packType = self::getField("packType", true);
 		self::checkStringField($packType, "packType", 2);
-	    self::checkRange($packType,"packType", array("pl", "le"));
+	    self::checkRange($packType,"packType", array("pl", "le", "PL", ""));
 		
 		$waybillDate = self::getField("waybillDate", true);
        self::checkStringField($waybillDate, "waybillDate", 8);
@@ -253,7 +253,7 @@ class wbJSONController{
   private function checkRange($field, $fieldName, $range) {
       $found = false;
       foreach ($range as $item) {
-          if ($field == $item)
+          if (($field == $item) || (strcasecmp($field, $item) == 0))
               $found = true;
       }
 
