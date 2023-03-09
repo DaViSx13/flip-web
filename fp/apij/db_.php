@@ -623,7 +623,13 @@ class SQLSRV_DataBase {
 		$this->prepare();
 		//$this->last_query = $query;
 
+		//$result = mssql_query( $query, $this->db );
+		try{
 		$result = mssql_query( $query, $this->db );
+		}
+	        catch (exception $e) {
+			throw new Exception(iconv("windows-1251", "UTF-8", mssql_get_last_message()));
+	        }
 
 		if ( false === $result ) {
 			

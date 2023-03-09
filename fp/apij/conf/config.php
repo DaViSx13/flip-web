@@ -2,11 +2,11 @@
 $config = [
     "db" => [
         "host" => "ROCKET",
-        "username" => "pod",
-        "password" => "",
+        "username" => "API2client",
+        "password" => "z3UlqILk",
         "databasename" => "alert_f"
       ],
     "web" => [
-        "base_url" => "/api"
+        "base_url" => "/apij"
       ]
   ];

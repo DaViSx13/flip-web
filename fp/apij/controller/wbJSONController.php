@@ -11,8 +11,9 @@ class wbJSONController{
      * @throws Exception Ошибка создания
      */
     public static function createWb() {     
-	 // $token = $_SERVER["HTTP_TOKEN"];
-     //if $token = Flight::checkToken($token);
+	 
+	    $token = $_SERVER["HTTP_TOKEN"];
+        $userName = Flight::checkToken($token);
 
 		$waybillNumber = self::getField("waybillNumber", "", true);
 		self::checkStringField($waybillNumber, "waybillNumber", 50);
@@ -30,8 +31,8 @@ class wbJSONController{
 		self::checkStringField($sender_location_country, "sender location country", 50);
 		$sender_location_state = str_ireplace("'", "''", $sender["location"]["state"]);
 		self::checkStringField($sender_location_state, "sender location state", 50);
-		$sender_location_сity = str_ireplace("'", "''", $sender["location"]["сity"]);
-		self::checkStringField($sender_location_сity, "sender location сity", 50);
+		$sender_location_city = str_ireplace("'", "''", $sender["location"]["city"]);
+		self::checkStringField($sender_location_city, "sender location city", 50);
 		$sender_location_address = str_ireplace("'", "''", $sender["location"]["address"]);
 		self::checkStringField($sender_location_address, "sender location address", 100);
 		$sender_location_zip = str_ireplace("'", "''", $sender["location"]["zip"]);
@@ -50,8 +51,8 @@ class wbJSONController{
 		self::checkStringField($receiver_location_country, "receiver location country", 50);
 		$receiver_location_state = str_ireplace("'", "''", $receiver["location"]["state"]);
 		self::checkStringField($receiver_location_state, "receiver location state", 50);
-		$receiver_location_сity = str_ireplace("'", "''", $receiver["location"]["сity"]);
-		self::checkStringField($receiver_location_сity, "receiver location сity", 50);
+		$receiver_location_city = str_ireplace("'", "''", $receiver["location"]["city"]);
+		self::checkStringField($receiver_location_city, "receiver location city", 50);
 		$receiver_location_address = str_ireplace("'", "''", $receiver["location"]["address"]);
 		self::checkStringField($receiver_location_address, "receiver location address", 100);
 		$receiver_location_zip = str_ireplace("'", "''", $receiver["location"]["zip"]);
@@ -70,8 +71,8 @@ class wbJSONController{
 		self::checkStringField($payer_location_country, "payer location country", 50);
 		$payer_location_state = str_ireplace("'", "''", $payer["location"]["state"]);
 		self::checkStringField($payer_location_state, "payer location state", 50);
-		$payer_location_сity = str_ireplace("'", "''", $payer["location"]["сity"]);
-		self::checkStringField($payer_location_сity, "payer location сity", 50);
+		$payer_location_city = str_ireplace("'", "''", $payer["location"]["city"]);
+		self::checkStringField($payer_location_city, "payer location city", 50);
 		$payer_location_address = str_ireplace("'", "''", $payer["location"]["address"]);
 		self::checkStringField($payer_location_address, "payer location address", 100);
 		$payer_location_zip = str_ireplace("'", "''", $payer["location"]["zip"]);
@@ -98,7 +99,7 @@ class wbJSONController{
 		
 		$packType = self::getField("packType", true);
 		self::checkStringField($packType, "packType", 2);
-	    self::checkRange($packType,"packType", array("pl", "le", "PL", ""));
+	    self::checkRange($packType,"packType", array("pl", "le"));
 		
 		$waybillDate = self::getField("waybillDate", true);
        self::checkStringField($waybillDate, "waybillDate", 8);
@@ -122,14 +123,14 @@ class wbJSONController{
         $userin = $token['auser'];
         $ag = $token['agentid'];
 */
-        $sql = "/*--apijson--*/exec wwwAPIJSON
+        $sql = "/*--wwwAPICreateWb--*/exec wwwAPICreateWb
        	    @waybillNumber = '$waybillNumber',
             @s_name = '$sender_name',
             @s_company = '$sender_company',
 			@s_phone = '$sender_phone',
 			@s_l_country = '$sender_location_country',
 			@s_l_state = '$sender_location_state',
-			@s_l_city = '$sender_location_сity',
+			@s_l_city = '$sender_location_city',
 			@s_l_address = '$sender_location_address',
 			@s_l_zip = '$sender_location_zip',
 			@r_name = '$receiver_name',
@@ -137,7 +138,7 @@ class wbJSONController{
 			@r_phone = '$receiver_phone',
 			@r_l_country = '$receiver_location_country',
 			@r_l_state = '$receiver_location_state',
-			@r_l_city = '$receiver_location_сity',
+			@r_l_city = '$receiver_location_city',
 			@r_l_address = '$receiver_location_address',
 			@r_l_zip = '$receiver_location_zip',
 			@p_name = '$payer_name',
@@ -145,7 +146,7 @@ class wbJSONController{
 			@p_phone = '$payer_phone',
 			@p_l_country = '$payer_location_country',
 			@p_l_state = '$payer_location_state',
-			@p_l_city = '$payer_location_сity',
+			@p_l_city = '$payer_location_city',
 			@p_l_address = '$payer_location_address',
 			@p_l_zip = '$payer_location_zip',
 			@weight = $weight,
@@ -156,7 +157,8 @@ class wbJSONController{
 			@packType = '$packType',
 			@waybillDate = '$waybillDate',
 			@description = '$description',
-			@senderComment = '$senderComment'
+			@senderComment = '$senderComment',
+			@userName = '$userName'
 			";
             
 

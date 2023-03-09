@@ -51,9 +51,12 @@ $erresp = new ErResp();
 });
 
 Flight::map('checkToken',function($token){
-  $sql = "exec wwwAPIcheckToken @token = '$token'";
-  $result = Flight::db()->query($sql);      
-  return $result;     
+  //$sql = "exec wwwAPIcheckToken @token = '$token'";
+  //$result = Flight::db()->query($sql); 
+  if ($token == "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9") 
+  return "api_integration_user";
+		else
+  throw new Exception("Не верный ключ авторизации");		
 });
 
 Flight::map('logDB',function($msg){
