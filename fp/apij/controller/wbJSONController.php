@@ -15,14 +15,14 @@ class wbJSONController{
         $token = $_SERVER["HTTP_TOKEN"];
         $userName = Flight::checkToken($token);
 	/*------------------Ограничение частоты вызова----------------------------------*/	
-		$file = 'time.txt';
+	/*	$file = 'time.txt';
 		$oldTime = file_get_contents($file);	
 		$newTime = $_SERVER['REQUEST_TIME'];
 		if(($newTime - $oldTime) < 1)	{
 			file_put_contents($file, $newTime);
 			throw new Exception("Ваш лимит частоты вызова API - 1 раз в секунду");
 		}
-		file_put_contents($file, $newTime);		
+		file_put_contents($file, $newTime);	*/	
 	/*-----------------------------------------------------------------------------*/	
         $waybillNumber = self::getField("waybillNumber", "", true);
         self::checkStringField($waybillNumber, "waybillNumber", 50);
