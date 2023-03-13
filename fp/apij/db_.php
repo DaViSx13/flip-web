@@ -624,6 +624,16 @@ class SQLSRV_DataBase {
 		//$this->last_query = $query;
 
 		//$result = mssql_query( $query, $this->db );
+		/*$query = "set quoted_identifier on
+						set arithabort on
+						set numeric_roundabort off
+						set ansi_warnings on
+						set ansi_padding on
+						set ansi_nulls on
+						SET ANSI_NULL_DFLT_ON ON
+						".$query;*/
+		
+		
 		try{
 		$result = mssql_query( $query, $this->db );
 		}
