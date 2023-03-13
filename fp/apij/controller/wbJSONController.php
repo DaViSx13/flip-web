@@ -187,8 +187,8 @@ public static function createWbs() {
 		$isError = false;
         $WBS = Flight::request() -> data;
 		
-		if(count($WBS) > 100){
-			throw new Exception("Максимальное количество накладных в пачке 100 штук");
+		if(count($WBS) > 1000){
+			throw new Exception("Максимальное количество накладных в пачке 1000 штук");
 		}
 		
 		for ($i = 0; $i < count($WBS); $i++) { 
