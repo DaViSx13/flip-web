@@ -188,7 +188,7 @@ public static function createWbs() {
         $WBS = Flight::request() -> data;
 		
 		if(!isset($WBS[0]))
-			throw new Exception("Не корректный формат JSON. АПИ ожидает массив накладных");
+			throw new Exception("Некорректный формат JSON. АПИ ожидает массив накладных");
 		
 		if(count($WBS) > 1000)
 			throw new Exception("Максимальное количество накладных в пачке не более 1000 штук");
