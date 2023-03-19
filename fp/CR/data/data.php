@@ -2,7 +2,7 @@
 //завязка
 session_name("COURIERSESSIONID");
 session_start();
-header("Content-type: text/plain; charset=utf-8");
+header("Content-type: application/json; charset=utf-8");
 error_reporting(0);
 class Response
 {
@@ -15,7 +15,31 @@ $response = new Response();
 
 if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'совсем не правильный запрос';
-} else {
+} 
+else if ( strcasecmp($_REQUEST['dbAct'], 'printUchetList')==0 ){
+	try{
+	
+		$options = array(
+			//CURLOPT_HTTPHEADER => $headers,
+		);
+
+		//$url = 'http://192.168.0.15:8080/printUchetList';
+		$url = 'http://10.10.10.6:8181/printUchetList';
+		$get = array(
+			'courID' => $_SESSION[CourID]
+		);
+		
+		$resp = curl_get($url, $get, $options);
+		$response->msg = $resp;
+				
+		$response->success = true;
+	}
+	catch (exception $e) {
+		$response->msg = "Ошибка сервиса печати: ".$e->getMessage();
+	}	
+}
+else
+{
     $dbAct = $_REQUEST['dbAct'];
     //в case нужно сформировать строку sql запроса $query
     //если нужен paging установить $paging = true
@@ -153,4 +177,51 @@ if (extension_loaded('mbstring')) {
 } else {
     echo json_encode($response);
 }
+
+
+/** 
+* Send a GET requst using cURL 
+* @param string $url to request 
+* @param array $get values to send 
+* @param array $options for cURL 
+* @return string 
+*/ 
+function curl_get($url, array $get = NULL, array $options = array()) 
+{    
+	$defaults = array( 
+        CURLOPT_URL => $url. (strpos($url, '?') === FALSE ? '?' : ''). http_build_query($get), 
+        CURLOPT_HEADER => 0, 
+        CURLOPT_RETURNTRANSFER => TRUE, 
+        CURLOPT_TIMEOUT => 10,
+		CURLOPT_SSL_VERIFYPEER => FALSE,
+		CURLOPT_SSL_VERIFYHOST => FALSE
+		//, CURLOPT_FAILONERROR => true
+    ); 
+    
+		//print '$defaults<br/>';
+        //print_r( $defaults);
+
+	$ch = curl_init(); 
+    curl_setopt_array($ch, ($options + $defaults)); 
+	$result = curl_exec($ch);
+    if($result === false) 
+    { 
+		//print 'curl_error<br/>';
+        //print curl_error($ch);
+		//trigger_error(curl_error($ch)); 
+		throw new Exception(curl_error($ch)); 
+		
+    } 
+	/*
+	print 'result<br/>';
+	var_dump( $result);
+	print 'curl_error<br/>';
+	print curl_error($ch);
+	print 'END========<br/>';
+	*/
+    curl_close($ch); 
+    return $result; 
+	
+} 
+
 ?>
