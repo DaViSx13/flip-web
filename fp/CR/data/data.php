@@ -1,8 +1,10 @@
 <?php
+include "curl.php";
+
 //завязка
 session_name("COURIERSESSIONID");
 session_start();
-header("Content-type: text/plain; charset=utf-8");
+header("Content-type: application/json; charset=utf-8");
 error_reporting(0);
 class Response
 {
@@ -15,7 +17,30 @@ $response = new Response();
 
 if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'совсем не правильный запрос';
-} else {
+} 
+else if ( strcasecmp($_REQUEST['dbAct'], 'printUchetList')==0 ){
+	try{
+	
+		$options = array(
+			//CURLOPT_HTTPHEADER => $headers,
+		);
+
+		$url = 'http://192.168.0.15:8080/printUchetList';
+		$get = array(
+			'courID' => $_SESSION[CourID]
+		);
+		
+		$resp = curl_get($url, $get, $options);
+		$response->msg = $resp;
+				
+		$response->success = true;
+	}
+	catch (exception $e) {
+		$response->msg = "Ошибка сервиса печати: ".$e->getMessage();
+	}	
+}
+else
+{
     $dbAct = $_REQUEST['dbAct'];
     //в case нужно сформировать строку sql запроса $query
     //если нужен paging установить $paging = true
