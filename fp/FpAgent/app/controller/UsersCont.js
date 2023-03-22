@@ -36,12 +36,96 @@ Ext.define('FPAgent.controller.UsersCont', {
 			},
 			'usersgrid' : {
 				selectionchange : this.isScroll
+			},
+			'userstool checkbox[name=showBlocked]': {
+				change: this.showHideBlocked
+			},
+			'userstool textfield[name=userSearch]': {
+				change: this.searchUser
 			}
 		});
 	},
+
+	/**
+	 * Поиск пользователя.
+	 * Событие: Измененеие текста в Поле "Поиск пользователя"
+	 *
+	 * @param textfield Фильтр "Поиск пользователя"
+	 * @param newValue Текущее значение
+	 */
+	searchUser: function (textfield, newValue) {
+		var grid = this.getUsersGrid();
+		var store = grid.getStore();
+		var usernameFilter = this.getUsernameFilter(newValue);
+		if (newValue.length !== 0) {
+			store.filters.add(usernameFilter);
+		} else {
+			store.filters.removeAtKey('usernameFilter');
+		}
+
+		store.load();
+	},
+
+	/**
+	 * Показывает/скрывает блокированных функций.
+	 * Событие: Изменение значения checkbox "Показать блокированных".
+	 *
+	 * @param checkbox Фильтр
+	 * @param newValue Текущее значение фильтра
+	 */
+	showHideBlocked: function (checkbox, newValue) {
+		var grid = this.getUsersGrid();
+		var store = grid.getStore();
+		var blockedFilter = this.getBlockedFilter();
+		if (!newValue) {
+			store.filters.add(blockedFilter);
+		} else {
+			store.filters.removeAtKey('blockedFilter');
+		}
+
+		store.load();
+	},
+
+	/**
+	 * Получает фильтр по полю "aUser" (Login).
+	 * @param value Значение из поля "Поиск пользователя"
+	 * @returns Ext.utils.Filter Фильтр
+	 */
+	getUsernameFilter(value) {
+		return new Ext.util.Filter({
+			id: 'usernameFilter',
+			filterFn: function (item) {
+				return item.get('auser').indexOf(value) !== -1
+			}
+		});
+	},
+
+	/**
+	 * Получает фильтр по полю "Показать блокированных"
+	 *
+	 * @returns Ext.utils.Filter Фильтр
+	 */
+	getBlockedFilter() {
+		return new Ext.util.Filter({
+			id: 'blockedFilter',
+			filterFn: function (item) {
+				return item.get('active') > 0
+			}
+		});
+	},
+
+	/**
+	 * Загружает данные таблицы "Пользователи"
+	 * По умолчанию, скрыты блокированные пользователи.
+	 *
+	 * @param ThePanel Контент
+	 * @param newCard Новая карточка
+	 */
 	loadUsers : function (ThePanel, newCard) {
 		if (newCard.xtype == 'usersgrid') {
-			this.getUsersStStore().load();
+			var store = this.getUsersStStore();
+			store.filters.add('blockedFilter', this.getBlockedFilter());
+			store.load();
 			this.getAgentsListStStore().load();
 			this.getAdmTool().down('buttongroup[itemId=admgroup]').setVisible(false);
 			this.getAdmTool().down('button[action=list]').setVisible(false);
