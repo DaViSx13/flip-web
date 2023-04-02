@@ -11,24 +11,43 @@ class Response
 }
 $response = new Response();
 
-//кульминация
+//методы сервиса печати
+$printSvcRoutes = array("printUchetList", "printOrder", "printWB");
+//URL сервиса печати
+$printSvcUrl = "http://10.10.10.6:8181/"; //прод
+$printSvcUrl = "http://192.168.0.15:8080/";
 
-if (!isset($_REQUEST['dbAct'])) {
+//кульминация
+if ( isset($_REQUEST['dbAct']) ) {
+    $dbAct = $_REQUEST['dbAct'];
+}
+
+if (!isset($dbAct)) {
     $response->msg = 'совсем не правильный запрос';
 } 
-else if ( strcasecmp($_REQUEST['dbAct'], 'printUchetList')==0 ){
+else 
+	if( in_array( mb_strtolower($dbAct), array_map('mb_strtolower',$printSvcRoutes)) ){	
+	/* вызов сервиса печати */
 	try{
 	
 		$options = array(
 			//CURLOPT_HTTPHEADER => $headers,
 		);
 
-		//$url = 'http://192.168.0.15:8080/printUchetList';
-		$url = 'http://10.10.10.6:8181/printUchetList';
-		$get = array(
-			'courID' => $_SESSION[CourID]
-		);
+		//URL
+		$url = $printSvcUrl.$dbAct;
+
+		//массив параметров
+		$get = array();
+		if ( strcasecmp($dbAct, 'printUchetList')==0 ){
+			$get['courID'] = $_SESSION['CourID'];
+		} else	if ( strcasecmp($dbAct, 'printOrder')==0 ){
+			$get['orderNo'] = $_REQUEST['orderno'];
+		} else	if ( strcasecmp($dbAct, 'printWB')==0 ){
+			$get['wbno'] = $_REQUEST['wbno'];
+		}
 		
+		//вызов
 		$resp = curl_get($url, $get, $options);
 		$response->msg = $resp;
 				
@@ -40,7 +59,6 @@ else if ( strcasecmp($_REQUEST['dbAct'], 'printUchetList')==0 ){
 }
 else
 {
-    $dbAct = $_REQUEST['dbAct'];
     //в case нужно сформировать строку sql запроса $query
     //если нужен paging установить $paging = true
     //можно задать сообщение, которое вернуть при успехе $response->msg = 'успех'
