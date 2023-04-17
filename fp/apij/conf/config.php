@@ -2,8 +2,8 @@
 $config = [
     "db" => [
         "host" => "ROCKET",
-        "username" => "APIJUser",
-        "password" => "",
+        "username" => "sa",
+        "password" => "1",
         "databasename" => "alert_f"
       ],
     "web" => [
