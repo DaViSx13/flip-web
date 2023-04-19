@@ -25,8 +25,8 @@ Flight::route('POST /wb',['wbJSONController','createWb']);
 
 Flight::route('POST /wbs',['wbJSONController','createWbs']);
 
-Flight::route('POST /pod',['podController','createPOD']);
+Flight::route('POST /pod',['courController','createPOD']);
 
-Flight::route('POST /act',['courLogController','createLog']);
+Flight::route('POST /act',['courController','createLog']);
 
 Flight::route('POST /finalwb',['finalWb','finalizeWB']);

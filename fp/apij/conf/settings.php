@@ -15,9 +15,7 @@ Flight::register("tarifs","tarifsController");
 
 Flight::register("catapulto","catapultoController");
 
-Flight::register("pod", "podController");
-
-Flight::register("act", "podController");
+Flight::register("cour", "courController");
 
 Flight::path("model/");
 

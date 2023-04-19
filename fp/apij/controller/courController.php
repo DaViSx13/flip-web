@@ -7,14 +7,64 @@ class Response
     public $data = null;
 }
 
-class courLogController {
+class courController {
 
-    public function createLog() {
+    public function createPOD() {
         try {
             $token = $_SERVER["HTTP_TOKEN"];
             Flight::checkToken($token);
 
-            $courID = self::getField('courID', true);
+            // Номер накладной, обязательный, 50 символов
+            $wbNo = self::getField('wbNo', true);
+            self::checkStringField($wbNo, 'Номер накладной', 50);
+
+            // Получатель, обязательный, 50 символов
+            $rcpn = self::getField('recirverName', true);
+            self::checkStringField($rcpn,'Получатель', 50);
+
+            // Дата подтверждения, обязательная
+            $pdIn = self::getField('dateIn', true);
+            self::checkByPattern("/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/", $pdIn, "Не соответсвует формату: 'yyyy-mm-dd' или 'yyyy-mm-dd hh:mm'");
+
+            // Время доставки
+            $tdd = self::getField('timeIn', true);
+            self::checkByPattern("/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/", $pdIn, "Не соответсвует формату: 'yyyy-mm-dd' или 'yyyy-mm-dd hh:mm'");
+
+            $user = self::getField('courierID', false);
+            self::checkStringField($user, 'Пользователь', 50);
+        } catch (Exception $ex) {
+            $error = new Response();
+            $error -> msg = iconv('windows-1251', 'utf-8', $ex->getMessage());
+            Flight::json($error);
+            return;
+        }
+
+
+        $sql = "/*--apitest--*/ 
+            exec wwwSetPOD
+               @wb_no='{$wbNo}',
+               @p_d_in='{$pdIn}',
+               @tdd='{$tdd}',
+               @rcpn='{$rcpn}',
+               @user='{$user}'";
+
+        $response = new Response();
+        $sql = Flight::utf8_to_win1251($sql);
+        $sql = stripslashes($sql);
+        $result = Flight::db()->query($sql);
+        $response->data = $result;
+        $response->status = 'success';
+        echo Flight::json($response);
+
+    }
+
+    public function createLog()
+    {
+        try {
+            $token = $_SERVER["HTTP_TOKEN"];
+            Flight::checkToken($token);
+
+            $courID = self::getField('courierID', true);
             self::checkNumberValue($courID, 'Пользователь');
 
             $ano = self::getField('ano', true);
@@ -22,7 +72,7 @@ class courLogController {
 
             // Событие, обязательный, область: 'pod', 'ready', 'go'
             $event = self::getField('event', true);
-            self::checkRange($event,'Событие', array('pod', 'ready', 'go'));
+            self::checkRange($event, 'Событие', array('pod', 'ready', 'go'));
 
             // Дата подтверждения, обязательная
             $date = self::getField('date', true);
@@ -32,10 +82,11 @@ class courLogController {
 
         } catch (Exception $ex) {
             $error = new Response();
-            $error -> msg = iconv('windows-1251', 'utf-8', $ex->getMessage());
+            $error->msg = iconv('windows-1251', 'utf-8', $ex->getMessage());
             Flight::json($error);
             return;
         }
+
 
         $sql = "/*--apitest--*/ 
             exec wwwSpCourLog
@@ -54,6 +105,8 @@ class courLogController {
         echo Flight::json($response);
 
     }
+
+    /**
 
     /**
      * Получение значения из запроса.
@@ -98,10 +151,6 @@ class courLogController {
                     "Значения ключа '$fieldName' не является числом. Исправьте тело запроса и повторите попытку");
     }
 
-    private static function checkByPattern($value, $pattern) {
-        return preg_match($pattern, $value);
-    }
-
     /**
      * Проерка строчного значения.
      * @param $field string Значение
@@ -131,6 +180,12 @@ class courLogController {
         foreach ($injectionSymbols as $item) {
             if(strpos($field, $item) == true)
                 throw new Exception("В значении ключа '$fieldName' обнаружено недопустимое значение - '$item'");
+        }
+    }
+
+    private static function  checkByPattern($pattern, $value, $friendly) {
+        if(!preg_match($pattern, $value)) {
+            throw new Exception("Поле не соответсвует условию: '".$friendly."'");
         }
     }
 
