@@ -31,7 +31,7 @@ class courController {
             self::checkByPattern("/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/", $pdIn, "Не соответсвует формату: 'yyyy-mm-dd' или 'yyyy-mm-dd hh:mm'");
 
             $user = self::getField('courierID', false);
-            self::checkStringField($user, 'Пользователь', 50);
+            self::checkNumberValue($user, 'Пользователь');
         } catch (Exception $ex) {
             $error = new Response();
             $error -> msg = iconv('windows-1251', 'utf-8', $ex->getMessage());
