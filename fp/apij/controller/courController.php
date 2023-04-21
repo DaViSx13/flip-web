@@ -76,6 +76,7 @@ class courController {
 
             // Дата подтверждения, обязательная
             $date = self::getField('date', true);
+            self::checkByPattern("/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/", $date, "Не соответсвует формату: 'yyyy-mm-dd' или 'yyyy-mm-dd hh:mm'");
 
             $rem = self::getFieldWithDefault('rem', '');
             self::checkStringField($rem, 'Описание', 50);
