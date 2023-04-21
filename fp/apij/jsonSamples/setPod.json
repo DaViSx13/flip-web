@@ -1,7 +1,7 @@
 {
-  "wbNo": "42-404383",
-  "recirverName": "aaa",
+  "waybillNumber": "42-404383",
+  "recipientName": "aaa",
   "dateIn": "2023-04-16 23:23",
-  "timeIn": "2023-04-18",
+  "timeIn": "2023-04-16 23:23",
   "courierID": "1329"
 }

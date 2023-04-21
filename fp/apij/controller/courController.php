@@ -15,11 +15,11 @@ class courController {
             Flight::checkToken($token);
 
             // Номер накладной, обязательный, 50 символов
-            $wbNo = self::getField('wbNo', true);
+            $wbNo = self::getField('waybillNumber', true);
             self::checkStringField($wbNo, 'Номер накладной', 50);
 
             // Получатель, обязательный, 50 символов
-            $rcpn = self::getField('recirverName', true);
+            $rcpn = self::getField('recipientName', true);
             self::checkStringField($rcpn,'Получатель', 50);
 
             // Дата подтверждения, обязательная
@@ -54,6 +54,7 @@ class courController {
         $result = Flight::db()->query($sql);
         $response->data = $result;
         $response->status = 'success';
+		$response->msg = 'Данные внесены';
         echo Flight::json($response);
 
     }
@@ -67,7 +68,7 @@ class courController {
             $courID = self::getField('courierID', true);
             self::checkNumberValue($courID, 'Пользователь');
 
-            $ano = self::getField('ano', true);
+            $ano = self::getField('orderNumber', true);
             self::checkStringField($ano, 'Номер', 50);
 
             // Событие, обязательный, область: 'pod', 'ready', 'go'
@@ -77,7 +78,7 @@ class courController {
             // Дата подтверждения, обязательная
             $date = self::getField('date', true);
 
-            $rem = self::getFieldWithDefault('rem', '');
+            $rem = self::getFieldWithDefault('description', '');
             self::checkStringField($rem, 'Описание', 50);
 
         } catch (Exception $ex) {
@@ -102,6 +103,7 @@ class courController {
         $result = Flight::db()->query($sql);
         $response->data = $result;
         $response->status = 'success';
+		$response->msg = 'Данные внесены';
         echo Flight::json($response);
 
     }
