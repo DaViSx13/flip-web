@@ -1,7 +1,7 @@
 Ext.define('fplk.view.orders.OrdForm', {
     alias: 'widget.ordform',
     extend: 'Ext.form.Panel',
-    requires: ['fplk.view.orders.ComboCity', 'fplk.view.other.UserInputField'],
+    requires: ['fplk.view.orders.ComboCity', 'fplk.view.other.UserInputField', 'fplk.view.templates.TemplateSelection'],
     layout: {
         type: 'absolute'
     },
@@ -16,6 +16,9 @@ Ext.define('fplk.view.orders.OrdForm', {
         x: 10,
         y: 0,
         items: [{
+            xtype: 'templateselection',
+            dest: 'org'
+        }, {
             xtype: 'panel',
             width: 337,
             border: false,
@@ -100,6 +103,9 @@ Ext.define('fplk.view.orders.OrdForm', {
         x: 390,
         y: 0,
         items: [{
+            xtype: 'templateselection',
+            dest: 'dest'
+        }, {
             xtype: 'panel',
             border: false,
             width: 337,
