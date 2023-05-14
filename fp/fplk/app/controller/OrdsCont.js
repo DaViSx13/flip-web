@@ -199,6 +199,12 @@ Ext.define('fplk.controller.OrdsCont', {
             },
             'ordwin combobox[name=sortType]': {
                 change: this.changeOrdType
+            },
+            '*[id=fs1] button[action=fillOrderFromTemplate]': {
+                click: this.fireOnFillOrgOrderFromTemplate
+            },
+            '*[id=fs2] button[action=fillOrderFromTemplate]': {
+                click: this.fireOnFillDestOrderFromTemplate
             }
 
         });
@@ -226,6 +232,28 @@ Ext.define('fplk.controller.OrdsCont', {
     },
 
     afterTemplateQuery: function (query) {
+
+    },
+
+    fireOnFillOrgOrderFromTemplate: function (button) {
+        this.fireOnFillOrderFromTemplate(button, 'org');
+    },
+
+    fireOnFillDestOrderFromTemplate: function (button) {
+        this.fireOnFillOrderFromTemplate(button, 'dest');
+    },
+
+    fireOnFillOrderFromTemplate: function (button, dest) {
+        var ordForm = button.up('ordform');
+        var window = Ext.create('Ext.window.Window', {
+            title:"Заполнить из шаблона", name: 'templateSelectionWrapper', closable: true, draggable: false
+        });
+        var templateSelection = Ext.create('fplk.view.templates.TemplateSelection', {
+            margin: 10, bodyStyle: 'background:transparent', dest: dest
+        });
+        window.add(templateSelection);
+        ordForm.add(window);
+        window.show();
 
     },
 

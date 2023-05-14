@@ -26,6 +26,8 @@ Ext.define('fplk.controller.templates.TemplateSelectionController', {
             this.fillOrgFromTemplate(me, records);
         else
             this.fillDestFromTemplate(me, records);
+
+        me.up('window[name=templateSelectionWrapper]').destroy();
     },
 
     fillOrgFromTemplate: function (combo, records) {

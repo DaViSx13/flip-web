@@ -16,9 +16,6 @@ Ext.define('fplk.view.orders.OrdForm', {
         x: 10,
         y: 0,
         items: [{
-            xtype: 'templateselection',
-            dest: 'org'
-        }, {
             xtype: 'panel',
             width: 337,
             border: false,
@@ -41,6 +38,11 @@ Ext.define('fplk.view.orders.OrdForm', {
                 store: 'CityStOrg',
                 allowBlank: true,
                 flex: 1
+            }, {
+                xtype: 'button',
+                margin: '18 0 0 5',
+                action: 'fillOrderFromTemplate',
+                iconCls : 'newtpl'
             }]
         }, {
             xtype: 'textfield',
@@ -93,19 +95,16 @@ Ext.define('fplk.view.orders.OrdForm', {
             fieldLabel: 'Примечание',
             labelAlign: 'top',
             anchor: '100%'
-        }
-        ]
+        }]
     }, {
         xtype: 'fieldset',
+        id: 'fs2',
         height: 400,
         width: 360,
         title: 'Получатель',
         x: 390,
         y: 0,
         items: [{
-            xtype: 'templateselection',
-            dest: 'dest'
-        }, {
             xtype: 'panel',
             border: false,
             width: 337,
@@ -127,6 +126,11 @@ Ext.define('fplk.view.orders.OrdForm', {
                 name: 'dest',
                 store: 'CityStDes',
                 flex: 1
+            }, {
+                xtype: 'button',
+                margin: '18 0 0 5',
+                action: 'fillOrderFromTemplate',
+                iconCls : 'newtpl'
             }]
         }, {
             xtype: 'userinputfield',
