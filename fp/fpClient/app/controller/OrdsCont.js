@@ -537,7 +537,7 @@ Ext.define('FPClient.controller.OrdsCont', {
         client.set('orgcode', client.get('cityid'));
 
         form_ord = edit.down('ordform');
-        //form_ord.loadRecord(client);
+        form_ord.loadRecord(client);
 
         var cb_org = form_ord.down('combocity[name=org]');
         cb_org.store.load({
@@ -545,6 +545,7 @@ Ext.define('FPClient.controller.OrdsCont', {
                 query: client.get('org')
             }
         });
+
         cb_org.select(client.get('orgcode'));
         //auto sender end
     },
