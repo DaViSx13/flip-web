@@ -760,6 +760,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		}
 		this.editOrdWin(vbut);
 	},
+
 	dblclickOrdClientGr: function (gr, rec) {
 		var tt = this.getOrdClientTool();
 		var vbut = tt.down('button[action=view]');
@@ -810,7 +811,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
 				});
 				win.show();
 				if (button.action == 'view') {
-					win.down('button[action=save]').setVisible(false);
+					win.down('button[action=save]').setText("Повторить заказ")
 				} else {
 					win.down('button[action=save]').setVisible(true);
 				}
@@ -851,8 +852,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
 
 			var formWin = win.items.items[0];
 			var fields = formWin.items;
-
-			win.down('button[action=save]').setVisible(false);
 		} else {
 			if (btn.action == 'edit') {
 				Ext.Msg.alert(FPAgent.lib.Translate.tr("Alert") /*'Внимание!'*/, FPAgent.lib.Translate.tr("OrdsCont.GetOrderEdit") /*'Выберите заказ для редактирования'*/);
@@ -1025,6 +1024,10 @@ Ext.define('FPAgent.controller.OrdsCont', {
 		var me = this;
 		var win = btn.up('ordwin');
 		var form_ord = win.down('ordform');
+
+		if (win.down('button[action=save]').getText() === 'Повторить заказ') {
+			form_ord.down('textfield[name=rordnum]').setValue(null);
+		}
 
 		if(!me.checkFormBeforeRequest(form_ord)) {
 			return;
