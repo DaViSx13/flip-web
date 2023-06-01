@@ -1,6 +1,7 @@
 Ext.define('fplk.view.orders.TemplForm', {
     alias: 'widget.templform',
     extend: 'Ext.form.Panel',
+    formForFill: true,
     requires: ['fplk.view.orders.ComboCity'],
     layout: {
         type: 'absolute'
@@ -26,10 +27,22 @@ Ext.define('fplk.view.orders.TemplForm', {
         x: 10,
         y: 40,
         items: [{
-            xtype: 'combocity',
-            name: 'org',
-            allowBlank: true,
-            store: 'CityStOrg'
+            xtype: 'panel',
+            width: 337,
+            border: false,
+            layout: 'hbox',
+            items: [{
+                xtype: 'combocity',
+                name: 'org',
+                allowBlank: true,
+                store: 'CityStOrg',
+                flex: 1
+            }, {
+                xtype: 'button',
+                margin: '18 0 0 5',
+                action: 'fillTemplateFromAnother',
+                iconCls : 'newtpl'
+            }]
         }, {
             xtype: 'textfield',
             name: 'id',
@@ -91,16 +104,29 @@ Ext.define('fplk.view.orders.TemplForm', {
         ]
     }, {
         xtype: 'fieldset',
+        id: 'fs2',
         height: 390,
         width: 360,
         title: 'Получатель',
         x: 390,
         y: 40,
         items: [{
-            xtype: 'combocity',
-            name: 'dest',
-            allowBlank: true,
-            store: 'CityStDes'
+            xtype: 'panel',
+            width: 337,
+            border: false,
+            layout: 'hbox',
+            items: [{
+                xtype: 'combocity',
+                name: 'dest',
+                allowBlank: true,
+                store: 'CityStDes',
+                flex: 1
+            }, {
+                xtype: 'button',
+                margin: '18 0 0 5',
+                action: 'fillTemplateFromAnother',
+                iconCls : 'newtpl'
+            }]
         }, {
             xtype: 'textfield',
             width: 337,
