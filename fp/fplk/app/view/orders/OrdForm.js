@@ -1,6 +1,7 @@
 Ext.define('fplk.view.orders.OrdForm', {
     alias: 'widget.ordform',
     extend: 'Ext.form.Panel',
+    formForFill: true,
     requires: ['fplk.view.orders.ComboCity', 'fplk.view.other.UserInputField', 'fplk.view.templates.TemplateSelection'],
     layout: {
         type: 'absolute'

@@ -51,8 +51,49 @@ Ext.define('fplk.controller.TemplCont', {
             },
             'templwin button[action=swap]': {
                 click: this.swapFields
+            },
+            '*[id=fs1] button[action=fillTemplateFromAnother]': {
+                click: this.fireOnFillOrgTemplateFromTemplate
+            },
+            '*[id=fs2] button[action=fillTemplateFromAnother]': {
+                click: this.fireOnFillDestTemplateFromTemplate
             }
         });
+    },
+
+    /**
+     * Заполняет информацию об отправителе из определенного шаблона
+     * @param button Кнопка "Из шаблона"
+     */
+    fireOnFillOrgTemplateFromTemplate: function (button) {
+        this.fireOnFillTemplateFromAnother(button, 'org');
+    },
+
+    /**
+     * Заполняет информацию о получателе из определенного шаблона
+     * @param button Кнопка "Из шаблона"
+     */
+    fireOnFillDestTemplateFromTemplate: function (button) {
+        this.fireOnFillTemplateFromAnother(button, 'dest');
+    },
+
+    /**
+     * Заполняет поля из шаблона.
+     * @param button Кнопка "Из шаблона"
+     * @param dest Флаг полей (отправитель/получатель)
+     */
+    fireOnFillTemplateFromAnother: function (button, dest) {
+        var ordForm = button.up('templform');
+        var window = Ext.create('Ext.window.Window', {
+            title:"Заполнить из шаблона", name: 'templateSelectionWrapper', closable: true, draggable: false
+        });
+        var templateSelection = Ext.create('fplk.view.templates.TemplateSelection', {
+            margin: 10, bodyStyle: 'background:transparent', dest: dest
+        });
+        window.add(templateSelection);
+        ordForm.add(window);
+        window.show();
+
     },
 
 

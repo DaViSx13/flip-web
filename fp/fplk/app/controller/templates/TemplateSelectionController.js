@@ -21,7 +21,6 @@ Ext.define('fplk.controller.templates.TemplateSelectionController', {
     },
 
     tempalteComboboxSelect: function (me, records) {
-        console.log(me.up('templateselection').dest)
         if(me.up('templateselection').dest === 'org')
             this.fillOrgFromTemplate(me, records);
         else
@@ -32,7 +31,7 @@ Ext.define('fplk.controller.templates.TemplateSelectionController', {
 
     fillOrgFromTemplate: function (combo, records) {
         if (records[0].data.org != null) {
-            var city = combo.up('ordform').down('combocity[name=org]');
+            var city = combo.up('form[formForFill=true]').down('combocity[name=org]');
             city.store.load({
                 params: {
                     query: records[0].data.org,
@@ -41,17 +40,17 @@ Ext.define('fplk.controller.templates.TemplateSelectionController', {
             });
             city.select(records[0].data.orgcode)
         }
-        combo.up('ordform').down('*[name=cname]').setValue(records[0].data.cname);
-        combo.up('ordform').down('*[name=address]').setValue(records[0].data.address);
-        combo.up('ordform').down('*[name=contname]').setValue(records[0].data.contname);
-        combo.up('ordform').down('*[name=contmail]').setValue(records[0].data.contmail);
-        combo.up('ordform').down('*[name=contphone]').setValue(records[0].data.contphone);
-        combo.up('ordform').down('*[name=orgrems]').setValue(records[0].data.orgrems);
+        combo.up('form[formForFill=true]').down('*[name=cname]').setValue(records[0].data.cname);
+        combo.up('form[formForFill=true]').down('*[name=address]').setValue(records[0].data.address);
+        combo.up('form[formForFill=true]').down('*[name=contname]').setValue(records[0].data.contname);
+        combo.up('form[formForFill=true]').down('*[name=contmail]').setValue(records[0].data.contmail);
+        combo.up('form[formForFill=true]').down('*[name=contphone]').setValue(records[0].data.contphone);
+        combo.up('form[formForFill=true]').down('*[name=orgrems]').setValue(records[0].data.orgrems);
     },
 
     fillDestFromTemplate: function (combo, records) {
         if (records[0].data.dest != null) {
-            var city = combo.up('ordform').down('combocity[name=dest]');
+            var city = combo.up('form[formForFill=true]').down('combocity[name=dest]');
             city.store.load({
                 params: {
                     query: records[0].data.dest,
@@ -60,11 +59,11 @@ Ext.define('fplk.controller.templates.TemplateSelectionController', {
             });
             city.select(records[0].data.destcode)
         }
-        combo.up('ordform').down('*[name=dname]').setValue(records[0].data.dname);
-        combo.up('ordform').down('*[name=dadr]').setValue(records[0].data.dadr);
-        combo.up('ordform').down('*[name=dcontname]').setValue(records[0].data.dcontname);
-        combo.up('ordform').down('*[name=dcontmail]').setValue(records[0].data.dcontmail);
-        combo.up('ordform').down('*[name=dcontphone]').setValue(records[0].data.dcontphone);
-        combo.up('ordform').down('*[name=destrems]').setValue(records[0].data.destrems);
+        combo.up('form[formForFill=true]').down('*[name=dname]').setValue(records[0].data.dname);
+        combo.up('form[formForFill=true]').down('*[name=dadr]').setValue(records[0].data.dadr);
+        combo.up('form[formForFill=true]').down('*[name=dcontname]').setValue(records[0].data.dcontname);
+        combo.up('form[formForFill=true]').down('*[name=dcontmail]').setValue(records[0].data.dcontmail);
+        combo.up('form[formForFill=true]').down('*[name=dcontphone]').setValue(records[0].data.dcontphone);
+        combo.up('form[formForFill=true]').down('*[name=destrems]').setValue(records[0].data.destrems);
     }
 });
