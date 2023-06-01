@@ -59,7 +59,7 @@ class catapultoController{
 	
 	//Flight::logDB($city);
 	
-	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$city', @iso = '$iso', @region='$region'";		
+	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$city', @iso = '$iso', @region='$region', @loc='org'";		
 	$result = Flight::db()->query($sql);
 	$org = $result[0]['city'];
 	//var_dump($result);
@@ -70,7 +70,7 @@ class catapultoController{
 	$iso    = Flight::utf8_to_win1251($params['receiver']['address']['iso']);
 	$region = Flight::utf8_to_win1251($params['receiver']['address']['region']);	
 	
-	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$city', @iso = '$iso', @region='$region'";		
+	$sql = "/*catapulto*/ exec wwwAPICatapultoGetCity @city='$city', @iso = '$iso', @region='$region', @loc='dest'";		
 	$result = Flight::db()->query($sql);
 	$dest = $result[0]['city'];	
 	if (isset($dest)) {

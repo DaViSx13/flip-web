@@ -2,7 +2,6 @@ Ext.define('fplk.view.orders.TemplForm', {
     alias: 'widget.templform',
     extend: 'Ext.form.Panel',
     requires: ['fplk.view.orders.ComboCity'],
-    formForFill:true,
     layout: {
         type: 'absolute'
     },
@@ -16,7 +15,8 @@ Ext.define('fplk.view.orders.TemplForm', {
         labelWidth: 150,
         x: 60,
         y: 10,
-        allowBlank: false
+        allowBlank: false,
+        vtype: 'ordinalTextField'
     }, {
         xtype: 'fieldset',
         id: 'fs1',
@@ -26,22 +26,10 @@ Ext.define('fplk.view.orders.TemplForm', {
         x: 10,
         y: 40,
         items: [{
-            xtype: 'panel',
-            width: 337,
-            border: false,
-            layout: 'hbox',
-            items: [{
-                xtype: 'combocity',
-                name: 'org',
-                allowBlank: true,
-                store: 'CityStOrg',
-                flex: 1
-            }, {
-                xtype: 'button',
-                margin: '18 0 0 5',
-                action: 'fillTemplateFromAnother',
-                iconCls: 'newtpl'
-            }]
+            xtype: 'combocity',
+            name: 'org',
+            allowBlank: true,
+            store: 'CityStOrg'
         }, {
             xtype: 'textfield',
             name: 'id',
@@ -53,7 +41,8 @@ Ext.define('fplk.view.orders.TemplForm', {
             fieldLabel: 'Название клиента',
             maxLength: 60,
             labelAlign: 'top',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textfield',
             width: 337,
@@ -61,7 +50,8 @@ Ext.define('fplk.view.orders.TemplForm', {
             maxLength: 70,
             fieldLabel: 'Адрес',
             labelAlign: 'top',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textfield',
             width: 329,
@@ -70,13 +60,15 @@ Ext.define('fplk.view.orders.TemplForm', {
             maxLength: 50,
             labelAlign: 'top',
             anchor: '100%',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textfield',
             name: 'contmail',
             fieldLabel: 'E-Mail',
             labelAlign: 'top',
-            anchor: '100%'
+            anchor: '100%',
+            vtype: 'email'
         }, {
             xtype: 'textfield',
             width: 84,
@@ -84,7 +76,8 @@ Ext.define('fplk.view.orders.TemplForm', {
             fieldLabel: 'Телефон',
             labelAlign: 'top',
             anchor: '100%',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textareafield',
             name: 'orgrems',
@@ -92,34 +85,22 @@ Ext.define('fplk.view.orders.TemplForm', {
             maxLength: 1000,
             fieldLabel: 'Примечание',
             labelAlign: 'top',
-            anchor: '100%'
+            anchor: '100%',
+            vtype: 'ordinalTextField'
         }
         ]
     }, {
         xtype: 'fieldset',
-        id: 'fs2',
         height: 390,
         width: 360,
         title: 'Получатель',
         x: 390,
         y: 40,
         items: [{
-            xtype: 'panel',
-            width: 337,
-            border: false,
-            layout: 'hbox',
-            items: [{
-                xtype: 'combocity',
-                name: 'dest',
-                allowBlank: true,
-                store: 'CityStDes',
-                flex: 1
-            }, {
-                xtype: 'button',
-                margin: '18 0 0 5',
-                action: 'fillTemplateFromAnother',
-                iconCls: 'newtpl'
-            }]
+            xtype: 'combocity',
+            name: 'dest',
+            allowBlank: true,
+            store: 'CityStDes'
         }, {
             xtype: 'textfield',
             width: 337,
@@ -127,7 +108,8 @@ Ext.define('fplk.view.orders.TemplForm', {
             fieldLabel: 'Название клиента',
             maxLength: 60,
             labelAlign: 'top',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textfield',
             width: 337,
@@ -135,7 +117,8 @@ Ext.define('fplk.view.orders.TemplForm', {
             maxLength: 70,
             fieldLabel: 'Адрес',
             labelAlign: 'top',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textfield',
             width: 329,
@@ -144,13 +127,15 @@ Ext.define('fplk.view.orders.TemplForm', {
             fieldLabel: 'Контактное лицо',
             labelAlign: 'top',
             anchor: '100%',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textfield',
             name: 'dcontmail',
             fieldLabel: 'E-Mail',
             labelAlign: 'top',
-            anchor: '100%'
+            anchor: '100%',
+            vtype: 'email'
         }, {
             xtype: 'textfield',
             width: 84,
@@ -158,7 +143,8 @@ Ext.define('fplk.view.orders.TemplForm', {
             fieldLabel: 'Телефон',
             labelAlign: 'top',
             anchor: '100%',
-            allowBlank: true
+            allowBlank: true,
+            vtype: 'ordinalTextField'
         }, {
             xtype: 'textareafield',
             name: 'destrems',
@@ -166,9 +152,8 @@ Ext.define('fplk.view.orders.TemplForm', {
             maxLength: 1000,
             fieldLabel: 'Примечание',
             labelAlign: 'top',
-            anchor: '100%'
-        }
-        ]
-    }
-    ]
+            anchor: '100%',
+            vtype: 'ordinalTextField'
+        }]
+    }]
 });
