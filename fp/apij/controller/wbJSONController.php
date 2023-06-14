@@ -280,6 +280,11 @@ public static function createWbs() {
 				self::checkStringField($packType, "packType", 2);
 				self::checkRange($packType,"packType", array("pl", "le"));
         
+                /* наличные с получателя - необязательное числовое поле */
+				try{ $aCash = $WBS[$i]['aCash']; } catch(Exception $e){};
+				if(isset($aCash)) { self::checkNumberValue($aCash, "aCash"); }
+				else { $aCash="NULL"; }
+
 				$waybillDate = $WBS[$i]['waybillDate'];//self::getField("waybillDate", true);
 				self::checkStringField($waybillDate, "waybillDate", 8);
         
@@ -324,7 +329,8 @@ public static function createWbs() {
             @waybillDate = '$waybillDate',
             @description = '$description',
             @senderComment = '$senderComment',
-            @userName = '$userName'
+            @userName = '$userName',
+            @aCash = $aCash
             ";            
 
 		$sql = Flight::utf8_to_win1251($sql);
