@@ -284,6 +284,10 @@ public static function createWbs() {
 				try{ $aCash = $WBS[$i]['aCash']; } catch(Exception $e){};
 				if(isset($aCash)) { self::checkNumberValue($aCash, "aCash"); }
 				else { $aCash="NULL"; }
+				
+				$SubCategory = $WBS[$i]['SubCategory'];
+				self::checkStringField($SubCategory, "SubCategory", 15);
+				self::checkRange($SubCategory,"SubCategory", array("Опасный груз", "Авиа", "ЖД", ""));
 
 				$waybillDate = $WBS[$i]['waybillDate'];//self::getField("waybillDate", true);
 				self::checkStringField($waybillDate, "waybillDate", 8);
@@ -330,7 +334,8 @@ public static function createWbs() {
             @description = '$description',
             @senderComment = '$senderComment',
             @userName = '$userName',
-            @aCash = $aCash
+            @aCash = $aCash,
+			@SubCategoryWB = '$SubCategory'
             ";            
 
 		$sql = Flight::utf8_to_win1251($sql);
