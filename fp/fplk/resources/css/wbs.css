@@ -86,6 +86,9 @@
 .newpod {
 	background-image : url(../../resources/images/newpod.png);
 }
+.pod {
+	background-image : url(../../resources/images/pod.gif);
+}
 .filter {
 	background-image : url(../../resources/images/filter_.png);
 }
