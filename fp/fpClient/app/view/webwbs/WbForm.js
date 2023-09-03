@@ -168,7 +168,7 @@ Ext.define('FPClient.view.webwbs.WbForm', {
 				}, {
 					xtype : 'numberfield',
 					name : 'pcs',
-					minValue : 0,
+					minValue : 1,
 					fieldLabel : 'Число мест',
 					allowBlank : true
 				}, {
