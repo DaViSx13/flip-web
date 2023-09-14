@@ -50,7 +50,7 @@
 	"payerType": 3,
 	"packType": "le",
 	"waybillDate": "20230201",	
-	
+	"SubCategory":"",
 	"senderComment": "comment",
 	"description": "description"	
 },
@@ -102,8 +102,9 @@
 	"payerType": 3,
 	"packType": "le",
 	"waybillDate": "20230201",	
-	
+	"SubCategory":"",
 	"senderComment": "comment",
+	"aCash":0,
 	"description": "description"	
 }
 ]

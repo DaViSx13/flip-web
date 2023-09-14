@@ -185,14 +185,38 @@ public static function createWbs() {
         $token = $_SERVER["HTTP_TOKEN"];
         $userName = Flight::checkToken($token);
 		$isError = false;
-        $WBS = Flight::request() -> data;
+        $WBS = Flight::request()->data->waybills;
 		
 		if(!isset($WBS[0]))
-			throw new Exception("Некорректный формат JSON. АПИ ожидает массив накладных");
+			throw new Exception("Некорректный формат JSON. АПИ ожидает массив накладных ");
 		
 		if(count($WBS) > 1000)
 			throw new Exception("Максимальное количество накладных в пачке не более 1000 штук");
-				
+		
+		$agentID = Flight::request()->data->agentID;
+		self::checkNumberValue($agentID, "agentID");
+		
+		$carrierID = Flight::request()->data->carrierID;
+		self::checkNumberValue($carrierID, "carrierID");
+		
+		$description = str_ireplace("'", "''", Flight::request()->data->description);
+		self::checkStringField($description, "description", 50);
+		
+		$sqlMnf = "/*--wwwAPICreateWb--*/exec wwwAPICreateMnf
+            @AgentID = $agentID,
+            @CarrCode = $carrierID,
+            @Descr = '$description'
+            ";
+		$sqlMnf = Flight::utf8_to_win1251($sqlMnf);
+		$sqlMnf = stripslashes($sqlMnf);
+		$resultMnf = Flight::db()->query($sqlMnf);
+
+		
+		//throw new Exception($result);
+		//var_dump($resultMnf[0]["mnfrefno"]);
+		$mnfrefno = $resultMnf[0]["mnfrefno"];
+		//exit;
+		
 		for ($i = 0; $i < count($WBS); $i++) { 
 			try {
 				 
@@ -281,8 +305,12 @@ public static function createWbs() {
 				self::checkRange($packType,"packType", array("pl", "le"));
         
                 /* наличные с получателя - необязательное числовое поле */
-				try{ $aCash = $WBS[$i]['aCash']; } catch(Exception $e){};
-				if(isset($aCash)) { self::checkNumberValue($aCash, "aCash"); }
+				//try{ $aCash = $WBS[$i]['aCash']; } catch(Exception $e){};
+				
+				if(isset($WBS[$i]['aCash'])) { 
+					$aCash = $WBS[$i]['aCash'];
+					self::checkNumberValue($aCash, "aCash"); 				
+				}
 				else { $aCash="NULL"; }
 				
 				$SubCategory = $WBS[$i]['SubCategory'];
@@ -335,7 +363,8 @@ public static function createWbs() {
             @senderComment = '$senderComment',
             @userName = '$userName',
             @aCash = $aCash,
-			@SubCategoryWB = '$SubCategory'
+			@SubCategoryWB = '$SubCategory',
+			@mnfrefno = '$mnfrefno'
             ";            
 
 		$sql = Flight::utf8_to_win1251($sql);
