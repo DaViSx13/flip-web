@@ -1,4 +1,60 @@
 {
+ "agentID": 123,
+ "carrierID": 123,
+ "description": "Описание",
+ "waybills": [
+{
+	"waybillNumber": "234wer",
+	"sender": {		
+		"name": "Белоусов Михаил",
+		"company": "ООО ЮУОМЗ",
+		"location": {
+					"country": "Россия",
+					"state":"Московская",
+					"city": "Москва",
+					"address":"Дорожная 60Б",
+					"zip": "123456"
+		},		
+		"phone": "8-495-721-18-18"		
+	},
+	
+	"receiver": {				
+		"name": "Белоусов Михаил",
+		"company": "ООО ЮУОМЗ",
+		"location": {
+					"country": "Россия",
+					"state":"Московская",
+					"city": "Москва",
+					"address":"Дорожная 60Б",
+					"zip": "123456"
+		},
+		"phone": "8-495-721-18-18"		
+	},
+	
+	"payer": {		
+		"name": "Белоусов Михаил",
+		"company": "ООО ЮУОМЗ",
+		"location": {
+					"country": "Россия",
+					"state":"Московская",
+					"city": "Москва",
+					"address":"Дорожная 60Б",
+					"zip": "123456"
+		},
+		"phone": "8-495-721-18-18"		
+	},
+	"weight": 0.1,
+	"volumeWeight": 0.2,
+	"packs": 2,
+	"payType": "csh",
+	"payerType": 3,
+	"packType": "le",
+	"waybillDate": "20230201",	
+	
+	"senderComment": "comment",
+	"description": "description"	
+},
+{
 	"waybillNumber": "234wer",
 	
 	"sender": {		
@@ -50,3 +106,6 @@
 	"senderComment": "comment",
 	"description": "description"	
 }
+]
+}
+
