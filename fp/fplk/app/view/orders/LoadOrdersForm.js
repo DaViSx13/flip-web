@@ -30,7 +30,7 @@ Ext.define('fplk.view.orders.LoadOrdersForm', {
 				+' Город получателя, Название получателя, Адрес получателя, Контакт получателя,<br> '
 				+' Телефон получателя, Почта получателя, Описание получателя, Количество, Вес,<br> '
 				+' Объемный вес, Тип отправления, Описание содержимого, Страховая сумма, Тип оплаты, Плательщик.<br> '
-				+' <a href="srv/import/Example_import_WebWB.xlsx" target="_blank" download>Пример файл для импорта веб накладных</a><br> ',
+				+' <a href="srv/import/Example_import_Orders.xls" target="_blank" download>Пример файл для импорта веб накладных</a><br> ',
         columnWidth: 0.5,
         title: 'Правила загрузки файла',
         collapsible: true,

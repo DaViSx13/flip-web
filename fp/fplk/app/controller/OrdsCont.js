@@ -477,7 +477,7 @@ Ext.define('fplk.controller.OrdsCont', {
             form_imp.submit({
                 url: 'srv/import/import.php',
                 params: {
-                    act: 'importWebWB'
+                    act: 'importOrders'
                 },
                 success: function (form, action) {
 
