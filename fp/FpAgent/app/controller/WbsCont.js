@@ -112,7 +112,7 @@ Ext.define('FPAgent.controller.WbsCont', {
             },
             'wbstool button[action=track]': {
                 click: this.trackWb
-            },
+            }
         });
         this.getWbsStoreStore().on({
             scope: this,

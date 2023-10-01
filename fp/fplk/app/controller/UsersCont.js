@@ -94,7 +94,7 @@ Ext.define('fplk.controller.UsersCont', {
      * @param value Значение из поля "Поиск пользователя"
      * @returns Ext.utils.Filter Фильтр
      */
-    getUsernameFilter(value) {
+    getUsernameFilter: function(value) {
       return new Ext.util.Filter({
           id: 'usernameFilter',
           filterFn: function (item) {
@@ -107,8 +107,8 @@ Ext.define('fplk.controller.UsersCont', {
      * Получает фильтр по полю "Показать блокированных"
      *
      * @returns Ext.utils.Filter Фильтр
-     */
-    getBlockedFilter() {
+    */ 
+    getBlockedFilter: function() {
         return new Ext.util.Filter({
             id: 'blockedFilter',
             filterFn: function (item) {
@@ -141,7 +141,7 @@ Ext.define('fplk.controller.UsersCont', {
      *
      * @param ThePanel Контент
      * @param newCard Новая карточка
-     */
+    */ 
     loadUsers: function (ThePanel, newCard) {
         if (newCard.xtype == 'usersgrid') {
             var store = this.getUsersStStore();
