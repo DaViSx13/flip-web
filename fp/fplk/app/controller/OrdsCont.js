@@ -11,7 +11,8 @@ Ext.define('fplk.controller.OrdsCont', {
         'orders.UseTemplForm',
         'orders.ViewWbWin',
         'wbs.WbsGrid',
-        'orders.LoadOrdersWin',
+        'orders.imports.orders.LoadOrdersWin',
+        'orders.imports.webwbs.LoadWebWbsWin',
         'orders.OrdExWin',
         'orders.OrdExGrid',
         'orders.OrdExForm'],
@@ -189,10 +190,16 @@ Ext.define('fplk.controller.OrdsCont', {
                 click: this.printWB
             },
             'ordtool button[action=import]': {
+                click: this.loadWebWbsWin
+            },
+            'ordtool button[action=importOrders]': {
                 click: this.loadOrdersWin
             },
             'loadorderswin button[action=imp]': {
                 click: this.importOrders
+            },
+            'loadwebwbswin button[action=imp]': {
+                click: this.importWebWbs
             },
             'ordgrid actioncolumn': {
                 itemclick: this.viewEx
@@ -227,6 +234,51 @@ Ext.define('fplk.controller.OrdsCont', {
 
     afterTemplateQuery: function (query) {
 
+    },
+
+    /**
+     * Импортирует данные.
+     * @param target Вид импорта
+     * @param form Форма импорта
+     * @param win Окно импорта
+     */
+    importData: function (target, form, win) {
+        var me = this;
+        if (form.getForm().isValid() && form.down('filefield[name=uploadFile]').getValue()) {
+            form.submit({
+                url: 'srv/import/import.php',
+                params: {
+                    act: target
+                },
+                success: function (form, action) {
+
+                    me.loadOrdGr();
+                    win.close();
+                    Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+                },
+                failure: function (form, action) {
+                    Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+                }
+            });
+        }
+    },
+
+    /**
+     * Открытие окна 'Импорт web накладных'
+     */
+    loadWebWbsWin: function () {
+        Ext.widget('loadwebwbswin').show();
+    },
+
+    /**
+     * Загрузка веб накладных
+     * @param btn Кнопка 'Импортировать'
+     */
+    importWebWbs: function (btn) {
+        var win = btn.up('loadwebwbswin');
+        var form = win.down('loadwebwbsform');
+
+        this.importData("importWebWB", form, win);
     },
 
     /**
@@ -469,27 +521,15 @@ Ext.define('fplk.controller.OrdsCont', {
         Ext.widget('loadorderswin').show();
     },
 
+    /**
+     * Импорт заказов
+     * @param btn Кнопка 'Импортировать'
+     */
     importOrders: function (btn) {
-        var me = this;
         var win = btn.up('loadorderswin');
-        var form_imp = win.down('loadordersform');
-        if (form_imp.getForm().isValid() && form_imp.down('filefield[name=uploadFile]').getValue()) {
-            form_imp.submit({
-                url: 'srv/import/import.php',
-                params: {
-                    act: 'importOrders'
-                },
-                success: function (form, action) {
+        var form = win.down('loadordersform');
 
-                    me.loadOrdGr();
-                    win.close();
-                    Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
-                },
-                failure: function (form, action) {
-                    Ext.Msg.alert('Ошибка импорта!', action.result.msg);
-                }
-            });
-        }
+        this.importData("importOrders", form, win);
     },
 
     clkList: function (btn) {

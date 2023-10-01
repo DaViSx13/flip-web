@@ -1,9 +1,9 @@
-Ext.define('fplk.view.orders.LoadOrdersWin', {
+Ext.define('fplk.view.orders.imports.webwbs.LoadWebWbsWin', {
 	extend : 'Ext.Window',
 	extend : 'Ext.window.Window',
-	alias : 'widget.loadorderswin',
-	requires : ['fplk.view.orders.LoadOrdersForm'],
-	title : 'Импорт веб накладных',
+	alias : 'widget.loadwebwbswin',
+	requires : ['fplk.view.orders.imports.webwbs.LoadWebWbsForm'],
+	title : 'Импорт накладных',
 	layout : 'fit',
 	autoShow : true,
 	height : 290,
@@ -13,7 +13,7 @@ Ext.define('fplk.view.orders.LoadOrdersWin', {
 	modal : true,
 	initComponent : function () {
 		this.items = [{
-				xtype : 'loadordersform'
+				xtype : 'loadwebwbsform'
 			}
 		];
 		this.buttons = [{
