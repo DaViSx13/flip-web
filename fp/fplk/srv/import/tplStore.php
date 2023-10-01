@@ -51,7 +51,7 @@ class tplStore {
 												array('auser', 'constant', $_SESSION['xUser'])
 												),
 							'importOrders' => array( 
-												array('LKImportOrders'),
+												array('wwwImportRegOrders'),
 												array('org', 'str', 0, 1),
 												array('cname', 'str', 1, 1),
 												array('address', 'str', 2, 1),
@@ -71,8 +71,7 @@ class tplStore {
 												array('courdate', 'date', 14, 0, NULL),
 												array('courtimef', 'time', 15, 0, NULL),
 												array('courtimet', 'time', 16, 0, NULL),
-
-
+                                                array('SubCategory', 'str', 17, 0, "Спец перевозка"),
 												),
 							'importTemplate' => array(
 							                    array('wwwImportLKsetTemplateGroup'),

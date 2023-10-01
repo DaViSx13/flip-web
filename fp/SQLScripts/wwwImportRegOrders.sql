@@ -18,7 +18,7 @@ GO
 -- Create date: <28.09.2023>
 -- Description:	<Импорт заказов из ЛК Москвы>
 -- =============================================
-CREATE PROCEDURE ImportRegOrders
+CREATE PROCEDURE wwwImportRegOrders
 @ORG varchar(60), 
 @CName varchar(60),
 @Address varchar(70),
@@ -42,6 +42,7 @@ CREATE PROCEDURE ImportRegOrders
 @CourTimeF time,
 @CourTimeT time,
 @Descr varchar(2000),
+@SubCategory varchar(15),
 @result varchar(400) OUTPUT
 AS
 BEGIN
@@ -130,7 +131,9 @@ PCACC,
 FrmID,
 UserIn,
 CurId,
-ContentDescr
+ContentDescr,
+SortType,
+SubCategory
  )
 VALUES (
 @orgID, --1
@@ -162,7 +165,9 @@ VALUES (
 4,
 @UserIn,
 0,
-@Descr
+@Descr,
+2,
+@SubCategory
        )
 select @mail= OrgRems from #import
 select @mail= @mail + char(13) + char(10) + 'Принят новый заказ №'+convert(varchar,ROrdNum)
@@ -183,4 +188,4 @@ end
 END
 GO
 
-GRANT EXECUTE ON ImportRegOrders TO POD
+GRANT EXECUTE ON wwwImportRegOrders TO POD
