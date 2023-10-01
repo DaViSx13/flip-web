@@ -41,11 +41,11 @@ Ext.define('fplk.view.orders.OrdTool', {
         iconCls: 'wbnewtpl',
         action: 'wbnewtpl'
     }, {
-        text: 'Импорт веб накладных из Excel',
+        text: 'Импорт веб накладных',
         iconCls: 'import',
         action: 'import'
     }, {
-        text: 'Импорт заказов из Excel',
+        text: 'Импорт заказов',
         iconCls: 'import',
         action: 'importOrders'
     }, '->', '-', {

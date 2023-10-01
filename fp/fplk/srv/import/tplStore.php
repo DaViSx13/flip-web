@@ -71,7 +71,7 @@ class tplStore {
 												array('courdate', 'date', 14, 0, NULL),
 												array('courtimef', 'time', 15, 0, NULL),
 												array('courtimet', 'time', 16, 0, NULL),
-                                                array('SubCategory', 'str', 17, 0, "Спец перевозка"),
+                                                array('SubCategory', 'str', 17, 0, NULL),
 												),
 							'importTemplate' => array(
 							                    array('wwwImportLKsetTemplateGroup'),
