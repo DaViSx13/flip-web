@@ -6,6 +6,8 @@ define('EOL', "\r\n");
 /*config*/
 $base_url = 'https://www.webhook.site/d42cbca0-8061-4b6d-9f51-83c4f37b3070'; //test
 $base_url = 'https://cs.staging.ctplt.ru'; //test
+$base_url = 'https://cs.catapulto.ru'; //work old 
+$base_url = 'https://api.catapulto.ru'; //work new 20231002
 $token = 'rIo5FDJPX9';
 /*config*/
 
@@ -15,7 +17,7 @@ $catapulto_order_id = $_REQUEST['catapulto_order_id'];
 $action = $_REQUEST['action'];
 $content_xml = $_REQUEST['content_xml'];
 
-echo 'content_xml:'.$content_xml;
+//echo 'content_xml:'.$content_xml;
 /*
 //debug
 $catapulto_order_id="ctp123";
@@ -157,6 +159,8 @@ function do_curl($url, $method, $data, array $options = array())
 
 	$ch = curl_init(); 
     curl_setopt_array($ch, ($options + $defaults)); 
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 	$result = curl_exec($ch);
     if($result === false) 
     { 
