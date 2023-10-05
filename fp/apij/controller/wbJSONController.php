@@ -196,8 +196,12 @@ public static function createWbs() {
 		$agentID = Flight::request()->data->agentID;
 		self::checkNumberValue($agentID, "agentID");
 		
-		$masterWaybillNumber = Flight::request()->data->masterWaybillNumber;
-		self::checkStringField($masterWaybillNumber, "masterWaybillNumber", 50);		
+		$masterWaybillNumber = Flight::request()->data->masterWaybillNumber;		
+		
+		if(!isset($masterWaybillNumber))
+        $masterWaybillNumber = '';
+		else
+        self::checkStringField($masterWaybillNumber, "masterWaybillNumber", 50);
 		
 		$carrierID = Flight::request()->data->carrierID;
 		self::checkNumberValue($carrierID, "carrierID");
