@@ -2,6 +2,7 @@
  "agentID": 123,
  "carrierID": 123,
  "description": "Описание",
+ "masterWaybillNumber": "dfg34",
  "waybills": [
 {
 	"waybillNumber": "234wer",
