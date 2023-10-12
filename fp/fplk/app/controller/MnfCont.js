@@ -371,7 +371,7 @@ Ext.define('fplk.controller.MnfCont', {
                 return /[^\\0]/.test(v)
             },
             ordinalTextFieldText: 'Поле содержит недопустимые символы : "\\0"',
-            ordinalTextFieldMask: /[A-zА-я0-9,."'!@#%;*]/
+            ordinalTextFieldMask: /[A-zА-я0-9,."'!@#%;* ]/
         })
     },
 
