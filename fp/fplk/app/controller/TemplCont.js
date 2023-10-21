@@ -1,8 +1,20 @@
 Ext.define('fplk.controller.TemplCont', {
     extend: 'Ext.app.Controller',
-    views: ['orders.TemplForm', 'orders.TemplFormImport', 'orders.TemplWin', 'orders.TemplGrid', 'orders.TemplWinImport'],
+
+    views: [
+        'orders.TemplForm',
+        'orders.TemplFormImport',
+        'orders.TemplWin',
+        'orders.TemplGrid',
+        'orders.TemplWinImport'],
+
     models: ['TemplMod'],
-    stores: ['TemplSt', 'ClientSt'],
+
+    stores: [
+        'TemplSt',
+        'ClientSt'
+    ],
+
     refs: [{
         ref: 'TemplForm',
         selector: 'templform'
@@ -15,8 +27,11 @@ Ext.define('fplk.controller.TemplCont', {
     }, {
         ref: 'TemplFormImport',
         selector: 'templformimport'
-    }
-    ],
+    }],
+
+    /**
+     * Инициализация "Шаблоны"
+     */
     init: function () {
         this.control({
             'templwinimport button[action=excelTmlExcel]': {
@@ -232,7 +247,7 @@ Ext.define('fplk.controller.TemplCont', {
      */
     searchByNameEvent: function (component, newValue) {
         var grid = component.up("tabpanel").down("grid");
-        if (newValue.length == 0)
+        if (newValue.length === 0)
             grid.getStore().clearFilter();
         else
             grid.getStore().filterBy(function (record) {
@@ -247,10 +262,19 @@ Ext.define('fplk.controller.TemplCont', {
             })
     },
 
-    dblclickTpl: function (gr, rec) {
+    /**
+     * Функция двойного нажатия на запись с шаблонами
+     * Открывает шаблон на редактирование
+     */
+    dblclickTpl: function () {
         this.clkEdit(this.getTemplTool().down('button[action=edittpl]'));
     },
-    clkNew: function (btn) {
+
+    /**
+     * Открывает окно создания нового шаблона
+     * Нажатие на кнопку "Новый"
+     */
+    clkNew: function () {
         var win = Ext.widget('templwin');
         win.show();
         win.down('templform').down('textfield[name=templatename]').focus(false, true);
@@ -274,6 +298,12 @@ Ext.define('fplk.controller.TemplCont', {
             //auto sender end
         }
     },
+
+    /**
+     * Удаляет шаблон
+     * Нажатие на кнопку "Удалить"
+     * @param btn Кнопка "Удалить"
+     */
     delTempl: function (btn) {
         var me = this;
         var sm = btn.up('templgrid').getSelectionModel();
@@ -298,6 +328,14 @@ Ext.define('fplk.controller.TemplCont', {
             Ext.Msg.alert('Внимание!', 'Выберите шаблон для удаления');
         }
     },
+
+    /**
+     * Редактирование шаблона.
+     * Нажатие на кнопку "Редактировать".
+     * Открывает окно для редактирования шаблона.
+     *
+     * @param btn Кнопка "Редактировать"
+     */
     clkEdit: function (btn) {
         var sm = btn.up('templgrid').getSelectionModel();
         if (sm.getCount() > 0) {
@@ -330,11 +368,42 @@ Ext.define('fplk.controller.TemplCont', {
             Ext.Msg.alert('Внимание!', 'Выберите шаблон для редактирования');
         }
     },
+
+    /**
+     * Проверка города из выпадающего списка.
+     * Если введнное значение не пустое
+     * и не был выбран город из выпадающего списка -
+     * выводит сообщение
+     * @param field Поле выбора города
+     * @param name Имя поля в сообщении
+     * @returns {boolean} Результат проверки
+     */
+    checkCity: function (field, name) {
+        if(field.rawValue != null && field.rawValue.length > 0) {
+            if (field.value == null) {
+                Ext.Msg.alert('Ошибка ввода города', 'Неверно введен город ' + name + '! Выберите город из выпадающего списка.');
+                return false;
+            }
+        }
+        return true;
+    },
+
+    /**
+     * Сохранение шаблона
+     * Нажатие на кнопку "Сохранить"
+     * @param btn Кнопка "Сохранить"
+     */
     saveTempl: function (btn) {
         var me = this;
         var win = btn.up('templwin');
         var form_ord = win.down('templform');
         var dest = form_ord.down('combocity[name=dest]');
+        var org = form_ord.down('combocity[name=org]');
+
+        if(!this.checkCity(org, "Отправителя"))
+            return;
+        if(!this.checkCity(dest, "Получателя"))
+            return;
 
         if (form_ord.getForm().isValid()) {
             form_ord.submit({
