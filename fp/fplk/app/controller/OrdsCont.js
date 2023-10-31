@@ -206,8 +206,10 @@ Ext.define('fplk.controller.OrdsCont', {
             },
             'ordwin combobox[name=sortType]': {
                 change: this.changeOrdType
+            },
+            'ordwin button[action=createWebWb]': {
+                click: this.createWebWb
             }
-
         });
         this.getOrderStStore().on({
             scope: this,
@@ -234,6 +236,53 @@ Ext.define('fplk.controller.OrdsCont', {
 
     afterTemplateQuery: function (query) {
 
+    },
+
+    /**
+     * Создание веб накладной
+     * @param button Кнопка "Создать веб накладную"
+     */
+    createWebWb: function (button) {
+        var form = button.up('ordwin').down('form');
+        var formValues = form.getValues();
+        Ext.Ajax.request({
+            url: 'srv/data.php',
+            method: 'POST',
+            async: false,
+            success: function (response) {
+                var answer = Ext.decode(response.responseText);
+                Ext.Msg.alert('Накладная успешно создана', "Номер созданной накланой: " + answer.wb_no);
+            },
+            failure: function (response) {
+                Ext.Msg.alert('Ошибка импорта!', response.result.msg);
+            },
+            params: {
+                dbAct: 'SetWebWB',
+
+                ord_no: formValues['rordnum'],
+
+                org: formValues['org'],
+                s_name: formValues['cname'],
+                s_tel: formValues['contphone'],
+                s_co: formValues['contname'],
+                s_adr: formValues['address'],
+                s_ref: formValues['orgrems'],
+                s_mail: formValues['contmail'],
+
+                dest: formValues['dest'],
+                r_name: formValues['dname'],
+                r_tel: formValues['dcontphone'],
+                r_co: formValues['dcontname'],
+                r_adr: formValues['dadr'],
+                r_ref: formValues['destrems'],
+                r_mail: formValues['dcontmail'],
+
+                type: formValues['type'],
+                vol_wt: formValues['volwt'],
+                wt: formValues['wt'],
+                pcs: formValues['packs']
+            }
+        })
     },
 
     /**
@@ -886,6 +935,7 @@ Ext.define('fplk.controller.OrdsCont', {
                     }
                 });
                 if (btn.action == 'view') {
+                    win.down('button[action=createWebWb]').setVisible(true);
                     win.down('button[action=save]').setText('Повторить заказ');
                 } else {
                     win.down('button[action=save]').setVisible(true);
