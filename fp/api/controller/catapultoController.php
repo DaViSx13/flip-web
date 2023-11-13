@@ -15,7 +15,8 @@ class ResponseError
 class catapultoController{   
   
   public static function getCatapultoTarif(){
-	
+
+  try{	
 	$method = Flight::request()->data->method;
 	$params = Flight::request()->data->params;
 	$body = Flight::utf8_to_win1251(Flight::request()->getBody());
@@ -47,6 +48,16 @@ class catapultoController{
 		echo Flight::json(self::rejectInvoice($params));		
         break;		
 	}
+  }
+  catch (exception $e) {
+		$response = new ResponseError();
+		$err = Flight::err();
+		$err->code = 1000;
+		$err->note = $e->getMessage();
+		$response->error = $err;
+		echo Flight::json($response);
+		//echo(print_r($response, true));
+  }	
 	
 	
   }
