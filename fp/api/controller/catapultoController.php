@@ -52,7 +52,7 @@ class catapultoController{
   catch (exception $e) {
 		$response = new ResponseError();
 		$err = Flight::err();
-		$err->code = 999;
+		$err->code = 1000;
 		$err->note = $e->getMessage();
 		$response->error = $err;
 		echo Flight::json($response);
