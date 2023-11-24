@@ -247,7 +247,7 @@ public static function createWbs() {
 				$sender_location_city = str_ireplace("'", "''", $sender["location"]["city"]);
 				self::checkStringField($sender_location_city, "sender location city", 50);
 				$sender_location_address = str_ireplace("'", "''", $sender["location"]["address"]);
-				self::checkStringField($sender_location_address, "sender location address", 100);
+				self::checkStringField($sender_location_address, "sender location address", 200);
 				$sender_location_zip = str_ireplace("'", "''", $sender["location"]["zip"]);
 				self::checkStringField($sender_location_zip, "sender location zip", 9);
         
@@ -267,7 +267,7 @@ public static function createWbs() {
 				$receiver_location_city = str_ireplace("'", "''", $receiver["location"]["city"]);
 				self::checkStringField($receiver_location_city, "receiver location city", 50);
 				$receiver_location_address = str_ireplace("'", "''", $receiver["location"]["address"]);
-				self::checkStringField($receiver_location_address, "receiver location address", 100);
+				self::checkStringField($receiver_location_address, "receiver location address", 200);
 				$receiver_location_zip = str_ireplace("'", "''", $receiver["location"]["zip"]);
 				self::checkStringField($receiver_location_zip, "receiver location zip", 9);
         
@@ -287,7 +287,7 @@ public static function createWbs() {
 				$payer_location_city = str_ireplace("'", "''", $payer["location"]["city"]);
 				self::checkStringField($payer_location_city, "payer location city", 50);
 				$payer_location_address = str_ireplace("'", "''", $payer["location"]["address"]);
-				self::checkStringField($payer_location_address, "payer location address", 100);
+				self::checkStringField($payer_location_address, "payer location address", 200);
 				$payer_location_zip = str_ireplace("'", "''", $payer["location"]["zip"]);
 				self::checkStringField($payer_location_zip, "payer location zip", 9);
 
