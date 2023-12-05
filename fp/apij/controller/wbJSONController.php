@@ -179,6 +179,39 @@ class wbJSONController{
        $response->status = 'success';
        echo Flight::json($response);
   }
+  
+public static function changeWtInWb() { 
+		$token = $_SERVER["HTTP_TOKEN"];
+        $userName = Flight::checkToken($token);
+		
+        $waybillNumber = self::getField("waybillNumber", "", true);
+        self::checkStringField($waybillNumber, "waybillNumber", 50);
+		
+		$weight = self::getField("weight", true);
+        self::checkNumberValue($weight, "weight");
+
+        $volumeWeight = self::getField("volumeWeight", true);
+        self::checkNumberValue($volumeWeight, "volumeWeight");
+		
+		$XYZ = self::getField("XYZ", "", true);
+        self::checkStringField($XYZ, "XYZ", 3000);
+		
+		$sql = "/*--wwwAPIChangeWtInWb--*/exec wwwAPIChangeWtInWb
+            @waybillNumber = '$waybillNumber',
+			@weight = $weight,
+			@volumeWeight = $volumeWeight,
+            @XYZ = '$XYZ'
+            ";
+		$response = new Response();
+        $sql = Flight::utf8_to_win1251($sql);
+        $sql = stripslashes($sql);
+        $result = Flight::db()->query($sql);
+        $response->data = $result;
+        $response->status = 'success';
+        echo Flight::json($response);		
+
+	}  
+  
 
 public static function createWbs() {     
      
