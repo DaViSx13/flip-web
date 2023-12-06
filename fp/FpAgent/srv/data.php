@@ -112,9 +112,9 @@ if (!isset($_REQUEST['dbAct'])) {
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
 			if (!empty($_SESSION['AdmAgentID'])) {$ag =$_SESSION['AdmAgentID'];}
 			if(isset($params['newPeriod']))
-                $query = "exec wwwGetAgOrders @period='$params[newPeriod]', @agentID={$ag}";
+                $query = "exec wwwGetAgOrdersNew @period='$params[newPeriod]', @agentID={$ag}";
 			else
-                $query = "exec wwwGetAgOrders @First='$params[startDate]',@Last='$params[endDate]', @agentID={$ag}";
+                $query = "exec wwwGetAgOrdersNew @First='$params[startDate]',@Last='$params[endDate]', @agentID={$ag}";
             break;
 	    case 'getClientAgOrders':
             $ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
