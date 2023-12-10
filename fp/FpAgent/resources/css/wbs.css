@@ -1,3 +1,9 @@
+.red-row {
+	background-color: #fa9292 !important;
+	color: red;
+	border-color: #fa9292;
+}
+
 .x-boundlist-item img.chkCombo {
 	background: transparent url(../../resources/images/unchecked.gif);
 	background-position:center;

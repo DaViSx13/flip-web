@@ -3,6 +3,11 @@ Ext.define('FPAgent.view.orders.OrdClientGrid', {
 	alias: 'widget.ordclientgrid',
 	requires: ['FPAgent.view.orders.OrdClientTool', 'FPAgent.view.orders.OrdClientTotal'],
 	store: 'OrdsClientSt',
+	viewConfig: {
+		getRowClass: function (record) {
+			return (record.data.status === 'просрочено') ?  'red-row' : '';
+		}
+	},
 	columns: [{
 			xtype: 'gridcolumn',
 			width: 55,

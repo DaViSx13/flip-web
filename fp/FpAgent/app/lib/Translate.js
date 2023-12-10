@@ -6,11 +6,10 @@
     tr: function (stringID) {
         var locString;
         for (var i = 0; i < this.data.length; i++) {
-            if (this.data[i].stringID == stringID) {
+            if (this.data[i].stringID === stringID) {
                 locString = this.data[i];
                 break;
             }
-            ;
         }
 
         var cookieLocale = Ext.util.Cookies.get("myLang");
