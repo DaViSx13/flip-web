@@ -839,15 +839,18 @@ Ext.define('FPAgent.controller.OrdsCont', {
 
 	showClientOrdWin: function (grid) {
 		var sm = grid.getSelectionModel();
-
+		var me = this;
 		if (sm.getCount() > 0) {
 			var win = Ext.widget('ordwin');
 				win.show();
-			var store_ord = this.getOrderClientStStore().load({
+			var store = this.getStoreByCabinetType(sm).load({
 					params: {
 						id: sm.getSelection()[0].get('rordnum'),
 						se : window.location.hash.replace("#", "")
-					}
+					},
+				    callback: function() {
+					me.convertOrderCategory(store, win);
+				}
 				});
 
 			var formWin = win.items.items[0];
@@ -860,6 +863,21 @@ Ext.define('FPAgent.controller.OrdsCont', {
 			}
 		}
 	},
+
+	/**
+	 * Получает хранилище заказов по типу кабинета
+	 * @param selectedModel Выбранная запись
+	 * @returns {array} Хранилище
+	 */
+	getStoreByCabinetType: function (selectedModel) {
+		console.log(selectedModel.getSelection()[0].get('cabinet_type'));
+		if(selectedModel.getSelection()[0].get('cabinet_type') === 'client') {
+			return this.getOrderClientStStore();
+		} else {
+			return this.getOrderStStore();
+		}
+	},
+
 	printWB: function (btn) {
 		var record = this.getViewWbStStore().findRecord('wb_no', this.getViewWbForm().down('displayfield[name=wb_no]').value);
 		window.open('srv/report.php?se=' + window.location.hash.replace("#", "") + '&wbno=' + this.getViewWbForm().down('displayfield[name=wb_no]').value);

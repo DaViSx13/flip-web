@@ -152,7 +152,7 @@ if (!isset($_REQUEST['dbAct'])) {
 		case 'viewregorder':
 			$id =  $params['id'];
 			$agent = $_SESSION['xAgentID'];
-			$query = "exec wwwLKgetOrder @id={$id}, @agent='{$agent}'";
+			$query = "exec wwwGetAgClientOrder @id={$id}, @agent='{$agent}'";
 			break;
 		case 'saveagorder':
 			$needLogRequest = true;			
