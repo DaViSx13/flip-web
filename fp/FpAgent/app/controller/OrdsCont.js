@@ -443,10 +443,11 @@ Ext.define('FPAgent.controller.OrdsCont', {
 
     editWbnoClient: function (btn) {
         var sm = btn.up('ordclientgrid').getSelectionModel();
-        this.editWbnoBase(sm);
+        var cabinet_type = sm.getSelection()[0].get('cabinet_type');
+        this.editWbnoBase(sm, cabinet_type);
     },
 
-    editWbnoBase: function (sm) {
+    editWbnoBase: function (sm, cabinet_type) {
         if (sm.getCount() > 0) {
             var win = Ext.widget('wbnowin');
             win.show();
@@ -454,6 +455,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
             form.down('textfield[name=wbno]').setValue(sm.getSelection()[0].get('wb_no'));
             form.down('textfield[name=rordnum]').setValue(sm.getSelection()[0].get('rordnum'));
             form.down('textfield[name=wbno]').focus(false, true);
+            if(cabinet_type !== undefined)
+                form.down('textfield[name=cabinet_type]').setValue(sm.getSelection()[0].get('cabinet_type'));
         } else {
             Ext.Msg.alert('Внимание!', 'Выберите заказ');
         }
