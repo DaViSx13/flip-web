@@ -18,7 +18,7 @@ Ext.define('FPAgent.view.orders.OrdClientGrid', {
         xtype: 'gridcolumn',
         width: 55,
         dataIndex: 'rordnum',
-        text: '№',
+        text: '№'
     }, {
         xtype: 'gridcolumn',
         width: 130,
