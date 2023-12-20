@@ -297,10 +297,12 @@ if (!isset($_REQUEST['dbAct'])) {
 			$query = "exec wwwSetWbno @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
 		case 'SetWbNoClient':
+            $cabinet_type = isset($params['cabinet_type']) ? $params['cabinet_type'] : "agent";
+            $procedure = ($cabinet_type == 'agent') ? 'wwwSetWbno' : 'wwwSetWbNoClient';
 			$paging = false;
 			$rordnum = isset($params['rordnum']) ? $params['rordnum'] : 0;
 			$wbno = isset($params['wbno']) ? $params['wbno'] : 'NULL';
-			$query = "exec wwwSetWbNoClient @rordnum={$rordnum}, @wbno='{$wbno}'";
+			$query = "exec {$procedure} @rordnum={$rordnum}, @wbno='{$wbno}'";
 			break;
 		case 'getAgTemplates':
 			$ag = isset($params['newAgent']) ? $params['newAgent'] : $_SESSION['xAgentID'];
