@@ -16,6 +16,11 @@ Ext.define('FPAgent.view.orders.OrdClientGrid', {
         hidden:true
     }, {
         xtype: 'gridcolumn',
+        width: 55,
+        dataIndex: 'rordnum',
+        text: '№',
+    }, {
+        xtype: 'gridcolumn',
         width: 130,
         dataIndex: 'status',
         text: FPAgent.lib.Translate.tr("OrdGrid.status") //'Статус'
