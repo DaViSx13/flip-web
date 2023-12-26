@@ -1,0 +1,62 @@
+version: "3.1"
+
+services:
+  sql-server:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=SamFisher010894@pc
+    volumes:
+      # «аменить на путь, где будут хранитьс€ данные от SQL SERVER
+      - ./db/mssql:/var/opt/mssql/data
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: SamFisher010894@pc
+      POSTGRES_USER: vboy
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      # «аменить на путь, где будут хранитьс€ данные от postgres
+      - ./db/postgres:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: SamFisher010894@pc
+      MYSQL_DATABASE: jasperreport
+      MYSQL_USER: jasper
+      MYSQL_PASSWORD: jasper
+    ports:
+      - "3306:3306"
+    volumes:
+      # «аменить на путь, где будут хранитьс€ данные от MY SQL
+      - ./db/mysql:/var/lib/mysql
+  jasper:
+    container_name: jasper
+    image: retriever/jasperserver:6.1.0
+    environment:
+      DB_TYPE: mysql
+      DB_USER: root
+      DB_PASSWORD: SamFisher010894@pc
+      DB_HOST: db
+      DB_PORT: 3306
+    ports:
+      - "8082:8080"
+    links:
+      - "mysql:db"
+  php:
+    container_name: php
+    build: ./
+    ports:
+      - "8080:80"
+    links:
+      - "sql-server:rocket"
+    volumes:
+      # «аменить на путь, где лежат исходники
+      - ./flip-web/fp:/var/www/html/
