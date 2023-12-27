@@ -21,8 +21,14 @@ if(!isset($token)){
 	}  
 }
 
-$wbno = $_REQUEST['wbno'];
-$qry = "exec wwwGetWb @wb_no='{$wbno}'";
+$qry = '';
+if(!isset($_REQUEST['cabinet_type'])) {
+	$wbno = $_REQUEST['wbno'];
+	$qry = "exec wwwGetWb @wb_no='{$wbno}'";
+} else {
+	$order = $_REQUEST['order'];
+	$qry = "exec wwwGetEmptyWb @Order={$order}, @type = '{$_REQUEST['cabinet_type']}'";
+}
 $result=mssql_query($qry);
 
 				for($i = 0; $i < mssql_num_fields($result); $i++){
@@ -44,7 +50,8 @@ $result=mssql_query($qry);
 $wbData = json_encode($response->data[0]);
 $data_string = urlencode($wbData);
 $str = "?wbData={$data_string}";
-$url = 'http://jasperadmin:jasperadmin@10.10.10.6:8080/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
+$url = 'http://jasperadmin:jasperadmin@192.168.56.1:8082/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
+//$url = 'http://jasperadmin:jasperadmin@10.10.10.6:8080/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
 $ch = curl_init($url); 
 $fh = fopen('php://temp', 'w');                                                                                                                  
 curl_setopt($ch, CURLOPT_FILE, $fh);

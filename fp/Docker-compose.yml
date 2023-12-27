@@ -9,21 +9,9 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=SamFisher010894@pc
+      - MSSQL_COLLATION=Cyrillic_General_CI_AS
     volumes:
-      # «аменить на путь, где будут хранитьс€ данные от SQL SERVER
       - ./db/mssql:/var/opt/mssql/data
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    environment:
-      POSTGRES_PASSWORD: SamFisher010894@pc
-      POSTGRES_USER: vboy
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      # «аменить на путь, где будут хранитьс€ данные от postgres
-      - ./db/postgres:/var/lib/postgresql/data/pgdata
-    ports:
-      - "5432:5432"
   mysql:
     container_name: mysql
     image: mysql:5.7
@@ -35,11 +23,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      # «аменить на путь, где будут хранитьс€ данные от MY SQL
       - ./db/mysql:/var/lib/mysql
   jasper:
     container_name: jasper
-    image: retriever/jasperserver:6.1.0
+    image: retriever/jasperserver:6.4.2
     environment:
       DB_TYPE: mysql
       DB_USER: root
@@ -57,6 +44,6 @@ services:
       - "8080:80"
     links:
       - "sql-server:rocket"
+      - "jasper:jasper"
     volumes:
-      # «аменить на путь, где лежат исходники
       - ./flip-web/fp:/var/www/html/
