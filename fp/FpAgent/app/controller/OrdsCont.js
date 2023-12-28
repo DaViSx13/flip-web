@@ -286,7 +286,7 @@ Ext.define('FPAgent.controller.OrdsCont', {
         cabinetType = cabinetType === undefined ? 'agent' : cabinetType;
 
         if(!wb)
-            this.printWbEmpty(order, cabinetType, grid);
+            this.setWbNoFromPrint(order, cabinetType, grid);
         else
             this.printWbByNumber(wb);
     },
@@ -306,9 +306,8 @@ Ext.define('FPAgent.controller.OrdsCont', {
      * Печать накладной по номеру заказа
      * @param order Номер заказа
      * @param cabinet_type Тип кабинета
-     * @param grid {Ext.grid.Panel} Хранилище таблицы
      */
-    printWbEmpty: function (order, cabinet_type, grid) {
+    printWbEmpty: function (order, cabinet_type) {
         if(!order)
             Ext.Msg.alert("Пустой номер заказа", "В выбранной записи отсутсвует заказ");
 
@@ -316,7 +315,6 @@ Ext.define('FPAgent.controller.OrdsCont', {
             Ext.Msg.alert("Определение кабинета", "Не удалось определить кабинет");
 
         window.open('srv/report.php?se=' + window.location.hash.replace("#", "") + '&order=' + order + '&cabinet_type=' + cabinet_type);
-        this.setWbNoFromPrint(order, cabinet_type, grid);
     },
 
     /**
@@ -333,26 +331,63 @@ Ext.define('FPAgent.controller.OrdsCont', {
         var wbNo = (cabinet_type === 'agent' ? 'AZ' : 'KZ') + '-' + order;
         Ext.Ajax.request ({
             url: 'srv/data.php',
+            async: false,
+            waitMsg: 'Формирование номера накладной...',
             params: {
+                se: self.getSession(),
                 dbAct: 'SetWbNoClient',
                 rordnum: order,
                 wbno: wbNo,
                 cabinet_type: cabinet_type
             },
-            success: function () {
+            success: function (response) {
+                if(!self.wbNoResponseCheck(response, order))
+                    return;
+
+                self.printWbEmpty(order, cabinet_type);
                 Ext.Msg.alert("Присвоен номер накладной", "Заказу '" + order + "' присвоен номер накладной '" + wbNo + "'");
                 if(grid.getXType() === 'ordclientgrid')
                     self.loadOrdclientGr();
                 else
                     self.loadOrdGr();
-
             },
             failure: function(response) {
-                var msg = response.msg
+                var json = Ext.JSON.decode(response.responseText);
+                var msg = json.msg
                 Ext.Msg.alert("Ошибка!", "Заказу '" + order + "' не удалось присвоить номер накладной<br> Причина:<br>" + msg);
             }
         })
 
+    },
+
+    /**
+     * Проверка присвоения номера накладной заказу
+     * @param response Ответ от сервера
+     * @param order {number} Номер заказа
+     * @returns {boolean} Результат проверки
+     */
+    wbNoResponseCheck: function (response, order) {
+        var json = Ext.JSON.decode(response.responseText);
+        if(!json) {
+            Ext.Msg.alert("Ошибка!", "Заказу '" + order + "' не удалось присвоить номер накладной<br> Причина:<br>Не удалось получить ответ от сервера");
+            return false;
+        }
+
+        if(!json.success) {
+            var msg = json.msg
+            Ext.Msg.alert("Ошибка!", "Заказу '" + order + "' не удалось присвоить номер накладной<br> Причина:<br>" + msg);
+            return false;
+        }
+
+        return  true;
+    },
+
+    /**
+     * Получает номер сессии пользователя
+     * @returns {string} Номер сессии
+     */
+    getSession: function () {
+        return window.location.hash.replace("#", "");
     },
 
     /**

@@ -7,16 +7,16 @@ AS
             SELECT
                 Wb_no = 'AZ' + LTRIM(STR(@Order)),      -- 1. Номер накладной
 
-                        agOrders.DateIn,                        -- 2. Дата внесения в систему
-                        agOrders.ORG,                           -- 3. Город отправителя
-                        agOrders.DEST,                          -- 4. Город получателя
-                        agOrders.ContName   AS S_Name,          -- 5. Имя контакта отправителя
-                        agOrders.ContPhone  AS S_Tel,           -- 6. Телефон отправителя
-                        agOrders.CName      AS S_Co,            -- 7. Компания отправитель
-                        agOrders.Address    AS S_Adr,           -- 8. Адрес отправителя
+                agOrders.DateIn     AS D_Acc,           -- 2. Дата внесения в систему
+                agOrders.ORG,                           -- 3. Город отправителя
+                agOrders.DEST,                          -- 4. Город получателя
+                agOrders.ContName   AS S_Name,          -- 5. Имя контакта отправителя
+                agOrders.ContPhone  AS S_Tel,           -- 6. Телефон отправителя
+                agOrders.CName      AS S_Co,            -- 7. Компания отправитель
+                agOrders.Address    AS S_Adr,           -- 8. Адрес отправителя
                 S_Cnt = scity.country,                  -- 9. Страна отправителя
                 S_Zip = '''',                           -- 10. Индекс отправителя
-                        agOrders.OrgRems    AS S_Ref,           -- 11. Примечания отправителя
+                agOrders.OrgRems    AS S_Ref,           -- 11. Примечания отправителя
                 S_City = scity.city,                    -- 12. Город отправителя
 
                 agOrders.DContName  AS R_Name,          -- 13. Имя контакта получателя
@@ -34,7 +34,7 @@ AS
                     WHEN 1 THEN 'LE'
                     WHEN 0 THEN 'PL'
                     ELSE 'PA'
-                            END                 AS T_PAK,           -- 24. Упаковка
+                END                 AS T_PAK,           -- 24. Упаковка
                 '' AS T_DEL,                            -- 24. Тип доставки
                 '' AS Pers,                             -- 25. Лично в руки
                 agOrders.Packs      AS PCS,             -- 26. Количество мест
