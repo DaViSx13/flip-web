@@ -45,14 +45,14 @@ $result=mssql_query($qry);
                     $response->data[] = array_change_key_case($row);
                 }
                 
-                unset($response->fields);				
+                unset($response->fields);
 
 $wbData = json_encode($response->data[0]);
 $data_string = urlencode($wbData);
 $str = "?wbData={$data_string}";
-$url = 'http://jasperadmin:jasperadmin@192.168.56.1:8082/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
-//$url = 'http://jasperadmin:jasperadmin@10.10.10.6:8080/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
-$ch = curl_init($url); 
+//$url = 'http://jasperadmin:jasperadmin@192.168.56.1:8082/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
+$url = 'http://jasperadmin:jasperadmin@10.10.10.6:8080/jasperserver/rest_v2/reports/flippost/reports/wbreport.pdf'.$str;
+$ch = curl_init($url);
 $fh = fopen('php://temp', 'w');                                                                                                                  
 curl_setopt($ch, CURLOPT_FILE, $fh);
 curl_exec($ch);
