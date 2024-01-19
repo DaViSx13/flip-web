@@ -31,7 +31,8 @@ Ext.define('fplk.view.orders.OrdForm', {
                 fieldLabel: 'Индекс',
                 margin: '0 5 0 0',
                 hideTrigger: true,
-                labelAlign: 'top'
+                labelAlign: 'top',
+                hidden: true
             }, {
                 xtype: 'combocity',
                 name: 'org',
@@ -115,7 +116,8 @@ Ext.define('fplk.view.orders.OrdForm', {
                 fieldLabel: 'Индекс',
                 hideTrigger: true,
                 margin: '0 5 0 0',
-                labelAlign: 'top'
+                labelAlign: 'top',
+                hidden: true
             }, {
                 xtype: 'combocity',
                 name: 'dest',
