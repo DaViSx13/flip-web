@@ -24,7 +24,7 @@ class importerToDB {
 		if($tpl->getTpl($this->action)){
 			$responseJson = new Response();		
 			$handle = new filesInitializer($this->file);
-			if ($handle->uploaded) {					
+			if ($handle->uploaded) {
 				$build = new queryBuilder($handle->file_src_pathname, $tpl->getTpl($this->action), $handle->file_src_name_ext);
 				if ($build->builded){
 					$data = new dataInserter($build->query);

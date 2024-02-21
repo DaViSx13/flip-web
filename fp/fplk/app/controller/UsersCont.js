@@ -62,7 +62,8 @@ Ext.define('fplk.controller.UsersCont', {
 
     importUsers:function (importButton) {
         var me = this;
-        var form = importButton.up('importUserWin').down('importuserform');
+        var win = importButton.up('importUserWin');
+        var form = win.down('importuserform');
         if (form.getForm().isValid() && form.down('filefield[name=uploadFile]').getValue()) {
             form.submit({
                 url : 'srv/import/import.php',
