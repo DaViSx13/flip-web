@@ -21,7 +21,7 @@ Ext.define('fplk.view.users.UsersTool', {
         labelAlign: 'right',
         value: false
     }, '-', {
-        text: "Импорт",
+        text: "Импорт пользователей",
         action: "import",
         iconCls: "import"
     }]
