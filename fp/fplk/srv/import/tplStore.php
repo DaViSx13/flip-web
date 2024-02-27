@@ -92,7 +92,6 @@ class tplStore {
 							),
                             'importUsers' => array(
                                 array('wwwLKImportUsers'),
-                                array('id', 'int', 0, 0, 0),
                                 array('auser', 'str', 1, 0),
                                 array('pass', 'str', 2, 0),
                                 array('cacc', 'str', 3, 0)
