@@ -89,7 +89,13 @@ class tplStore {
 												array('SenderContact', 'str', 10, 0, NULL),
 												array('SenderPhone', 'str', 11, 0, NULL),
 												array('SenderMail', 'str', 12, 0, NULL)
-							)
+							),
+                            'importUsers' => array(
+                                array('wwwLKImportUsers'),
+                                array('auser', 'str', 0, 0),
+                                array('pass', 'str', 1, 0),
+                                array('cacc', 'str', 2, 0)
+                            )
 							);
 	}
 	function getTpl($tpl) {

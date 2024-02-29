@@ -1,6 +1,6 @@
 Ext.define('fplk.controller.UsersCont', {
     extend: 'Ext.app.Controller',
-    views: ['users.UsersGrid', 'users.UsersWin', 'users.UsersForm', 'users.UsersTool', 'mainform.MainPanel'],
+    views: ['users.UsersGrid', 'users.UsersWin', 'users.UsersForm', 'users.UsersTool', 'mainform.MainPanel', 'users.imports.ImportUsersWin', 'users.imports.ImportUsersForm'],
     models: ['UsersMod', 'AgentsMod'],
     stores: ['UsersSt', 'AgentsListSt'],
     refs: [{
@@ -15,8 +15,13 @@ Ext.define('fplk.controller.UsersCont', {
     }, {
         ref: 'UsersTool',
         selector: 'userstool'
-    }
-    ],
+    }, {
+        ref: 'ImportUsersForm',
+        selector: 'importuserform'
+    }, {
+        ref: 'ImportUsersWin',
+        selector: 'importUserWin'
+    }],
     init: function () {
         this.control({
             'mainpanel': {
@@ -45,8 +50,43 @@ Ext.define('fplk.controller.UsersCont', {
             },
             'userstool textfield[name=userSearch]': {
                 change: this.searchUser
+            },
+            'userstool button[action=import]': {
+                click: this.openImportUsersWin
+            },
+            'importUserWin button[action=imp]': {
+                click: this.importUsers
             }
         });
+    },
+
+    importUsers:function (importButton) {
+        var me = this;
+        var win = importButton.up('importUserWin');
+        var form = win.down('importuserform');
+        if (form.getForm().isValid() && form.down('filefield[name=uploadFile]').getValue()) {
+            form.submit({
+                url : 'srv/import/import.php',
+                params : {
+                    act : 'importUsers'
+                },
+                success : function (form, action) {
+
+                    var grid = me.getUsersGrid();
+                    var store = grid.getStore();
+                    store.load();
+                    win.close();
+                    Ext.Msg.alert('Импортирование завершено успешно!', action.result.msg);
+                },
+                failure : function (form, action) {
+                    Ext.Msg.alert('Ошибка импорта!', action.result.msg);
+                }
+            });
+        }
+    },
+
+    openImportUsersWin: function () {
+        Ext.widget('importUserWin').show();
     },
 
     /**
@@ -94,21 +134,21 @@ Ext.define('fplk.controller.UsersCont', {
      * @param value Значение из поля "Поиск пользователя"
      * @returns Ext.utils.Filter Фильтр
      */
-    getUsernameFilter: function(value) {
-      return new Ext.util.Filter({
-          id: 'usernameFilter',
-          filterFn: function (item) {
-              return item.get('auser').indexOf(value) !== -1
-          }
-      });
+    getUsernameFilter: function (value) {
+        return new Ext.util.Filter({
+            id: 'usernameFilter',
+            filterFn: function (item) {
+                return item.get('auser').indexOf(value) !== -1
+            }
+        });
     },
 
     /**
      * Получает фильтр по полю "Показать блокированных"
      *
      * @returns Ext.utils.Filter Фильтр
-    */ 
-    getBlockedFilter: function() {
+     */
+    getBlockedFilter: function () {
         return new Ext.util.Filter({
             id: 'blockedFilter',
             filterFn: function (item) {
@@ -141,7 +181,7 @@ Ext.define('fplk.controller.UsersCont', {
      *
      * @param ThePanel Контент
      * @param newCard Новая карточка
-    */ 
+     */
     loadUsers: function (ThePanel, newCard) {
         if (newCard.xtype == 'usersgrid') {
             var store = this.getUsersStStore();
