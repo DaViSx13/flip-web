@@ -20,9 +20,5 @@ Ext.define('fplk.view.users.UsersTool', {
         name: 'showBlocked',
         labelAlign: 'right',
         value: false
-    }, '-', {
-        text: "Импорт пользователей",
-        action: "import",
-        iconCls: "import"
     }]
 });
