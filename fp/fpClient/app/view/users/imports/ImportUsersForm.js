@@ -26,7 +26,7 @@ Ext.define('FPClient.view.users.imports.ImportUsersForm', {
 		html :  ' Загружаемый файл должен быть в формате *.xls, *.xlsx или *.csv, размером до 1 Мб,<br> '
 				+' количество строк до 1000. Данные в файле должны представлять собой таблицу<br> '
 				+' из 4 столбцов с заголовками и повторять поля формы ввода нового пользователея:<br> '
-				+' Логин, Пароль, CACC, id Агента.<br> '
+				+' Логин, Пароль, CACC, CACC Агента.<br> '
 				+' <a href="srv/import/Example_import_users.xlsx" target="_blank" download>Пример файл для импорта пользователей</a><br> ',
         columnWidth: 0.5,
         title: 'Правила загрузки файла',
