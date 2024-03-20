@@ -1,8 +1,8 @@
-CREATE procedure [dbo].[wwwClientImportUsers]
+ALTER procedure [dbo].[wwwClientImportUsers]
     @auser varchar(50),
     @pass varchar(50),
     @cacc varchar(50),
-    @agentID int,
+    @cacc_agent varchar(50),
     @result varchar(400) OUTPUT
 as
 
@@ -36,6 +36,13 @@ select @id = (SELECT users.userID FROM  wwwClientUser users where users.aUser = 
 IF @id IS NULL
     SELECT @id = 0;
 
+declare @agentID int;
+select @agentID = (SELECT info.PartCode from Partinf info where info.CACC = @cacc_agent)
+IF @agentID IS NULL
+BEGIN
+   select @result = 'Не найдено анента с CACC ' + @cacc_agent
+    RETURN
+END
 /*-------------------------------------------------------------------------------------------------------------*/
 
 /*------------------------Обновления юзера---------------------------------------------------------------------*/

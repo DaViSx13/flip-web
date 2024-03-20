@@ -103,7 +103,7 @@ class tplStore
                 array('auser', 'str', 0, 0),
                 array('pass', 'str', 1, 0),
                 array('cacc', 'str', 2, 0),
-                array('agentID', 'int', 3, 0),
+                array('cacc_agent', 'str', 3, 0),
             )
         );
     }
