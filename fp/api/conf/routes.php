@@ -20,3 +20,7 @@ Flight::route('GET /tarifs/@org/@dest/@wt(/@cargotype)',['tarifsController','get
 Flight::route('POST /catapulto',['catapultoController','getCatapultoTarif']);
 
 Flight::route('POST /wb',['wbController','createWb']);
+
+Flight::route('GET /sber/auth',['sberController','getToken']);
+
+Flight::route('POST /sber/cargo/orders',['sberController','createOrder']);

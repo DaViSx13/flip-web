@@ -15,6 +15,8 @@ Flight::register("tarifs","tarifsController");
 
 Flight::register("catapulto","catapultoController");
 
+Flight::register("sber","sberController");
+
 Flight::path("model/");
 
 Flight::register("tar", "dataTar");

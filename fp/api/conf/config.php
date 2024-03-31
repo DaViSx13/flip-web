@@ -1,7 +1,7 @@
 <?php
 $config = [
     "db" => [
-        "host" => "ROCKET",
+        "host" => "rocket",
         "username" => "pod",
         "password" => "",
         "databasename" => "alert_f"
