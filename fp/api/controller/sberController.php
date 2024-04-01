@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Ответ с токеном пользователя
+ * пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  */
 class TokenResponse
 {
@@ -18,6 +18,7 @@ class ErrorDescription
 {
     public $message;
     public $status;
+    public $techInfo;
 }
 
 class CreateOrderResponse
@@ -29,14 +30,14 @@ class CreateOrderResponse
 }
 
 /**
- * Контроллер API сбера
+ * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ API пїЅпїЅпїЅпїЅпїЅ
  */
 class sberController
 {
     /**
-     * Получение токена пользователя
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      * url - '/sber/auth'
-     * @return void Токен
+     * @return void пїЅпїЅпїЅпїЅпїЅ
      */
     public static function getToken()
     {
@@ -54,107 +55,113 @@ class sberController
     }
 
     /**
-     * Создание заказа
-     * @param $order ArrayObject Заказ
-     * @return void Ответ клиенту
+     * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+     * @param $order ArrayObject пїЅпїЅпїЅпїЅпїЅ
+     * @return void пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      */
     private static function saveOrder($order)
     {
         try {
 
-            $cName = "Сбертранспорт";                                               // Компания Сбертранспорт
-            $cAddress = "Москва";                                                   // Адрес отправителя
-            $contPhone = "1234";                                                    // Телефон отправителя
-            $userIn = "Сбертранспорт";                                              // Пользователь создавший накладную
-            $contName = "Сбертранспорт";                                            // Имя контакта отправителя
-            $clientID = 781;                                                        // ИД агента
+            $cName = "РЎР±РµСЂС‚СЂР°РЅСЃРїРѕСЂС‚";                                               // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $cAddress = "РњРѕСЃРєРІР°";                                                   // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $contPhone = "1234";                                                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $userIn = "РЎР±РµСЂС‚СЂР°РЅСЃРїРѕСЂС‚";                                              // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $contName = "РЎР±РµСЂС‚СЂР°РЅСЃРїРѕСЂС‚";                                            // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $clientID = 781;                                                        // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 
-            $humanReadableID = $order['humanReadableId'];                           // Индификатор Сбер транспорт
+            $humanReadableID = $order['humanReadableId'];                           // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            $author = $order['author'];                                             // Автор завпроса
-            $authorContactName = $author['name'];                                   // ФИО
-            $authorPhone = $author['phone'];                                        // Телефон
+            $author = $order['author'];                                             // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $authorContactName = $author['name'];                                   // пїЅпїЅпїЅ
+            $authorPhone = $author['phone'];                                        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            $desiredDate = $order['desiredDate'];                                   // Дата доставки в UTC
+            $desiredDate = $order['desiredDate'];                                   // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ UTC
 
-            $workgroup = explode('/', $order['workGroup']);                  // Рабочая группа
-            $orgName = trim($workgroup[0]);                                          // Наименование организации
-            $serviceType = trim($workgroup[1]);                                      // Вид услуги
-            $region = trim($workgroup[2]);                                           // Регион
-            $contractNum = trim($workgroup[3]);                                      // Номер договора
+            $workgroup = explode('/', $order['workGroup']);                  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            $orgName = trim($workgroup[0]);                                          // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $serviceType = trim($workgroup[1]);                                      // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            $region = trim($workgroup[2]);                                           // пїЅпїЅпїЅпїЅпїЅпїЅ
+            $contractNum = trim($workgroup[3]);                                      // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            $inn = $order['contragentInn'];                                          // ИНН контрагента
-            $reestr = $order['reestr'];                                              // Код группы
-            $comment = $order['comment'];                                            // Комментарий к маршруту
-            $costRub = $order['cost'] / 100;                                         // Предварительная стоимость доставки, руб
-            $costKop = $order['cost'] % 100;                                         // Предварительная стоимость доставки, коп
-            $hourTariffRub = $order['hourTariff'] / 100;                             // Стоимость каждого последующего часа доставки (час/руб)
-            $hourTariffKop = $order['hourTariff'] % 100;                             // Стоимость каждого последующего часа доставки (коп/руб)
-            $distance = $order['distance'];                                          // Предварительная дальность доставки, км
+            $inn = $order['contragentInn'];                                          // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $reestr = $order['reestr'];                                              // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            $comment = $order['comment'];                                            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $costRub = $order['cost'] / 100;                                         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ
+            $costKop = $order['cost'] % 100;                                         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ
+            $hourTariffRub = $order['hourTariff'] / 100;                             // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ/пїЅпїЅпїЅ)
+            $hourTariffKop = $order['hourTariff'] % 100;                             // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ/пїЅпїЅпїЅ)
+            $distance = $order['distance'];                                          // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ
 
-            $waypoints = $order['waypoints'];                                        // Маршруты (каждый маршрут следует сохранять?)
-            $waypoint = $waypoints[count($waypoints) - 1];                           // Маршрут
-            $address = $waypoint['address'];                                         // Адрес
-            $city = trim(explode(',', $address['name'])[0]);                // Город
-            $way = $address['name'];                                                 // Полный адрес
+            $waypoints = $order['waypoints'];                                        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?)
+            $waypoint = $waypoints[count($waypoints) - 1];                           // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $address = $waypoint['address'];                                         // пїЅпїЅпїЅпїЅпїЅ
+            $way = $address['name'];                                                 // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            $city = trim(
+                str_replace(
+                    'Рі.','',
+                    explode(',',  $way)[0]));                                // пїЅпїЅпїЅпїЅпїЅ
 
-            $waypointType = $waypoint['type'];                                       // Тип точки (сбор/доставка/сбор-доставка)
-            $waypointContacts = $waypoint['contacts'];                               // Массив уникальных контактов с заявками
-            $waypointContact = $waypointContacts[count($waypointContacts) - 1];     // Контакт с заявкой (Может быть несколько?)
+            $waypointType = $waypoint['type'];                                       // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+            $waypointContacts = $waypoint['contacts'];                               // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $waypointContact = $waypointContacts[count($waypointContacts) - 1];      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?)
 
 
-            $item = $waypointContact['requests'][0];                                  // Заявка
-            $cargo = $item['cargo'][0];                                               // Груз (в заявке несколько грузов?)
-            $cargoName = $cargo['cargoName'];                                         // Наименование груза
-            $wt = $cargo['weight'];                                                   // Вес
-            $vol = $cargo['volume'];                                                  // Объем
-            $psc = $cargo['occupiedPlacesCount'];                                     // Мест
-            $height = $cargo['height'];                                               // Высота, см
-            $width = $cargo['width'];                                                 // Ширина, см
-            $length = $cargo['length'];                                               // Длина, см
-            $fragile = ($cargo['fragile']) ? 1 : 0;                                   // Признак бьющегося груза
-            $destCitySql = "exec wwwGetCity @pName = '$city'";
+            $item = $waypointContact['requests'][0];                                  // пїЅпїЅпїЅпїЅпїЅпїЅ
+            $cargo = $item['cargo'][0];                                               // пїЅпїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ?)
+            $cargoName = $cargo['cargoName'];                                         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            $wt = $cargo['weight'];                                                   // пїЅпїЅпїЅ
+            $vol = $cargo['volume'];                                                  // пїЅпїЅпїЅпїЅпїЅ
+            $psc = $cargo['occupiedPlacesCount'];                                     // пїЅпїЅпїЅпїЅ
+            $height = $cargo['height'];                                               // пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ
+            $width = $cargo['width'];                                                 // пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ
+            $length = $cargo['length'];                                               // пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ
+            $fragile = ($cargo['fragile']) ? 1 : 0;                                   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            $destCitySql = "exec wwwGetCity @pName = N'$city'";
 
-            $orgCitySql = "exec wwwGetCity @pName = 'Москва'";                        // Город сбертранспорт
-            $org = Flight::db()->query($orgCitySql)[0];
-            $dest = Flight::db()->query($destCitySql)[0];
+            $orgCitySql = "exec wwwGetCity @pName = 'РњРѕСЃРєРІР°'";                        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ;
+            $destCitySql = Flight::utf8_to_win1251($destCitySql);
+            $orgCitySql = Flight::utf8_to_win1251($orgCitySql);
+
+            $org = Flight::db()->query($orgCitySql)[0]['code'];
+            $dest = Flight::db()->query($destCitySql)[0]['code'];
             $wolVt = ($height + $length + $wt) / 6000;
             $courDate = explode('T', $desiredDate)[0];
             $courTime = explode('+', explode('T', $desiredDate)[1])[0];
 
+            //language=SQL
             $sql = "
-            EXEC wwwLKsetOrder 
+            EXECUTE wwwLKsetOrder 
                 @clientID   = $clientID,
                 @ORG        = $org,
-                @CName      = '$cName',
-                @Address    = '$cAddress'
-                @ContName   = '$contName',
+                @CName      = N'$cName',
+                @Address    = N'$cAddress',
+                @ContName   = N'$contPhone',
                 @ContPhone  = '$contPhone',
-                @ContMail   = '',
-                @OrgRems    = '',
+                @ContMail   = null,
+                @OrgRems    = null,
                 @DEST       = $dest,
-                @DName      = '$orgName',
-                @DAdr       = '$way',
-                @DContName  = '$authorContactName',
-                @DContPhone = '$authorPhone',
-                @DContMail  = '',
-                @DESTRems   = '$comment',
+                @DName      = N'$orgName',
+                @DAdr       = N'$way',
+                @DContName  = N'$authorContactName',
+                @DContPhone = N'$authorPhone',
+                @DContMail  = null,
+                @DESTRems   = N'$comment',
                 @Type       = 1,
                 @Packs      = $psc,
                 @Wt         = $vol,
                 @VolWt      = $wolVt,
                 @Payr       = 2,
-                @UserIn     = '$userIn',
+                @UserIn     = N'$userIn',
                 @RordNum    = 0,
-                @CourDate   = '$courDate',
-                @CourTimeF  = '$courTime'
-                @CourTimeT  = '$courTime',
+                @CourDate   = N'$courDate',
+                @CourTimeF  = N'$courTime',
+                @CourTimeT  = N'$courTime',
                 @webwb      = 1             
         ";
-
-
-            $crOrder = Flight::db()->query($sql);
+            $sql = Flight::utf8_to_win1251($sql);
+            $crOrder = Flight::db()->query($sql)[0]['id'];
 
             // language=SQL
             $sqlExtraFields = "
@@ -163,7 +170,7 @@ class sberController
                  @humanReadableID   = '$humanReadableID',
                  @serviceType       = '$serviceType',
                  @region            = '$region',
-                 @contractNum       = '$contractNum'
+                 @contractNum       = '$contractNum',
                  @inn               = $inn,
                  @reestr            = '$reestr',
                  @costRub           = $costRub,
@@ -189,6 +196,7 @@ class sberController
             $errorDesc = new ErrorDescription();
             $errorDesc->message = $ex->getLine() . ". " . $ex->getMessage();
             $errorDesc->status = $ex->getCode();
+            $errorDesc->techInfo = $ex -> getTraceAsString();
             $error->error = $errorDesc;
             echo Flight::json($error);
         }
