@@ -10,7 +10,7 @@ create table SberExtraFields
     region            varchar(100),
     contract_num      int,
     INN               int,
-    reestr            int,
+    reestr            varchar(100),
     cost_rub          int,
     cost_kop          int,
     hour_tarif_rub    int,
@@ -22,5 +22,8 @@ create table SberExtraFields
     length            int,
     width             int,
     fragile           binary,
-    human_readable_id varchar(500)
+    human_readable_id varchar(500),
+    request_file_id   int
+        constraint SberExtraFields_SberRequestHistory_id_fk
+            references SberRequestHistory
 )

@@ -1,0 +1,60 @@
+[
+  {
+    "humanReadableId": "CT-0025-00001280",
+    "author": {
+      "name": "Грузовичков Сергей Каргович",
+      "phone": "+79998887766"
+    },
+    "desiredDate": "2023-07-04T21:00:00+03:00",
+    "desiredAuto": {
+      "weight": 3000.0,
+      "volume": 12
+    },
+    "workGroup": "Грузоперевозки/транспорт/Московская область/1805293948",
+    "contragentInn": "7719819987",
+    "reestr": "ББ-8586",
+    "comment": "Комментарий к маршруту",
+    "waypoints": [
+      {
+        "id": "5b1aaf8f-4c64-41fa-9efe-30058fab4eef",
+        "orderingIndex": 1,
+        "type": "LOAD",
+        "address": {
+          "name":  "г.Краснодар, ул.Селезнева, 136",
+          "latitude": 55.787662,
+          "longitude": 37.509508
+        },
+        "contacts": [
+          {
+            "contact": {
+              "name": "Грузовичков Сергей Каргович",
+              "phone": "+79998887766"
+            },
+            "requests": [
+              {
+                "humanReadableId": "OT-0025-00001281",
+                "type": "LOAD",
+                "cargo": [
+                  {
+                    "orderingIndex": 1,
+                    "cargoName": "Коробка",
+                    "weight": 7.5,
+                    "volume": 90000,
+                    "occupiedPlacesCount": 2,
+                    "height": 30,
+                    "length": 50,
+                    "width": 60,
+                    "fragile": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "cost": 1260000,
+    "hourTariff": 219962,
+    "distance": 10
+  }
+]
