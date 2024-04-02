@@ -4,7 +4,7 @@ create table dbo.SberRequestHistory
         constraint SberReauestHistory_pk
             primary key,
     date_in datetime default GETDATE() not null,
-    content varchar(8000)              not null
+    content varchar(max)              not null
 )
 go
 
