@@ -12,7 +12,7 @@ CREATE procedure wwwFillSberExtraFields
     @serviceType        varchar(50),       -- ��� ������
     @region             varchar(100),      -- ������
     @contractNum        varchar(100),      -- ����� ���������
-    @inn                int,               -- ���
+    @inn                varchar(50),       -- ���
     @reestr             varchar(50),       -- ��� ������
     @costRub            int,               -- ��������������� ��������� ��������, ���
     @costKop            int,               -- ��������������� ��������� ��������, ���
@@ -28,8 +28,8 @@ CREATE procedure wwwFillSberExtraFields
     @fileID             int            -- �� �����
 AS
         BEGIN
-           INSERT INTO SberExtraFields(
-                order_id,
+           INSERT INTO wwwSberExtraFields(
+                ROrdNum,
                 human_readable_id,
                 service_type,
                 region,

@@ -96,11 +96,11 @@ class sberController
         }
 
         $orders = Flight::request()->data->getData();
-        $json = json_encode($orders);
-
+        $json = json_encode($orders, JSON_UNESCAPED_UNICODE);
+        $json = iconv("UTF-8", "windows-1251", $json);
         //language=SQL
         $historySql = "
-            EXECUTE wwwSberAddRequestToHistory @content = '$json'
+            EXECUTE wwwSberAddRequestToHistory @content = N'$json'
         ";
         $historySql = Flight::utf8_to_win1251($historySql);
         $id = Flight::db()->query($historySql)[0]['id'];
@@ -235,7 +235,7 @@ class sberController
                  @serviceType       = '$serviceType',
                  @region            = '$region',
                  @contractNum       = '$contractNum',
-                 @inn               = $inn,
+                 @inn               = '$inn',
                  @reestr            = '$reestr',
                  @costRub           = $costRub,
                  @costKop           = $costKop,

@@ -2,7 +2,7 @@ CREATE PROCEDURE wwwSberAddRequestToHistory
     @content    varchar(max)
 AS
     DECLARE @date datetime = GETDATE();
-    INSERT INTO SberRequestHistory(
+    INSERT INTO wwwSberRequestHistory(
         date_in,
         content
     )
