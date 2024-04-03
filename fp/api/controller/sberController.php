@@ -82,6 +82,10 @@ class sberController
         echo Flight::json($resp);
     }
 
+    /**
+     * Генерация токена
+     * @return string Токен
+     */
     private static function generateToken()
     {
         $signing_key = "changeme";
@@ -101,6 +105,11 @@ class sberController
         return $jwt;
     }
 
+    /**
+     * Кодирование в Base64
+     * @param $text string Текст для кодирования
+     * @return array|string|string[] Кодированная строка
+     */
     private static function base64encode($text)
     {
         return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($text));
@@ -114,7 +123,7 @@ class sberController
     public static function createOrder()
     {
         $token =  apache_request_headers()['Authorization'];
-        if(strpos($token, 'test') == false) {
+        if(strpos($token, self::generateToken()) == false) {
             $error = new ErrorResponse();
             $errorDesc = new ErrorDescription();
             $errorDesc->message = 'Авторизация не пройдена';
