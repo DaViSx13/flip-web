@@ -9,6 +9,10 @@ class TokenResponse
      * @var string Токен
      */
     public $token;
+
+    public $refreshToken;
+
+    public $transferPassword = true;
 }
 
 /**
@@ -72,8 +76,34 @@ class sberController
     public static function getToken()
     {
         $resp = new  TokenResponse();
-        $resp->token = "test";
+        $token = self::generateToken();
+        $resp-> token = $token;
+        $resp-> refreshToken = $token;
         echo Flight::json($resp);
+    }
+
+    private static function generateToken()
+    {
+        $signing_key = "changeme";
+        $header = [
+            "alg" => "HS512",
+            "typ" => "JWT",
+            "user" => 781,
+            "userName" => "Сбертранспорт"
+        ];
+        $header = self::base64encode(json_encode($header));
+        $payload =  [
+            "exp" => 0,
+        ];
+        $payload = self::base64encode(json_encode($payload));
+        $signature = self::base64encode(hash_hmac('sha512', "$header.$payload", $signing_key, true));
+        $jwt = "$header.$payload.$signature";
+        return $jwt;
+    }
+
+    private static function base64encode($text)
+    {
+        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($text));
     }
 
     /**
