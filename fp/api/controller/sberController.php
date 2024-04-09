@@ -1,73 +1,35 @@
 <?php
 
 /**
- * Токен для аутентификации
- */
-class TokenResponse
-{
-    /**
-     * @var string Токен
-     */
-    public $token;
-
-    public $refreshToken;
-
-    public $transferPassword = true;
-}
-
-/**
- * Ответ об ошибке клиенту
- */
-class ErrorResponse
-{
-    /**
-     * @var bool Статус
-     */
-    public $isSuccess = false;
-
-    /**
-     * @var ErrorDescription Описание ошибки
-     */
-    public $error;
-}
-
-/**
- * Описание ошибки
- */
-class ErrorDescription
-{
-    /**
-     * @var string Ошибка
-     */
-    public $message;
-
-    /**
-     * @var string Статус ошибки
-     */
-    public $status;
-
-    /**
-     * @var string Техническая информация
-     */
-    public $techInfo;
-}
-
-/**
- * Успешный ответ клиенту
- */
-class SuccessResponse
-{
-    public $isSuccess;
-    public $orderParthnerId;
-
-    public $orderSbertransportId;
-}
-
-/**
  * Странспорт API
  */
 class sberController
 {
+    /**
+     * Отправка пользователю ошибки
+     * @param $ex string|Exception
+     * @param $techInfo string
+     * @return ErrorResponse
+     */
+    public static function getErrorMessage($ex, $techInfo)
+    {
+        $info = (is_string($ex)) ? $techInfo : $ex->getTraceAsString();
+
+        $message = (is_string($ex)) ? $ex : $ex;
+
+        $code = (is_string($ex)) ? -10 : $ex->getCode();
+
+
+        $error = new ErrorResponse();
+        $errorDesc = new ErrorDescription();
+        $errorDesc->message = $message;
+        $errorDesc->status = $code;
+        $errorDesc->techInfo = $info;
+        $error->error = $errorDesc;
+
+        return $error;
+    }
+
     /**
      * Получает токен для аутентификации
      * url - '/sber/auth'
@@ -75,11 +37,16 @@ class sberController
      */
     public static function getToken()
     {
-        $resp = new  TokenResponse();
-        $token = self::generateToken();
-        $resp-> token = $token;
-        $resp-> refreshToken = $token;
-        echo Flight::json($resp);
+        try {
+            $resp = new  TokenResponse();
+            $token = self::generateToken();
+            $resp->token = $token;
+            $resp->refreshToken = $token;
+            echo Flight::json($resp);
+        } catch (Exception $exception) {
+            echo Flight::json(self::getErrorMessage($exception, null));
+        }
+
     }
 
     /**
@@ -96,13 +63,12 @@ class sberController
             "userName" => "Сбертранспорт"
         ];
         $header = self::base64encode(json_encode($header));
-        $payload =  [
-            "exp" => 0,
+        $payload = [
+            //"exp" => 0,
         ];
         $payload = self::base64encode(json_encode($payload));
         $signature = self::base64encode(hash_hmac('sha512', "$header.$payload", $signing_key, true));
-        $jwt = "$header.$payload.$signature";
-        return $jwt;
+        return "$header.$payload.$signature";
     }
 
     /**
@@ -116,55 +82,76 @@ class sberController
     }
 
     /**
+     * Проверка токена
+     * @return bool
+     */
+    private static function checkToken()
+    {
+        $token = apache_request_headers()['Authorization'];
+        if (strpos($token, self::generateToken()) == false) {
+            echo Flight::json(
+                self::getErrorMessage("Авторизация не пройдена", "Токен '$token' не валиден")
+            );
+            return false;
+        }
+
+        return true;
+
+    }
+
+    /**
      * Создает заказ
      * url - '/sber/cargo/orders'
      * @return void Ответ пользователю
      */
     public static function createOrder()
     {
-        $token =  apache_request_headers()['Authorization'];
-        if(strpos($token, self::generateToken()) == false) {
-            $error = new ErrorResponse();
-            $errorDesc = new ErrorDescription();
-            $errorDesc->message = 'Авторизация не пройдена';
-            $errorDesc->status = 0;
-            $errorDesc->techInfo = "Токен '$token' не ваалиден";
-            $error->error = $errorDesc;
-            echo Flight::json($error);
+        if (!self::checkToken())
             return;
-        }
 
         $orders = Flight::request()->data->getData();
+
+        $id = self::addRequestToHistory($orders);
+
+        $res = array();
+        foreach ($orders as $order) {
+            $resp = self::saveOrder($order, $id);
+            array_push($res, $resp);
+        }
+
+        echo Flight::json($res);
+    }
+
+    /**
+     * Добавление записи в историю запросов от сбертранспорта
+     * @param $orders array Тело запроса
+     * @return int ИД записи
+     */
+    private static function addRequestToHistory($orders)
+    {
         $json = json_encode($orders, JSON_UNESCAPED_UNICODE);
         $json = iconv("UTF-8", "windows-1251", $json);
+
         //language=SQL
         $historySql = "
             EXECUTE wwwSberAddRequestToHistory @content = N'$json'
         ";
         $historySql = Flight::utf8_to_win1251($historySql);
-        $id = Flight::db()->query($historySql)[0]['id'];
-
-        $res = array();
-        foreach ($orders as $order) {
-            $resp = self::saveOrder($order, $id);
-            if(!isset($resp))
-                break;
-            else
-                array_push($res, $resp);
-        }
-        echo Flight::json($res);
+        return Flight::db()->query($historySql)[0]['id'];
     }
 
     /**
      * Сохранение заказа
-     * @param $order object Заказ
-     * @param $res array Список сохраненых заказов
-     * @param $fileID int ID присланного файла
-     * @return bool
+     * @param $order array Заказ
+     * @param $fileID int Ид истории
+     * @return ErrorResponse|SuccessResponse Ответ о сохранении
      */
     private static function saveOrder($order, $fileID)
     {
         try {
+            $request = new NewRequestDTO($order);
+
+            // --------------------------------Заполняем внутренними сущностми---------------------------------------//
 
             $cName = "Сбертранспорт";                                               // Компания отправителя
             $cAddress = "Москва";                                                   // Город отправителя
@@ -172,67 +159,86 @@ class sberController
             $userIn = "Сбертранспорт";                                              // Имя человека, создавшего заказ
             $contName = "Сбертранспорт";                                            // Имя контактоного лица
             $clientID = 781;                                                        // ИД клиента
+            $cCity = "Москва";                                                      // Город отправителя
 
+            // ------------------------------------------------------------------------------------------------------//
 
-            $humanReadableID = $order['humanReadableId'];                           // Человеко-читаемый идентификатор маршрута в Сбертранспорт
+            // --------------------------------Заполняем поля из запроса---------------------------------------------//
 
-            $author = $order['author'];                                             // Контакт получателя
-            $authorContactName = $author['name'];                                   // ФИО
-            $authorPhone = $author['phone'];                                        // Телефон
+            $humanReadableID = $request->humanReadableId;                         // Человеко-читаемый идентификатор маршрута в Сбертранспорт
+            $author = new ContactDTO($request->author, false);            // Контакт
+            $authorContactName = $author->name;                                   // ФИО
+            $authorPhone = $author->phone;                                        // Телефон
+            $desiredDate = $request->desiredDate;                                 // Дата доставки в UTC
 
-            $desiredDate = $order['desiredDate'];                                   // Дата доставки в UTC
-
-            $workgroup = explode('/', $order['workGroup']);                 // Рабочая группа в формате "Организация /вид услуги (транспорт)/Регион/Договор"
+            $workgroup = explode('/', $request->workGroup);               // Рабочая группа в формате "Организация /вид услуги (транспорт)/Регион/Договор"
             $orgName = trim($workgroup[0]);                                          // Имя организации получателя
             $serviceType = trim($workgroup[1]);                                      // Вид услуги
             $region = trim($workgroup[2]);                                           // Регион
             $contractNum = trim($workgroup[3]);                                      // Номер договора
 
-            $inn = $order['contragentInn'];                                          // ИНН получателя
-            $reestr = $order['reestr'];                                              // Код группы
-            $comment = $order['comment'];                                            // Комментарий к маршруту
-            $costRub = $order['cost'] / 100;                                         // Предварительная стоимость доставки, руб
-            $costKop = $order['cost'] % 100;                                         // Предварительная стоимость доставки, коп
-            $hourTariffRub = $order['hourTariff'] / 100;                             // Стоимость каждого последующего часа доставки, руб/час
-            $hourTariffKop = $order['hourTariff'] % 100;                             // Стоимость каждого последующего часа доставки, коп/час
-            $distance = $order['distance'];                                          // Предварительная дальность доставки, км
+            $inn = $request->contragentInn;                                        // ИНН получателя
+            $reestr = $request->reestr;                                            // Код группы
+            $comment = $request->comment;                                          // Комментарий к маршруту
+            $costRub = $request->cost / 100;                                       // Предварительная стоимость доставки, руб
+            $costKop = $request->cost % 100;                                       // Предварительная стоимость доставки, коп
+            $hourTariffRub = $request->hourTariff / 100;                           // Стоимость каждого последующего часа доставки, руб/час
+            $hourTariffKop = $request->hourTariff % 100;                           // Стоимость каждого последующего часа доставки, коп/час
+            $distance = $request->distance;                                        // Предварительная дальность доставки, км
 
-            $waypoints = $order['waypoints'];                                        // Точки на маршруте
-            $waypoint = $waypoints[count($waypoints) - 1];                           // Точка на маршруте
-            $address = $waypoint['address'];                                         // Адрес получателя
-            $way = $address['name'];                                                 // Полный адрес
+            $waypoints = $request->waypoints;                                      // Точки на маршруте
+            $waypoint = new WaypointDTO($waypoints[0]);                            // Точка на маршруте
+            $address = new AddressDTO($waypoint->address);                         // Адрес получателя
+            $way = $address->addressStringRepresentation;                          // Полный адрес
+
             $city = trim(
                 str_replace(
                     'г.', '',
-                    explode(',', $way)[0]));                                // Город получателя
+                    explode(',', $way)[2]));                                // Город получателя
 
-            $waypointType = $waypoint['type'];                                       // Тип точки (LOAD - сбор/UNLOAD - доставка/LOAD-UNLOAD - сбор-доставка)
-            $waypointContacts = $waypoint['contacts'];                               // Контакты с заявками
-            $waypointContact = $waypointContacts[count($waypointContacts) - 1];      // Контакт с заявками
+            $waypointType = $waypoint->type;                                       // Тип точки (LOAD - сбор/UNLOAD - доставка/LOAD-UNLOAD - сбор-доставка)
+            $waypointContacts = $waypoint->contacts;                               // Контакты с заявками
+            $waypointContact =
+                new ContactRequestDTO(
+                    $waypointContacts[0]
+                );                                                                   // Контакт с заявками
+            $wayContactDTO = new ContactDTO($waypointContact->contact);            // Контакт отправителя
+            $rContName = $wayContactDTO->name;                                     // Имя контакта отправителя
+            $rPhone = $wayContactDTO->phone;                                       // Телефон контакта отправителя
 
+            $reqDTO =
+                new RequestDTO(
+                    $waypointContact->requests[0]
+                );                                                                  // Заказ
+            $cargo = new CargoDTO($reqDTO->cargo[0]);                               // Груз
+            $cargoName = $cargo->cargoName;                                         // Наименование груза
+            $wt = $cargo->weight;                                                   // Вес
+            $vol = $cargo->volume;                                                  // Объем, см3
+            $psc = $cargo->occupiedPlacesCount;                                     // Мест
+            $height = $cargo->height;                                               // Высота, см
+            $width = $cargo->width;                                                 // Ширина, см
+            $length = $cargo->length;                                               // Длина, см
+            $fragile = ($cargo->fragile) ? 1 : 0;                                   // Признак бьющегося заказа
 
-            $item = $waypointContact['requests'][0];                                  // Заказы
-            $cargo = $item['cargo'][0];                                               // Заказ
-            $cargoName = $cargo['cargoName'];                                         // Наименование груза
-            $wt = $cargo['weight'];                                                   // Вес
-            $vol = $cargo['volume'];                                                  // Объем, см3
-            $psc = $cargo['occupiedPlacesCount'];                                     // Мест
-            $height = $cargo['height'];                                               // Высота, см
-            $width = $cargo['width'];                                                 // Ширина, см
-            $length = $cargo['length'];                                               // Длина, см
-            $fragile = ($cargo['fragile']) ? 1 : 0;                                   // Признак бьющегося заказа
-            $destCitySql = "exec wwwGetCity @pName = N'$city'";
+            $wolVt = ($height + $length + $wt) / 6000;                                 // Объемный вес
+            $courDate = explode('T', $desiredDate)[0];                        // Дата доставки
+            $courTime = explode('+', explode('T', $desiredDate)[1])[0]; // Время доставки
+            // ------------------------------------------------------------------------------------------------------//
 
-            $orgCitySql = "exec wwwGetCity @pName = 'Москва'";                        // Город отправителя;
+            // ----------------------------------------Запросы городов------------------------------------------------//
+
+            $destCitySql = "exec wwwGetCity @pName = N'$city'";                        // Город получателя
             $destCitySql = Flight::utf8_to_win1251($destCitySql);
+            $dest = Flight::db()->query($destCitySql)[0]['code'];                      // Код города получателя
+
+            $orgCitySql = "exec wwwGetCity @pName = N'$cCity'";                        // Город отправителя;
             $orgCitySql = Flight::utf8_to_win1251($orgCitySql);
+            $org = Flight::db()->query($orgCitySql)[0]['code'];                        // Код города отправителя
 
-            $org = Flight::db()->query($orgCitySql)[0]['code'];
-            $dest = Flight::db()->query($destCitySql)[0]['code'];
-            $wolVt = ($height + $length + $wt) / 6000;
-            $courDate = explode('T', $desiredDate)[0];
-            $courTime = explode('+', explode('T', $desiredDate)[1])[0];
+            // ------------------------------------------------------------------------------------------------------//
 
+
+            // ----------------------------------------Запросы заказа------------------------------------------------//
             //language=SQL
             $sql = "
             EXECUTE wwwLKsetOrder 
@@ -247,8 +253,8 @@ class sberController
                 @DEST       = $dest,
                 @DName      = N'$orgName',
                 @DAdr       = N'$way',
-                @DContName  = N'$authorContactName',
-                @DContPhone = N'$authorPhone',
+                @DContName  = N'$rContName',
+                @DContPhone = N'$rPhone',
                 @DContMail  = null,
                 @DESTRems   = N'$comment',
                 @Type       = 1,
@@ -262,7 +268,8 @@ class sberController
                 @CourTimeF  = N'$courTime',
                 @CourTimeT  = N'$courTime',
                 @webwb      = 1             
-        ";
+            ";
+
             $sql = Flight::utf8_to_win1251($sql);
             $crOrder = Flight::db()->query($sql)[0]['ord_no'];
 
@@ -288,9 +295,14 @@ class sberController
                  @length            = $length,
                  @fragile           = $fragile,
                  @fileID            = $fileID 
-        ";
+            ";
+
             $sqlExtraFields = Flight::utf8_to_win1251($sqlExtraFields);
-            $answ = Flight::db()->query($sqlExtraFields);
+            $ans = Flight::db()->query($sqlExtraFields);
+            if (!isset($ans))
+                throw new Exception("Не удалось сохранить доп. поля заказа");
+
+            // ------------------------------------------------------------------------------------------------------//
 
             $response = new SuccessResponse();
             $response->isSuccess = true;
@@ -298,14 +310,7 @@ class sberController
             $response->orderSbertransportId = $humanReadableID;
             return $response;
         } catch (Exception $ex) {
-            $error = new ErrorResponse();
-            $errorDesc = new ErrorDescription();
-            $errorDesc->message = $ex->getLine() . ". " . $ex->getMessage();
-            $errorDesc->status = $ex->getCode();
-            $errorDesc->techInfo = $ex->getTraceAsString();
-            $error->error = $errorDesc;
-            echo Flight::json($error);
-            return null;
+            return self::getErrorMessage($ex, null);
         }
     }
 }

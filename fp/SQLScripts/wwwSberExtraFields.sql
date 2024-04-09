@@ -8,7 +8,7 @@ create table wwwSberExtraFields
             references RegOrders,
     service_type      varchar(100),
     region            varchar(100),
-    contract_num      int,
+    contract_num      varchar(200),
     INN               varchar(50),
     reestr            varchar(200),
     cost_rub          int,

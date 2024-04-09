@@ -33,6 +33,30 @@ Flight::register("order", "dataOrd");
 
 Flight::register("pdf", "dataPdf");
 
+Flight::path("model/sber/request");
+
+Flight::register("SberNewRequestDTO", "AddressDTO");
+
+Flight::register("SberContactDto", "ContactDTO");
+
+Flight::register("SberCoordinatesDto", "CoordinatesDTO");
+
+Flight::register("SberDesiredAutoDto", "DesiredAutoDTO");
+
+Flight::register("SberNewRequestDto", "NewRequestDTO");
+
+Flight::register("SberWaypointDto", "WaypointDTO");
+
+Flight::path("model/sber/response");
+
+Flight::register("ErrorResponse", "ErrorResponse");
+
+Flight::register("SberErrorDescription", "ErrorDescription");
+
+Flight::register("SberSuccessResponse", "SuccessResponse");
+
+Flight::register("SberTokenResponse", "TokenResponse");
+
 Flight::map('error', function(Exception $ex){
 	class ErResp
 {
