@@ -1,5 +1,7 @@
 <?php
 
+use api\model\sber\response\token\TokenResponse;
+
 /**
  * Странспорт API
  */
@@ -15,7 +17,7 @@ class sberController
     {
         $info = (is_string($ex)) ? $techInfo : $ex->getTraceAsString();
 
-        $message = (is_string($ex)) ? $ex : $ex;
+        $message = $ex;
 
         $code = (is_string($ex)) ? -10 : $ex->getCode();
 
