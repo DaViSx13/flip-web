@@ -1,6 +1,5 @@
 <?php
 
-namespace api\model\sber\response\token;
 /**
  * Токен для аутентификации
  */

@@ -24,3 +24,5 @@ Flight::route('POST /wb',['wbController','createWb']);
 Flight::route('GET /sber/auth',['sberController','getToken']);
 
 Flight::route('POST /sber/cargo/orders',['sberController','createOrder']);
+
+Flight::route('GET /sber/orders/@WbNo',['sberController','getOrder']);

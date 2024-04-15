@@ -1,31 +1,31 @@
 <?php
 
 /**
- * èíôîðìàöèÿ îá àâòîìîáèëå
+ * Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾Ð± Ð°Ð²Ñ‚Ð¾Ð¼Ð¾Ð±Ð¸Ð»Ðµ
  */
 class VehicleInfo
 {
 
     /**
-     * ìàðêà
+     * Ð¼Ð°Ñ€ÐºÐ°
      * @var string
      */
     public $mark;
 
     /**
-     * ìîäåëü
+     * Ð¼Ð¾Ð´ÐµÐ»ÑŒ
      * @var string
      */
     public $model;
 
     /**
-     * öâåò
+     * Ñ†Ð²ÐµÑ‚
      * @var string
      */
     public $color;
 
     /**
-     * ãîñóäàðñòâåííûé íîìåð
+     * Ð³Ð¾ÑÑƒÐ´Ð°Ñ€ÑÑ‚Ð²ÐµÐ½Ð½Ñ‹Ð¹ Ð½Ð¾Ð¼ÐµÑ€
      * @var string
      */
     public $registrationNumber;

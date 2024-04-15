@@ -1,25 +1,25 @@
 <?php
 /**
- * Îáúåêò "Êîîðäèíàòû"
+ * ÐžÐ±ÑŠÐµÐºÑ‚ "ÐšÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹"
  */
 class CoordinatesDTO extends SberBaseDTO
 {
 
     /**
-     * Øèðîòà
+     * Ð¨Ð¸Ñ€Ð¾Ñ‚Ð°
      * @var double
      */
     public $latitude;
 
     /**
-     * Äîëãîòà
+     * Ð”Ð¾Ð»Ð³Ð¾Ñ‚Ð°
      * @var double
      */
     public $longitude;
 
     /**
-     * Ïîëó÷àåò ñïèñîê îáÿçàòåëüíûõ ïîëåé
-     * @return array Îáÿçàòåëüíûå ïîëÿ
+     * ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÑ‚ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ñ… Ð¿Ð¾Ð»ÐµÐ¹
+     * @return array ÐžÐ±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð¿Ð¾Ð»Ñ
      */
     protected function getRequiredArray()
     {

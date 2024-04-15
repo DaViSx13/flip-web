@@ -1,6 +1,5 @@
 <?php
 
-use api\model\sber\response\token\TokenResponse;
 
 /**
  * Странспорт API
@@ -9,25 +8,23 @@ class sberController
 {
     /**
      * Отправка пользователю ошибки
-     * @param $ex string|Exception
+     * @param $ex string|SberException
      * @param $techInfo string
      * @return ErrorResponse
      */
-    public static function getErrorMessage($ex, $techInfo)
+    public static function getErrorMessage($ex, $techInfo = null)
     {
-        $info = (is_string($ex)) ? $techInfo : $ex->getTraceAsString();
 
-        $message = $ex;
-
-        $code = (is_string($ex)) ? -10 : $ex->getCode();
-
-
-        $error = new ErrorResponse();
-        $errorDesc = new ErrorDescription();
-        $errorDesc->message = $message;
-        $errorDesc->status = $code;
-        $errorDesc->techInfo = $info;
-        $error->error = $errorDesc;
+        if (is_string($ex)) {
+            $error = new ErrorResponse();
+            $errorDesc = new ErrorDescription();
+            $errorDesc->message = $ex;
+            $errorDesc->status = 5;
+            $errorDesc->techInfo = $techInfo;
+            $error->error = $errorDesc;
+        } else {
+            $error = $ex -> getResponse();
+        }
 
         return $error;
     }
@@ -118,7 +115,7 @@ class sberController
         $res = array();
         foreach ($orders as $order) {
             $resp = self::saveOrder($order, $id);
-            array_push($res, $resp);
+            $res[] = $resp;
         }
 
         echo Flight::json($res);
@@ -273,7 +270,9 @@ class sberController
             ";
 
             $sql = Flight::utf8_to_win1251($sql);
-            $crOrder = Flight::db()->query($sql)[0]['ord_no'];
+            $queryResult = Flight::db()->query($sql);
+            $crOrder = $queryResult[0]['ord_no'];
+            $wbNo = $queryResult[0]['wb_no'];
 
             // language=SQL
             $sqlExtraFields = "
@@ -302,18 +301,40 @@ class sberController
             $sqlExtraFields = Flight::utf8_to_win1251($sqlExtraFields);
             $ans = Flight::db()->query($sqlExtraFields);
             if (!isset($ans))
-                throw new Exception("Не удалось сохранить доп. поля заказа");
+                throw new SberException("It's not possible to save extra fields");
 
             // ------------------------------------------------------------------------------------------------------//
 
             $response = new SuccessResponse();
             $response->isSuccess = true;
-            $response->orderParthnerId = $crOrder;
+            $response->orderParthnerId = $wbNo;
             $response->orderSbertransportId = $humanReadableID;
             return $response;
+
         } catch (Exception $ex) {
-            return self::getErrorMessage($ex, null);
+            return self::getErrorMessage($ex);
         }
+    }
+
+    /**
+     * @param $orderID
+     * @return void
+     */
+    public static function getOrder($WbNo)
+    {
+
+        $sql = "
+            exec wwwGetWb @wb_no='$WbNo'
+        ";
+
+        $sql = Flight::utf8_to_win1251($sql);
+        $ans = Flight::db()->query($sql);
+
+
+
+        $resp = new SuccessResponse();
+        $resp -> orderSbertransportId = $ans;
+        echo Flight::json($resp);
     }
 }
 

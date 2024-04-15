@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Óñïåøíûé îòâåò êëèåíòó
+ * Ð£ÑÐ¿ÐµÑˆÐ½Ñ‹Ð¹ Ð¾Ñ‚Ð²ÐµÑ‚ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ñƒ
  */
 class SuccessResponse
 {
     /**
-     * Ïðèçíàê óñïåõà
+     * ÐŸÑ€Ð¸Ð·Ð½Ð°Ðº ÑƒÑÐ¿ÐµÑ…Ð°
      * @var bool
      */
     public $isSuccess;
 
     /**
-     * ID êîíòðàãåíòà
+     * ID ÐºÐ¾Ð½Ñ‚Ñ€Ð°Ð³ÐµÐ½Ñ‚Ð°
      * @var string
      */
     public $orderParthnerId;
 
     /**
-     * ÈÄ Ñáåðòðàíñïîðòà
+     * Ð˜Ð” Ð¡Ð±ÐµÑ€Ñ‚Ñ€Ð°Ð½ÑÐ¿Ð¾Ñ€Ñ‚Ð°
      * @var string
      */
     public $orderSbertransportId;

@@ -37,15 +37,21 @@ Flight::path("model/sber/request");
 
 Flight::register("SberNewRequestDTO", "AddressDTO");
 
-Flight::register("SberContactDto", "ContactDTO");
+Flight::register("CargoDTO", "CargoDTO");
 
-Flight::register("SberCoordinatesDto", "CoordinatesDTO");
+Flight::register("ContactDTO", "ContactDTO");
 
-Flight::register("SberDesiredAutoDto", "DesiredAutoDTO");
+Flight::register("ContactRequestDTO", "ContactRequestDTO");
 
-Flight::register("SberNewRequestDto", "NewRequestDTO");
+Flight::register("CoordinatesDTO", "CoordinatesDTO");
 
-Flight::register("SberWaypointDto", "WaypointDTO");
+Flight::register("DesiredAutoDTO", "DesiredAutoDTO");
+
+Flight::register("NewRequestDTO", "NewRequestDTO");
+
+Flight::register("RequestDTO", "RequestDTO");
+
+Flight::register("WaypointDTO", "WaypointDTO");
 
 Flight::path("model/sber/response");
 
@@ -56,6 +62,10 @@ Flight::register("SberErrorDescription", "ErrorDescription");
 Flight::register("SberSuccessResponse", "SuccessResponse");
 
 Flight::register("SberTokenResponse", "TokenResponse");
+
+Flight::path("model/sber/exception");
+
+Flight::register("SberException", "SberException");
 
 Flight::map('error', function(Exception $ex){
 	class ErResp

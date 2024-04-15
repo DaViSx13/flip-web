@@ -1,73 +1,73 @@
 <?php
 
 /**
- * Îáúåêò "Èíôîðìàöèÿ î âîäèòåëå"
+ * ÐžÐ±ÑŠÐµÐºÑ‚ "Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ Ð²Ð¾Ð´Ð¸Ñ‚ÐµÐ»Ðµ"
  */
 class DriverInfoDTO
 {
 
     /**
-     * èäåíòèôèêàòîð âîäèòåëÿ
+     * Ð¸Ð´ÐµÐ½Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ‚Ð¾Ñ€ Ð²Ð¾Ð´Ð¸Ñ‚ÐµÐ»Ñ
      * @var integer
      */
     public $id;
 
     /**
-     * èìÿ
+     * Ð¸Ð¼Ñ
      * @var string
      */
     public $name;
 
     /**
-     * îò÷åñòâî
+     * Ð¾Ñ‚Ñ‡ÐµÑÑ‚Ð²Ð¾
      * @var string
      */
     public $patronimyc;
 
     /**
-     * ôàìèëèÿ
+     * Ñ„Ð°Ð¼Ð¸Ð»Ð¸Ñ
      * @var string
      */
     public $secName;
 
     /**
-     * èäåíòèôèêàòîð êîìïàíèè
+     * Ð¸Ð´ÐµÐ½Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ‚Ð¾Ñ€ ÐºÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ð¸
      * @var integer
      */
     public $companyId;
 
     /**
-     * òåëåôîí (+7XXXXXXXXXX)
+     * Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½ (+7XXXXXXXXXX)
      * @var integer
      */
     public $phone;
 
     /**
-     * ññûëêà íà ôîòî
+     * ÑÑÑ‹Ð»ÐºÐ° Ð½Ð° Ñ„Ð¾Ñ‚Ð¾
      * @var string
      */
     public $imageUrl;
 
     /**
-     * ðåéòèíã
+     * Ñ€ÐµÐ¹Ñ‚Ð¸Ð½Ð³
      * @var float
      */
     public $rating;
 
     /**
-     * èíôîðìàöèÿ î ëèöåíçèè
+     * Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾ Ð»Ð¸Ñ†ÐµÐ½Ð·Ð¸Ð¸
      * @var DriverLicense
      */
     public $license;
 
     /**
-     * Àäðåñ
+     * ÐÐ´Ñ€ÐµÑ
      * @var AddressDTO
      */
     public $location;
 
     /**
-     * èíôîðìàöèÿ îá àâòîìîáèëå
+     * Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ Ð¾Ð± Ð°Ð²Ñ‚Ð¾Ð¼Ð¾Ð±Ð¸Ð»Ðµ
      * @var VehicleInfo
      */
     public $vehicle;

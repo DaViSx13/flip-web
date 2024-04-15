@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Îòâåò îá îøèáêå êëèåíòó
+ * ÐžÑ‚Ð²ÐµÑ‚ Ð¾Ð± Ð¾ÑˆÐ¸Ð±ÐºÐµ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ñƒ
  */
 class ErrorResponse
 {
     /**
-     * Ñòàòóñ
+     * Ð¡Ñ‚Ð°Ñ‚ÑƒÑ
      * @var bool
      */
     public $isSuccess = false;
 
     /**
-     * Îïèñàíèå îøèáêè
+     * ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ Ð¾ÑˆÐ¸Ð±ÐºÐ¸
      * @var ErrorDescription
      */
     public $error;

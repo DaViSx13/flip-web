@@ -1,54 +1,57 @@
 <?php
 
 /***
- * Áàçîâàÿ DTO äëÿ ñáåğòğàíñïîğòà
+ * Ğ‘Ğ°Ğ·Ğ¾Ğ²Ğ°Ñ DTO Ğ´Ğ»Ñ ÑĞ±ĞµÑ€Ñ‚Ñ€Ğ°Ğ½ÑĞ¿Ğ¾Ñ€Ñ‚Ğ°
  */
 abstract class SberBaseDTO
 {
 
     /**
-     * Ïîëó÷àåò ñïèñîê îáÿçàòåëüíûõ ïîëåé
-     * @return array Îáÿçàòåëüíûå ïîëÿ
+     * ĞŸĞ¾Ğ»ÑƒÑ‡Ğ°ĞµÑ‚ ÑĞ¿Ğ¸ÑĞ¾Ğº Ğ¾Ğ±ÑĞ·Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ñ‹Ñ… Ğ¿Ğ¾Ğ»ĞµĞ¹
+     * @return array ĞĞ±ÑĞ·Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ñ‹Ğµ Ğ¿Ğ¾Ğ»Ñ
      */
     protected abstract function getRequiredArray();
 
     /**
-     * Îáùèé êîíñòğóêòîğ DTO ñáåğòğàíñïîğòà
-     * @param $arr array Ìàññèâ äàííûõ èç çàïğîñà
-     * @param $required bool Ïğîâåğêà çàïîëíåíèÿ
-     * @throws Exception Îøèáêà âàëèäàöèè
+     * ĞĞ±Ñ‰Ğ¸Ğ¹ ĞºĞ¾Ğ½ÑÑ‚Ñ€ÑƒĞºÑ‚Ğ¾Ñ€ DTO ÑĞ±ĞµÑ€Ñ‚Ñ€Ğ°Ğ½ÑĞ¿Ğ¾Ñ€Ñ‚Ğ°
+     * @param $arr array ĞœĞ°ÑÑĞ¸Ğ² Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ… Ğ¸Ğ· Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
+     * @param $required bool ĞŸÑ€Ğ¾Ğ²ĞµÑ€ĞºĞ° Ğ·Ğ°Ğ¿Ğ¾Ğ»Ğ½ĞµĞ½Ğ¸Ñ
+     * @throws Exception ĞÑˆĞ¸Ğ±ĞºĞ° Ğ²Ğ°Ğ»Ğ¸Ğ´Ğ°Ñ†Ğ¸Ğ¸
      */
     public function __construct($arr, $required = true)
     {
-        $res = $this->setFields($arr, $required);
-        if($res != null)
-            throw new Exception($res);
+        $this->setFields($arr, $required);
+
     }
 
     /**
-     * Ìåòîä çàïîëíåíèÿ ïîëåé ñóùíîñòè
-     * @param $arr array Ìàññèâ äàííûõ èç çàïğîñà
-     * @param $required bool Ïğîâåğêà çàïîëíåíèÿ
-     * @throws Exception Âàëèäàöèÿ ıëåìåíòà
+     * ĞœĞµÑ‚Ğ¾Ğ´ Ğ·Ğ°Ğ¿Ğ¾Ğ»Ğ½ĞµĞ½Ğ¸Ñ Ğ¿Ğ¾Ğ»ĞµĞ¹ ÑÑƒÑ‰Ğ½Ğ¾ÑÑ‚Ğ¸
+     * @param $arr array ĞœĞ°ÑÑĞ¸Ğ² Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ… Ğ¸Ğ· Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
+     * @param $required bool ĞŸÑ€Ğ¾Ğ²ĞµÑ€ĞºĞ° Ğ·Ğ°Ğ¿Ğ¾Ğ»Ğ½ĞµĞ½Ğ¸Ñ
+     * @throws SberException Ğ’Ğ°Ğ»Ğ¸Ğ´Ğ°Ñ†Ğ¸Ñ ÑĞ»ĞµĞ¼ĞµĞ½Ñ‚Ğ°
      */
     private function setFields($arr, $required)
     {
-        if(!$arr) {
-            if($required)
-                return "Ìàññèâ äàííûõ èç çàïğîñà ïóñò";
+        if (!$arr) {
+            if ($required)
+                throw new SberException("The array should not be empty");
             else
-                return null;
+                return;
         }
-        $req = $this -> getRequiredArray();
-        foreach ($req as $key) {
-            if (!array_key_exists($key, $arr)) {
-                return 'Ïîëå ('.$key.') äîëæíî áûòü â çàïğîñå';
+
+
+        $req = $this->getRequiredArray();
+
+        for ($i = 0; $i < count($req) ; $i++) {
+            if(!array_key_exists($req[$i], $arr)) {
+                throw new SberException("Field '$req[$i]' was not found in the array");
             }
+
         }
 
         foreach ($arr as $name => $value) {
-            if (array_key_exists($name, $this->getRequiredArray()) && $value === null) {
-                return "Ïîëå '$name' äîëæíî áûòü çàïîëíåíî";
+            if (array_key_exists($name, $req) && is_null($value)) {
+                throw new SberException("Field '$name' must be filled in");
             }
 
             try {
@@ -58,11 +61,8 @@ abstract class SberBaseDTO
                 $prop->setValue($this, $value);
                 $prop->setAccessible(false);
             } catch (Exception $ex) {
-                return $ex -> getMessage();
+                throw new SberException($ex->getMessage());
             }
-
         }
-
-        return null;
     }
 }
