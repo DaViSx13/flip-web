@@ -67,6 +67,26 @@ Flight::path("model/sber/exception");
 
 Flight::register("SberException", "SberException");
 
+Flight::path("model/sber/response/order");
+
+Flight::register("DriverInfoDTO", "DriverInfoDTO");
+
+Flight::register("DriverLicense", "DriverLicense");
+
+Flight::register("OrderInfoResponseExtrav1DTO", "OrderInfoResponseExtrav1DTO");
+
+Flight::register("PriceCalculationv1DTO", "PriceCalculationv1DTO");
+
+Flight::register("StatusOKDTOv1", "StatusOKDTOv1");
+
+Flight::register("TariffDTO", "TariffDTO");
+
+Flight::register("TariffOptions", "TariffOptions");
+
+Flight::register("TrackInfoDTO", "TrackInfoDTO");
+
+Flight::register("VehicleInfo", "VehicleInfo");
+
 Flight::map('error', function(Exception $ex){
 	class ErResp
 {

@@ -324,17 +324,31 @@ class sberController
     {
 
         $sql = "
-            exec wwwGetWb @wb_no='$WbNo'
+            exec wwwGetWebWb @wb_no='$WbNo'
         ";
 
         $sql = Flight::utf8_to_win1251($sql);
         $ans = Flight::db()->query($sql);
+        $order = str_replace("Номер заказа: ", "", $ans[0]['fp_ref']);
 
+        $orderSql = "
+            exec wwwSberGetOrderWithExtraFields @order = $order
+        ";
 
+        $orderSql = Flight::utf8_to_win1251($orderSql);
+        $orderAns = Flight::db()->query($orderSql);
 
-        $resp = new SuccessResponse();
-        $resp -> orderSbertransportId = $ans;
-        echo Flight::json($resp);
+        $humanReadableID = $orderAns[0]['human_readable_id'];
+
+        date_default_timezone_set('Europe/Moscow');
+        $creationDate = DateTime::createFromFormat('Y-m-d H:i:s', $ans[0]['d_acc']);
+
+        $orderDTO = new OrderInfoResponseExtrav1DTO($WbNo, $humanReadableID, 1);
+        $orderDTO -> createOrderTime = $creationDate -> format(DATE_ATOM);
+        $statusDTO = new StatusOKDTOv1();
+        $statusDTO -> order = $orderDTO;
+
+        echo Flight::json($statusDTO);
     }
 }
 
