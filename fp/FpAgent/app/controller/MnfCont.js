@@ -97,22 +97,21 @@ Ext.define('FPAgent.controller.MnfCont', {
 	 * Загрузка золотого тарифа
 	 */
 	downloadTariffsGold: function () {
-		window.open('srv/export/Тарифы_Флиппост_ТП_Агент_Золото_06_05_24.xlsx', '_blank').focus();
+		window.open('srv/export/gold.xlsx', '_blank').focus();
 	},
 
 	/**
 	 * Загрузка серебрянного тарифа
 	 */
 	downloadTariffsSilver: function () {
-		window.open('srv/export/Тарифы_Флиппост_ТП_Агент_Серебро_06_05_24.xlsx', '_blank').focus();
+		window.open('srv/export/silver.xlsx', '_blank').focus();
 	},
-
 
 	/**
 	 * Загрузка бронзового тарифа
 	 */
 	downloadTariffsBronze: function () {
-		window.open('srv/export/Тарифы_Флиппост_ТП_Агент_Бронза_06_05_24.xlsx', '_blank').focus();
+		window.open('srv/export/bronze.xlsx', '_blank').focus();
 	},
 
 
@@ -120,7 +119,7 @@ Ext.define('FPAgent.controller.MnfCont', {
 	 * Загрузка инструкции в тарифе
 	 */
 	downloadTariffsInstruction: function () {
-		window.open('srv/export/Инструкции_Флиппост_для_АГЕНТОВ2024.pdf', '_blank').focus();
+		window.open('srv/export/instruction.pdf', '_blank').focus();
 	},
 
 
