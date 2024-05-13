@@ -58,6 +58,18 @@ Ext.define('FPAgent.controller.MnfCont', {
 			'admtool button[action=tariffs]' : {
 				click : this.downloadTariffs
 			},
+			'admtool menuitem[action=tariff_Gold]' : {
+				click : this.downloadTariffsGold
+			},
+			'admtool menuitem[action=tariff_Silver]' : {
+				click : this.downloadTariffsSilver
+			},
+			'admtool menuitem[action=tariff_Bronze]' : {
+				click : this.downloadTariffsBronze
+			},
+			'admtool menuitem[action=tariff_instruction]' : {
+				click : this.downloadTariffsInstruction
+			},
 			'admtool button[action=token]' : {
 				click : this.loadTokenWin
 			},
@@ -80,6 +92,36 @@ Ext.define('FPAgent.controller.MnfCont', {
 			load : this.loadWbStore
 		});
 	},
+
+	/**
+	 * Загрузка золотого тарифа
+	 */
+	downloadTariffsGold: function () {
+		window.open('srv/export/gold.xlsx', '_blank').focus();
+	},
+
+	/**
+	 * Загрузка серебрянного тарифа
+	 */
+	downloadTariffsSilver: function () {
+		window.open('srv/export/silver.xlsx', '_blank').focus();
+	},
+
+	/**
+	 * Загрузка бронзового тарифа
+	 */
+	downloadTariffsBronze: function () {
+		window.open('srv/export/bronze.xlsx', '_blank').focus();
+	},
+
+
+	/**
+	 * Загрузка инструкции в тарифе
+	 */
+	downloadTariffsInstruction: function () {
+		window.open('srv/export/instruction.pdf', '_blank').focus();
+	},
+
 
 	/**
 	 * Получает период из фильтров даты.

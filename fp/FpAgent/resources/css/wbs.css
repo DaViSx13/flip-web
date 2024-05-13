@@ -28,6 +28,18 @@
 	font-size: 10px !important;
 }
 
+.goldMedal {
+	background-image : url(../../resources/images/gold_medal.png);
+}
+
+.silverMedal {
+	background-image : url(../../resources/images/silver_medal.png);
+}
+
+.bronzeMedal {
+	background-image : url(../../resources/images/bronze_medal.png);
+}
+
 .exit-user {
 	background-image : url(../../resources/images/exit.gif);
 }
