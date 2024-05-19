@@ -415,6 +415,10 @@ if (!isset($_REQUEST['dbAct'])) {
 			@DContMail='$params[dcontmail]',
 			@DESTRems='$DESTRems'";			
 			break;
+        case 'DeleteTemplatesGroup':
+            $ids = $params['ids'];
+            $query = "exec wwwLkDeleteTemplates @tplID = '{$ids}'";
+            break;
 		case 'DelAgTemplates':
 			$id = $params['id'];			
 			$query = "exec wwwLKdelTemplate @tplID = {$id}";

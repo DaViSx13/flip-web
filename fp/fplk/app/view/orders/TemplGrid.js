@@ -3,6 +3,7 @@ Ext.define('fplk.view.orders.TemplGrid', {
 	alias : 'widget.templgrid',
 	requires : ['fplk.view.orders.TemplTool'],
 	store : 'TemplSt',
+	multiSelect: true,
 	columns : [ {
 			xtype : 'numbercolumn',
 			format : '0',

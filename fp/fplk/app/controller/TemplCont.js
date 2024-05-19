@@ -41,7 +41,7 @@ Ext.define('fplk.controller.TemplCont', {
                 click: this.saveTempl
             },
             'templtool button[action=deltpl]': {
-                click: this.delTempl
+                click: this.fireDeleteTemplates
             },
             'templgrid > tableview': {
                 itemdblclick: this.dblclickTpl
@@ -250,6 +250,7 @@ Ext.define('fplk.controller.TemplCont', {
     dblclickTpl: function (gr, rec) {
         this.clkEdit(this.getTemplTool().down('button[action=edittpl]'));
     },
+
     clkNew: function (btn) {
         var win = Ext.widget('templwin');
         win.show();
@@ -274,23 +275,61 @@ Ext.define('fplk.controller.TemplCont', {
             //auto sender end
         }
     },
-    delTempl: function (btn) {
+
+    /**
+     * Нажатие на кнопку "Удалить" на форме "Шаблоны"
+     * @param btn {Ext.button.Button} Кнопка "Удалить"
+     */
+    fireDeleteTemplates: function (btn) {
         var me = this;
         var sm = btn.up('templgrid').getSelectionModel();
-        if (sm.getCount() > 0) {
+        var selection = sm.getSelection();
+        if (selection.length === 0) {
+            Ext.Msg.alert(
+                'Внимание!',
+                'Выберите запись в таблице для удаления'
+            );
+            return;
+        }
+        Ext.MessageBox.show({
+            title: 'Удаление шаблонов',
+            msg: 'Вы действительно хотите удалить шаблоны в количистве: ' + selection.length + '?',
+            buttons: Ext.MessageBox.YESNO,
+            icon: Ext.MessageBox.QUESTION,
+            fn: function(btn){
+                if(btn === 'yes'){
+                    me.deleteTemplates(selection, me)
+                }
+            }
+        });
+    },
+
+    /**
+     *
+     * @param selection {Array} Выбранные записи
+     * @param controller {fplk.controller.TemplCont}
+     *
+     */
+    deleteTemplates: function (selection, controller) {
+        var ids = [];
+        Ext.Array.forEach(selection, function (item) {
+            ids.push(item.data.id);
+        });
+
+        var joinString = ids.join(',');
+        if (selection.length > 0) {
             Ext.Ajax.request({
                 url: 'srv/data.php',
                 params: {
-                    dbAct: 'DelAgTemplates',
-                    id: sm.getSelection()[0].get('id')
+                    dbAct: 'DeleteTemplatesGroup',
+                    ids: joinString
                 },
-                success: function (response) {
-                    jData = Ext.decode(response.responseText);
-                    Ext.Msg.alert('Успешное удаление!', 'Шаблон удален: ' + jData.msg);
-                    me.getTemplStStore().reload();
+                success: function () {
+                    Ext.Msg.alert('Успешное удаление!', 'Шаблоны: [' + ids + '] удалены');
+                    controller.getTemplStStore().reload();
                 },
                 failure: function (response) {
-                    jData = Ext.decode(response.responseText);
+                    var jData = Ext.decode(response.responseText);
                     Ext.Msg.alert('Ошибка!', 'Не удалось удалить шаблон: ' + jData.msg);
                 }
             });
@@ -298,38 +337,61 @@ Ext.define('fplk.controller.TemplCont', {
             Ext.Msg.alert('Внимание!', 'Выберите шаблон для удаления');
         }
     },
+
+    /**
+     * Нажатие на кнопку "Редактировать" на форме "Шаблоны"
+     * @param btn Кнопка "Редактировать"
+     */
     clkEdit: function (btn) {
         var sm = btn.up('templgrid').getSelectionModel();
-        if (sm.getCount() > 0) {
-            var win = Ext.widget('templwin');
-            var form = win.down('templform');
-            win.down('button[action=swap]').setVisible(true);
-            var record = sm.getSelection()[0];
-            form.loadRecord(record);
+        if (sm.getCount() > 1) {
+            Ext.Msg.alert(
+                'Внимание!',
+                'Вы выбрали больше 1 записи для редактирования. <br> Для редактирования выберите 1 конкретную запись'
+            );
+            return;
+        }
 
-            var cb_org = form.down('combocity[name=org]');
-            cb_org.store.load({
-                params: {
-                    query: cb_org.getValue()
-                }
-            });
-            if (record.data['orgcode'] > 0) {
-                cb_org.select(record.data['orgcode']);
-            }
-            var cb_des = form.down('combocity[name=dest]');
-            cb_des.store.load({
-                params: {
-                    query: cb_des.getValue()
-                }
-            });
-            if (record.data['destcode'] > 0) {
-                cb_des.select(record.data['destcode']);
-            }
-            form.down('textfield[name=templatename]').focus(false, true);
+        if (sm.getCount() === 1) {
+            this.showTemplateEditForm(sm);
         } else {
             Ext.Msg.alert('Внимание!', 'Выберите шаблон для редактирования');
         }
     },
+
+    /**
+     * Показывает форму для редактирования шаблона
+     * @param sm Выбранные записи
+     */
+    showTemplateEditForm: function (sm) {
+
+        var win = Ext.widget('templwin');
+        var form = win.down('templform');
+        win.down('button[action=swap]').setVisible(true);
+        var record = sm.getSelection()[0];
+        form.loadRecord(record);
+
+        var cb_org = form.down('combocity[name=org]');
+        cb_org.store.load({
+            params: {
+                query: cb_org.getValue()
+            }
+        });
+        if (record.data['orgcode'] > 0) {
+            cb_org.select(record.data['orgcode']);
+        }
+        var cb_des = form.down('combocity[name=dest]');
+        cb_des.store.load({
+            params: {
+                query: cb_des.getValue()
+            }
+        });
+        if (record.data['destcode'] > 0) {
+            cb_des.select(record.data['destcode']);
+        }
+        form.down('textfield[name=templatename]').focus(false, true);
+    },
+
     saveTempl: function (btn) {
         var me = this;
         var win = btn.up('templwin');
