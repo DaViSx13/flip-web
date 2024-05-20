@@ -55,15 +55,15 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
             menu: {
 				xtype: 'menu',
                 items: [{
-                    text: "Золотой",
+                    text: "Золото",
                     action: 'tariff_Gold',
                     iconCls: 'goldMedal'
                 }, {
-                    text: "Серебрянный",
+                    text: "Серебро",
                     action: 'tariff_Silver',
                     iconCls: 'silverMedal'
                 }, {
-                    text: "Бронзовый",
+                    text: "Бронза",
                     action: 'tariff_Bronze',
                     iconCls: 'bronzeMedal'
                 }, {
