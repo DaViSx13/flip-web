@@ -335,7 +335,7 @@ Ext.define('fplk.controller.TemplCont', {
                 },
                 success: function () {
                     Ext.Msg.alert('Успешное удаление!', 'Шаблоны: [' + ids + '] удалены');
-                    this.getTemplStStore().reload();
+                    controller.getTemplStStore().reload();
                 },
                 failure: function (response) {
                     var jData = Ext.decode(response.responseText);
