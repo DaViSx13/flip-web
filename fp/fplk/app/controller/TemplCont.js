@@ -291,6 +291,15 @@ Ext.define('fplk.controller.TemplCont', {
             );
             return;
         }
+
+        if(selection.length > 650) {
+            Ext.Msg.alert(
+                'Внимание!',
+                'Привышен лимит удаления. Не более 650 за раз'
+            );
+            return;
+        }
+
         Ext.MessageBox.show({
             title: 'Удаление шаблонов',
             msg: 'Вы действительно хотите удалить шаблоны в количистве: ' + selection.length + '?',
@@ -326,7 +335,7 @@ Ext.define('fplk.controller.TemplCont', {
                 },
                 success: function () {
                     Ext.Msg.alert('Успешное удаление!', 'Шаблоны: [' + ids + '] удалены');
-                    controller.getTemplStStore().reload();
+                    this.getTemplStStore().reload();
                 },
                 failure: function (response) {
                     var jData = Ext.decode(response.responseText);
