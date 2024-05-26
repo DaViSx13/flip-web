@@ -70,6 +70,10 @@ Ext.define('FPAgent.controller.MnfCont', {
 			'admtool menuitem[action=tariff_instruction]' : {
 				click : this.downloadTariffsInstruction
 			},
+			'admtool menuitem[action=tariff_sber]' : {
+				click : this.downloadTariffsSber,
+				afterrender: this.initSberTariffButton
+			},
 			'admtool button[action=token]' : {
 				click : this.loadTokenWin
 			},
@@ -91,6 +95,25 @@ Ext.define('FPAgent.controller.MnfCont', {
 			scope : this,
 			load : this.loadWbStore
 		});
+	},
+
+	/**
+	 * Инициализация кнопки тарифа "Сбербанк"<br>
+	 * Если логин пользователя содержит "sberbank", то кнопка становится активна
+	 * @param button Кнопка тарифа "Сбербанк"
+	 */
+	initSberTariffButton: function (button) {
+		var agent = button.up('admtool').down('label').text;
+		if(agent.toLowerCase().indexOf('sberbank') !== -1) {
+			button.hidden = false;
+		}
+	},
+
+	/**
+	 * Загрузка тарифа Сбербанка
+	 */
+	downloadTariffsSber: function () {
+		window.open('srv/export/sber.xlsx', '_blank').focus();
 	},
 
 	/**

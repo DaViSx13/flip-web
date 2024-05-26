@@ -53,8 +53,13 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
             action: 'tariffsNew',
             xtype: 'button',
             menu: {
-				xtype: 'menu',
+                xtype: 'menu',
                 items: [{
+                    text: "Сбербанк",
+                    action: 'tariff_sber',
+                    iconCls: 'sber',
+                    hidden: true
+                }, {
                     text: "Золотой",
                     action: 'tariff_Gold',
                     iconCls: 'goldMedal'
@@ -75,7 +80,7 @@ Ext.define('FPAgent.view.mainform.AdmTool', {
         }, ' ',
         {
             xtype: 'label',
-            text: 'UserName'
+            text: 'UserName',
         },
         ' ', ' ', ' ',
         {

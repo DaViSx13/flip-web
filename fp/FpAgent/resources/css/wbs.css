@@ -28,6 +28,10 @@
 	font-size: 10px !important;
 }
 
+.sber {
+	background-image : url(../../resources/images/sber.png);
+}
+
 .goldMedal {
 	background-image : url(../../resources/images/gold_medal.png);
 }
