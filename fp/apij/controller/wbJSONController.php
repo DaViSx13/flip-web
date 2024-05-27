@@ -15,10 +15,10 @@ class wbJSONController
      * @return void Ничего
      * @throws Exception При обработке накладной
      */
-    public static function createWbBase($procName)
+    public static function createWb()
     {
-       // $token = $_SERVER["HTTP_TOKEN"];
-       // $userName = Flight::checkToken($token);
+        $token = $_SERVER["HTTP_TOKEN"];
+        $userName = Flight::checkToken($token);
         /*------------------Ограничение частоты вызова----------------------------------*/
         /*	$file = 'time.txt';
             $oldTime = file_get_contents($file);
@@ -136,7 +136,7 @@ class wbJSONController
           $userin = $token['auser'];
           $ag = $token['agentid'];
   */
-        $sql = "/*--wwwAPICreateWb--*/exec $procName
+        $sql = "/*--wwwAPICreateWb--*/exec wwwAPICreateWbMain
             @waybillNumber = '$waybillNumber',
             @s_name = '$sender_name',
             @s_company = '$sender_company',
@@ -183,25 +183,6 @@ class wbJSONController
         $response->data = $result;
         $response->status = 'success';
         echo Flight::json($response);
-    }
-
-    /**
-     * Создание накладной в таблице Main
-     * @return void Ничего
-     * @throws Exception При обработке накладной
-     */
-    public static function createWbMain()
-    {
-        self::createWbBase("wwwAPICreateWbMain");
-    }
-
-    /**
-     * Создание нкладной в таблице "wwwClientWB".
-     * @throws Exception Ошибка создания
-     */
-    public static function createWb()
-    {
-        self::createWbBase("wwwAPICreateWb");
     }
 
     /**
