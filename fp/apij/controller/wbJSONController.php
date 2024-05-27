@@ -242,25 +242,17 @@ class wbJSONController
 
     }
 
+    public static function createWbs() {
 
-    /**
-     * Метод массового создания накладных
-     * @param $procName string Имя процедуры создания
-     * @return void Ничего
-     *
-     * @throws Exception При обработке накладных
-     */
-    public static function createWbsBase($procName)
-    {
         $token = $_SERVER["HTTP_TOKEN"];
         $userName = Flight::checkToken($token);
         $isError = false;
         $WBS = Flight::request()->data->waybills;
 
-        if (!isset($WBS[0]))
+        if(!isset($WBS[0]))
             throw new Exception("Некорректный формат JSON. АПИ ожидает массив накладных ");
 
-        if (count($WBS) > 1000)
+        if(count($WBS) > 1000)
             throw new Exception("Максимальное количество накладных в пачке не более 1000 штук");
 
         $agentID = Flight::request()->data->agentID;
@@ -268,7 +260,7 @@ class wbJSONController
 
         $masterWaybillNumber = Flight::request()->data->masterWaybillNumber;
 
-        if (!isset($masterWaybillNumber))
+        if(!isset($masterWaybillNumber))
             $masterWaybillNumber = '';
         else
             self::checkStringField($masterWaybillNumber, "masterWaybillNumber", 50);
@@ -372,7 +364,7 @@ class wbJSONController
 
                 $payType = $WBS[$i]['payType'];//self::getField("payType", true);
                 self::checkStringField($payType, "payType", 3);
-                self::checkRange($payType, "payType", array("inv", "csh"));
+                self::checkRange($payType,"payType", array("inv", "csh"));
 
                 $payerType = $WBS[$i]['payerType'];//self::getField("payerType", true);
                 self::checkNumberValue($payerType, "payerType");
@@ -380,21 +372,20 @@ class wbJSONController
 
                 $packType = $WBS[$i]['packType'];//self::getField("packType", true);
                 self::checkStringField($packType, "packType", 2);
-                self::checkRange($packType, "packType", array("pl", "le"));
+                self::checkRange($packType,"packType", array("pl", "le"));
 
                 /* наличные с получателя - необязательное числовое поле */
                 //try{ $aCash = $WBS[$i]['aCash']; } catch(Exception $e){};
 
-                if (isset($WBS[$i]['aCash'])) {
+                if(isset($WBS[$i]['aCash'])) {
                     $aCash = $WBS[$i]['aCash'];
                     self::checkNumberValue($aCash, "aCash");
-                } else {
-                    $aCash = "NULL";
                 }
+                else { $aCash="NULL"; }
 
                 $SubCategory = $WBS[$i]['SubCategory'];
                 self::checkStringField($SubCategory, "SubCategory", 15);
-                self::checkRange($SubCategory, "SubCategory", array("Опасный груз", "Авиа", "ЖД", ""));
+                self::checkRange($SubCategory,"SubCategory", array("Опасный груз", "Авиа", "ЖД", ""));
 
                 $waybillDate = $WBS[$i]['waybillDate'];//self::getField("waybillDate", true);
                 self::checkStringField($waybillDate, "waybillDate", 8);
@@ -405,7 +396,7 @@ class wbJSONController
                 $senderComment = str_ireplace("'", "''", $WBS[$i]['senderComment']);
                 self::checkStringField($senderComment, "senderComment", 300);
 
-                $sql = "/*--wwwAPICreateWb--*/exec $procName
+                $sql = "/*--wwwAPICreateWb--*/exec wwwAPICreateWb
             @waybillNumber = '$waybillNumber',
             @s_name = '$sender_name',
             @s_company = '$sender_company',
@@ -462,32 +453,12 @@ class wbJSONController
         }
         $response = new Response();
         $response->data = $resp;
-        if ($isError) {
+        if ($isError){
             $response->status = 'error';
         } else {
             $response->status = 'success';
         }
         echo Flight::json($response);
-    }
-
-    /**
-     * Создание накладных в таблице Main
-     * @return void Ничего
-     * @throws Exception При обработке накладных
-     */
-    public static function createWbsMain()
-    {
-        self::createWbsBase("wwwAPICreateWbMain");
-    }
-
-    /**
-     * Создание накладных в таблице wwwClientWB
-     * @return void Ничего
-     * @throws Exception При обработке накладных
-     */
-    public static function createWbs()
-    {
-        self::createWbsBase("wwwAPICreateWb");
     }
 
     /**
