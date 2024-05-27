@@ -11,7 +11,6 @@ class wbJSONController
 
     /**
      * Метод создания накладной
-     * @param $procName string Имя процедуры для создания
      * @return void Ничего
      * @throws Exception При обработке накладной
      */
