@@ -21,9 +21,13 @@ Flight::route('POST /catapulto',['catapultoController','getCatapultoTarif']);
 
 Flight::route('POST /wb',['wbController','createWb']);*/
 
-Flight::route('POST /wb',['wbJSONController','createWb']);
+Flight::route('POST /wb',['wbJSONController','createWbMain']);
 
-Flight::route('POST /wbs',['wbJSONController','createWbs']);
+Flight::route('POST /client/wb',['wbJSONController','createWb']);
+
+Flight::route('POST /wbs',['wbJSONController','createWbsMain']);
+
+Flight::route('POST /client/wbs',['wbJSONController','createWbs']);
 
 Flight::route('POST /setwt',['wbJSONController','changeWtInWb']);
 
