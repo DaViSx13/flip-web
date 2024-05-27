@@ -1,41 +1,46 @@
 <?php
+
 class Response
 {
-     public $status = 'fail';
-     public $data = null;
+    public $status = 'fail';
+    public $data = null;
 }
-class wbJSONController{
+
+class wbJSONController
+{
 
     /**
-     * Создание нкладной.
-     * @throws Exception Ошибка создания
+     * Метод создания накладной
+     * @param $procName string Имя процедуры для создания
+     * @return void Ничего
+     * @throws Exception При обработке накладной
      */
-    public static function createWb() {     
-     
+    public static function createWb()
+    {
         $token = $_SERVER["HTTP_TOKEN"];
         $userName = Flight::checkToken($token);
-	/*------------------Ограничение частоты вызова----------------------------------*/	
-	/*	$file = 'time.txt';
-		$oldTime = file_get_contents($file);	
-		$newTime = $_SERVER['REQUEST_TIME'];
-		if(($newTime - $oldTime) < 1)	{
-			file_put_contents($file, $newTime);
-			throw new Exception("Ваш лимит частоты вызова API - 1 раз в секунду");
-		}
-		file_put_contents($file, $newTime);	*/	
-	/*-----------------------------------------------------------------------------*/	
+        /*------------------Ограничение частоты вызова----------------------------------*/
+        /*	$file = 'time.txt';
+            $oldTime = file_get_contents($file);
+            $newTime = $_SERVER['REQUEST_TIME'];
+            if(($newTime - $oldTime) < 1)	{
+                file_put_contents($file, $newTime);
+                throw new Exception("Ваш лимит частоты вызова API - 1 раз в секунду");
+            }
+            file_put_contents($file, $newTime);	*/
+        /*-----------------------------------------------------------------------------*/
         $waybillNumber = self::getField("waybillNumber", "", true);
         self::checkStringField($waybillNumber, "waybillNumber", 50);
 
         $sender = self::getField("sender", true);
-       
-        $sender_name = str_ireplace("'", "''", $sender["name"]);        
+
+        $sender_name = str_ireplace("'", "''", $sender["name"]);
         self::checkStringField($sender_name, "sender name", 20);
         $sender_company = str_ireplace("'", "''", $sender["company"]);
         self::checkStringField($sender_company, "sender company", 40);
         $sender_phone = str_ireplace("'", "''", $sender["phone"]);
         self::checkStringField($sender_phone, "sender phone", 50);
-        
+
         $sender_location_country = str_ireplace("'", "''", $sender["location"]["country"]);
         self::checkStringField($sender_location_country, "sender location country", 50);
         $sender_location_state = str_ireplace("'", "''", $sender["location"]["state"]);
@@ -46,16 +51,16 @@ class wbJSONController{
         self::checkStringField($sender_location_address, "sender location address", 100);
         $sender_location_zip = str_ireplace("'", "''", $sender["location"]["zip"]);
         self::checkStringField($sender_location_zip, "sender location zip", 9);
-        
+
         $receiver = self::getField("receiver", true);
-        
+
         $receiver_name = str_ireplace("'", "''", $receiver["name"]);
         self::checkStringField($receiver_name, "receiver name", 20);
         $receiver_company = str_ireplace("'", "''", $receiver["company"]);
         self::checkStringField($receiver["company"], "receiver company", 40);
         $receiver_phone = str_ireplace("'", "''", $receiver["phone"]);
         self::checkStringField($receiver_phone, "receiver phone", 50);
-            
+
         $receiver_location_country = str_ireplace("'", "''", $receiver["location"]["country"]);
         self::checkStringField($receiver_location_country, "receiver location country", 50);
         $receiver_location_state = str_ireplace("'", "''", $receiver["location"]["state"]);
@@ -66,16 +71,16 @@ class wbJSONController{
         self::checkStringField($receiver_location_address, "receiver location address", 100);
         $receiver_location_zip = str_ireplace("'", "''", $receiver["location"]["zip"]);
         self::checkStringField($receiver_location_zip, "receiver location zip", 9);
-        
+
         $payer = self::getField("payer", true);
-       
+
         $payer_name = str_ireplace("'", "''", $payer["name"]);
         self::checkStringField($payer_name, "payer name", 20);
         $payer_company = str_ireplace("'", "''", $payer["company"]);
         self::checkStringField($payer_company, "payer company", 40);
         $payer_phone = str_ireplace("'", "''", $payer["phone"]);
         self::checkStringField($payer_phone, "payer phone", 50);
-        
+
         $payer_location_country = str_ireplace("'", "''", $payer["location"]["country"]);
         self::checkStringField($payer_location_country, "payer location country", 50);
         $payer_location_state = str_ireplace("'", "''", $payer["location"]["state"]);
@@ -86,53 +91,52 @@ class wbJSONController{
         self::checkStringField($payer_location_address, "payer location address", 100);
         $payer_location_zip = str_ireplace("'", "''", $payer["location"]["zip"]);
         self::checkStringField($payer_location_zip, "payer location zip", 9);
-       
 
 
-       $weight = self::getField("weight", true);
-       self::checkNumberValue($weight, "weight");
+        $weight = self::getField("weight", true);
+        self::checkNumberValue($weight, "weight");
 
-       $volumeWeight = self::getField("volumeWeight", true);
-       self::checkNumberValue($volumeWeight, "volumeWeight");
+        $volumeWeight = self::getField("volumeWeight", true);
+        self::checkNumberValue($volumeWeight, "volumeWeight");
 
-       $packs = self::getField("packs", true);
-       self::checkNumberValue($packs, "packs");
+        $packs = self::getField("packs", true);
+        self::checkNumberValue($packs, "packs");
 
-       $payType = self::getField("payType", true);
-       self::checkStringField($payType, "payType", 3);
-       self::checkRange($payType,"payType", array("inv", "csh"));
-       
+        $payType = self::getField("payType", true);
+        self::checkStringField($payType, "payType", 3);
+        self::checkRange($payType, "payType", array("inv", "csh"));
+
         $payerType = self::getField("payerType", true);
         self::checkNumberValue($payerType, "payerType");
         self::checkRange($payerType, "payerType", array(1, 2, 3));
-        
+
         $packType = self::getField("packType", true);
         self::checkStringField($packType, "packType", 2);
-        self::checkRange($packType,"packType", array("pl", "le"));
-        
+        self::checkRange($packType, "packType", array("pl", "le"));
+
         $waybillDate = self::getField("waybillDate", true);
-       self::checkStringField($waybillDate, "waybillDate", 8);
-        
-       $description = str_ireplace("'", "''", self::getFieldWithDefault("description", ""));
-       self::checkStringField($description, "description", 500);
+        self::checkStringField($waybillDate, "waybillDate", 8);
 
-       $senderComment = str_ireplace("'", "''", self::getFieldWithDefault("senderComment", ""));
-       self::checkStringField($senderComment, "senderComment", 300);
-       //self::checkRange($tPac, "inSum", array(0, 1));
+        $description = str_ireplace("'", "''", self::getFieldWithDefault("description", ""));
+        self::checkStringField($description, "description", 500);
 
-       /*$metPaym = self::getFieldWithDefault("metPaym", 'INV');
-       self::checkStringField($metPaym, "metPaym", 5);
-       self::checkRange($metPaym,"metPaym", array("INV", "CSH"));
+        $senderComment = str_ireplace("'", "''", self::getFieldWithDefault("senderComment", ""));
+        self::checkStringField($senderComment, "senderComment", 300);
+        //self::checkRange($tPac, "inSum", array(0, 1));
 
-       $payer = self::getFieldWithDefault("payer", 0);
-       self::checkNumberValue($payer, "payer");
-       self::checkRange($payer, "payer", array(0, 1, 2)); */      
+        /*$metPaym = self::getFieldWithDefault("metPaym", 'INV');
+        self::checkStringField($metPaym, "metPaym", 5);
+        self::checkRange($metPaym,"metPaym", array("INV", "CSH"));
 
-      /*  $token = current($token);
-        $userin = $token['auser'];
-        $ag = $token['agentid'];
-*/
-        $sql = "/*--wwwAPICreateWb--*/exec wwwAPICreateWb
+        $payer = self::getFieldWithDefault("payer", 0);
+        self::checkNumberValue($payer, "payer");
+        self::checkRange($payer, "payer", array(0, 1, 2)); */
+
+        /*  $token = current($token);
+          $userin = $token['auser'];
+          $ag = $token['agentid'];
+  */
+        $sql = "/*--wwwAPICreateWb--*/exec wwwAPICreateWbMain
             @waybillNumber = '$waybillNumber',
             @s_name = '$sender_name',
             @s_company = '$sender_company',
@@ -167,207 +171,212 @@ class wbJSONController{
             @waybillDate = '$waybillDate',
             @description = '$description',
             @senderComment = '$senderComment',
-            @userName = '$userName'
+            @userName = '$userName'            
             ";
-            
 
-       $response = new Response();
-       $sql = Flight::utf8_to_win1251($sql);
-       $sql = stripslashes($sql);
-       $result = Flight::db()->query($sql);
-       $response->data = $result;
-       $response->status = 'success';
-       echo Flight::json($response);
-  }
-  
-public static function changeWtInWb() { 
-		$token = $_SERVER["HTTP_TOKEN"];
-        $userName = Flight::checkToken($token);
-		
-        $waybillNumber = self::getField("waybillNumber", "", true);
-        self::checkStringField($waybillNumber, "waybillNumber", 50);
-		
-		$weight = self::getField("weight", true);
-        self::checkNumberValue($weight, "weight");
 
-        $volumeWeight = self::getField("volumeWeight", true);
-        self::checkNumberValue($volumeWeight, "volumeWeight");
-		
-		$XYZ = self::getField("XYZ", "", true);
-        self::checkStringField($XYZ, "XYZ", 3000);
-		
-		$sql = "/*--wwwAPIChangeWtInWb--*/exec wwwAPIChangeWtInWb
-            @waybillNumber = '$waybillNumber',
-			@weight = $weight,
-			@volumeWeight = $volumeWeight,
-            @XYZ = '$XYZ'
-            ";
-		$response = new Response();
+        $response = new Response();
         $sql = Flight::utf8_to_win1251($sql);
         $sql = stripslashes($sql);
         $result = Flight::db()->query($sql);
         $response->data = $result;
         $response->status = 'success';
-        echo Flight::json($response);		
+        echo Flight::json($response);
+    }
 
-	}  
-  
-
-public static function createWbs() {     
-     
+    /**
+     * Изменить вес в накладной
+     * @return void Ничего
+     * @throws Exception При обраболтки накладной
+     */
+    public static function changeWtInWb()
+    {
         $token = $_SERVER["HTTP_TOKEN"];
         $userName = Flight::checkToken($token);
-		$isError = false;
+
+        $waybillNumber = self::getField("waybillNumber", "", true);
+        self::checkStringField($waybillNumber, "waybillNumber", 50);
+
+        $weight = self::getField("weight", true);
+        self::checkNumberValue($weight, "weight");
+
+        $volumeWeight = self::getField("volumeWeight", true);
+        self::checkNumberValue($volumeWeight, "volumeWeight");
+
+        $XYZ = self::getField("XYZ", "", true);
+        self::checkStringField($XYZ, "XYZ", 3000);
+
+        $sql = "/*--wwwAPIChangeWtInWb--*/exec wwwAPIChangeWtInWb
+            @waybillNumber = '$waybillNumber',
+			@weight = $weight,
+			@volumeWeight = $volumeWeight,
+            @XYZ = '$XYZ'
+            ";
+        $response = new Response();
+        $sql = Flight::utf8_to_win1251($sql);
+        $sql = stripslashes($sql);
+        $result = Flight::db()->query($sql);
+        $response->data = $result;
+        $response->status = 'success';
+        echo Flight::json($response);
+
+    }
+
+    public static function createWbs() {
+
+        $token = $_SERVER["HTTP_TOKEN"];
+        $userName = Flight::checkToken($token);
+        $isError = false;
         $WBS = Flight::request()->data->waybills;
-		
-		if(!isset($WBS[0]))
-			throw new Exception("Некорректный формат JSON. АПИ ожидает массив накладных ");
-		
-		if(count($WBS) > 1000)
-			throw new Exception("Максимальное количество накладных в пачке не более 1000 штук");
-		
-		$agentID = Flight::request()->data->agentID;
-		self::checkNumberValue($agentID, "agentID");
-		
-		$masterWaybillNumber = Flight::request()->data->masterWaybillNumber;		
-		
-		if(!isset($masterWaybillNumber))
-        $masterWaybillNumber = '';
-		else
-        self::checkStringField($masterWaybillNumber, "masterWaybillNumber", 50);
-		
-		$carrierID = Flight::request()->data->carrierID;
-		self::checkNumberValue($carrierID, "carrierID");
-		
-		$description = str_ireplace("'", "''", Flight::request()->data->description);
-		self::checkStringField($description, "description", 50);
-		
-		$sqlMnf = "/*--wwwAPICreateWb--*/exec wwwAPICreateMnf
+
+        if(!isset($WBS[0]))
+            throw new Exception("Некорректный формат JSON. АПИ ожидает массив накладных ");
+
+        if(count($WBS) > 1000)
+            throw new Exception("Максимальное количество накладных в пачке не более 1000 штук");
+
+        $agentID = Flight::request()->data->agentID;
+        self::checkNumberValue($agentID, "agentID");
+
+        $masterWaybillNumber = Flight::request()->data->masterWaybillNumber;
+
+        if(!isset($masterWaybillNumber))
+            $masterWaybillNumber = '';
+        else
+            self::checkStringField($masterWaybillNumber, "masterWaybillNumber", 50);
+
+        $carrierID = Flight::request()->data->carrierID;
+        self::checkNumberValue($carrierID, "carrierID");
+
+        $description = str_ireplace("'", "''", Flight::request()->data->description);
+        self::checkStringField($description, "description", 50);
+
+        $sqlMnf = "/*--wwwAPICreateWb--*/exec wwwAPICreateMnf
             @AgentID = $agentID,
             @CarrCode = $carrierID,
             @Descr = '$description',
 			@masterWaybillNumber = '$masterWaybillNumber'
             ";
-		$sqlMnf = Flight::utf8_to_win1251($sqlMnf);
-		$sqlMnf = stripslashes($sqlMnf);
-		$resultMnf = Flight::db()->query($sqlMnf);
+        $sqlMnf = Flight::utf8_to_win1251($sqlMnf);
+        $sqlMnf = stripslashes($sqlMnf);
+        $resultMnf = Flight::db()->query($sqlMnf);
 
-		
-		//throw new Exception($result);
-		//var_dump($resultMnf[0]["mnfrefno"]);
-		$mnfrefno = $resultMnf[0]["mnfrefno"];
-		//exit;
-		
-		for ($i = 0; $i < count($WBS); $i++) { 
-			try {
-				 
-				$waybillNumber = $WBS[$i]['waybillNumber'];
-				self::checkStringField($waybillNumber, "waybillNumber", 50);
 
-				$sender = $WBS[$i]['sender'];
-       
-				$sender_name = str_ireplace("'", "''", $sender["name"]);        
-				self::checkStringField($sender_name, "sender name", 20);
-				$sender_company = str_ireplace("'", "''", $sender["company"]);
-				self::checkStringField($sender_company, "sender company", 40);
-				$sender_phone = str_ireplace("'", "''", $sender["phone"]);
-				self::checkStringField($sender_phone, "sender phone", 50);
-        
-				$sender_location_country = str_ireplace("'", "''", $sender["location"]["country"]);
-				self::checkStringField($sender_location_country, "sender location country", 50);
-				$sender_location_state = str_ireplace("'", "''", $sender["location"]["state"]);
-				self::checkStringField($sender_location_state, "sender location state", 50);
-				$sender_location_city = str_ireplace("'", "''", $sender["location"]["city"]);
-				self::checkStringField($sender_location_city, "sender location city", 50);
-				$sender_location_address = str_ireplace("'", "''", $sender["location"]["address"]);
-				self::checkStringField($sender_location_address, "sender location address", 200);
-				$sender_location_zip = str_ireplace("'", "''", $sender["location"]["zip"]);
-				self::checkStringField($sender_location_zip, "sender location zip", 9);
-        
-				$receiver = $WBS[$i]['receiver'];
-        
-				$receiver_name = str_ireplace("'", "''", $receiver["name"]);
-				self::checkStringField($receiver_name, "receiver name", 20);
-				$receiver_company = str_ireplace("'", "''", $receiver["company"]);
-				self::checkStringField($receiver["company"], "receiver company", 40);
-				$receiver_phone = str_ireplace("'", "''", $receiver["phone"]);
-				self::checkStringField($receiver_phone, "receiver phone", 50);
-            
-				$receiver_location_country = str_ireplace("'", "''", $receiver["location"]["country"]);
-				self::checkStringField($receiver_location_country, "receiver location country", 50);
-				$receiver_location_state = str_ireplace("'", "''", $receiver["location"]["state"]);
-				self::checkStringField($receiver_location_state, "receiver location state", 50);
-				$receiver_location_city = str_ireplace("'", "''", $receiver["location"]["city"]);
-				self::checkStringField($receiver_location_city, "receiver location city", 50);
-				$receiver_location_address = str_ireplace("'", "''", $receiver["location"]["address"]);
-				self::checkStringField($receiver_location_address, "receiver location address", 200);
-				$receiver_location_zip = str_ireplace("'", "''", $receiver["location"]["zip"]);
-				self::checkStringField($receiver_location_zip, "receiver location zip", 9);
-        
-				$payer = $WBS[$i]['payer'];//self::getField("payer", true);
-       
-				$payer_name = str_ireplace("'", "''", $payer["name"]);
-				self::checkStringField($payer_name, "payer name", 20);
-				$payer_company = str_ireplace("'", "''", $payer["company"]);
-				self::checkStringField($payer_company, "payer company", 40);
-				$payer_phone = str_ireplace("'", "''", $payer["phone"]);
-				self::checkStringField($payer_phone, "payer phone", 50);
-        
-				$payer_location_country = str_ireplace("'", "''", $payer["location"]["country"]);
-				self::checkStringField($payer_location_country, "payer location country", 50);
-				$payer_location_state = str_ireplace("'", "''", $payer["location"]["state"]);
-				self::checkStringField($payer_location_state, "payer location state", 50);
-				$payer_location_city = str_ireplace("'", "''", $payer["location"]["city"]);
-				self::checkStringField($payer_location_city, "payer location city", 50);
-				$payer_location_address = str_ireplace("'", "''", $payer["location"]["address"]);
-				self::checkStringField($payer_location_address, "payer location address", 200);
-				$payer_location_zip = str_ireplace("'", "''", $payer["location"]["zip"]);
-				self::checkStringField($payer_location_zip, "payer location zip", 9);
+        //throw new Exception($result);
+        //var_dump($resultMnf[0]["mnfrefno"]);
+        $mnfrefno = $resultMnf[0]["mnfrefno"];
+        //exit;
 
-				$weight = $WBS[$i]['weight'];//self::getField("weight", true);
-				self::checkNumberValue($weight, "weight");
+        for ($i = 0; $i < count($WBS); $i++) {
+            try {
 
-				$volumeWeight = $WBS[$i]['volumeWeight'];//self::getField("volumeWeight", true);
-				self::checkNumberValue($volumeWeight, "volumeWeight");
+                $waybillNumber = $WBS[$i]['waybillNumber'];
+                self::checkStringField($waybillNumber, "waybillNumber", 50);
 
-				$packs = $WBS[$i]['packs'];//self::getField("packs", true);
-				self::checkNumberValue($packs, "packs");
+                $sender = $WBS[$i]['sender'];
 
-				$payType = $WBS[$i]['payType'];//self::getField("payType", true);
-				self::checkStringField($payType, "payType", 3);
-				self::checkRange($payType,"payType", array("inv", "csh"));
-       
-				$payerType = $WBS[$i]['payerType'];//self::getField("payerType", true);
-				self::checkNumberValue($payerType, "payerType");
-				self::checkRange($payerType, "payerType", array(1, 2, 3));
-        
-				$packType = $WBS[$i]['packType'];//self::getField("packType", true);
-				self::checkStringField($packType, "packType", 2);
-				self::checkRange($packType,"packType", array("pl", "le"));
-        
+                $sender_name = str_ireplace("'", "''", $sender["name"]);
+                self::checkStringField($sender_name, "sender name", 20);
+                $sender_company = str_ireplace("'", "''", $sender["company"]);
+                self::checkStringField($sender_company, "sender company", 40);
+                $sender_phone = str_ireplace("'", "''", $sender["phone"]);
+                self::checkStringField($sender_phone, "sender phone", 50);
+
+                $sender_location_country = str_ireplace("'", "''", $sender["location"]["country"]);
+                self::checkStringField($sender_location_country, "sender location country", 50);
+                $sender_location_state = str_ireplace("'", "''", $sender["location"]["state"]);
+                self::checkStringField($sender_location_state, "sender location state", 50);
+                $sender_location_city = str_ireplace("'", "''", $sender["location"]["city"]);
+                self::checkStringField($sender_location_city, "sender location city", 50);
+                $sender_location_address = str_ireplace("'", "''", $sender["location"]["address"]);
+                self::checkStringField($sender_location_address, "sender location address", 200);
+                $sender_location_zip = str_ireplace("'", "''", $sender["location"]["zip"]);
+                self::checkStringField($sender_location_zip, "sender location zip", 9);
+
+                $receiver = $WBS[$i]['receiver'];
+
+                $receiver_name = str_ireplace("'", "''", $receiver["name"]);
+                self::checkStringField($receiver_name, "receiver name", 20);
+                $receiver_company = str_ireplace("'", "''", $receiver["company"]);
+                self::checkStringField($receiver["company"], "receiver company", 40);
+                $receiver_phone = str_ireplace("'", "''", $receiver["phone"]);
+                self::checkStringField($receiver_phone, "receiver phone", 50);
+
+                $receiver_location_country = str_ireplace("'", "''", $receiver["location"]["country"]);
+                self::checkStringField($receiver_location_country, "receiver location country", 50);
+                $receiver_location_state = str_ireplace("'", "''", $receiver["location"]["state"]);
+                self::checkStringField($receiver_location_state, "receiver location state", 50);
+                $receiver_location_city = str_ireplace("'", "''", $receiver["location"]["city"]);
+                self::checkStringField($receiver_location_city, "receiver location city", 50);
+                $receiver_location_address = str_ireplace("'", "''", $receiver["location"]["address"]);
+                self::checkStringField($receiver_location_address, "receiver location address", 200);
+                $receiver_location_zip = str_ireplace("'", "''", $receiver["location"]["zip"]);
+                self::checkStringField($receiver_location_zip, "receiver location zip", 9);
+
+                $payer = $WBS[$i]['payer'];//self::getField("payer", true);
+
+                $payer_name = str_ireplace("'", "''", $payer["name"]);
+                self::checkStringField($payer_name, "payer name", 20);
+                $payer_company = str_ireplace("'", "''", $payer["company"]);
+                self::checkStringField($payer_company, "payer company", 40);
+                $payer_phone = str_ireplace("'", "''", $payer["phone"]);
+                self::checkStringField($payer_phone, "payer phone", 50);
+
+                $payer_location_country = str_ireplace("'", "''", $payer["location"]["country"]);
+                self::checkStringField($payer_location_country, "payer location country", 50);
+                $payer_location_state = str_ireplace("'", "''", $payer["location"]["state"]);
+                self::checkStringField($payer_location_state, "payer location state", 50);
+                $payer_location_city = str_ireplace("'", "''", $payer["location"]["city"]);
+                self::checkStringField($payer_location_city, "payer location city", 50);
+                $payer_location_address = str_ireplace("'", "''", $payer["location"]["address"]);
+                self::checkStringField($payer_location_address, "payer location address", 200);
+                $payer_location_zip = str_ireplace("'", "''", $payer["location"]["zip"]);
+                self::checkStringField($payer_location_zip, "payer location zip", 9);
+
+                $weight = $WBS[$i]['weight'];//self::getField("weight", true);
+                self::checkNumberValue($weight, "weight");
+
+                $volumeWeight = $WBS[$i]['volumeWeight'];//self::getField("volumeWeight", true);
+                self::checkNumberValue($volumeWeight, "volumeWeight");
+
+                $packs = $WBS[$i]['packs'];//self::getField("packs", true);
+                self::checkNumberValue($packs, "packs");
+
+                $payType = $WBS[$i]['payType'];//self::getField("payType", true);
+                self::checkStringField($payType, "payType", 3);
+                self::checkRange($payType,"payType", array("inv", "csh"));
+
+                $payerType = $WBS[$i]['payerType'];//self::getField("payerType", true);
+                self::checkNumberValue($payerType, "payerType");
+                self::checkRange($payerType, "payerType", array(1, 2, 3));
+
+                $packType = $WBS[$i]['packType'];//self::getField("packType", true);
+                self::checkStringField($packType, "packType", 2);
+                self::checkRange($packType,"packType", array("pl", "le"));
+
                 /* наличные с получателя - необязательное числовое поле */
-				//try{ $aCash = $WBS[$i]['aCash']; } catch(Exception $e){};
-				
-				if(isset($WBS[$i]['aCash'])) { 
-					$aCash = $WBS[$i]['aCash'];
-					self::checkNumberValue($aCash, "aCash"); 				
-				}
-				else { $aCash="NULL"; }
-				
-				$SubCategory = $WBS[$i]['SubCategory'];
-				self::checkStringField($SubCategory, "SubCategory", 15);
-				self::checkRange($SubCategory,"SubCategory", array("Опасный груз", "Авиа", "ЖД", ""));
+                //try{ $aCash = $WBS[$i]['aCash']; } catch(Exception $e){};
 
-				$waybillDate = $WBS[$i]['waybillDate'];//self::getField("waybillDate", true);
-				self::checkStringField($waybillDate, "waybillDate", 8);
-        
-				$description = str_ireplace("'", "''", $WBS[$i]['description']);
-				self::checkStringField($description, "description", 500);
+                if(isset($WBS[$i]['aCash'])) {
+                    $aCash = $WBS[$i]['aCash'];
+                    self::checkNumberValue($aCash, "aCash");
+                }
+                else { $aCash="NULL"; }
 
-				$senderComment = str_ireplace("'", "''", $WBS[$i]['senderComment']);
-				self::checkStringField($senderComment, "senderComment", 300);
+                $SubCategory = $WBS[$i]['SubCategory'];
+                self::checkStringField($SubCategory, "SubCategory", 15);
+                self::checkRange($SubCategory,"SubCategory", array("Опасный груз", "Авиа", "ЖД", ""));
 
-        $sql = "/*--wwwAPICreateWb--*/exec wwwAPICreateWb
+                $waybillDate = $WBS[$i]['waybillDate'];//self::getField("waybillDate", true);
+                self::checkStringField($waybillDate, "waybillDate", 8);
+
+                $description = str_ireplace("'", "''", $WBS[$i]['description']);
+                self::checkStringField($description, "description", 500);
+
+                $senderComment = str_ireplace("'", "''", $WBS[$i]['senderComment']);
+                self::checkStringField($senderComment, "senderComment", 300);
+
+                $sql = "/*--wwwAPICreateWb--*/exec wwwAPICreateWb
             @waybillNumber = '$waybillNumber',
             @s_name = '$sender_name',
             @s_company = '$sender_company',
@@ -406,31 +415,31 @@ public static function createWbs() {
             @aCash = $aCash,
 			@SubCategoryWB = '$SubCategory',
 			@mnfrefno = '$mnfrefno'
-            ";            
+            ";
 
-		$sql = Flight::utf8_to_win1251($sql);
-		$sql = stripslashes($sql);
-		$result = Flight::db()->query($sql);
+                $sql = Flight::utf8_to_win1251($sql);
+                $sql = stripslashes($sql);
+                $result = Flight::db()->query($sql);
 
-		$resp[$i] = $result[0];
-		$resp[$i]['status'] = 'success';
-		$resp[$i]['msg'] = 'Накладная внесена';
-		} catch (Exception $e) {				
-				$isError = true;
-				$resp[$i]['waybillNumber'] = $waybillNumber;
-				$resp[$i]['status'] = 'error';	
-				$resp[$i]['msg'] = $e->getMessage();								
-			}			
-		}
-		$response = new Response();
-		$response->data = $resp;
-		if ($isError){					
-			$response->status = 'error';			
-		} else {
-			$response->status = 'success';			
-		}  
-		echo Flight::json($response);
-  }
+                $resp[$i] = $result[0];
+                $resp[$i]['status'] = 'success';
+                $resp[$i]['msg'] = 'Накладная внесена';
+            } catch (Exception $e) {
+                $isError = true;
+                $resp[$i]['waybillNumber'] = $waybillNumber;
+                $resp[$i]['status'] = 'error';
+                $resp[$i]['msg'] = $e->getMessage();
+            }
+        }
+        $response = new Response();
+        $response->data = $resp;
+        if ($isError){
+            $response->status = 'error';
+        } else {
+            $response->status = 'success';
+        }
+        echo Flight::json($response);
+    }
 
     /**
      * Получение значения из запроса.
@@ -439,13 +448,14 @@ public static function createWbs() {
      * @return mixed Значение из запроса
      * @throws Exception Ошибка проверки
      */
-  private static function getField($fieldName, $isSet) {
-       $result = Flight::request() -> data -> $fieldName;   
-       if($isSet & !isset($result))
+    private static function getField($fieldName, $isSet)
+    {
+        $result = Flight::request()->data->$fieldName;
+        if ($isSet & !isset($result))
             throw new Exception("Не задано поле '$fieldName'. Задайте значение поля и повторите запрос");
 
         return $result;
-  }
+    }
 
     /**
      * Получение значения из запроса
@@ -454,13 +464,14 @@ public static function createWbs() {
      * @param $default mixed Значение по умолчанию
      * @return mixed Значение из запроса
      */
-  private static function getFieldWithDefault($fieldName, $default) {
-      $result = Flight::request() -> data -> $fieldName;
-      if(!isset($result))
-        return $default;
-      else
-        return $result;
-  }
+    private static function getFieldWithDefault($fieldName, $default)
+    {
+        $result = Flight::request()->data->$fieldName;
+        if (!isset($result))
+            return $default;
+        else
+            return $result;
+    }
 
     /**
      * Проерка строчного значения.
@@ -469,28 +480,29 @@ public static function createWbs() {
      * @param $charCount integer Количество допустимых символов
      * @throws Exception Ошибка проверки
      */
-  private static function checkStringField($field, $fieldName, $charCount) {
-      $injectionSymbols = array(
-          "--",
-          "1=1",
-          "0=0",
-          "true",
-          "script>"
-      );
+    private static function checkStringField($field, $fieldName, $charCount)
+    {
+        $injectionSymbols = array(
+            "--",
+            "1=1",
+            "0=0",
+            "true",
+            "script>"
+        );
 
-     if (gettype($field) != "string")
-         throw new Exception(
-             "Значения ключа '$fieldName' не является строчным");
+        if (gettype($field) != "string")
+            throw new Exception(
+                "Значения ключа '$fieldName' не является строчным");
 
-  if (mb_strlen($field,'UTF-8')> $charCount)
-         throw new Exception(
-             "Количесво символов значения ключа '$fieldName' превышает доустимое количество - '$charCount'");
+        if (mb_strlen($field, 'UTF-8') > $charCount)
+            throw new Exception(
+                "Количесво символов значения ключа '$fieldName' превышает доустимое количество - '$charCount'");
 
-     foreach ($injectionSymbols as $item) {
-         if(strpos($field, $item) == true)
-             throw new Exception("В значении ключа '$fieldName' обнаружено недопустимое значение - '$item'");
-     }
-  }
+        foreach ($injectionSymbols as $item) {
+            if (strpos($field, $item) == true)
+                throw new Exception("В значении ключа '$fieldName' обнаружено недопустимое значение - '$item'");
+        }
+    }
 
     /**
      * Проверка числового значения.
@@ -498,13 +510,14 @@ public static function createWbs() {
      * @param $fieldName string Наименование ключа
      * @throws Exception Ошибка проверки
      */
-  private function checkNumberValue($field, $fieldName) {
-       if (strlen($field)==0 || (!is_int($field+0) || !is_numeric($field)))
-        if (strlen($field)==0 || (!is_float($field+0) || !is_numeric($field)))   
-              throw new Exception(
-                  "Значения ключа '$fieldName' не является числом.
+    private function checkNumberValue($field, $fieldName)
+    {
+        if (strlen($field) == 0 || (!is_int($field + 0) || !is_numeric($field)))
+            if (strlen($field) == 0 || (!is_float($field + 0) || !is_numeric($field)))
+                throw new Exception(
+                    "Значения ключа '$fieldName' не является числом.
                            Исправьте тело запроса и повторите попытку");
-  }
+    }
 
     /**
      * Проверка значения находится ли в списке допустимых.
@@ -513,14 +526,15 @@ public static function createWbs() {
      * @param $range array Область значения
      * @throws Exception Ошибка проверки
      */
-  private function checkRange($field, $fieldName, $range) {
-      $found = false;
-      foreach ($range as $item) {
-          if (($field == $item) || (strcasecmp($field, $item) == 0))
-              $found = true;
-      }
+    private function checkRange($field, $fieldName, $range)
+    {
+        $found = false;
+        foreach ($range as $item) {
+            if (($field == $item) || (strcasecmp($field, $item) == 0))
+                $found = true;
+        }
 
-      if (!$found)
-          throw new Exception("Значение($fieldName) не находится в списке допустимых");
-  }
+        if (!$found)
+            throw new Exception("Значение($fieldName) не находится в списке допустимых");
+    }
 }
