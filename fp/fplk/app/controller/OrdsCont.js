@@ -39,74 +39,76 @@ Ext.define('fplk.controller.OrdsCont', {
         'LocalQueries',
         'SortTypeSt',
         'SortSubTypeSt'],
-    refs: [/*{
-			ref : 'WbForm',
-			selector : 'wbform'
-		},*/ {
-        ref: 'OrdForm',
-        selector: 'ordform'
-    }, {
-        ref: 'OrdFormSber',
-        selector: 'ordformsber'
-    }, {
-        ref: 'OrdTool',
-        selector: 'ordtool'
-    }, {
-        ref: 'OrdTotal',
-        selector: 'ordtotal'
-    }, {
-        ref: 'ComboCity',
-        selector: 'combocity[name=org]'
-    }, {
-        ref: 'ComboCity',
-        selector: 'combocity[name=dest]'
-    }, {
-        ref: 'OrdWin',
-        selector: 'ordwin'
-    }, {
-        ref: 'OrdWinSber',
-        selector: 'ordwinsber'
-    }, {
-        ref: 'AdmTool',
-        selector: 'admtool'
-    }, {
-        ref: 'LoadFileForm',
-        selector: 'loadfileform'
-    }, {
-        ref: 'ViewWbWin',
-        selector: 'viewwbwin'
-    }, {
-        ref: 'WbNoWin',
-        selector: 'wbnowin'
-    }, /*{
+    refs: [
+        {
+            ref: 'OrdForm',
+            selector: 'ordform'
+        }, {
+            ref: 'OrdFormSber',
+            selector: 'ordformsber'
+        }, {
+            ref: 'OrdTool',
+            selector: 'ordtool'
+        }, {
+            ref: 'OrdTotal',
+            selector: 'ordtotal'
+        }, {
+            ref: 'ComboCity',
+            selector: 'combocity[name=org]'
+        }, {
+            ref: 'ComboCity',
+            selector: 'combocity[name=dest]'
+        }, {
+            ref: 'OrdWin',
+            selector: 'ordwin'
+        }, {
+            ref: 'OrdWinSber',
+            selector: 'ordwinsber'
+        }, {
+            ref: 'AdmTool',
+            selector: 'admtool'
+        }, {
+            ref: 'LoadFileForm',
+            selector: 'loadfileform'
+        }, {
+            ref: 'ViewWbWin',
+            selector: 'viewwbwin'
+        }, {
+            ref: 'WbNoWin',
+            selector: 'wbnowin'
+        }, /*{
 			ref : 'WbWin',
 			selector : 'wbwin'
 		},*/{
-        ref: 'WbNoForm',
-        selector: 'wbnoform'
-    }, {
-        ref: 'MainPanel',
-        selector: 'mainpanel'
-    }, {
-        ref: 'WbsGrid',
-        selector: 'wbsgrid'
-    }, {
-        ref: 'OrdGrid',
-        selector: 'ordgrid'
-    }, {
-        ref: 'TemplGrid',
-        selector: 'templgrid'
-    }, {
-        ref: 'OrdsPanel',
-        selector: 'ordspanel'
-    }, {
-        ref: 'UseTemplForm',
-        selector: 'usetemplform'
-    }, {
-        ref: 'OrdExGrid',
-        selector: 'ordexgrid'
-    }
+            ref: 'WbNoForm',
+            selector: 'wbnoform'
+        }, {
+            ref: 'MainPanel',
+            selector: 'mainpanel'
+        }, {
+            ref: 'WbsGrid',
+            selector: 'wbsgrid'
+        }, {
+            ref: 'OrdGrid',
+            selector: 'ordgrid'
+        }, {
+            ref: 'TemplGrid',
+            selector: 'templgrid'
+        }, {
+            ref: 'OrdsPanel',
+            selector: 'ordspanel'
+        }, {
+            ref: 'UseTemplForm',
+            selector: 'usetemplform'
+        }, {
+            ref: 'OrdExGrid',
+            selector: 'ordexgrid'
+        }
     ],
+
+    /**
+     * Инициализация
+     */
     init: function () {
         this.control({
             'ordspanel': {
@@ -209,7 +211,10 @@ Ext.define('fplk.controller.OrdsCont', {
             },
             'ordtool button[action=createWebWb]': {
                 click: this.createWebWb
-            }
+            },
+            'ordwin button[action=createWebWbFromOrder]': {
+                click: this.createWebWbFromOrderWin
+            },
 
         });
         this.getOrderStStore().on({
@@ -239,10 +244,25 @@ Ext.define('fplk.controller.OrdsCont', {
 
     },
 
+    /**
+     * СОБЫТИЕ Нажатие на кнопку "Создать web накладную" на форме заказа
+     * @param button Кнопка "Создать web накладную"
+     */
+    createWebWbFromOrderWin: function (button) {
+        var form = button.up('ordwin').down('ordform');
+        var order = form.getRecord().data;
+        this.createWebWbRequest(order.rordnum);
+    },
+
+    /**
+     * СОБЫТИЕ Нажатие на кнопку "Создать Web накладную"
+     * Создает Web накладную
+     * @param button Кнопка "Создать Web накладную"
+     */
     createWebWb: function (button) {
         var sm = button.up('ordgrid').getSelectionModel();
         var selectedData = sm.getSelection();
-        if(selectedData.length === 0) {
+        if (selectedData.length === 0) {
             Ext.Msg.alert('Ошибка создания Веб накладной!', "Выберите строку заказ в таблице для создания");
             return;
         }
@@ -251,78 +271,82 @@ Ext.define('fplk.controller.OrdsCont', {
         this.createWebWbRequest(order.rordnum);
     },
 
+    /**
+     * Отправляет запрос на создание накладной
+     * @param order Номер заказа
+     */
     createWebWbRequest: function (order) {
 
         var orderData = this.getOrderData(order);
-        if(orderData === -1)
+        if (orderData === -1)
             return;
 
         orderData = orderData.data[0];
 
-        var orderNum               = orderData.rordnum;
+        var orderNum = orderData.rordnum;
 
-        var wb_no           = '77-' + orderNum;
+        var wb_no = '77-' + orderNum;
 
-        var senderCity             = orderData.orgcode;
-        var senderName      = orderData.cname;
-        var senderPhone            = orderData.contphone;
-        var senderContact          = orderData.contname;
-        var senderAddress          = orderData.address;
-        var senderNote             = orderData.orgrems;
-        var senderMail             = orderData.contmail;
+        var senderCity = orderData.orgcode;
+        var senderName = orderData.cname;
+        var senderPhone = orderData.contphone;
+        var senderContact = orderData.contname;
+        var senderAddress = orderData.address;
+        var senderNote = orderData.orgrems;
+        var senderMail = orderData.contmail;
 
-        var receiverCity           = orderData.destcode;
-        var receiverName           = orderData.dname;
-        var receiverPhone          = orderData.dcontphone;
-        var receiverContact        = orderData.dcontname;
-        var receiverAddress        = orderData.dadr;
-        var receiverNote           = orderData.destrems;
-        var receiverMail           = orderData.dcontmail;
+        var receiverCity = orderData.destcode;
+        var receiverName = orderData.dname;
+        var receiverPhone = orderData.dcontphone;
+        var receiverContact = orderData.dcontname;
+        var receiverAddress = orderData.dadr;
+        var receiverNote = orderData.destrems;
+        var receiverMail = orderData.dcontmail;
 
-        var type                   = orderData.type;
-        var volWt                  = orderData.volwt;
-        var wt                     = orderData.wt;
-        var places                 = orderData.packs;
+        var type = orderData.type;
+        var volWt = orderData.volwt;
+        var wt = orderData.wt;
+        var places = orderData.packs;
 
-        var note            = '';
-        var inSum         = 0;
+        var note = '';
+        var inSum = 0;
 
         Ext.Ajax.request({
             url: 'srv/data.php',
             method: 'POST',
             async: false,
             params: {
-                id:         0,
-                wb_no:      wb_no,
-                ord_no:     orderNum,
-                org:        senderCity,
-                s_name:     senderName,
-                s_tel:      senderPhone,
-                s_co:       senderContact,
-                s_adr:      senderAddress,
-                s_ref:      senderNote,
-                s_mail:     senderMail,
-                dest:       receiverCity,
-                r_name:     receiverName,
-                r_tel:      receiverPhone,
-                r_co:       receiverContact,
-                r_adr:      receiverAddress,
-                r_ref:      receiverNote,
-                r_mail:     receiverMail,
-                type:       type,
-                vol_wt:     volWt,
-                wt:         wt,
-                pcs:        places,
-                descr:      note,
-                inssum:     inSum,
-                dbAct:      'SetWebWB'
+                id: 0,
+                wb_no: wb_no,
+                ord_no: orderNum,
+                org: senderCity,
+                s_name: senderName,
+                s_tel: senderPhone,
+                s_co: senderContact,
+                s_adr: senderAddress,
+                s_ref: senderNote,
+                s_mail: senderMail,
+                dest: receiverCity,
+                r_name: receiverName,
+                r_tel: receiverPhone,
+                r_co: receiverContact,
+                r_adr: receiverAddress,
+                r_ref: receiverNote,
+                r_mail: receiverMail,
+                type: type,
+                vol_wt: volWt,
+                wt: wt,
+                pcs: places,
+                descr: note,
+                inssum: inSum,
+                dbAct: 'SetWebWB'
             },
             success: function (response) {
                 var data = Ext.decode(response.responseText);
-                if(data.success === false)
-                    Ext.Msg.alert('Ошибка веб накладной', "Веб накладная " + wb_no + " не создана!<br> Сообщение:<br>" + data.msg);
+                if (data.success === false)
+                    Ext.Msg.alert('Ошибка веб накладной', "Веб накладная не создана!<br> Сообщение:<br>" + data.msg);
                 else
-                    Ext.Msg.alert('Сохранено', "Веб накладная " + wb_no + " создана!");
+                    Ext.Msg.alert('Сохранено', "Веб накладная " + data.data[0].wb_no + " создана!");
             },
 
         })
@@ -333,7 +357,7 @@ Ext.define('fplk.controller.OrdsCont', {
      * @param orderNum Номер заказа
      * @returns array Данные заказа
      */
-    getOrderData: function(orderNum) {
+    getOrderData: function (orderNum) {
         var extraOrderData = Ext.Ajax.request({
             url: 'srv/data.php',
             async: false,
@@ -344,13 +368,13 @@ Ext.define('fplk.controller.OrdsCont', {
             },
             success: function (response) {
                 var dataResp = Ext.decode(response.responseText);
-                if(dataResp.success === false) {
+                if (dataResp.success === false) {
                     Ext.Msg.alert('Ошибка заказа', "Не удалось получить информацию о заказе: " + orderNum + "<br> Сообщение:<br>\" + data.msg");
                     return -1;
                 }
                 var data = dataResp.data;
 
-                if(dataResp.length === 0) {
+                if (dataResp.length === 0) {
                     Ext.Msg.alert('Ошибка заказа', "Не удалось получить информацию о заказе: " + orderNum + "");
                     return -1;
                 }
@@ -359,8 +383,7 @@ Ext.define('fplk.controller.OrdsCont', {
             }
         });
 
-        var data = Ext.decode(extraOrderData.responseText);
-        return data;
+        return Ext.decode(extraOrderData.responseText);
     },
 
     /**
@@ -1014,8 +1037,10 @@ Ext.define('fplk.controller.OrdsCont', {
                 });
                 if (btn.action == 'view') {
                     win.down('button[action=save]').setText('Повторить заказ');
+                    win.down('checkboxfield[name=webwb]').setVisible(false);
                 } else {
                     win.down('button[action=save]').setVisible(true);
+                    win.down('button[action=createWebWb]').setVisible(false);
                 }
             } else {
                 Ext.Msg.alert('Запрещено!', 'Редактировать можно только заявленные заказы');
@@ -1190,7 +1215,7 @@ Ext.define('fplk.controller.OrdsCont', {
      * @returns {boolean} Результат проверки
      */
     checkFormBeforeRequest: function (form) {
-        if(!this.checkOrderSubType(form))
+        if (!this.checkOrderSubType(form))
             return false;
         return this.checkOrderCourierTime(form);
     },
@@ -1202,8 +1227,8 @@ Ext.define('fplk.controller.OrdsCont', {
      */
     checkOrderSubType: function (form) {
         var subCategory = form.down('combobox[name=subcategory]');
-        if(subCategory.disabled === false) {
-            if(subCategory.value === null || subCategory.value.length === 0) {
+        if (subCategory.disabled === false) {
+            if (subCategory.value === null || subCategory.value.length === 0) {
                 Ext.Msg.alert('Заказ не сохранен!', 'Заполните поле "Подкатегория"');
                 return false;
             }
@@ -1223,22 +1248,22 @@ Ext.define('fplk.controller.OrdsCont', {
         var timeFromVal = form.down("textfield[name=courtimef]").getValue();
         var timeToVal = form.down("textfield[name=courtimet]").getValue();
 
-        if(timeFromVal.indexOf(":") === -1) {
+        if (timeFromVal.indexOf(":") === -1) {
             Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
             return false;
         }
 
-        if(timeFromVal.length !== 5 ) {
+        if (timeFromVal.length !== 5) {
             Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
             return false;
         }
 
-        if(timeToVal.indexOf(":") === -1) {
+        if (timeToVal.indexOf(":") === -1) {
             Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" не содержит разделитель минут и секунд (":")');
             return false;
         }
 
-        if(timeToVal.length !== 5 ) {
+        if (timeToVal.length !== 5) {
             Ext.Msg.alert('Заказ не сохранен!', 'Поле "Время с" содержит неправильное количество символов. Ожидается - 5, количество - ' + timeFromVal.length);
             return false;
         }
@@ -1263,7 +1288,7 @@ Ext.define('fplk.controller.OrdsCont', {
      */
     saveOrderRequest: function (form, object) {
         var me = this;
-        if(!me.checkFormBeforeRequest(form))
+        if (!me.checkFormBeforeRequest(form))
             return;
 
         if (form.getForm().isValid()) {
