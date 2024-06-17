@@ -48,6 +48,10 @@ Ext.define('fplk.view.orders.OrdTool', {
         text: 'Импорт заказов',
         iconCls: 'import',
         action: 'importOrders'
+    }, {
+        text: 'Создать Веб накладную',
+        iconCls: 'wbview',
+        action: 'createWebWb'
     }, '->', '-', {
         xtype: 'combomonth'
     }

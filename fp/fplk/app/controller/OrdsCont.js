@@ -206,6 +206,9 @@ Ext.define('fplk.controller.OrdsCont', {
             },
             'ordwin combobox[name=sortType]': {
                 change: this.changeOrdType
+            },
+            'ordtool button[action=createWebWb]': {
+                click: this.createWebWb
             }
 
         });
@@ -234,6 +237,130 @@ Ext.define('fplk.controller.OrdsCont', {
 
     afterTemplateQuery: function (query) {
 
+    },
+
+    createWebWb: function (button) {
+        var sm = button.up('ordgrid').getSelectionModel();
+        var selectedData = sm.getSelection();
+        if(selectedData.length === 0) {
+            Ext.Msg.alert('Ошибка создания Веб накладной!', "Выберите строку заказ в таблице для создания");
+            return;
+        }
+
+        var order = selectedData[0].data;
+        this.createWebWbRequest(order.rordnum);
+    },
+
+    createWebWbRequest: function (order) {
+
+        var orderData = this.getOrderData(order);
+        if(orderData === -1)
+            return;
+
+        orderData = orderData.data[0];
+
+        var orderNum               = orderData.rordnum;
+
+        var wb_no           = '77-' + orderNum;
+
+        var senderCity             = orderData.orgcode;
+        var senderName      = orderData.cname;
+        var senderPhone            = orderData.contphone;
+        var senderContact          = orderData.contname;
+        var senderAddress          = orderData.address;
+        var senderNote             = orderData.orgrems;
+        var senderMail             = orderData.contmail;
+
+        var receiverCity           = orderData.destcode;
+        var receiverName           = orderData.dname;
+        var receiverPhone          = orderData.dcontphone;
+        var receiverContact        = orderData.dcontname;
+        var receiverAddress        = orderData.dadr;
+        var receiverNote           = orderData.destrems;
+        var receiverMail           = orderData.dcontmail;
+
+        var type                   = orderData.type;
+        var volWt                  = orderData.volwt;
+        var wt                     = orderData.wt;
+        var places                 = orderData.packs;
+
+        var note            = '';
+        var inSum         = 0;
+
+        Ext.Ajax.request({
+            url: 'srv/data.php',
+            method: 'POST',
+            async: false,
+            params: {
+                id:         0,
+                wb_no:      wb_no,
+                ord_no:     orderNum,
+                org:        senderCity,
+                s_name:     senderName,
+                s_tel:      senderPhone,
+                s_co:       senderContact,
+                s_adr:      senderAddress,
+                s_ref:      senderNote,
+                s_mail:     senderMail,
+                dest:       receiverCity,
+                r_name:     receiverName,
+                r_tel:      receiverPhone,
+                r_co:       receiverContact,
+                r_adr:      receiverAddress,
+                r_ref:      receiverNote,
+                r_mail:     receiverMail,
+                type:       type,
+                vol_wt:     volWt,
+                wt:         wt,
+                pcs:        places,
+                descr:      note,
+                inssum:     inSum,
+                dbAct:      'SetWebWB'
+            },
+            success: function (response) {
+                var data = Ext.decode(response.responseText);
+                if(data.success === false)
+                    Ext.Msg.alert('Ошибка веб накладной', "Веб накладная " + wb_no + " не создана!<br> Сообщение:<br>" + data.msg);
+                else
+                    Ext.Msg.alert('Сохранено', "Веб накладная " + wb_no + " создана!");
+            },
+
+        })
+    },
+
+    /**
+     * Получает сведения заказа по ИД
+     * @param orderNum Номер заказа
+     * @returns array Данные заказа
+     */
+    getOrderData: function(orderNum) {
+        var extraOrderData = Ext.Ajax.request({
+            url: 'srv/data.php',
+            async: false,
+            method: 'POST',
+            params: {
+                dbAct: 'editagorder',
+                id: orderNum
+            },
+            success: function (response) {
+                var dataResp = Ext.decode(response.responseText);
+                if(dataResp.success === false) {
+                    Ext.Msg.alert('Ошибка заказа', "Не удалось получить информацию о заказе: " + orderNum + "<br> Сообщение:<br>\" + data.msg");
+                    return -1;
+                }
+                var data = dataResp.data;
+
+                if(dataResp.length === 0) {
+                    Ext.Msg.alert('Ошибка заказа', "Не удалось получить информацию о заказе: " + orderNum + "");
+                    return -1;
+                }
+
+                return data[0];
+            }
+        });
+
+        var data = Ext.decode(extraOrderData.responseText);
+        return data;
     },
 
     /**
