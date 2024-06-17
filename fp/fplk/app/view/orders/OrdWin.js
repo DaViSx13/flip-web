@@ -17,7 +17,8 @@ Ext.define('fplk.view.orders.OrdWin', {
         this.buttons = [
             {
                 text: 'Создать веб накладную',
-                action: 'createWebWbFromOrder'
+                action: 'createWebWbFromOrder',
+                hidden: true
             }, {
                 text: 'Сохранить',
                 action: 'save'

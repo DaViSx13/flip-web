@@ -1038,9 +1038,9 @@ Ext.define('fplk.controller.OrdsCont', {
                 if (btn.action == 'view') {
                     win.down('button[action=save]').setText('Повторить заказ');
                     win.down('checkboxfield[name=webwb]').setVisible(false);
+                    win.down('button[action=createWebWbFromOrder]').setVisible(true);
                 } else {
                     win.down('button[action=save]').setVisible(true);
-                    win.down('button[action=createWebWb]').setVisible(false);
                 }
             } else {
                 Ext.Msg.alert('Запрещено!', 'Редактировать можно только заявленные заказы');
