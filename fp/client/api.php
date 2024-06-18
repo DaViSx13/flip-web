@@ -64,13 +64,13 @@ if (!isset($_REQUEST['dbAct'])) {
 				}
             break;
         case 'getWb':
-            $query = "exec [wwwAPIgetWb] @wbno='$wbno'";
+            $query = "exec wwwAPIgetWb @wbno='$wbno'";
             break;
         case 'getWbEx':
-            $query = "exec [wwwAPIGetWbEx] @wbno='$wbno'";
+            $query = "exec wwwAPIGetWbEx @wbno='$wbno'";
             break;
         case 'getTrackInfo':
-            $query = "exec [wwwAPIGetWbTrackingInfo] @wbno='$wbno'";
+            $query = "exec wwwAPIGetWbTrackingInfo @wbno='$wbno'";
             break;
 	    }
 
@@ -78,8 +78,7 @@ if (!isset($_REQUEST['dbAct'])) {
         $response->msg = 'не правильный запрос: '.$errMsg;
     } else {
         $query = iconv("UTF-8", "windows-1251", $query);
-        $query = stripslashes($query);
-        $query = addslashes($query);
+        $query = quotemeta($query);
         try {
             include "dbConnect.php";
             $result = mssql_query($query);
@@ -146,6 +145,7 @@ if (!isset($_REQUEST['dbAct'])) {
                 
             } else {
                 $response->msg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
+                $response->data = $query;
             }
         }
         catch (exception $e) {
