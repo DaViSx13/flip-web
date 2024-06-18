@@ -77,8 +77,8 @@ if (!isset($_REQUEST['dbAct'])) {
     if (!isset($query)) {
         $response->msg = 'не правильный запрос: '.$errMsg;
     } else {
-        $query = iconv("UTF-8", "windows-1251", $query);
         $query = quotemeta($query);
+        $query = iconv("UTF-8", "windows-1251", $query);
         try {
             include "dbConnect.php";
             $result = mssql_query($query);
