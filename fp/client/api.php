@@ -79,7 +79,7 @@ if (!isset($_REQUEST['dbAct'])) {
     } else {
         $query = iconv("UTF-8", "windows-1251", $query);
         $query = stripslashes($query);
-
+        $query = addslashes($query);
         try {
             include "dbConnect.php";
             $result = mssql_query($query);
