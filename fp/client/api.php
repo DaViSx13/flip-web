@@ -145,7 +145,7 @@ if (!isset($_REQUEST['dbAct'])) {
                 
             } else {
                 $response->msg = 'sql error: ' . iconv("windows-1251", "UTF-8", mssql_get_last_message());
-                $response->data = $query;
+                //$response->data = $query;
             }
         }
         catch (exception $e) {
