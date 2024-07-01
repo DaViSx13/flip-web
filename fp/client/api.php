@@ -1,4 +1,5 @@
 <?php
+include "sql_prepare.php";
 //завязка
 //session_start();
 header("Content-type: text/plain; charset=utf-8");
@@ -28,7 +29,16 @@ if (!isset($_REQUEST['dbAct'])) {
     $response->msg = 'ok';
     switch ($dbAct) {
         case 'dbTest':
-            $query = "select '$_REQUEST[test]' as test";
+            $query = "select #{req} as test";
+            try {
+                $query = sql_prepare::prepare($query, array('req' => $_REQUEST['test']));
+            } catch (Exception $ex) {
+                $error = new Response();
+                $error -> success = false;
+                $error -> msg = iconv("windows-1251", "UTF-8", $ex -> getMessage());
+                echo json_encode($error);
+                return;
+            }
 			//$query = "select cast(null as varchar(10)) as test";
             break;
         case 'getCountries':
@@ -77,7 +87,7 @@ if (!isset($_REQUEST['dbAct'])) {
     if (!isset($query)) {
         $response->msg = 'не правильный запрос: '.$errMsg;
     } else {
-        $query = quotemeta($query);
+        echo $query;
         $query = iconv("UTF-8", "windows-1251", $query);
         try {
             include "dbConnect.php";
